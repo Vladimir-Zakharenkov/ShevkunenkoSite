@@ -12290,7 +12290,7 @@ a:active, .dropdown:active {
 }
 
 .ref-to-page {
-  display: block;
+  display: inline-block;
   color: black;
   text-align: center;
   width: 3rem;
