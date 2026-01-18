@@ -2,6 +2,27 @@
   <Folder Name="/Localcertificate/">
     <File Path="Localcertificate/Localcertificate.ps1" />
   </Folder>
+  <Project Path="../shevkunenko.ru/" Type="Website" DisplayName="shevkunenko.ru" Id="610e8a56-5298-427e-86cb-f1be66e2b7af">
+    <BuildType Project="Debug" />
+    <Properties Name="WebsiteProperties">
+      <Property Name="Debug.AspNetCompiler.Debug" Value="&quot;True&quot;" />
+      <Property Name="Debug.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
+      <Property Name="Debug.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
+      <Property Name="Debug.AspNetCompiler.PhysicalPath" Value="&quot;..\shevkunenko.ru\&quot;" />
+      <Property Name="Debug.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_52614\&quot;" />
+      <Property Name="Debug.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
+      <Property Name="Debug.AspNetCompiler.VirtualPath" Value="&quot;/localhost_52614&quot;" />
+      <Property Name="Release.AspNetCompiler.Debug" Value="&quot;False&quot;" />
+      <Property Name="Release.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
+      <Property Name="Release.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
+      <Property Name="Release.AspNetCompiler.PhysicalPath" Value="&quot;..\shevkunenko.ru\&quot;" />
+      <Property Name="Release.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_52614\&quot;" />
+      <Property Name="Release.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
+      <Property Name="Release.AspNetCompiler.VirtualPath" Value="&quot;/localhost_52614&quot;" />
+      <Property Name="TargetFrameworkMoniker" Value="&quot;.NETFramework,Version%3Dv4.8&quot;" />
+      <Property Name="VWDPort" Value="&quot;52614&quot;" />
+    </Properties>
+  </Project>
   <Project Path="ShevkunenkoSite.Model/ShevkunenkoSite.Models.csproj" />
   <Project Path="ShevkunenkoSite.Services/ShevkunenkoSite.Services.csproj" />
   <Project Path="ShevkunenkoSite/ShevkunenkoSite.csproj" />

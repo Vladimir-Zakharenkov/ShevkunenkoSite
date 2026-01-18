@@ -2,11 +2,9 @@ using System.Text;
 
 namespace ShevkunenkoSite.Pages;
 
-public class SitemapModel : PageModel
+public class SitemapModel(IPageInfoRepository pageinfoContext) : PageModel
 {
-    public readonly IPageInfoRepository _pageinfoContext;
-
-    public SitemapModel(IPageInfoRepository pageinfoContext) => _pageinfoContext = pageinfoContext;
+    public readonly IPageInfoRepository _pageinfoContext = pageinfoContext;
 
     public async Task<IActionResult> OnGetAsync()
     {
@@ -18,7 +16,7 @@ public class SitemapModel : PageModel
 
         foreach (var page in pages)
         {
-            if (!page.PageLoc.ToLower().Contains("dbcrud") || !page.PageLoc.ToLower().Contains("pageinfo"))
+            if (!page.PageFullPath.Contains("/admin/", StringComparison.CurrentCultureIgnoreCase))
             {
                 string pageLoc = (this.Request.Scheme + "://" + this.Request.Host + page.PageFullPathWithData).Replace("&", "&amp;");
                 string pageLastmode = page.PageLastmod.ToString("yyyy-MM-ddTHH:mm:sszzz");
@@ -30,6 +28,13 @@ public class SitemapModel : PageModel
                     string pagePathNickName = (this.Request.Scheme + "://" + this.Request.Host + page.PagePathNickName).Replace("&", "&amp;");
 
                     sb.Append($"<url><loc>{pagePathNickName}</loc><lastmod>{pageLastmode}</lastmod><changefreq>{page.Changefreq}</changefreq><priority>{page.Priority}</priority></url>");
+                }
+
+                if (!string.IsNullOrEmpty(page.PagePathNickName2))
+                {
+                    string pagePathNickName2 = (this.Request.Scheme + "://" + this.Request.Host + page.PagePathNickName2).Replace("&", "&amp;");
+
+                    sb.Append($"<url><loc>{pagePathNickName2}</loc><lastmod>{pageLastmode}</lastmod><changefreq>{page.Changefreq}</changefreq><priority>{page.Priority}</priority></url>");
                 }
             }
         }
