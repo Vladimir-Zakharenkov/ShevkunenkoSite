@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Let’s Encrypt on IIS/">
+    <File Path="Let’s Encrypt on IIS/Let’s Encrypt on IIS.txt" />
+  </Folder>
   <Folder Name="/Localcertificate/">
     <File Path="Localcertificate/Localcertificate.ps1" />
   </Folder>
