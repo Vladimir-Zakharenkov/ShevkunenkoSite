@@ -644,13 +644,13 @@ public class PageInfoController(
 
             if (addPage.TextFileFormFile != null)
             {
-                if (addPage.TextFileFormFile.FileName.Contains("moskva-3-", StringComparison.InvariantCultureIgnoreCase))
+                if (addPage.TextFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    addPage.PageTitle = "Николай Модестов «Москва 3» страница " + (addPage.SortOfPage - 1).ToString();
+                    addPage.PageTitle = "Николай Модестов «Следствие продолжается» страница " + (addPage.SortOfPage - 1).ToString();
 
                     addPage.PageDescription = addPage.PageTitle + ".";
 
-                    addPage.PageKeyWords = "Москва бандитская, Николай Модестов, криминал, 90-е годы,";
+                    addPage.PageKeyWords = "Следствие продолжается, Николай Модестов, криминал, 90-е годы,";
                 }
             }
             else
@@ -672,9 +672,9 @@ public class PageInfoController(
 
             if (addPage.TextFileFormFile != null)
             {
-                if (addPage.TextFileFormFile.FileName.Contains("moskva-3-", StringComparison.InvariantCultureIgnoreCase))
+                if (addPage.TextFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    addPage.ImageFileModelId = new("2ad38131-e863-47c8-9e99-08de4c7dcd58");
+                    addPage.ImageFileModelId = new("c131c3fa-5d0b-4424-7e33-08de5b2ee0af");
                 }
             }
             else if (addPage.ImageFileModelId != Guid.Empty)
@@ -811,7 +811,7 @@ public class PageInfoController(
 
             if (addPage.TextFileFormFile != null)
             {
-                if (addPage.TextFileFormFile.FileName.Contains("moskva-3-", StringComparison.InvariantCultureIgnoreCase))
+                if (addPage.TextFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-", StringComparison.InvariantCultureIgnoreCase))
                 {
                     addPage.BackgroundFileModelId = new("9DCC0265-DF8B-4678-A66B-7006EA116E5A");
                 }
@@ -973,7 +973,7 @@ public class PageInfoController(
 
             if (addPage.TextFileFormFile != null)
             {
-                if (addPage.TextFileFormFile.FileName.Contains("moskva-3-", StringComparison.InvariantCultureIgnoreCase))
+                if (addPage.TextFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-", StringComparison.InvariantCultureIgnoreCase))
                 {
                     addPage.PageCardText = "СТРАНИЦА " + (addPage.SortOfPage - 1).ToString();
                 }
@@ -1008,28 +1008,10 @@ public class PageInfoController(
             }
             else
             {
-                if (addPage.PageTitle.Contains("Москва 3", StringComparison.InvariantCultureIgnoreCase))
+                if (addPage.PageTitle.Contains("Следствие продолжается", StringComparison.InvariantCultureIgnoreCase))
                 {
                     addPage.Controller = "/books";
                 }
-                //if (string.IsNullOrWhiteSpace(addPage.Controller) || string.IsNullOrEmpty(addPage.Controller))
-                //{
-                //    ModelState.AddModelError("PageItem.Controller", "Введите название контроллера");
-
-                //    // Список картинок сайта
-                //    ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
-
-                //    // Список картинок для фона (фотопленка)
-                //    ViewData["BackgroundImages"] = new SelectList(backgroundContext.BackgroundFiles.OrderBy(orderBackgroundImage => orderBackgroundImage.WebLeftBackground), "BackgroundFileModelId", "WebLeftBackground");
-
-                //    // Список текстовых файлов
-                //    ViewData["Texts"] = new SelectList(textFileContext.Texts.OrderBy(orderText => orderText.TxtFileName), "TextInfoModelId", "TxtFileName");
-
-                //    // Список аудиофайлов
-                //    ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
-
-                //    return View(addPage);
-                //}
                 else
                 {
                     addPage.Controller = "/" + addPage.Controller.Trim().Trim('/').ToLower();
@@ -1046,28 +1028,10 @@ public class PageInfoController(
             }
             else
             {
-                if (addPage.PageTitle.Contains("Москва 3", StringComparison.InvariantCultureIgnoreCase))
+                if (addPage.PageTitle.Contains("Следствие продолжается", StringComparison.InvariantCultureIgnoreCase))
                 {
                     addPage.Action = "/book";
                 }
-                //if (string.IsNullOrWhiteSpace(addPage.Action) || string.IsNullOrEmpty(addPage.Action))
-                //{
-                //    ModelState.AddModelError("PageItem.Action", "Введите название метода");
-
-                //    // Список картинок сайта
-                //    ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
-
-                //    // Список картинок для фона (фотопленка)
-                //    ViewData["BackgroundImages"] = new SelectList(backgroundContext.BackgroundFiles.OrderBy(orderBackgroundImage => orderBackgroundImage.WebLeftBackground), "BackgroundFileModelId", "WebLeftBackground");
-
-                //    // Список текстовых файлов
-                //    ViewData["Texts"] = new SelectList(textFileContext.Texts.OrderBy(orderText => orderText.TxtFileName), "TextInfoModelId", "TxtFileName");
-
-                //    // Список аудиофайлов
-                //    ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
-
-                //    return View(addPage);
-                //}
                 else
                 {
                     addPage.Action = "/" + addPage.Action.Trim().Trim('/').ToLower();
@@ -1116,9 +1080,9 @@ public class PageInfoController(
 
             #region Данные (RoutData)
 
-            if (addPage.PageTitle.Contains("Москва 3", StringComparison.InvariantCultureIgnoreCase))
+            if (addPage.PageTitle.Contains("Следствие продолжается", StringComparison.InvariantCultureIgnoreCase))
             {
-                addPage.RoutData = "?bookcaption=москва-3&pagenumber=" + (addPage.SortOfPage - 1).ToString();
+                addPage.RoutData = "?bookcaption=следствие-продолжается&pagenumber=" + (addPage.SortOfPage - 1).ToString();
             }
             else if (string.IsNullOrWhiteSpace(addPage.RoutData) || string.IsNullOrEmpty(addPage.RoutData))
             {
@@ -1133,9 +1097,9 @@ public class PageInfoController(
 
             #region Псевдоним страницы (1)
 
-            if (addPage.PageTitle.Contains("Москва 3", StringComparison.InvariantCultureIgnoreCase))
+            if (addPage.PageTitle.Contains("Следствие продолжается", StringComparison.InvariantCultureIgnoreCase))
             {
-                addPage.PagePathNickName = "/%d0%ba%d0%bd%d0%b8%d0%b3%d0%b0/%d0%bc%d0%be%d1%81%d0%ba%d0%b2%d0%b0-3/%d1%81%d1%82%d1%80%d0%b0%d0%bd%d0%b8%d1%86%d0%b0-" + (addPage.SortOfPage - 1).ToString();
+                addPage.PagePathNickName = "/%D0%BA%D0%BD%D0%B8%D0%B3%D0%B0/%D1%81%D0%BB%D0%B5%D0%B4%D1%81%D1%82%D0%B2%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B4%D0%BE%D0%BB%D0%B6%D0%B0%D0%B5%D1%82%D1%81%D1%8F/%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0-" + (addPage.SortOfPage - 1).ToString();
             }
             else if (string.IsNullOrWhiteSpace(addPage.PagePathNickName) || string.IsNullOrEmpty(addPage.PagePathNickName))
             {
@@ -1221,7 +1185,7 @@ public class PageInfoController(
 
             #region OgType - PageIconPath - BrowserConfig - BrowserConfigFolder - Manifest
 
-            if (addPage.PageTitle.Contains("Москва 3", StringComparison.InvariantCultureIgnoreCase))
+            if (addPage.PageTitle.Contains("Следствие продолжается", StringComparison.InvariantCultureIgnoreCase))
             {
                 addPage.OgType = "book";
             }
@@ -1415,7 +1379,7 @@ public class PageInfoController(
 
             _ = addPage.PageLinksByFilters;
 
-            if (addPage.PageTitle.Contains("Москва 3", StringComparison.InvariantCultureIgnoreCase))
+            if (addPage.PageTitle.Contains("Следствие продолжается", StringComparison.InvariantCultureIgnoreCase))
             {
                 addPage.PageFilterOut = "Книги Николая Модестова, Книги о Сергее Шевкуненко,";
 

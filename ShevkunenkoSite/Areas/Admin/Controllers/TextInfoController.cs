@@ -493,15 +493,11 @@ public class TextInfoController(
 
             #region Описание текста
 
-            if (addText.HtmlFileFormFile.FileName.Contains("moskva-3-"))
-            {
-                addText.TextDescription = "Николай Модестов «Москва 3» страница " + addText.SequenceNumber + ".";
-            }
-            else
-            {
-                addText.TextDescription = addText.TextDescription.Trim();
-            }
+            addText.TextDescription = addText.HtmlFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-")
+                ? "Николай Модестов «Следствие продолжается» страница " + addText.SequenceNumber + "."
+                : addText.TextDescription.Trim();
 
+            // Проверка наличия описания в базе данных
             if (await textContext.Texts.Where(file => file.TextDescription == addText.TextDescription).AnyAsync())
             {
                 ModelState.AddModelError("TextDescription", $"Описание «{addText.TextDescription}» уже существует в БД");
@@ -550,9 +546,9 @@ public class TextInfoController(
 
             #region Связанная книга (статья)
 
-            if (addText.HtmlFileFormFile.FileName.Contains("moskva-3-"))
+            if (addText.HtmlFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-"))
             {
-                addText.BooksAndArticlesModelId = new Guid("84E631B3-CED1-4757-CE23-08DE4C7F911A");
+                addText.BooksAndArticlesModelId = new Guid("2e08e370-6c55-4aa8-1bb3-08de5b313618");
             }
             else
             {
@@ -563,9 +559,9 @@ public class TextInfoController(
 
             #region Каталог текста
 
-            if (addText.HtmlFileFormFile.FileName.Contains("moskva-3-"))
+            if (addText.HtmlFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-"))
             {
-                addText.FolderForText = "moskva-3";
+                addText.FolderForText = "sledstvie-prodoljaetsya";
             }
             
             if (addText.FolderForText != "texts")
