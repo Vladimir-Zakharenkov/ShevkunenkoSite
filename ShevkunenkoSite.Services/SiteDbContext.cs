@@ -28,6 +28,8 @@ public class SiteDbContext(DbContextOptions<SiteDbContext> options) : DbContext(
 
     public DbSet<AudioInfoModel> AudioInfoModel => Set<AudioInfoModel>();
 
+    public DbSet<FilmFileModel> Films => Set<FilmFileModel>();
+
     #endregion
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

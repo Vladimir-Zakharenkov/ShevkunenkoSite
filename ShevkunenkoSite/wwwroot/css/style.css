@@ -12124,6 +12124,10 @@ p {
     font-size: 17px;
   }
 }
+.clear-left {
+  clear: left;
+}
+
 /* перенос слов в тексте */
 body {
   word-wrap: break-word;
