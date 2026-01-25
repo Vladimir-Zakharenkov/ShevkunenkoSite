@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShevkunenkoSite.Services;
 
@@ -11,9 +12,11 @@ using ShevkunenkoSite.Services;
 namespace ShevkunenkoSite.Services.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    partial class SiteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260125200056_25-01-2026-23-00")]
+    partial class _250120262300
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -452,8 +455,14 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Property<Guid?>("FullFilmId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("ImageFileModelId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int?>("MoviePart")
                         .HasColumnType("int");
+
+                    b.Property<Guid?>("MoviePosterImageFileModelId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("MovieTotalParts")
                         .HasColumnType("int");
@@ -467,11 +476,11 @@ namespace ShevkunenkoSite.Services.Migrations
 
                     b.HasKey("FilmFileModelId");
 
-                    b.HasIndex("FIlmImageId");
-
-                    b.HasIndex("FilmPosterId");
-
                     b.HasIndex("FullFilmId");
+
+                    b.HasIndex("ImageFileModelId");
+
+                    b.HasIndex("MoviePosterImageFileModelId");
 
                     b.ToTable("Films");
                 });
@@ -1093,9 +1102,6 @@ namespace ShevkunenkoSite.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("FilmInfoId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("ImageFileModelId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1232,8 +1238,6 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.HasIndex("AudioInfoId");
 
                     b.HasIndex("BackgroundFileModelId");
-
-                    b.HasIndex("FilmInfoId");
 
                     b.HasIndex("ImageFileModelId");
 
@@ -1380,23 +1384,23 @@ namespace ShevkunenkoSite.Services.Migrations
 
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.FilmFileModel", b =>
                 {
-                    b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "FilmImage")
-                        .WithMany()
-                        .HasForeignKey("FIlmImageId");
-
-                    b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "FilmPoster")
-                        .WithMany()
-                        .HasForeignKey("FilmPosterId");
-
                     b.HasOne("ShevkunenkoSite.Models.DataModels.FilmFileModel", "FullFilm")
                         .WithMany()
                         .HasForeignKey("FullFilmId");
 
-                    b.Navigation("FilmImage");
+                    b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "ImageFileModel")
+                        .WithMany()
+                        .HasForeignKey("ImageFileModelId");
 
-                    b.Navigation("FilmPoster");
+                    b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "MoviePoster")
+                        .WithMany()
+                        .HasForeignKey("MoviePosterImageFileModelId");
 
                     b.Navigation("FullFilm");
+
+                    b.Navigation("ImageFileModel");
+
+                    b.Navigation("MoviePoster");
                 });
 
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.MovieFileModel", b =>
@@ -1456,10 +1460,6 @@ namespace ShevkunenkoSite.Services.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShevkunenkoSite.Models.DataModels.FilmFileModel", "FilmInfo")
-                        .WithMany()
-                        .HasForeignKey("FilmInfoId");
-
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "ImageFileModel")
                         .WithMany()
                         .HasForeignKey("ImageFileModelId")
@@ -1477,8 +1477,6 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Navigation("AudioInfo");
 
                     b.Navigation("BackgroundFileModel");
-
-                    b.Navigation("FilmInfo");
 
                     b.Navigation("ImageFileModel");
 

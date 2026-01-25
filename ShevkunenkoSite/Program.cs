@@ -162,6 +162,7 @@ services.AddScoped<ITextInfoRepository, TextInfoImplementation>();
 services.AddScoped<IBooksAndArticlesRepository, BooksAndArticlesImplementation>();
 services.AddScoped<IAudioBookRepository, AudioBookImplementation>();
 services.AddScoped<IAudioInfoRepository, AudioInfoImplementation>();
+services.AddScoped<IFilmFileRepository, FilmFileImplementation>();
 
 #endregion
 

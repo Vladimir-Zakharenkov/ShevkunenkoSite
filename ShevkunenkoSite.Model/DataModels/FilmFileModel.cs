@@ -311,12 +311,12 @@ public class FilmFileModel
     // картинка для карточки фильма
     [Display(Name = "Картинка к фильму (Guid):")]
     public Guid? FIlmImageId { get; set; }
-    public ImageFileModel? ImageFileModel { get; set; }
+    public ImageFileModel? FilmImage { get; set; }
 
     // постер для фильм
     [Display(Name = "Постер к фильму (Guid):")]
     public Guid? FilmPosterId { get; set; }
-    public ImageFileModel? MoviePoster { get; set; }
+    public ImageFileModel? FilmPoster { get; set; }
 
     #endregion
 }

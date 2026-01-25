@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShevkunenkoSite.Services;
 
@@ -11,9 +12,11 @@ using ShevkunenkoSite.Services;
 namespace ShevkunenkoSite.Services.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    partial class SiteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260125200836_25-01-2026-23-07")]
+    partial class _250120262307
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1093,9 +1096,6 @@ namespace ShevkunenkoSite.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("FilmInfoId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("ImageFileModelId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1232,8 +1232,6 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.HasIndex("AudioInfoId");
 
                     b.HasIndex("BackgroundFileModelId");
-
-                    b.HasIndex("FilmInfoId");
 
                     b.HasIndex("ImageFileModelId");
 
@@ -1456,10 +1454,6 @@ namespace ShevkunenkoSite.Services.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShevkunenkoSite.Models.DataModels.FilmFileModel", "FilmInfo")
-                        .WithMany()
-                        .HasForeignKey("FilmInfoId");
-
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "ImageFileModel")
                         .WithMany()
                         .HasForeignKey("ImageFileModelId")
@@ -1477,8 +1471,6 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Navigation("AudioInfo");
 
                     b.Navigation("BackgroundFileModel");
-
-                    b.Navigation("FilmInfo");
 
                     b.Navigation("ImageFileModel");
 

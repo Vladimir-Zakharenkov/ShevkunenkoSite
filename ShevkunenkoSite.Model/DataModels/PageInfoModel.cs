@@ -190,6 +190,13 @@ public class PageInfoModel
 
     #endregion
 
+    #region Связанный фильм
+
+    public Guid? FilmInfoId { get; set; }
+    public FilmFileModel? FilmInfo { get; set; }
+
+    #endregion
+
     #region Заголовок, картинка и текст страницы
 
     [Required(AllowEmptyStrings = true)]
