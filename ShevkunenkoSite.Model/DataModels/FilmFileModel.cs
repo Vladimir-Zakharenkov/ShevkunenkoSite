@@ -27,7 +27,7 @@ public class FilmFileModel
     [Required(ErrorMessage = "Оригинальное название фильма")]
     [DataType(DataType.Text)]
     [Display(Name = "Оригинальное название:")]
-    public string FilmCaptionOriginal { get; set; } = string.Empty;
+    public string? FilmCaptionOriginal { get; set; }
 
     #endregion
 
@@ -150,7 +150,7 @@ public class FilmFileModel
     [Required(ErrorMessage = "Введите дату загрузки на сервер")]
     [DataType(DataType.Date)]
     [Display(Name = "Дата публикации на сайте:")]
-    public DateTime FIlmUploadDate { get; set; } = DateTime.Today;
+    public DateTime FilmUploadDate { get; set; } = DateTime.Today;
 
     #endregion
 
@@ -159,7 +159,7 @@ public class FilmFileModel
     [Required(ErrorMessage = "Введите язык звуковой дорожки")]
     [DataType(DataType.Text)]
     [Display(Name = "Звуковая дорожка (1):")]
-    public string FIlmInLanguage1 { get; set; } = string.Empty;
+    public string FilmInLanguage1 { get; set; } = string.Empty;
 
     [Required(AllowEmptyStrings = true)]
     [DisplayFormat(ConvertEmptyStringToNull = false)]
@@ -192,7 +192,7 @@ public class FilmFileModel
     [DisplayFormat(ConvertEmptyStringToNull = false)]
     [DataType(DataType.Text)]
     [Display(Name = "Режиссер: ")]
-    public string FIlmDirector1 { get; set; } = string.Empty;
+    public string FilmDirector1 { get; set; } = string.Empty;
 
     [DataType(DataType.Text)]
     [Display(Name = "Режиссер: ")]
@@ -294,11 +294,11 @@ public class FilmFileModel
 
     [Range(1, 100)]
     [Display(Name = "Количество серий:")]
-    public int? MovieTotalParts { get; set; }
+    public int? FilmTotalParts { get; set; }
 
     [Range(1, 100)]
     [Display(Name = "Номер серии фильма:")]
-    public int? MoviePart { get; set; }
+    public int? FilmPart { get; set; }
 
     [DataType(DataType.Text)]
     [Display(Name = "Фильтр поиска серий: ")]
@@ -310,7 +310,7 @@ public class FilmFileModel
 
     // картинка для карточки фильма
     [Display(Name = "Картинка к фильму (Guid):")]
-    public Guid? FIlmImageId { get; set; }
+    public Guid? FilmImageId { get; set; }
     public ImageFileModel? FilmImage { get; set; }
 
     // постер для фильм

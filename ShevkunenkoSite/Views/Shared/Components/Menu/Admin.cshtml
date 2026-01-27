@@ -155,25 +155,7 @@
 
                     <ul class="@ulDropdownMenuClass" aria-labelledby="Movies" itemscope itemtype="http://schema.org/BreadcrumbList">
 
-                        <li class="@liDropdownClass"
-                            title="добавить фильм"
-                            itemprop="itemListElement"
-                            itemscope itemtype="http://schema.org/ListItem">
-
-                            <a class="@refDropdownClass"
-                               asp-area="Admin"
-                               asp-controller="MovieInfo"
-                               asp-action="AddMovie"
-                               itemprop="item">
-
-                                <span itemprop="name">Добавить фильм</span>
-
-                            </a>
-
-                            <meta itemprop="position" content="0">
-
-                        </li>
-
+                        @* Список фильмов *@
                         <li class="@liDropdownClass"
                             title="список фильмов"
                             itemprop="itemListElement"
@@ -189,7 +171,47 @@
 
                             </a>
 
+                            <meta itemprop="position" content="0">
+
+                        </li>
+
+                        @* Добавить фильм (film) *@
+                        <li class="@liDropdownClass"
+                            title="добавить фильм"
+                            itemprop="itemListElement"
+                            itemscope itemtype="http://schema.org/ListItem">
+
+                            <a class="@refDropdownClass"
+                               asp-area="Admin"
+                               asp-controller="Films"
+                               asp-action="AddFilm"
+                               itemprop="item">
+
+                                <span itemprop="name">Добавить</span>
+
+                            </a>
+
                             <meta itemprop="position" content="1">
+
+                        </li>
+
+                        @* Добавить фильм (movie) *@
+                        <li class="@liDropdownClass"
+                            title="добавить фильм"
+                            itemprop="itemListElement"
+                            itemscope itemtype="http://schema.org/ListItem">
+
+                            <a class="@refDropdownClass"
+                               asp-area="Admin"
+                               asp-controller="MovieInfo"
+                               asp-action="AddMovie"
+                               itemprop="item">
+
+                                <span itemprop="name">Добавить фильм</span>
+
+                            </a>
+
+                            <meta itemprop="position" content="2">
 
                         </li>
 
@@ -208,7 +230,7 @@
 
                             </a>
 
-                            <meta itemprop="position" content="2">
+                            <meta itemprop="position" content="3">
 
                         </li>
 
@@ -227,7 +249,7 @@
 
                             </a>
 
-                            <meta itemprop="position" content="3">
+                            <meta itemprop="position" content="4">
 
                         </li>
 

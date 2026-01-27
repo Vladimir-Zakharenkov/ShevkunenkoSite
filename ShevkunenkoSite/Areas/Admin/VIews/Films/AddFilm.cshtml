@@ -1,0 +1,150 @@
+﻿@model AddEditFilmViewModel
+
+@{
+    string cssForLabel = "col-form-label text-primary fs-5 me-2";
+}
+
+<script src="~/js/ckeditor5/ckeditor.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        ClassicEditor.create(document.querySelector('#FilmDescriptionHtmlInput'));
+    });
+</script>
+
+<h1 class="fs-3 text_shadow mb-3">Добавить фильм</h1>
+
+<div class="row">
+
+    <div class="col col-lg-9 col-xl-8 d-block mx-auto px-2">
+
+        <form asp-area="Admin"
+              asp-controller="Films"
+              asp-action="AddFilm"
+              method="post"
+              enctype="multipart/form-data">
+
+            @* скрытые  поля *@
+            <div>
+            </div>
+
+            @* все ошибки ввода данных *@
+            @if (Context.Request.Method == "POST")
+            {
+                <div asp-validation-summary="All" class="text-danger border border-top-0 border-danger mb-3"></div>
+            }
+
+            @* данные по группам*@
+            <div class="accordion" id="accordionAddFilm">
+
+                @* Файл фильма *@
+                <div class="accordion-item mb-3 shadw">
+
+                    @* заголовок группы «файл фильма» *@
+                    <h2 id="headingInputFile" class="accordion-header">
+                        <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#InputFile" aria-expanded="true" aria-controls="InputFile">
+                            <span class="form-label fs-5">Файл фильма :</span>
+                        </button>
+                    </h2>
+
+                    <div id="InputFile" class="accordion-collapse collapse" aria-labelledby="headingInputFile" data-bs-parent="#accordionAddFilm">
+
+                        <div class="accordion-body accordion-body-nointend text-center">
+
+                            @* выбрать файл фильма и полную версию фильма *@
+                            <div class="row g-2 justify-content-center">
+
+                                <div class="col-auto">
+
+                                    <label asp-for="FileForFilmFormFile" class="@cssForLabel"></label>
+
+                                </div>
+
+                                <div class="col-auto text-start">
+
+                                    <input asp-for="FileForFilmFormFile"
+                                           id="FileForFilmFormFile"
+                                           class="form-control"
+                                           aria-describedby="FileForFilmFormFileInputHelpBlock" />
+
+                                </div>
+
+                                <div id="FileForFilmFormFileInputHelpBlock" class="form-text">
+
+                                    <span class="fs-6 text-success">
+                                        фильм
+                                    </span>
+
+                                </div>
+
+                                @if (Context.Request.Method == "POST")
+                                {
+                                    <span asp-validation-for="FileForFilmFormFile" class="text-danger"></span>
+                                }
+
+                                <hr class="w-50 mx-auto" />
+
+                            </div>
+
+                            @* выбрать файл полной версии фильма *@
+                            <div class="row g-2 justify-content-center">
+
+                                <div class="col-auto">
+                                    <label for="FullFilmFormFileInput" asp-for="FullFilmFormFile" class="@cssForLabel"></label>
+                                </div>
+
+                                <div class="col-auto text-start">
+                                    <input id="FullFilmFormFile" asp-for="FullFilmFormFile" class="form-control" aria-describedby="FullFilmFormFileInputHelpBlock" />
+                                </div>
+
+                                <div id="FullFilmFormFileInputHelpBlock" class="form-text">
+
+                                    <span class="fs-6 text-success">
+                                        полная версия
+                                    </span>
+
+                                </div>
+
+                                @if (Context.Request.Method == "POST")
+                                {
+                                    <span asp-validation-for="FullFilmFormFile" class="text-danger"></span>
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @* Сохранить - Отменить*@
+            <div class="card-footer p-0 pb-2 mt-4 mx-auto maxwidth700px">
+
+                <button type="submit"
+                        class="btn btn-outline-success m-2 me-3 text-center shadw"
+                        title="Сохранить">
+
+                    Сохранить
+
+                </button>
+
+                <a class="btn btn-outline-danger m-2 shadw"
+                   asp-area="Admin"
+                   asp-controller="MovieInfo"
+                   asp-action="Index"
+                   title="отменить">
+
+                    Отменить
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
