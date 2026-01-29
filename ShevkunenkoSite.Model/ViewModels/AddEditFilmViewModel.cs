@@ -4,14 +4,6 @@ using Microsoft.AspNetCore.Http;
 
 public class AddEditFilmViewModel : FilmFileModel
 {
-    [DataType(DataType.Upload)]
-    [Display(Name = "Фильм:")]
-    public IFormFile? FileForFilmFormFile { get; set; }
-
-    [DataType(DataType.Upload)]
-    [Display(Name = "Полная версия:")]
-    public IFormFile? FullFilmFormFile { get; set; }
-
     [Required(ErrorMessage = "Выберите картинку для фильма")]
     [DataType(DataType.Upload)]
     [Display(Name = "Картинка фильма:")]

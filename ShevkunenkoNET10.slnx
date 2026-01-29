@@ -5,6 +5,9 @@
   <Folder Name="/Localcertificate/">
     <File Path="Localcertificate/Localcertificate.ps1" />
   </Folder>
+  <Folder Name="/MetaDataForMedia/">
+    <Project Path="MetaDataForMedia/ConsoleApp1/ConsoleApp1.csproj" />
+  </Folder>
   <Project Path="../shevkunenko.ru/" Type="Website" DisplayName="shevkunenko.ru" Id="610e8a56-5298-427e-86cb-f1be66e2b7af">
     <BuildType Project="Debug" />
     <Properties Name="WebsiteProperties">

@@ -1,4 +1,4 @@
-﻿@model AddEditFilmViewModel
+﻿@model FilmFileModel
 
 @{
     string cssForLabel = "col-form-label text-primary fs-5 me-2";
@@ -42,12 +42,24 @@
 
                     @* заголовок группы «файл фильма» *@
                     <h2 id="headingInputFile" class="accordion-header">
-                        <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#InputFile" aria-expanded="true" aria-controls="InputFile">
-                            <span class="form-label fs-5">Файл фильма :</span>
+                        <button class="accordion-button collapsed py-0 stranicy"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#InputFile"
+                                aria-expanded="true"
+                                aria-controls="InputFile">
+
+                            <span class="form-label fs-5">
+                                Файл фильма :
+                            </span>
+
                         </button>
                     </h2>
 
-                    <div id="InputFile" class="accordion-collapse collapse" aria-labelledby="headingInputFile" data-bs-parent="#accordionAddFilm">
+                    <div id="InputFile"
+                         class="accordion-collapse collapse"
+                         aria-labelledby="headingInputFile"
+                         data-bs-parent="#accordionAddFilm">
 
                         <div class="accordion-body accordion-body-nointend text-center">
 
@@ -79,7 +91,7 @@
 
                                 @if (Context.Request.Method == "POST")
                                 {
-                                    <span asp-validation-for="FileForFilmFormFile" class="text-danger"></span>
+                                    <span class="text-danger preline">@Html.ValidationMessageFor(model => model.FileForFilmFormFile)</span>
                                 }
 
                                 <hr class="w-50 mx-auto" />
@@ -109,6 +121,182 @@
                                 {
                                     <span asp-validation-for="FullFilmFormFile" class="text-danger"></span>
                                 }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                @* Заголовок и оригинальное название *@
+                <div class="accordion-item mb-3 shadw">
+
+                    @* заголовок группы «описание фильма» *@
+                    <h2 id="headingCaption" class="accordion-header">
+                        <button class="accordion-button collapsed py-0 stranicy"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#FilmCaption"
+                                aria-expanded="true"
+                                aria-controls="FilmCaption">
+
+                            <span class="form-label fs-5">
+                                Заголовок :
+                            </span>
+
+                        </button>
+                    </h2>
+
+                    <div id="FilmCaption"
+                         class="accordion-collapse collapse"
+                         aria-labelledby="headingCaption"
+                         data-bs-parent="#accordionAddFilm">
+
+                        <div class="accordion-body accordion-body-nointend text-center">
+
+                            @* название фильма *@
+                            <div class="row g-2 justify-content-center">
+
+                                <div class="col-auto">
+                                    <label asp-for="FilmCaption" class="col-form-label text-primary fs-5 me-2"></label>
+                                </div>
+
+                                <div class="col-12 col-md-10">
+                                    <input asp-for="FilmCaption" id="FilmCaptionInput" class="form-control text-center" aria-describedby="FilmCaptionInputHelpBlock" />
+                                </div>
+
+                                <div id="FilmCaptionInputHelpBlock" class="form-text">
+
+                                    <span class="fs-6 text-success">название фильма - </span>
+                                    <br class="d-inline-block d-md-none" />
+                                    <span class="fs-6 text-danger">обязательное поле</span>
+
+                                </div>
+
+                                @if (Context.Request.Method == "POST")
+                                {
+                                    <span asp-validation-for="FilmCaption" class="text-danger"></span>
+                                }
+
+                                <hr class="w-50 mx-auto mb-2" />
+
+                            </div>
+
+                            @* оригинальное название фильма *@
+                            <div class="row g-2 justify-content-center">
+
+                                <div class="col-auto">
+                                    <label asp-for="FilmCaptionOriginal" class="col-form-label text-primary fs-5 me-2"></label>
+                                </div>
+
+                                <div class="col-12 col-md-10">
+                                    <input asp-for="FilmCaptionOriginal" id="FilmCaptionOriginalInput" class="form-control text-center" aria-describedby="FilmCaptionOriginalInputHelpBlock" />
+                                </div>
+
+                                <div id="FilmCaptionOriginalInputHelpBlock" class="form-text">
+
+                                    <span class="fs-6 text-success">оригинальное название</span>
+
+                                </div>
+
+                                @if (Context.Request.Method == "POST")
+                                {
+                                    <span asp-validation-for="FilmCaptionOriginal" class="text-danger"></span>
+                                }
+
+                                <hr class="w-50 mx-auto mb-2" />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                @* Описание фильма *@
+                <div class="accordion-item mb-3 shadw">
+
+                    @* заголовок группы «описание фильма» *@
+                    <h2 id="headingDescription" class="accordion-header">
+                        <button class="accordion-button collapsed py-0 stranicy"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#FilmDescription"
+                                aria-expanded="true"
+                                aria-controls="FilmDescription">
+
+                            <span class="form-label fs-5">
+                                Описание :
+                            </span>
+
+                        </button>
+                    </h2>
+
+                    <div id="FilmDescription"
+                         class="accordion-collapse collapse"
+                         aria-labelledby="headingDescription"
+                         data-bs-parent="#accordionAddFilm">
+
+                        <div class="accordion-body accordion-body-nointend text-center">
+
+                            @* краткое содержание (SchemaOrg) *@
+                            <div>
+
+                                <label asp-for="FilmDescriptionForSchemaOrg" class="form-label text-primary fs-5"></label>
+
+                                <textarea asp-for="FilmDescriptionForSchemaOrg"
+                                          id="FilmDescriptionForSchemaOrgInput"
+                                          class="form-control"
+                                          rows="3"
+                                          aria-describedby="FilmDescriptionForSchemaOrgInputHelpBlock">
+                                </textarea>
+
+                                <div id="FilmDescriptionForSchemaOrgInputHelpBlock" class="form-text mb-2">
+
+                                    <span class="fs-6 text-success">краткое содержание (SchemaOrg) - </span>
+                                    <br class="d-inline-block d-sm-none" />
+                                    <span class="fs-6 text-danger">обязательное поле</span>
+
+                                </div>
+
+                                @if (Context.Request.Method == "POST")
+                                {
+                                    <span asp-validation-for="FilmDescriptionForSchemaOrg" class="text-danger"></span>
+                                }
+
+                                <hr class="w-50 mx-auto" />
+
+                            </div>
+
+                            @* краткое содержание (HTML) *@
+                            <div>
+
+                                <label asp-for="FilmDescriptionHtml" class="form-label text-primary fs-5"></label>
+
+                                <textarea asp-for="FilmDescriptionHtml"
+                                          id="FilmDescriptionHtmlInput"
+                                          class="form-control"
+                                          rows="5"
+                                          aria-describedby="FilmDescriptionHtmlHelpBlock">
+                                </textarea>
+
+                                <div id="FilmDescriptionHtmlHelpBlock" class="form-text mb-2">
+
+                                    <span class="fs-6 text-success">краткое содержание (HTML) - </span>
+                                    <br class="d-inline-block d-sm-none" />
+                                    <span class="fs-6 text-danger">обязательное поле</span>
+
+                                </div>
+
+                                @if (Context.Request.Method == "POST")
+                                {
+                                    <span asp-validation-for="FilmDescriptionHtml" class="text-danger"></span>
+                                }
+
+                                <hr class="w-50 mx-auto" />
 
                             </div>
 

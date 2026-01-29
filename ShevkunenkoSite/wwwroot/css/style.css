@@ -12128,6 +12128,10 @@ p {
   clear: left;
 }
 
+.preline {
+  white-space: pre-line;
+}
+
 /* перенос слов в тексте */
 body {
   word-wrap: break-word;

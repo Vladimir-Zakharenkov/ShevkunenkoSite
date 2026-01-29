@@ -13,55 +13,6 @@ public class FilmFileModel
 
     #endregion
 
-    #region Название фильма в базе данных
-
-    [Required(ErrorMessage = "Введите название фильма")]
-    [DataType(DataType.Text)]
-    [Display(Name = "Название фильма:")]
-    public string FilmCaption { get; set; } = string.Empty;
-
-    #endregion
-
-    #region Оригинальное название фильма
-
-    [Required(ErrorMessage = "Оригинальное название фильма")]
-    [DataType(DataType.Text)]
-    [Display(Name = "Оригинальное название:")]
-    public string? FilmCaptionOriginal { get; set; }
-
-    #endregion
-
-    #region Содержание фильма
-
-    [Required(ErrorMessage = "Введите содержание фильма")]
-    [DataType(DataType.MultilineText)]
-    [Display(Name = "Краткое содержание:")]
-    public string FilmDescriptionForSchemaOrg { get; set; } = string.Empty;
-
-    [Required(ErrorMessage = "Введите содержание фильма (HTML)")]
-    [DataType(DataType.MultilineText)]
-    [Display(Name = "Краткое содержание (HTML):")]
-    public string FilmDescriptionHtml { get; set; } = string.Empty;
-
-    #endregion
-
-    #region Примечания
-
-    [Required(AllowEmptyStrings = true)]
-    [DisplayFormat(ConvertEmptyStringToNull = false)]
-    [DataType(DataType.Text)]
-    [Display(Name = "Примечания: ")]
-    public string FilmNote { get; set; } = string.Empty;
-
-    #endregion
-
-    #region Включать фильм в MainList
-
-    [Display(Name = "В списке видео сайта:")]
-    public bool FilmInMainList { get; set; } = true;
-
-    #endregion
-
     #region Автозаполнение параметров файла фильма
 
     [Display(Name = "Продолжительность фильма:")]
@@ -96,6 +47,61 @@ public class FilmFileModel
     public ulong FilmFileSize { get; set; }
 
     #endregion
+    
+    #region Полная версия фильма
+
+    [Display(Name = "Полная версия фильма:")]
+    public Guid? FullFilmId { get; set; } 
+    public FilmFileModel? FullFilm { get; set; }
+
+    #endregion
+
+    #region Название фильма в базе данных
+
+    [Required(ErrorMessage = "Введите название фильма")]
+    [DataType(DataType.Text)]
+    [Display(Name = "Название фильма:")]
+    public string FilmCaption { get; set; } = string.Empty;
+
+    #endregion
+
+    #region Оригинальное название фильма
+
+    [Required(ErrorMessage = "Оригинальное название фильма")]
+    [DataType(DataType.Text)]
+    [Display(Name = "Оригинальное название:")]
+    public string? FilmCaptionOriginal { get; set; }
+
+    #endregion
+
+    #region Содержание фильма
+
+    [Required(ErrorMessage = "Введите содержание фильма")]
+    [DataType(DataType.MultilineText)]
+    [Display(Name = "Краткое содержание:")]
+    public string FilmDescriptionForSchemaOrg { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Введите содержание фильма (HTML)")]
+    [DataType(DataType.MultilineText)]
+    [Display(Name = "Краткое содержание (HTML):")]
+    public string FilmDescriptionHtml { get; set; } = string.Empty;
+
+    #endregion
+
+    #region Примечания
+
+    [DataType(DataType.Text)]
+    [Display(Name = "Примечания: ")]
+    public string? FilmNote { get; set; }
+
+    #endregion
+
+    #region Включать фильм в MainList
+
+    [Display(Name = "В списке видео сайта:")]
+    public bool FilmInMainList { get; set; } = true;
+
+    #endregion
 
     #region Фильтры поиска фильма
 
@@ -124,14 +130,6 @@ public class FilmFileModel
 
     [Display(Name = "Фильм 18+ :")]
     public bool FilmAdult { get; set; } = false;
-
-    #endregion
-
-    #region Полная версия фильма
-
-    [Display(Name = "Полная версия фильма:")]
-    public Guid? FullFilmId { get; set; } // Guid идентификатор полной версии фильма
-    public FilmFileModel? FullFilm { get; set; }
 
     #endregion
 
@@ -317,6 +315,25 @@ public class FilmFileModel
     [Display(Name = "Постер к фильму (Guid):")]
     public Guid? FilmPosterId { get; set; }
     public ImageFileModel? FilmPoster { get; set; }
+
+    #endregion
+
+    #region Свойства NotMapped
+
+    #region Выбрать фильм и его полную версию
+
+    [NotMapped]
+    [Required(ErrorMessage = "Выберите файл фильма")]
+    [DataType(DataType.Upload)]
+    [Display(Name = "Фильм:")]
+    public IFormFile FileForFilmFormFile { get; set; } = null!;
+
+    [NotMapped]
+    [DataType(DataType.Upload)]
+    [Display(Name = "Полная версия:")]
+    public IFormFile? FullFilmFormFile { get; set; }
+
+    #endregion
 
     #endregion
 }
