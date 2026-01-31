@@ -47,7 +47,29 @@ public class FilmsController(
                 "FilmInLanguage1," +
                 "FilmInLanguage2," +
                 "FilmSubtitles1," +
-                "FilmSubtitles2,"
+                "FilmSubtitles2," +
+                "FilmРroductionCompany," +
+                "FilmDirector1," +
+                "FilmDirector2," +
+                "FilmMusicBy," +
+                "FilmActor01," +
+                "FilmActor02," +
+                "FilmActor03," +
+                "FilmActor04," +
+                "FilmActor05," +
+                "FilmActor06," +
+                "FilmActor07," +
+                "FilmActor08," +
+                "FilmActor09," +
+                "FilmActor10," +
+                "FilmYouTube," +
+                "FilmVkVideo," +
+                "FilmMailRuVideo," +
+                "FilmOkVideo," +
+                "FilmYandexDiskVideo," +
+                "FilmKinoTeatrRu," +
+                "FilmKinoPoisk," +
+                "FilmImbd"
         )]
         FilmFileModel filmItem)
     {
@@ -347,11 +369,133 @@ public class FilmsController(
 
             #endregion
 
+            #region Съёмочная группа
+
+            filmItem.FilmРroductionCompany = filmItem.FilmРroductionCompany.Trim();
+
+            filmItem.FilmDirector1 = filmItem.FilmDirector1.Trim();
+
+            if (filmItem.FilmDirector2 != null)
+            {
+                filmItem.FilmDirector2 = filmItem.FilmDirector2.Trim();
+            }
+
+            if (filmItem.FilmMusicBy != null)
+            {
+                filmItem.FilmMusicBy = filmItem.FilmMusicBy.Trim();
+            }
+
+            if (filmItem.FilmActor01 != null)
+            {
+                filmItem.FilmActor01 = filmItem.FilmActor01.Trim();
+            }
+
+            if (filmItem.FilmActor02 != null)
+            {
+                filmItem.FilmActor02 = filmItem.FilmActor02.Trim();
+            }
+
+            if (filmItem.FilmActor03 != null)
+            {
+                filmItem.FilmActor03 = filmItem.FilmActor03.Trim();
+            }
+
+            if (filmItem.FilmActor04 != null)
+            {
+                filmItem.FilmActor04 = filmItem.FilmActor04.Trim();
+            }
+
+            if (filmItem.FilmActor05 != null)
+            {
+                filmItem.FilmActor05 = filmItem.FilmActor05.Trim();
+            }
+
+            if (filmItem.FilmActor06 != null)
+            {
+                filmItem.FilmActor06 = filmItem.FilmActor06.Trim();
+            }
+
+            if (filmItem.FilmActor07 != null)
+            {
+                filmItem.FilmActor07 = filmItem.FilmActor07.Trim();
+            }
+
+            if (filmItem.FilmActor08 != null)
+            {
+                filmItem.FilmActor08 = filmItem.FilmActor08.Trim();
+            }
+
+            if (filmItem.FilmActor09 != null)
+            {
+                filmItem.FilmActor09 = filmItem.FilmActor09.Trim();
+            }
+
+            if (filmItem.FilmActor10 != null)
+            {
+                filmItem.FilmActor10 = filmItem.FilmActor10.Trim();
+            }
+
+            #endregion
+
+            #region Ссылки на видеохостинги
+
+            if (filmItem.FilmContentUrl != null)
+            {
+                filmItem.FilmContentUrl = new Uri("https://sergeyshef.ru/video/" + filmItem.FilmFileName);
+            }
+
+            if (filmItem.FilmYouTube != null)
+            {
+                filmItem.FilmYouTube = filmItem.FilmYouTube;
+            }
+
+            if (filmItem.FilmVkVideo != null)
+            {
+                filmItem.FilmVkVideo = filmItem.FilmVkVideo;
+            }
+
+            if (filmItem.FilmMailRuVideo != null)
+            {
+                filmItem.FilmMailRuVideo = filmItem.FilmMailRuVideo;
+            }
+
+            if (filmItem.FilmOkVideo != null)
+            {
+                filmItem.FilmOkVideo = filmItem.FilmOkVideo;
+            }
+
+            if (filmItem.FilmYandexDiskVideo != null)
+            {
+                filmItem.FilmYandexDiskVideo = filmItem.FilmYandexDiskVideo;
+            }
+
+            #endregion
+
+            #region Ссылки на информацию о фильме
+
+            if (filmItem.FilmKinoTeatrRu != null)
+            {
+                filmItem.FilmKinoTeatrRu = filmItem.FilmKinoTeatrRu;
+            }
+
+            if (filmItem.FilmKinoPoisk != null)
+            {
+                filmItem.FilmKinoPoisk = filmItem.FilmKinoPoisk;
+            }
+
+            if (filmItem.FilmImbd != null)
+            {
+                filmItem.FilmImbd = filmItem.FilmMailRuVideo;
+            }
+
+            #endregion
+
             #region Сохранить данные
 
             return View(filmItem);
 
             #endregion
+
         }
         else
         {

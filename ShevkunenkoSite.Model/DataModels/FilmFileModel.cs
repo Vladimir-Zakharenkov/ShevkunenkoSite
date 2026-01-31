@@ -47,11 +47,11 @@ public class FilmFileModel
     public ulong FilmFileSize { get; set; }
 
     #endregion
-    
+
     #region Полная версия фильма
 
     [Display(Name = "Полная версия фильма:")]
-    public Guid? FullFilmId { get; set; } 
+    public Guid? FullFilmId { get; set; }
     public FilmFileModel? FullFilm { get; set; }
 
     #endregion
@@ -180,8 +180,7 @@ public class FilmFileModel
     [Display(Name = "Кинокомпания:")]
     public string FilmРroductionCompany { get; set; } = string.Empty;
 
-    [Required(AllowEmptyStrings = true)]
-    [DisplayFormat(ConvertEmptyStringToNull = false)]
+    [Required(ErrorMessage = "Введите режиссера фильма")]
     [DataType(DataType.Text)]
     [Display(Name = "Режиссер: ")]
     public string FilmDirector1 { get; set; } = string.Empty;
@@ -194,7 +193,7 @@ public class FilmFileModel
     [DisplayFormat(ConvertEmptyStringToNull = false)]
     [DataType(DataType.Text)]
     [Display(Name = "Композитор: ")]
-    public string FilmMusicBy { get; set; } = string.Empty;
+    public string? FilmMusicBy { get; set; }
 
     [DataType(DataType.Text)]
     [Display(Name = "Актёр (актриса): ")]
@@ -242,7 +241,7 @@ public class FilmFileModel
 
     [DataType(DataType.Url)]
     [Display(Name = "sergeyshef.ru : ")]
-    public Uri? FilmContentUrl { get; set; } = null!;
+    public Uri? FilmContentUrl { get; set; }
 
     [DataType(DataType.Url)]
     [Display(Name = "YouTube : ")]
