@@ -12,8 +12,8 @@ using ShevkunenkoSite.Services;
 namespace ShevkunenkoSite.Services.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    [Migration("20260125200836_25-01-2026-23-07")]
-    partial class _250120262307
+    [Migration("20260131085350_31-01-2026-11-52")]
+    partial class _310120261152
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -292,20 +292,6 @@ namespace ShevkunenkoSite.Services.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("FilmFileId");
 
-                    b.Property<string>("FIlmDirector1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("FIlmImageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("FIlmInLanguage1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("FIlmUploadDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("FilmActor01")
                         .HasColumnType("nvarchar(max)");
 
@@ -364,6 +350,10 @@ namespace ShevkunenkoSite.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FilmDirector1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FilmDirector2")
                         .HasColumnType("nvarchar(max)");
 
@@ -388,11 +378,17 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Property<int>("FilmHeight")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("FilmImageId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("FilmImbd")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FilmInLanguage2")
+                    b.Property<string>("FilmInLanguage1")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilmInLanguage2")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("FilmInMainList")
@@ -419,22 +415,28 @@ namespace ShevkunenkoSite.Services.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FilmNote")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FilmOkVideo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("FilmPart")
+                        .HasColumnType("int");
+
                     b.Property<Guid?>("FilmPosterId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FilmSubtitles1")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FilmSubtitles2")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("FilmTotalParts")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FilmUploadDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FilmVkVideo")
                         .HasColumnType("nvarchar(max)");
@@ -455,12 +457,6 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Property<Guid?>("FullFilmId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("MoviePart")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MovieTotalParts")
-                        .HasColumnType("int");
-
                     b.Property<string>("SearchFilterForFilm")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -470,7 +466,7 @@ namespace ShevkunenkoSite.Services.Migrations
 
                     b.HasKey("FilmFileModelId");
 
-                    b.HasIndex("FIlmImageId");
+                    b.HasIndex("FilmImageId");
 
                     b.HasIndex("FilmPosterId");
 
@@ -1096,6 +1092,9 @@ namespace ShevkunenkoSite.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("FilmInfoId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("ImageFileModelId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1232,6 +1231,8 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.HasIndex("AudioInfoId");
 
                     b.HasIndex("BackgroundFileModelId");
+
+                    b.HasIndex("FilmInfoId");
 
                     b.HasIndex("ImageFileModelId");
 
@@ -1380,7 +1381,7 @@ namespace ShevkunenkoSite.Services.Migrations
                 {
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "FilmImage")
                         .WithMany()
-                        .HasForeignKey("FIlmImageId");
+                        .HasForeignKey("FilmImageId");
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "FilmPoster")
                         .WithMany()
@@ -1454,6 +1455,10 @@ namespace ShevkunenkoSite.Services.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ShevkunenkoSite.Models.DataModels.FilmFileModel", "FilmInfo")
+                        .WithMany()
+                        .HasForeignKey("FilmInfoId");
+
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "ImageFileModel")
                         .WithMany()
                         .HasForeignKey("ImageFileModelId")
@@ -1471,6 +1476,8 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Navigation("AudioInfo");
 
                     b.Navigation("BackgroundFileModel");
+
+                    b.Navigation("FilmInfo");
 
                     b.Navigation("ImageFileModel");
 

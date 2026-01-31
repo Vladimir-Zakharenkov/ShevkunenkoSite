@@ -36,7 +36,18 @@ public class FilmsController(
                 "FilmCaption," +
                 "FilmCaptionOriginal," +
                 "FilmDescriptionForSchemaOrg," +
-                "FilmDescriptionHtml"
+                "FilmDescriptionHtml," +
+                "FilmNote," +
+                "FilmInMainList," +
+                "SearchFilterForFilm," +
+                "FilmGenre," +
+                "FilmDateCreated," +
+                "FilmDatePublished," +
+                "FilmUploadDate," +
+                "FilmInLanguage1," +
+                "FilmInLanguage2," +
+                "FilmSubtitles1," +
+                "FilmSubtitles2,"
         )]
         FilmFileModel filmItem)
     {
@@ -287,11 +298,52 @@ public class FilmsController(
 
             #endregion
 
-            #region Краткое содержание
+            #region Краткое содержание, примечания админа
 
             filmItem.FilmDescriptionForSchemaOrg = filmItem.FilmDescriptionForSchemaOrg.Trim();
 
             filmItem.FilmDescriptionHtml = filmItem.FilmDescriptionHtml.Trim();
+
+            if (!string.IsNullOrEmpty(filmItem.FilmNote))
+            {
+                filmItem.FilmNote = filmItem.FilmNote.Trim();
+            }
+
+            #endregion
+
+            #region Критерии поиска
+
+            filmItem.FilmInMainList = filmItem.FilmInMainList;
+
+            if (filmItem.SearchFilterForFilm != null)
+            {
+                filmItem.SearchFilterForFilm = filmItem.SearchFilterForFilm.Trim();
+            }
+
+            filmItem.FilmGenre = filmItem.FilmGenre.Trim();
+
+            filmItem.FilmAdult = filmItem.FilmAdult;
+
+            #endregion
+
+            #region Язык и субтитры
+
+            filmItem.FilmInLanguage1 = filmItem.FilmInLanguage1.Trim();
+
+            if (filmItem.FilmInLanguage2 != null)
+            {
+                filmItem.FilmInLanguage2 = filmItem.FilmInLanguage2.Trim();
+            }
+
+            if (filmItem.FilmSubtitles1 != null)
+            {
+                filmItem.FilmSubtitles1 = filmItem.FilmSubtitles1.Trim();
+            }
+
+            if (filmItem.FilmSubtitles2 != null)
+            {
+                filmItem.FilmSubtitles2 = filmItem.FilmSubtitles2.Trim();
+            }
 
             #endregion
 

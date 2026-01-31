@@ -386,7 +386,6 @@ namespace ShevkunenkoSite.Services.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FilmInLanguage2")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("FilmInMainList")
@@ -413,7 +412,6 @@ namespace ShevkunenkoSite.Services.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FilmNote")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FilmOkVideo")
@@ -426,11 +424,9 @@ namespace ShevkunenkoSite.Services.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FilmSubtitles1")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FilmSubtitles2")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("FilmTotalParts")

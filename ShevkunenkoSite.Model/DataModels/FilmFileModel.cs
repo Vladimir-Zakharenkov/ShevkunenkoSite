@@ -99,7 +99,7 @@ public class FilmFileModel
     #region Включать фильм в MainList
 
     [Display(Name = "В списке видео сайта:")]
-    public bool FilmInMainList { get; set; } = true;
+    public bool FilmInMainList { get; set; }
 
     #endregion
 
@@ -109,7 +109,7 @@ public class FilmFileModel
     [DisplayFormat(ConvertEmptyStringToNull = false)]
     [DataType(DataType.MultilineText)]
     [Display(Name = "Фильтры поиска фильма: ")]
-    public string SearchFilterForFilm { get; set; } = string.Empty;
+    public string? SearchFilterForFilm { get; set; }
 
     #endregion
 
@@ -125,7 +125,7 @@ public class FilmFileModel
     #region Ограничения по возрасту
 
     [Required(ErrorMessage = "Выберите ограничения по возрасту")]
-    [Display(Name = "Нет ограничений по возрасту:")]
+    [Display(Name = "Ограничения по возрасту:")]
     public bool FilmIsFamilyFriendly { get; set; } = true;
 
     [Display(Name = "Фильм 18+ :")]
@@ -159,23 +159,17 @@ public class FilmFileModel
     [Display(Name = "Звуковая дорожка (1):")]
     public string FilmInLanguage1 { get; set; } = string.Empty;
 
-    [Required(AllowEmptyStrings = true)]
-    [DisplayFormat(ConvertEmptyStringToNull = false)]
     [DataType(DataType.Text)]
     [Display(Name = "Звуковая дорожка (2):")]
-    public string FilmInLanguage2 { get; set; } = string.Empty;
+    public string? FilmInLanguage2 { get; set; }
 
-    [Required(AllowEmptyStrings = true)]
-    [DisplayFormat(ConvertEmptyStringToNull = false)]
     [DataType(DataType.Text)]
     [Display(Name = "Язык субтитров (1):")]
-    public string FilmSubtitles1 { get; set; } = string.Empty;
+    public string? FilmSubtitles1 { get; set; }
 
-    [Required(AllowEmptyStrings = true)]
-    [DisplayFormat(ConvertEmptyStringToNull = false)]
     [DataType(DataType.Text)]
     [Display(Name = "Язык субтитров (2):")]
-    public string FilmSubtitles2 { get; set; } = string.Empty;
+    public string? FilmSubtitles2 { get; set; }
 
     #endregion
 
