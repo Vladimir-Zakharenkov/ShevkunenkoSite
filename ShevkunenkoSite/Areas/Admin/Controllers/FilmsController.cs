@@ -69,7 +69,12 @@ public class FilmsController(
                 "FilmYandexDiskVideo," +
                 "FilmKinoTeatrRu," +
                 "FilmKinoPoisk," +
-                "FilmImbd"
+                "FilmImbd," +
+                "SeriesSearchFilter," +
+                "FilmTotalParts," +
+                "FilmPart," +
+                "PosterForFilmFormFile," +
+                "ImageForFilmFormFile"
         )]
         FilmFileModel filmItem)
     {
@@ -490,12 +495,44 @@ public class FilmsController(
 
             #endregion
 
+            #region Многосерийный фильм
+
+            if (filmItem.SeriesSearchFilter != null)
+            {
+                filmItem.SeriesSearchFilter = filmItem.SeriesSearchFilter.Trim();
+            }
+
+            filmItem.FilmTotalParts = filmItem.SeriesSearchFilter != null && filmItem.FilmTotalParts != null ? filmItem.FilmTotalParts : null;
+
+            filmItem.FilmPart = filmItem.SeriesSearchFilter != null && filmItem.FilmTotalParts != null && filmItem.FilmPart != null ? filmItem.FilmPart : null;
+
+            #endregion
+
+            #region Постер и картинка фильма
+
+            if (filmItem.PosterForFilmFormFile != null)
+            {
+                var imageGuid = imageContext.GetImageGuidByFileNameAsync(filmItem.PosterForFilmFormFile.FileName);
+
+                if (imageGuid != null)
+                {
+                    filmItem.FilmPosterId = await imageGuid;
+                }
+                else
+                {
+                    ModelState.AddModelError("PosterForFilmFormFile", $"Вы выбрали файл «{filmItem.PosterForFilmFormFile.FileName}»" + Environment.NewLine + "Файла с таким именем нет в базе данных");
+
+                    return View(filmItem);
+                }
+            }
+
+            #endregion
+
             #region Сохранить данные
 
             return View(filmItem);
 
             #endregion
-
         }
         else
         {

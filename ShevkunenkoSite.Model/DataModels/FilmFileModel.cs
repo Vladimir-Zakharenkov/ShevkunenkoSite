@@ -328,5 +328,21 @@ public class FilmFileModel
 
     #endregion
 
+    #region Постер и картинка фильма
+
+    [NotMapped]
+    [Required(ErrorMessage = "Выберите постер для фильма")]
+    [DataType(DataType.Upload)]
+    [Display(Name = "Постер фильма:")]
+    public IFormFile? PosterForFilmFormFile { get; set; }
+
+    [NotMapped]
+    [Required(ErrorMessage = "Выберите картинку для фильма")]
+    [DataType(DataType.Upload)]
+    [Display(Name = "Картинка фильма:")]
+    public IFormFile? ImageForFilmFormFile { get; set; }
+
+    #endregion
+
     #endregion
 }
