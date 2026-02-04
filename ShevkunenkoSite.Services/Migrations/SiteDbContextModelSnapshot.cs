@@ -1089,7 +1089,7 @@ namespace ShevkunenkoSite.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("FilmInfoId")
+                    b.Property<Guid?>("FilmId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ImageFileModelId")
@@ -1229,7 +1229,9 @@ namespace ShevkunenkoSite.Services.Migrations
 
                     b.HasIndex("BackgroundFileModelId");
 
-                    b.HasIndex("FilmInfoId");
+                    b.HasIndex("FilmId")
+                        .IsUnique()
+                        .HasFilter("[FilmId] IS NOT NULL");
 
                     b.HasIndex("ImageFileModelId");
 
@@ -1452,9 +1454,9 @@ namespace ShevkunenkoSite.Services.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShevkunenkoSite.Models.DataModels.FilmFileModel", "FilmInfo")
-                        .WithMany()
-                        .HasForeignKey("FilmInfoId");
+                    b.HasOne("ShevkunenkoSite.Models.DataModels.FilmFileModel", "Film")
+                        .WithOne("PageInfo")
+                        .HasForeignKey("ShevkunenkoSite.Models.DataModels.PageInfoModel", "FilmId");
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "ImageFileModel")
                         .WithMany()
@@ -1474,7 +1476,7 @@ namespace ShevkunenkoSite.Services.Migrations
 
                     b.Navigation("BackgroundFileModel");
 
-                    b.Navigation("FilmInfo");
+                    b.Navigation("Film");
 
                     b.Navigation("ImageFileModel");
 
@@ -1501,6 +1503,11 @@ namespace ShevkunenkoSite.Services.Migrations
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.BooksAndArticlesModel", b =>
                 {
                     b.Navigation("CaptionForURL");
+                });
+
+            modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.FilmFileModel", b =>
+                {
+                    b.Navigation("PageInfo");
                 });
 
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.PageInfoModel", b =>

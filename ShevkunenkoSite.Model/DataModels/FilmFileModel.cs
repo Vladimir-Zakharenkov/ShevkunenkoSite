@@ -311,6 +311,12 @@ public class FilmFileModel
 
     #endregion
 
+    #region One-to-One with PageInfoModel as parent
+
+    public PageInfoModel? PageInfo { get; set; }
+
+    #endregion
+
     #region Свойства NotMapped
 
     #region Выбрать фильм и его полную версию

@@ -190,13 +190,6 @@ public class PageInfoModel
 
     #endregion
 
-    #region Связанный фильм
-
-    public Guid? FilmInfoId { get; set; }
-    public FilmFileModel? FilmInfo { get; set; }
-
-    #endregion
-
     #region Заголовок, картинка и текст страницы
 
     [Required(AllowEmptyStrings = true)]
@@ -340,6 +333,14 @@ public class PageInfoModel
     #region Навигационное свойство MovieFileModel
 
     public MovieFileModel? MovieFile { get; set; }
+
+    #endregion
+
+    #region One-to-One with FilmFileModel as child
+
+    public Guid? FilmId { get; set; }
+
+    public FilmFileModel? Film { get; set; }
 
     #endregion
 
