@@ -11,6 +11,8 @@ public class PageInfoImplementation(SiteDbContext siteContext) : IPageInfoReposi
         // TODO: убрать nullable для картинки фильма
         .Include(movie => movie.MovieFile).ThenInclude(movieImage => movieImage != null ? movieImage.ImageFileModel : null)
         .Include(movie => movie.MovieFile).ThenInclude(moviePoster => moviePoster != null ? moviePoster.MoviePoster : null)
+        .Include(film => film.Film).ThenInclude(filmImage => filmImage != null ? filmImage.FilmImage : null)
+        .Include(film => film.Film).ThenInclude(filmPoster => filmPoster != null ? filmPoster.FilmPoster : null)
         ;
 
     #endregion

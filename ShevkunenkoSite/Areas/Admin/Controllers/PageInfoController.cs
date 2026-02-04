@@ -9,6 +9,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers;
 public class PageInfoController(
     IPageInfoRepository pageInfoContext,
     IMovieFileRepository movieContext,
+    IFilmFileRepository filmContext,
     IIconFileRepository iconContext,
     IImageFileRepository imageContext,
     IBackgroundFotoRepository backgroundContext,
@@ -483,7 +484,7 @@ public class PageInfoController(
 
     #endregion
 
-    #region Добавить страницу сайта в базу данных
+    #region Добавить страницу
 
     [HttpGet]
     public ViewResult AddPage()
@@ -501,6 +502,9 @@ public class PageInfoController(
 
         // Список аудиофайлов
         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+        // Список фильмов
+        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
         return View(newPage);
     }
@@ -520,6 +524,8 @@ public class PageInfoController(
                 "PageAsRazorPage," +
                 "ImageFileModelId," +
                 "ImageFileFormFile," +
+                "FilmFileFormFile," +
+                "FilmId," +
                 "BackgroundFileModelId," +
                 "BackgroundFormFile," +
                 "AudioInfoId," +
@@ -596,6 +602,9 @@ public class PageInfoController(
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
 
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                         return View(addPage);
                     }
 
@@ -622,6 +631,9 @@ public class PageInfoController(
 
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                         return View(addPage);
                     }
@@ -700,6 +712,9 @@ public class PageInfoController(
 
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                         return View(addPage);
                     }
@@ -780,6 +795,9 @@ public class PageInfoController(
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
 
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                         return View(addPage);
                     }
                 }
@@ -800,6 +818,9 @@ public class PageInfoController(
 
                     // Список аудиофайлов
                     ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                    // Список фильмов
+                    ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                     return View(addPage);
                 }
@@ -839,6 +860,9 @@ public class PageInfoController(
 
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                         return View(addPage);
                     }
@@ -883,6 +907,9 @@ public class PageInfoController(
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
 
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                         return View(addPage);
                     }
                 }
@@ -903,6 +930,9 @@ public class PageInfoController(
 
                     // Список аудиофайлов
                     ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                    // Список фильмов
+                    ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                     return View(addPage);
                 }
@@ -930,8 +960,14 @@ public class PageInfoController(
                         // Список картинок для фона (фотопленка)
                         ViewData["BackgroundImages"] = new SelectList(backgroundContext.BackgroundFiles.OrderBy(orderBackgroundImage => orderBackgroundImage.WebLeftBackground), "BackgroundFileModelId", "WebLeftBackground");
 
+                        // Список текстовых файлов
+                        ViewData["Texts"] = new SelectList(textFileContext.Texts.OrderBy(orderText => orderText.TxtFileName), "TextInfoModelId", "TxtFileName");
+
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                         return View(addPage);
                     }
@@ -957,6 +993,9 @@ public class PageInfoController(
 
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                         return View(addPage);
                     }
@@ -1060,6 +1099,9 @@ public class PageInfoController(
                     // Список аудиофайлов
                     ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
 
+                    // Список фильмов
+                    ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                     return View(addPage);
                 }
                 else if (addPage.PageLoc == "/")
@@ -1156,6 +1198,9 @@ public class PageInfoController(
 
                     // Список аудиофайлов
                     ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                    // Список фильмов
+                    ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                     return View(addPage);
                 }
@@ -1268,6 +1313,9 @@ public class PageInfoController(
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
 
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                         return View(addPage);
                     }
 
@@ -1348,6 +1396,9 @@ public class PageInfoController(
 
                             // Список аудиофайлов
                             ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                            // Список фильмов
+                            ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                             return View(addPage);
                         }
@@ -1484,6 +1535,9 @@ public class PageInfoController(
 
             // Список аудиофайлов
             ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+            // Список фильмов
+            ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
             return View(addPage);
         }
@@ -2002,6 +2056,9 @@ public class PageInfoController(
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
 
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                         return View(editPage);
                     }
 
@@ -2081,6 +2138,9 @@ public class PageInfoController(
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
 
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                         return View(editPage);
                     }
                 }
@@ -2122,6 +2182,9 @@ public class PageInfoController(
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
 
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                         return View(editPage);
                     }
 
@@ -2148,6 +2211,9 @@ public class PageInfoController(
 
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                         return View(editPage);
                     }
@@ -2185,6 +2251,9 @@ public class PageInfoController(
 
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                         return View(editPage);
                     }
@@ -2229,6 +2298,9 @@ public class PageInfoController(
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
 
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                         return View(editPage);
                     }
                 }
@@ -2270,6 +2342,9 @@ public class PageInfoController(
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
 
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                         return View(editPage);
                     }
 
@@ -2294,6 +2369,9 @@ public class PageInfoController(
 
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                         return View(editPage);
                     }
@@ -2391,6 +2469,9 @@ public class PageInfoController(
 
                     // Список аудиофайлов
                     ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                    // Список фильмов
+                    ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                     return View(editPage);
                 }
@@ -2532,6 +2613,9 @@ public class PageInfoController(
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
 
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                         return View(editPage);
                     }
 
@@ -2610,6 +2694,9 @@ public class PageInfoController(
 
                         // Список аудиофайлов
                         ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                         return View(editPage);
                     }

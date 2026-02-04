@@ -382,6 +382,15 @@ public class PageInfoModel
 
     #endregion
 
+    #region Выбрать файл фильма (NotMapped)
+
+    [NotMapped]
+    [DataType(DataType.Upload)]
+    [Display(Name = "Фильм страницы :")]
+    public IFormFile? FilmFileFormFile { get; set; }
+
+    #endregion
+
     #region Выбрать файл текста (NotMapped)
 
     [NotMapped]

@@ -4,9 +4,7 @@
 	string cssForLabel = "col-form-label text-primary fs-5 me-2";
 }
 
-<h1 class="fs-3 text_shadow">Добавить страницу</h1>
-
-<hr class="liniya" />
+<h1 class="fs-3 text_shadow mb-3">Добавить страницу</h1>
 
 <div class="row">
 
@@ -37,10 +35,10 @@
 			@* данные по группам *@
 			<div class="accordion" id="accordionAddPage">
 
-				@* выбор MVC или RazorPages *@
+				@* Выбор MVC или RazorPages *@
 				<div class="accordion-item mb-3 mt-2 shadw">
 
-					@* заголовок группы «Выбор MVC или RazorPages» *@
+					@* заголовок группы «выбор MVC или RazorPages» *@
 					<h2 id="headingMVCorRazorPages" class="accordion-header">
 
 						<button class="accordion-button collapsed py-0 stranicy"
@@ -105,10 +103,10 @@
 
 				</div>
 
-				@* картинка для страницы *@
+				@* Картинка для страницы *@
 				<div class="accordion-item mb-3 mt-2 shadw">
 
-					@* заголовок группы «Картинка для страницы» *@
+					@* заголовок группы «картинка для страницы» *@
 					<h2 id="headingImageForPage" class="accordion-header">
 
 						<button class="accordion-button collapsed py-0 stranicy"
@@ -118,7 +116,8 @@
 								aria-expanded="true"
 								aria-controls="ImageForPage">
 
-							<span class="form-label fs-5">Картинка для страницы :</span>
+							<span class="form-label fs-5">
+								Картинка для страницы :</span>
 
 						</button>
 
@@ -187,10 +186,94 @@
 
 				</div>
 
-				@* текст для страницы *@
+				@* Фильм для страницы *@
 				<div class="accordion-item mb-3 mt-2 shadw">
 
-					@* заголовок группы «Текст для страницы» *@
+					@* заголовок группы «фильм для страницы» *@
+					<h2 id="headingFilmForPage" class="accordion-header">
+
+						<button class="accordion-button collapsed py-0 stranicy"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#FilmForPage"
+								aria-expanded="true"
+								aria-controls="FilmForPage">
+
+							<span class="form-label fs-5">
+								Фильм для страницы :
+							</span>
+
+						</button>
+
+					</h2>
+
+					@* выбрать фильм *@
+					<div id="FilmForPage"
+						 class="accordion-collapse collapse"
+						 aria-labelledby="headingFilmForPage"
+						 data-bs-parent="#accordionAddPage">
+
+						<div class="accordion-body accordion-body-nointend text-center">
+
+							<div>
+
+								<label asp-for="FilmFileFormFile" class="@cssForLabel"></label>
+
+								<input asp-for="FilmFileFormFile"
+									   id="FilmFormFileInput"
+									   class="form-control mt-2 w-50 mx-auto"
+									   aria-describedby="FilmFormFileInputHelpBlock" />
+
+								@if (Context.Request.Method == "POST")
+								{
+									<span asp-validation-for="FilmFileFormFile" class="text-danger"></span>
+								}
+
+								<div id="FilmFormFileInputHelpBlock" class="form-text mt-3">
+
+									<span class="fs-6 text-success">
+										выбрать файл фильма
+									</span>
+
+								</div>
+
+								<hr class="w-50 mx-auto" />
+
+								<select asp-for="FilmId"
+										asp-items="ViewBag.FilmFIles"
+										class="d-flex col-12 col-sm-7 col-lg-6 mx-auto my-3"
+										aria-describedby="FilmFormFileInputHelpBlock">
+
+									<option value="@Guid.Empty" selected>Фильм не выбран</option>
+
+								</select>
+
+
+								@if (Context.Request.Method == "POST")
+								{
+									<span asp-validation-for="FilmId" class="text-danger"></span>
+								}
+
+								<div class="form-text">
+
+									<span class="fs-6 text-success">
+										выбрать фильм
+									</span>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				@* Текст для страницы *@
+				<div class="accordion-item mb-3 mt-2 shadw">
+
+					@* заголовок группы «текст для страницы» *@
 					<h2 id="headingTextForPage" class="accordion-header">
 
 						<button class="accordion-button collapsed py-0 stranicy"
@@ -266,10 +349,10 @@
 
 				</div>
 
-				@* фон для страницы (фотопленка) *@
+				@* Фон для страницы (фотопленка) *@
 				<div class="accordion-item mb-3 mt-2 shadw">
 
-					@* заголовок группы «Фон для для страницы (фотопленка)» *@
+					@* заголовок группы «Фон для страницы (фотопленка)» *@
 					<h2 id="headingBackgroundForPage" class="accordion-header">
 
 						<button class="accordion-button collapsed py-0 stranicy"
@@ -348,10 +431,10 @@
 
 				</div>
 
-				@* аудиофайл для страницы *@
+				@* Аудиофайл для страницы *@
 				<div class="accordion-item mb-3 mt-2 shadw">
 
-					@* заголовок группы «Аудиофайл для страницы» *@
+					@* заголовок группы «аудиофайл для страницы» *@
 					<h2 id="headingAudioForPage" class="accordion-header">
 
 						<button class="accordion-button collapsed py-0 stranicy"
@@ -429,10 +512,10 @@
 
 				</div>
 
-				@* текст карточки страницы *@
+				@* Текст карточки страницы *@
 				<div class="accordion-item mb-3 mt-2 shadw">
 
-					@* заголовок группы «Текст карточки страницы» *@
+					@* заголовок группы «текст карточки страницы» *@
 					<h2 id="headingTextForCardPage" class="accordion-header">
 
 						<button class="accordion-button collapsed py-0 stranicy"
@@ -483,10 +566,10 @@
 
 				</div>
 
-				@* индекс сортировки страницы *@
+				@* Индекс сортировки страницы *@
 				<div class="accordion-item mb-3 mt-2 shadw">
 
-					@* заголовок группы «Индекс сортировки страницы» *@
+					@* заголовок группы «индекс сортировки страницы» *@
 					<h2 id="headingIndexOfSorting" class="accordion-header">
 
 						<button class="accordion-button collapsed py-0 stranicy"
@@ -546,10 +629,10 @@
 
 				</div>
 
-				@* адрес и псевдонимы  страницы  *@
+				@* Адрес и псевдонимы  страницы  *@
 				<div class="accordion-item mb-3 mt-2 shadw">
 
-					@* заголовок группы «Адрес и псевдонимы  страницы» *@
+					@* заголовок группы «адрес и псевдонимы  страницы» *@
 					<h2 id="headingPageAdress" class="accordion-header">
 
 						<button class="accordion-button collapsed py-0 stranicy"
@@ -1194,10 +1277,10 @@
 
 				</div>
 
-				@* фильтры поиска текущей страницы *@
+				@* Фильтры поиска текущей страницы *@
 				<div class="accordion-item mb-3 mt-2 shadw">
 
-					@* заголовок группы «Фильтры поиска текущей страницы» *@
+					@* заголовок группы «фильтры поиска текущей страницы» *@
 					<h2 id="headingSearchCurrentPage" class="accordion-header">
 
 						<button class="accordion-button collapsed py-0 stranicy"
@@ -1253,10 +1336,10 @@
 
 				</div>
 
-				@* поиск связанных страниц *@
+				@* Поиск связанных страниц *@
 				<div class="accordion-item mb-3 mt-2 shadw">
 
-					@* заголовок группы «Поиск связанных страниц» *@
+					@* заголовок группы «поиск связанных страниц» *@
 					<h2 id="headingRelatedPages" class="accordion-header">
 
 						<button class="accordion-button collapsed py-0 stranicy"
@@ -1359,10 +1442,10 @@
 
 				</div>
 
-				@* поиск связанных видео *@
+				@* Поиск связанных видео *@
 				<div class="accordion-item mb-3 mt-2 shadw">
 
-					@* заголовок группы «Поиск связанных видео» *@
+					@* заголовок группы «поиск связанных видео» *@
 					<h2 id="headingRelatedVideo" class="accordion-header">
 
 						<button class="accordion-button collapsed py-0 stranicy"
@@ -1465,10 +1548,10 @@
 
 				</div>
 
-				@* поиск связанных страниц по GUID(1) *@
+				@* Поиск связанных страниц по GUID(1) *@
 				<div class="accordion-item mb-3 mt-2 shadw">
 
-					@* заголовок группы «Поиск связанных страниц по GUID(1)» *@
+					@* заголовок группы «поиск связанных страниц по GUID(1)» *@
 					<h2 id="headingRelatedPageByGuid1" class="accordion-header">
 
 						<button class="accordion-button collapsed py-0 stranicy"
@@ -1571,10 +1654,10 @@
 
 				</div>
 
-				@* поиск связанных страниц по GUID(2) *@
+				@* Поиск связанных страниц по GUID(2) *@
 				<div class="accordion-item mb-3 mt-2 shadw">
 
-					@* заголовок группы «Поиск связанных страниц по GUID(2)» *@
+					@* заголовок группы «поиск связанных страниц по GUID(2)» *@
 					<h2 id="headingRelatedPageByGuid2" class="accordion-header">
 
 						<button class="accordion-button collapsed py-0 stranicy"
@@ -1677,10 +1760,10 @@
 
 				</div>
 
-				@* альбом связанных картинок *@
+				@* Альбом связанных картинок *@
 				<div class="accordion-item mb-3 mt-2 shadw">
 
-					@* заголовок группы «Альбом связанных картинок» *@
+					@* заголовок группы «альбом связанных картинок» *@
 					<h2 id="headingRelatedPictures" class="accordion-header">
 
 						<button class="accordion-button collapsed py-0 stranicy"
