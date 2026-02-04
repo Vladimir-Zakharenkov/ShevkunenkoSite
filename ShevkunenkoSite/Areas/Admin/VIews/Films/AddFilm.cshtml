@@ -84,7 +84,10 @@
                                 <div id="FileForFilmFormFileInputHelpBlock" class="form-text">
 
                                     <span class="fs-6 text-success">
-                                        фильм
+                                        фильм -
+                                    </span>
+                                    <span class="fs-6 text-danger">
+                                        обязательное поле
                                     </span>
 
                                 </div>
@@ -437,7 +440,10 @@
                                 <div id="FilmGenreInputHelpBlock" class="form-text mb-2">
 
                                     <span class="fs-6 text-success">
-                                        жанр фильма
+                                        жанр фильма -
+                                    </span>
+                                    <span class="fs-6 text-danger">
+                                        обязательное поле
                                     </span>
 
                                 </div>
@@ -1513,7 +1519,11 @@
                                 </div>
 
                                 <div id="SeriesSearchFilterInputHelpBlock" class="form-text">
-                                    <span class="fs-6 text-success">текст поиска всех серий фильма</span>
+
+                                    <span class="fs-6 text-success">
+                                        текст поиска всех серий фильма
+                                    </span>
+
                                 </div>
 
                                 @if (Context.Request.Method == "POST")
@@ -1539,9 +1549,9 @@
 
                                 <div id="FilmTotalPartsInputHelpBlock" class="form-text">
 
-                                    <span class="fs-6 text-success">количество серий - </span>
-                                    <br class="d-inline-block d-md-none" />
-                                    <span class="fs-6 text-danger">обязательное поле</span>
+                                    <span class="fs-6 text-success">
+                                        количество серий
+                                    </span>
 
                                 </div>
 
@@ -1568,8 +1578,9 @@
 
                                 <div id="FilmPartInputHelpBlock" class="form-text">
 
-                                    <span class="fs-6 text-success">серия - </span>
-                                    <span class="fs-6 text-danger">обязательное поле</span>
+                                    <span class="fs-6 text-success">
+                                        номер серии
+                                    </span>
 
                                 </div>
 
@@ -1649,10 +1660,10 @@
                                 </div>
 
                                 <div class="col-auto text-start">
-                                    <input asp-for="ImageForFilmFormFile" 
-                                        id="ImageForMovieFormFileInput" 
-                                        class="form-control" 
-                                        aria-describedby="ImageForFilmFormFileInputHelpBlock" />
+                                    <input asp-for="ImageForFilmFormFile"
+                                           id="ImageForMovieFormFileInput"
+                                           class="form-control"
+                                           aria-describedby="ImageForFilmFormFileInputHelpBlock" />
                                 </div>
 
                                 <div id="ImageForFilmFormFileInputHelpBlock" class="form-text">

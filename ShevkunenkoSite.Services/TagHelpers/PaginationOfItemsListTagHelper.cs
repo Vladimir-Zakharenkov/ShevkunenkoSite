@@ -1,6 +1,4 @@
-﻿using Azure;
-
-namespace ShevkunenkoSite.Services.TagHelpers;
+﻿namespace ShevkunenkoSite.Services.TagHelpers;
 
 [HtmlTargetElement("div", Attributes = "pagination")]
 public class PaginationOfItemsListTagHelper(IUrlHelperFactory helperFactory) : TagHelper
@@ -57,7 +55,7 @@ public class PaginationOfItemsListTagHelper(IUrlHelperFactory helperFactory) : T
                     }
                 }
 
-                newRef.AddCssClass("btn border border-1 border-secondary rounded ten minwidth50px maxwidth100px me-2 mb-3 py-0 mx-auto");
+                newRef.AddCssClass("btn border border-1 border-secondary rounded ten width60px mx-2 my-1 py-0");
                 newRef.AddCssClass(i == Pagination.CurrentPage ? "btn-danger" : "btn-outline-dark");
 
                 newRef.InnerHtml.Append(i.ToString());

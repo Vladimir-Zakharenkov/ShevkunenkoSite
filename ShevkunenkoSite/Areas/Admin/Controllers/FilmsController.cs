@@ -1,5 +1,5 @@
 ﻿//Ignore Spelling: Org
-using MetadataExtractor;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ShevkunenkoSite.Areas.Admin.Controllers;
 
@@ -14,6 +14,78 @@ public class FilmsController(
     private readonly string rootPath = hostEnvironment.WebRootPath;
 
     readonly FilmFileModel filmItem = new();
+
+    #region Список фильмов
+
+    public async Task<ViewResult> Index
+       (
+       string? searchString,
+       int pageNumber = 1,
+       bool pageCard = false
+       )
+    {
+        var allFilmsSite = await filmContext.FilmFiles.ToListAsync();
+
+        if (!searchString.IsNullOrEmpty())
+        {
+            allFilmsSite = [.. allFilmsSite.FilmSearch(searchString).OrderBy(filmSite => filmSite.FilmDatePublished)];
+        }
+
+        ItemsListViewModel itemList = new()
+        {
+            AllFilmFiles = [.. allFilmsSite
+                     .Skip((pageNumber - 1) * DataConfig.NumberOfItemsPerPage)
+                     .Take(DataConfig.NumberOfItemsPerPage)],
+
+            #region Свойства PagingInfoViewModel
+
+            TotalItems = allFilmsSite.Count,
+
+            ItemsPerPage = DataConfig.NumberOfItemsPerPage,
+
+            CurrentPage = pageNumber,
+
+            SearchString = searchString ?? string.Empty,
+
+            PageCard = pageCard
+
+            #endregion
+        };
+
+        if (pageCard == false)
+        {
+            return View(itemList);
+        }
+        else
+        {
+            return View("FilmCards", itemList);
+        }
+    }
+
+    #endregion
+
+    #region Информация о фильме
+
+    public async Task<IActionResult> DetailsFilm(Guid? filmId)
+    {
+        if (filmId.HasValue && await filmContext.FilmFiles.Where(film => film.FilmFileModelId == filmId).AnyAsync())
+        {
+            FilmFileModel filmItem = await filmContext.FilmFiles
+                .Include(img => img.FilmImage)
+                .Include(img => img.FilmPoster)
+                .Include(film => film.FullFilm)
+                .AsNoTracking()
+                .FirstAsync(film => film.FilmFileModelId == filmId);
+
+            return View(filmItem);
+        }
+        else
+        {
+            return RedirectToAction(nameof(Index));
+        }
+    }
+
+    #endregion
 
     #region Добавить фильм в базу данных
 
@@ -78,7 +150,7 @@ public class FilmsController(
         )]
         FilmFileModel filmItem)
     {
-        if (!ModelState.IsValid)
+        if (ModelState.IsValid)
         {
             #region Добавить файл фильма
 
@@ -444,7 +516,7 @@ public class FilmsController(
 
             #region Ссылки на видеохостинги
 
-            if (filmItem.FilmContentUrl != null)
+            if (!string.IsNullOrEmpty(filmItem.FilmFileName))
             {
                 filmItem.FilmContentUrl = new Uri("https://sergeyshef.ru/video/" + filmItem.FilmFileName);
             }
@@ -512,25 +584,55 @@ public class FilmsController(
 
             if (filmItem.PosterForFilmFormFile != null)
             {
-                var imageGuid = imageContext.GetImageGuidByFileNameAsync(filmItem.PosterForFilmFormFile.FileName);
+                var posterGuid = imageContext.GetImageGuidByFileNameAsync(filmItem.PosterForFilmFormFile.FileName);
+
+                if (posterGuid != null)
+                {
+                    filmItem.FilmPosterId = await posterGuid;
+
+                    if (filmItem.FilmPosterId == null)
+                    {
+                        ModelState.AddModelError("PosterForFilmFormFile", $"Вы выбрали файл «{filmItem.PosterForFilmFormFile.FileName}»" + Environment.NewLine + "Файла с таким именем нет в базе данных");
+
+                        return View(filmItem);
+                    }
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("PosterForFilmFormFile", "Выберите файл постера");
+            }
+
+            if (filmItem.ImageForFilmFormFile != null)
+            {
+                var imageGuid = imageContext.GetImageGuidByFileNameAsync(filmItem.ImageForFilmFormFile.FileName);
 
                 if (imageGuid != null)
                 {
-                    filmItem.FilmPosterId = await imageGuid;
-                }
-                else
-                {
-                    ModelState.AddModelError("PosterForFilmFormFile", $"Вы выбрали файл «{filmItem.PosterForFilmFormFile.FileName}»" + Environment.NewLine + "Файла с таким именем нет в базе данных");
+                    filmItem.FilmImageId = await imageGuid;
 
-                    return View(filmItem);
+                    if (filmItem.FilmImageId == null)
+                    {
+                        ModelState.AddModelError("ImageForFilmFormFile", $"Вы выбрали файл «{filmItem.ImageForFilmFormFile.FileName}»" + Environment.NewLine + "Файла с таким именем нет в базе данных");
+
+                        return View(filmItem);
+                    }
                 }
+            }
+            else
+            {
+                ModelState.AddModelError("ImageForFilmFormFile", "Выберите файл картинки");
             }
 
             #endregion
 
             #region Сохранить данные
 
-            return View(filmItem);
+            await filmContext.AddNewFilmAsync(filmItem);
+
+            var newFilm = await filmContext.FilmFiles.FirstAsync(film => film.FilmCaption == filmItem.FilmCaption);
+
+            return RedirectToAction("DetailsFilm", new { filmId = newFilm.FilmFileModelId, Area = "Admin" });
 
             #endregion
         }

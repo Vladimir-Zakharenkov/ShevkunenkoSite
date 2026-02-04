@@ -155,7 +155,7 @@
 
                     <ul class="@ulDropdownMenuClass" aria-labelledby="Movies" itemscope itemtype="http://schema.org/BreadcrumbList">
 
-                        @* Список фильмов *@
+                        @* Список фильмов (movie) *@
                         <li class="@liDropdownClass"
                             title="список фильмов"
                             itemprop="itemListElement"
@@ -175,6 +175,26 @@
 
                         </li>
 
+                        @* Список фильмов (film) *@
+                        <li class="@liDropdownClass"
+                            title="список фильмов"
+                            itemprop="itemListElement"
+                            itemscope itemtype="http://schema.org/ListItem">
+
+                            <a class="@refDropdownClass"
+                               asp-area="Admin"
+                               asp-controller="Films"
+                               asp-action="Index"
+                               itemprop="item">
+
+                                <span itemprop="name">Список</span>
+
+                            </a>
+
+                            <meta itemprop="position" content="1">
+
+                        </li>
+
                         @* Добавить фильм (film) *@
                         <li class="@liDropdownClass"
                             title="добавить фильм"
@@ -191,7 +211,7 @@
 
                             </a>
 
-                            <meta itemprop="position" content="1">
+                            <meta itemprop="position" content="2">
 
                         </li>
 
@@ -211,10 +231,11 @@
 
                             </a>
 
-                            <meta itemprop="position" content="2">
+                            <meta itemprop="position" content="3">
 
                         </li>
 
+                        @* Темы видео *@
                         <li class="@liDropdownClass"
                             title="темы видео"
                             itemprop="itemListElement"
@@ -230,10 +251,11 @@
 
                             </a>
 
-                            <meta itemprop="position" content="3">
+                            <meta itemprop="position" content="4">
 
                         </li>
 
+                        @* Добавить тему видео *@
                         <li class="@liDropdownClass"
                             title="добавить тему видео"
                             itemprop="itemListElement"
@@ -249,7 +271,7 @@
 
                             </a>
 
-                            <meta itemprop="position" content="4">
+                            <meta itemprop="position" content="5">
 
                         </li>
 

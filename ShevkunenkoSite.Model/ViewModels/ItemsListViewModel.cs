@@ -37,4 +37,10 @@ public class ItemsListViewModel : PagingInfoViewModel
     public PageInfoModel[]? AllSitePages { get; set; }
 
     #endregion
+
+    #region Фильмы
+
+    public FilmFileModel[]? AllFilmFiles { get; set; }
+
+    #endregion
 }

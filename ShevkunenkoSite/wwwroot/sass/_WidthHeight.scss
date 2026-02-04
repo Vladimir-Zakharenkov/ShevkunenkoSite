@@ -15,6 +15,18 @@
     height: 1000px;
 }
 
+.width60px {
+    width: 60px !important;
+}
+
+.width80px {
+    width: 80px !important;
+}
+
+.width100px {
+    width: 100px !important;
+}
+
 @media screen {
     .minheight900 {
         min-height: 900px;
@@ -111,6 +123,11 @@
 .maxwidth300px {
     max-width: 300px;
 }
+
+.maxwidth400px {
+    max-width: 400px;
+}
+
 
 .maxwidth600px {
     max-width: 600px;
