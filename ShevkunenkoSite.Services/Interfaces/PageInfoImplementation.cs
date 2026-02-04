@@ -3,6 +3,7 @@
 public class PageInfoImplementation(SiteDbContext siteContext) : IPageInfoRepository
 {
     #region Инициализация PagesInfo
+
     public IQueryable<PageInfoModel> PagesInfo => siteContext.PageInfo
         .Include(image => image.ImageFileModel)
         .Include(text => text.TextInfo).ThenInclude(book => book != null ? book.BooksAndArticlesModel : null).ThenInclude(articleLogo => articleLogo!.LogoOfArticle != null ? articleLogo.LogoOfArticle : null)
