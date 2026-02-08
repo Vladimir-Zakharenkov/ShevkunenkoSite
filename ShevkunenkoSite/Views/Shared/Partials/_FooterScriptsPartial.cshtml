@@ -1,8 +1,5 @@
 ﻿<environment include="Development">
 
-    @* Для работы Blazor в проекте ASP.NET Core MVC" *@
-    <script src="_framework/blazor.server.js"></script>
-
     <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -10,9 +7,6 @@
 </environment>
 
 <environment exclude="Development">
-
-    @* Для работы Blazor в проекте ASP.NET Core MVC" *@
-    <script src="_framework/blazor.server.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
             asp-fallback-src="~/lib/jquery/jquery.min.js"
