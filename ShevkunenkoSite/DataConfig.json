@@ -1,6 +1,8 @@
 {
   "ProjectData": {
 
+    "ManifestPath": "/manifests/",
+
     "IconsFolder": "/images/pageicons/",
 
     "IconFoldersPath": "/wwwroot/images/pageicons/",
@@ -14,8 +16,6 @@
     "ImageForMsapplication": "ms-icon-144x144.png",
 
     "BrowserconfigPath": "/browserconfigs",
-
-    "ManifestPath": "/manifests",
 
     "MovieFoldersPath": "F:\\site-video",
 

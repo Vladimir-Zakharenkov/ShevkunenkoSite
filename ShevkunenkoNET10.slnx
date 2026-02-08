@@ -1,9 +1,15 @@
 <Solution>
+  <Folder Name="/Bootstrap/">
+    <File Path="bootstrap-download.txt" />
+  </Folder>
   <Folder Name="/Let’s Encrypt on IIS/">
     <File Path="Let’s Encrypt on IIS/Let’s Encrypt on IIS.txt" />
   </Folder>
   <Folder Name="/Localcertificate/">
     <File Path="Localcertificate/Localcertificate.ps1" />
+  </Folder>
+  <Folder Name="/ManifestScript/">
+    <File Path="manifest.js" />
   </Folder>
   <Folder Name="/MetaDataForMedia/">
     <Project Path="MetaDataForMedia/ConsoleApp1/ConsoleApp1.csproj" />

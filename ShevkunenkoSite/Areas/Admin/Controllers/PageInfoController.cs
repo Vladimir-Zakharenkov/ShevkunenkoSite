@@ -548,7 +548,6 @@ public class PageInfoController(
                 "PageIconPath," +
                 "BrowserConfig," +
                 "BrowserConfigFolder," +
-                "Manifest," +
                 "PageLastmod," +
                 "Changefreq," +
                 "Priority," +
@@ -572,6 +571,95 @@ public class PageInfoController(
     {
         if (ModelState.IsValid)
         {
+            #region Добавить видео для страницы
+
+            if (addPage.FilmFileFormFile != null)
+            {
+                if (await filmContext.FilmFiles.Where(filmFile => filmFile.FilmFileName == addPage.FilmFileFormFile.FileName).AnyAsync())
+                {
+                    var addFilm = await filmContext.FilmFiles.FirstAsync(filmFile => filmFile.FilmFileName == addPage.FilmFileFormFile.FileName);
+
+                    addPage.FilmId = addFilm.FilmFileModelId;
+                }
+                else
+                {
+                    ModelState.AddModelError("FilmFileFormFile", $"Файла «{addPage.FilmFileFormFile.FileName}» нет в базе данных");
+
+                    // Список картинок сайта
+                    ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
+                    // Список картинок для фона (фотопленка)
+                    ViewData["BackgroundImages"] = new SelectList(backgroundContext.BackgroundFiles.OrderBy(orderBackgroundImage => orderBackgroundImage.WebLeftBackground), "BackgroundFileModelId", "WebLeftBackground");
+
+                    // Список текстовых файлов
+                    ViewData["Texts"] = new SelectList(textFileContext.Texts.OrderBy(orderText => orderText.TxtFileName), "TextInfoModelId", "TxtFileName");
+
+                    // Список аудиофайлов
+                    ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                    // Список фильмов
+                    ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
+                    return View(addPage);
+                }
+            }
+            else if (addPage.FilmFileFormFile == null & addPage.FilmId != Guid.Empty)
+            {
+                addPage.FilmId = addPage.FilmId;
+            }
+            else
+            {
+                addPage.FilmId = null;
+            }
+
+            #endregion
+
+            #region OgType
+
+            if (addPage.PageTitle.Contains("Следствие продолжается", StringComparison.InvariantCultureIgnoreCase))
+            {
+                addPage.OgType = "book";
+            }
+
+            if (addPage.FilmId != null)
+            {
+                addPage.OgType = "movie";
+            }
+
+            _ = addPage.OgType.Trim();
+
+            #endregion
+
+            #region manifest.json
+
+            if (addPage.OgType == "movie")
+            {
+                addPage.Manifest = "movie.json";
+            }
+            else
+            {
+                addPage.Manifest = "main.json";
+            }
+
+            #endregion
+
+            #region PageIconPath - BrowserConfig - BrowserConfigFolder
+
+            if (addPage.OgType == "movie")
+            {
+                addPage.PageIconPath = "movie/";
+                addPage.BrowserConfig = "movie.xml";
+                addPage.BrowserConfigFolder = "/movie";
+            }
+            else
+            {
+                addPage.PageIconPath = "main/";
+                addPage.BrowserConfig = "main.xml";
+                addPage.BrowserConfigFolder = "/main";
+            }
+
+            #endregion
+
             #region Добавить ссылку на текстовый файл
 
             if (addPage.TextInfoId != Guid.Empty & addPage.TextFileFormFile == null)
@@ -645,7 +733,7 @@ public class PageInfoController(
             }
 
             #endregion
-            
+
             #region Индекс сортировки страницы
 
             _ = addPage.SortOfPage;
@@ -1037,6 +1125,14 @@ public class PageInfoController(
                 addPage.PageArea = "/" + addPage.PageArea.Trim().Trim('/').ToLower();
             }
 
+            if (addPage.PageArea == "admin")
+            {
+                addPage.PageIconPath = "admin/";
+                addPage.BrowserConfig = "admin.xml";
+                addPage.BrowserConfigFolder = "/admin";
+                addPage.Manifest = "admin.json";
+            }
+
             #endregion
 
             #region Контроллер
@@ -1225,47 +1321,6 @@ public class PageInfoController(
             }
 
             #endregion
-
-            #endregion
-
-            #region OgType - PageIconPath - BrowserConfig - BrowserConfigFolder - Manifest
-
-            if (addPage.PageTitle.Contains("Следствие продолжается", StringComparison.InvariantCultureIgnoreCase))
-            {
-                addPage.OgType = "book";
-            }
-
-            _ = addPage.OgType.Trim();
-
-            if (addPage.OgType == "website")
-            {
-                addPage.PageIconPath = "main/";
-                addPage.BrowserConfig = "main.xml";
-                addPage.BrowserConfigFolder = "/main";
-                addPage.Manifest = "main.json";
-            }
-            else if (addPage.OgType == "movie")
-            {
-                addPage.PageIconPath = "movie/";
-                addPage.BrowserConfig = "movie.xml";
-                addPage.BrowserConfigFolder = "/movie";
-                addPage.Manifest = "movie.json";
-            }
-            else
-            {
-                addPage.PageIconPath = "main/";
-                addPage.BrowserConfig = "main.xml";
-                addPage.BrowserConfigFolder = "/main";
-                addPage.Manifest = "main.json";
-            }
-
-            if (addPage.PageArea == "admin")
-            {
-                addPage.PageIconPath = "admin/";
-                addPage.BrowserConfig = "admin.xml";
-                addPage.BrowserConfigFolder = "/admin";
-                addPage.Manifest = "admin.json";
-            }
 
             #endregion
 
@@ -1949,7 +2004,6 @@ public class PageInfoController(
                 "PageIconPath," +
                 "BrowserConfig," +
                 "BrowserConfigFolder," +
-                "Manifest," +
                 "PageAsRazorPage," +
                 "ImageFileModelId," +
                 "ImageFileFormFile," +
@@ -2003,6 +2057,34 @@ public class PageInfoController(
 
             var pageUpdate = await pageInfoContext.PagesInfo
                 .FirstAsync(page => page.PageInfoModelId == editPage.PageInfoModelId);
+
+            #endregion
+
+            #region OgType
+
+            if (editPage.FilmId != null)
+            {
+                pageUpdate.OgType = "movie";
+            }
+
+            _ = pageUpdate.OgType.Trim();
+
+            #endregion
+
+            #region manifest.json
+
+            if (pageUpdate.OgType == "movie")
+            {
+                pageUpdate.Manifest = "movie.json";
+            }
+            else if (editPage.PageArea == "/admin")
+            {
+                pageUpdate.Manifest = "admin.json";
+            }
+            else
+            {
+                pageUpdate.Manifest = "main.json";
+            }
 
             #endregion
 
@@ -2543,7 +2625,6 @@ public class PageInfoController(
                 pageUpdate.PageIconPath = "main/";
                 pageUpdate.BrowserConfig = "main.xml";
                 pageUpdate.BrowserConfigFolder = "/main";
-                pageUpdate.Manifest = "main.json";
             }
             else if (editPage.OgType == "movie")
             {
@@ -2551,14 +2632,12 @@ public class PageInfoController(
                 pageUpdate.PageIconPath = "movie/";
                 pageUpdate.BrowserConfig = "movie.xml";
                 pageUpdate.BrowserConfigFolder = "/movie";
-                pageUpdate.Manifest = "movie.json";
             }
             else
             {
                 pageUpdate.PageIconPath = "main/";
                 pageUpdate.BrowserConfig = "main.xml";
                 pageUpdate.BrowserConfigFolder = "/main";
-                pageUpdate.Manifest = "main.json";
             }
 
             if (pageUpdate.PageArea == "/admin")
@@ -2566,7 +2645,6 @@ public class PageInfoController(
                 pageUpdate.PageIconPath = "admin/";
                 pageUpdate.BrowserConfig = "admin.xml";
                 pageUpdate.BrowserConfigFolder = "/admin";
-                pageUpdate.Manifest = "admin.json";
             }
 
             #endregion

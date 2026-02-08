@@ -1,7 +1,7 @@
 ﻿@{
     var message = Context.Request.Host.ToString().ToLower();
 
-    if (message.Contains("shevkunenko.site"))
+    @if (message.Contains("shevkunenko.site"))
     {
         <div class="row justify-content-center rsy">
 

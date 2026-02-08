@@ -119,6 +119,14 @@ public class PageInfoModel
 
     #endregion
 
+    #region manifest.json
+
+    [Display(Name = "Файл manifest.json :")]
+    [DataType(DataType.Text)]
+    public string? Manifest { get; set; }
+
+    #endregion
+
     #region BrowserConfig и т.п.
 
     [Required(ErrorMessage = "Необходимо указать файл browserconfig")]
@@ -130,11 +138,6 @@ public class PageInfoModel
     [Display(Name = "Каталог иконок browserconfig :")]
     [DataType(DataType.Text)]
     public string BrowserConfigFolder { get; set; } = "main";
-
-    [Required(ErrorMessage = "Необходимо указать файл manifest")]
-    [Display(Name = "Файл manifest :")]
-    [DataType(DataType.Text)]
-    public string Manifest { get; set; } = "main.json";
 
     [Required(ErrorMessage = "Выберите папку с иконками")]
     [Display(Name = "Папка с иконками :")]

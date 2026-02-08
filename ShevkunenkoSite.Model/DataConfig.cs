@@ -4,6 +4,12 @@ namespace ShevkunenkoSite.Models;
 
 public class DataConfig
 {
+    #region Папка с файлами manifest.json
+
+    public static string ManifestPath { get; set; } = null!;
+
+    #endregion
+
     public static string ImageForMsapplication { get; set; } = null!;
 
     public static string IconItem { get; set; } = null!;
@@ -14,10 +20,7 @@ public class DataConfig
 
     public static string BrowserconfigPath { get; set; } = null!;
 
-    public static string ManifestPath { get; set; } = null!;
-
     public static string Test { get; set; } = string.Empty;
-
 
     // GUID картинки NoImage
     public static string NoImage { get; set; } = null!;

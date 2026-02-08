@@ -236,7 +236,8 @@
 
                     <a id="Movies"
                        class="@refNavItemClass"
-                       href="#" role="button"
+                       href="#"
+                       role="button"
                        data-bs-toggle="dropdown"
                        aria-expanded="false"
                        title="фильмы на сайте"
@@ -676,7 +677,7 @@
 
                                     </a>
 
-                                    <meta itemprop="position" content="0">
+                                    <meta itemprop="position" content="1">
 
                                 </li>
 
@@ -695,12 +696,12 @@
 
                                     </a>
 
-                                    <meta itemprop="position" content="1">
+                                    <meta itemprop="position" content="2">
 
                                 </li>
 
                                 @* Мой серебряный шар*@
-                                <li class="bg-light p-0 mb-1 border border-2 rounded-1 maxwidthcontent"
+                                <li class="bg-light p-0 mb-1 rounded-1 maxwidthcontent"
                                     title="программа Виталия Вульфа"
                                     itemprop="itemListElement"
                                     itemscope itemtype="http://schema.org/ListItem">
@@ -716,9 +717,31 @@
 
                                     </a>
 
-                                    <meta itemprop="position" content="2">
+                                    <meta itemprop="position" content="3">
 
                                 </li>
+
+                                @* Мой серебряный шар*@
+                                <li class="bg-light p-0 mb-1 rounded-1 maxwidthcontent"
+                                    title="музыка Эннио Морриконе"
+                                    itemprop="itemListElement"
+                                    itemscope itemtype="http://schema.org/ListItem">
+
+                                    <a class="@refDropdownClass"
+                                       asp-area=""
+                                       asp-controller="Films"
+                                       asp-action="Index"
+                                       asp-route-filmFilter="композитор-Эннио-Морриконе"
+                                       itemprop="item">
+
+                                        <span itemprop="name">композитор Эннио Морриконе</span>
+
+                                    </a>
+
+                                    <meta itemprop="position" content="4">
+
+                                </li>
+
 
                             </ul>
 

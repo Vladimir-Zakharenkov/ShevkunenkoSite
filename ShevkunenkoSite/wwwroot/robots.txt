@@ -1,4 +1,4 @@
-User-agent: *
+﻿User-agent: *
 Host: shevkunenko.site
 
 User-agent: Yandex

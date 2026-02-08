@@ -1,0 +1,68 @@
+﻿@{
+	Random randomBackground = new();
+
+	var backgroundLeft = randomBackground.Next(100);
+
+	var backgrounRight = backgroundLeft + 1;
+}
+
+<!DOCTYPE html>
+
+<html dir="ltr" lang="ru" itemscope itemtype="http://schema.org/WebPage" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# book: http://ogp.me/ns/book# video: http://ogp.me/ns/video# article: https://ogp.me/ns/article# ya: http://webmaster.yandex.ru/vocabularies/">
+
+<head>
+
+
+	@* Загрузка стилей *@
+	@* <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> *@
+	@* Загрузка стилей *@
+	<link media="screen" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+		  asp-fallback-href="~/lib/bootstrap/css/bootstrap.min.css"
+		  asp-fallback-test-class="sr-only"
+		  asp-fallback-test-property="position"
+		  asp-fallback-test-value="absolute"
+		  integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+		  crossorigin="anonymous" />
+	<link media="all" rel="stylesheet" href="~/css/style.min.css" asp-append-version="true" />
+
+	@* <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script> *@
+
+	@* <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+			asp-fallback-src="~/lib/bootstrap/js/bootstrap.bundle.min.js"
+			asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+			crossorigin="anonymous"
+			integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI">
+	</script> *@
+
+	<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+
+	<script src="~/js/site.js" asp-append-version="true"></script>
+
+</head>
+
+
+<body>
+
+	<div class="container-fluid container-fluid-1920">
+
+		<div class="row text-center bg-light">
+
+			<main itemprop="mainContentOfPage" class="col pb-3 text-center mx-auto shadw">
+
+				<div class="container-fluid px-0">
+
+					@RenderBody()
+
+				</div>
+
+			</main>
+
+		</div>
+
+	</div>
+
+	@await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>
