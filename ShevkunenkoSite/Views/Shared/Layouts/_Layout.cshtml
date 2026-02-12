@@ -1,9 +1,9 @@
 ﻿@{
-	Random randomBackground = new();
+    Random randomBackground = new();
 
-	var backgroundLeft = randomBackground.Next(100);
+    var backgroundLeft = randomBackground.Next(100);
 
-	var backgrounRight = backgroundLeft + 1;
+    var backgrounRight = backgroundLeft + 1;
 }
 
 <!DOCTYPE html>
@@ -15,50 +15,52 @@
 
 <body>
 
-	<div class="container-fluid container-fluid-1920">
+    <vc:manifest />
 
-		@* реклама сверху *@
-		<vc:reklama-top />
+    <div class="container-fluid container-fluid-1920">
 
-		@* меню вверху сайта *@
-		<vc:menu />
+        @* реклама сверху *@
+        <vc:reklama-top />
 
-		<div class="row text-center bg-light">
+        @* меню вверху сайта *@
+        <vc:menu />
 
-			@* фотопленка слева *@
-			<vc:background-foto background=@backgroundLeft />
+        <div class="row text-center bg-light">
 
-			<main itemprop="mainContentOfPage" class="col pb-3 text-center mx-auto shadw">
+            @* фотопленка слева *@
+            <vc:background-foto background=@backgroundLeft />
 
-				<div class="container-fluid px-0">
+            <main itemprop="mainContentOfPage" class="col pb-3 text-center mx-auto shadw">
 
-					@* заголовок и картинка в шапке страницы *@
-					<vc:page-heading />
+                <div class="container-fluid px-0">
 
-					@RenderBody()
+                    @* заголовок и картинка в шапке страницы *@
+                    <vc:page-heading />
 
-				</div>
+                    @RenderBody()
 
-				@* ссылки на связанные по теме страницы, книги, фильмы *@
-				<vc:ref-pages />
+                </div>
 
-			</main>
+                @* ссылки на связанные по теме страницы, книги, фильмы *@
+                <vc:ref-pages />
 
-			@* фотопленка справа *@
-			<vc:background-foto background=@backgrounRight />
+            </main>
 
-		</div>
+            @* фотопленка справа *@
+            <vc:background-foto background=@backgrounRight />
 
-		<vc:counters />
+        </div>
 
-		@* реклама снизу *@
-		<vc:reklama-bottom />
+        <vc:counters />
 
-	</div>
+        @* реклама снизу *@
+        <vc:reklama-bottom />
 
-	<partial name="_FooterScriptsPartial" />
+    </div>
 
-	@await RenderSectionAsync("Scripts", required: false)
+    <partial name="_FooterScriptsPartial" />
+
+    @await RenderSectionAsync("Scripts", required: false)
 
 </body>
 

@@ -1,318 +1,321 @@
 ﻿@model HeadViewModel
 
+@{
+}
+
 <head>
 
-	<meta charset="UTF-8">
-	<title>@Model.PageInfo.PageTitle</title>
-	<meta name="description" content="@Model.PageInfo.PageDescription" />
-	<meta name="keywords" content="@Model.PageInfo.PageKeyWords" />
-	<meta itemprop="lastReviewed" content="@Model.PageInfo.PageLastmod.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
-	<meta name="robots" content="ALL" />
-	<meta name="revisit-after" content="14 days" />
-	<meta name="viewport" content="initial-scale=1.0, width=device-width" />
-	<meta name="HandheldFriendly" content="True" />
-	<link rel="canonical" href="https://@Context.Request.Host@Context.Request.Path@Context.Request.QueryString" />
+    <meta charset="UTF-8">
+    <title>@Model.PageInfo.PageTitle</title>
+    <meta name="description" content="@Model.PageInfo.PageDescription" />
+    <meta name="keywords" content="@Model.PageInfo.PageKeyWords" />
+    <meta itemprop="lastReviewed" content="@Model.PageInfo.PageLastmod.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
+    <meta name="robots" content="ALL" />
+    <meta name="revisit-after" content="14 days" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <meta name="HandheldFriendly" content="True" />
+    <link rel="canonical" href="https://@Context.Request.Host@Context.Request.Path@Context.Request.QueryString" />
 
-	@* Верификация поисковых систем*@
-	@if (Context.Request.Path.ToString().Contains("sergeyshef.ru", StringComparison.OrdinalIgnoreCase))
-	{
-		<meta name="yandex-verification" content="800b6b429689169b" />
-	}
-	else
-	{
-		<meta name="google-site-verification" content="JaJ5pHXzt-lZczZWIHZZyCH-4mSDA1o5w8mytFI0uqQ" />
-		<meta name="yandex-verification" content="df8caf709ed9aba7" />
-		<meta name="yandex-verification" content="b894f910bafa1187" />
-	}
-
-
-	@* Картинка страницы *@
-	@if (Model.PageInfo.ImageFileModel != null)
-	{
-		@if (!string.IsNullOrEmpty(Model.PageInfo.ImageFileModel.WebImageFileName))
-		{
-			<meta itemprop="image" content="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.WebImageFileName">
-		}
-		else
-		{
-			<meta itemprop="image" content="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.ImageFileName">
-		}
-
-	}
-
-	@* Иконки страницы *@
-	@foreach (var p in Model.IconList)
-	{
-		if (p.IconRel == "shortcut icon")
-		{
-			<link rel="shortcut icon" type="image/x-icon" sizes="16x16 20x20 24x24 32x32 40x40 48x48 64x64 256x256" href="@DataConfig.IconsFolder@p.IconPath@p.IconFileName" />
-		}
-		else if (p.IconRel == "mask-icon")
-		{
-			<link rel="mask-icon" type="image/svg+xml" sizes="any" href="@DataConfig.IconsFolder@p.IconPath@p.IconFileName" color="#fffff" />
-		}
-		else
-		{
-			string widthHeight = @p.IconWidth + "x" + @p.IconHeight;
-
-			<link rel="@p.IconRel" type="@p.IconType" sizes="@widthHeight" href="@DataConfig.IconsFolder@p.IconPath@p.IconFileName" />
-		}
-	}
+    @* Верификация поисковых систем*@
+    @if (Context.Request.Path.ToString().Contains("sergeyshef.ru", StringComparison.OrdinalIgnoreCase))
+    {
+        <meta name="yandex-verification" content="800b6b429689169b" />
+    }
+    else
+    {
+        <meta name="google-site-verification" content="JaJ5pHXzt-lZczZWIHZZyCH-4mSDA1o5w8mytFI0uqQ" />
+        <meta name="yandex-verification" content="df8caf709ed9aba7" />
+        <meta name="yandex-verification" content="b894f910bafa1187" />
+    }
 
 
-	@* Browserconfig *@
-	<meta name="msapplication-config" content="@DataConfig.BrowserconfigPath/@Model.PageInfo.BrowserConfig" />
-	<meta name="application-name" lang="ru" content="@Model.PageInfo.PageTitle" />
-	<meta name="msapplication-tooltip" content="@Model.PageInfo.PageTitle" />
-	<meta name="msapplication-TileImage" content="@DataConfig.BrowserconfigIconsFolder@Model.PageInfo.BrowserConfigFolder/@DataConfig.ImageForMsapplication" />
-	<meta name="msapplication-TileColor" content="#ffffff" />
-	<meta name="theme-color" content="#fffffff" />
+    @* Картинка страницы *@
+    @if (Model.PageInfo.ImageFileModel != null)
+    {
+        @if (!string.IsNullOrEmpty(Model.PageInfo.ImageFileModel.WebImageFileName))
+        {
+            <meta itemprop="image" content="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.WebImageFileName">
+        }
+        else
+        {
+            <meta itemprop="image" content="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.ImageFileName">
+        }
 
-	@* Manifest *@
-	<link rel="manifest" href="@DataConfig.ManifestPath/@Model.PageInfo.Manifest" />
+    }
 
-	@* Данные OpenGraph*@
+    @* Иконки страницы *@
+    @foreach (var p in Model.IconList)
+    {
+        if (p.IconRel == "shortcut icon")
+        {
+            <link rel="shortcut icon" type="image/x-icon" sizes="16x16 20x20 24x24 32x32 40x40 48x48 64x64 256x256" href="@DataConfig.IconsFolder@p.IconPath@p.IconFileName" />
+        }
+        else if (p.IconRel == "mask-icon")
+        {
+            <link rel="mask-icon" type="image/svg+xml" sizes="any" href="@DataConfig.IconsFolder@p.IconPath@p.IconFileName" color="#fffff" />
+        }
+        else
+        {
+            string widthHeight = @p.IconWidth + "x" + @p.IconHeight;
 
-	@* Тип содержимого страницы *@
-	<meta property="og:type" content="@Model.PageInfo.OgType" />
-
-	@if (Model.PageInfo.OgType == "article")
-	{
-		if (Model.BookOrArticle != null)
-		{
-			<meta itemprop="article:author" content="@Model.BookOrArticle.AuthorOfText" />
-			<meta itemprop="article:headline" content="@Model.BookOrArticle.CaptionOfText" />
-			<meta itemprop="article:publisher" content="@Model.BookOrArticle.Publisher" />
-			<meta itemprop="article:published_time" content="@Model.BookOrArticle.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
-			<meta itemprop="article:modified_time" content="@Model.BookOrArticle.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
-			<meta itemprop="article:description" content="@Model.BookOrArticle.BookDescription" />
-
-			<meta property="article:published_time" content="@Model.BookOrArticle.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
-
-			@foreach (var tag in Model.BookOrArticle.TagsForBook.Split(',', StringSplitOptions.RemoveEmptyEntries))
-			{
-				<meta property="article:tag" content="@tag.Trim()" />
-			}
-		}
-	}
-	else if (Model.PageInfo.OgType == "book")
-	{
-		if (Model.BookOrArticle != null)
-		{
-			<meta itemprop="book:author" content="@Model.BookOrArticle.AuthorOfText" />
-			<meta itemprop="book:headline" content="@Model.BookOrArticle.CaptionOfText" />
-			<meta itemprop="book:publisher" content="@Model.BookOrArticle.Publisher" />
-			<meta itemprop="book:published_time" content="@Model.BookOrArticle.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
-			<meta itemprop="book:modified_time" content="@Model.BookOrArticle.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
-			<meta itemprop="book:description" content="@Model.BookOrArticle.BookDescription" />
-			<meta property="book:release_date" content="@Model.BookOrArticle.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")">
-
-			@foreach (var tag in Model.BookOrArticle.TagsForBook.Split(',', StringSplitOptions.RemoveEmptyEntries))
-			{
-				<meta property="book:tag" content="@tag.Trim()" />
-			}
-		}
-	}
-	else if (Model.PageInfo.OgType == "movie" && Model.PageInfo.MovieFile != null)
-	{
-		<link rel="stylesheet" href="https://vjs.zencdn.net/8.16.1/video-js.css" />
-
-		<meta property="og:type" content="video.movie" />
-		<meta property="og:video" content="@Model.PageInfo.MovieFile.MovieContentUrl" />
-		<meta property="video:duration" content="@Convert.ToInt32(Model.PageInfo.MovieFile.MovieDuration.TotalSeconds)" />
-		<meta property="og:video:type" content="@Model.PageInfo.MovieFile.MovieMimeType" />
-		<meta property="og:video:width" content="@Model.PageInfo.MovieFile.MovieWidth" />
-		<meta property="og:video:height" content="@Model.PageInfo.MovieFile.MovieHeight" />
-		<meta property="ya:ovs:upload_date" content="@Model.PageInfo.MovieFile.MovieUploadDate.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")" />
-		<meta property="ya:ovs:adult" content="@Model.PageInfo.MovieFile.MovieAdult.ToString()" />
-		<meta property="ya:ovs:original_name" content="@Model.PageInfo.MovieFile.MovieCaption" />
-		<meta property="video:release_date" content="@Model.PageInfo.MovieFile.MovieDatePublished.ToString("yyyy-MM-dd")" />
-		<meta property="ya:ovs:movie:part" content="@Model.PageInfo.MovieFile.MoviePart" />
-		@if (Model.PageInfo.MovieFile.MovieHeight <= 360)
-		{
-			<meta property="ya:ovs:quality" content="low" />
-		}
-		@if (Model.PageInfo.MovieFile.MovieHeight > 360 & Model.PageInfo.MovieFile.MovieHeight <= 720)
-		{
-			<meta property="ya:ovs:quality" content="medium" />
-		}
-		@if (Model.PageInfo.MovieFile.MovieHeight > 720 & Model.PageInfo.MovieFile.MovieHeight < 1080)
-		{
-			<meta property="ya:ovs:quality" content="HD" />
-		}
-		@if (Model.PageInfo.MovieFile.MovieHeight >= 1080)
-		{
-			<meta property="ya:ovs:quality" content="full HD" />
-		}
-		<meta property="ya:ovs:content_id" content="@Model.PageInfo.MovieFile.MovieFileModelId" />
-		<meta property="ya:ovs:available_platform" content="Desktop" />
-		<meta property="ya:ovs:available_platform" content="Mobile" />
-		<meta property="ya:ovs:content_url" content="@Model.PageInfo.MovieFile.MovieContentUrl" />
-		<meta property="ya:ovs:content_url:public" content="True" />
-		<meta property="ya:ovs:category" content="фильм" />
-		<meta property="ya:ovs:genre" content="@Model.PageInfo.MovieFile.MovieGenre" />
-		<meta property="video:tag" content="@Model.PageInfo.PageKeyWords" />
-		<meta property="ya:ovs:languages" content="@Model.PageInfo.MovieFile.MovieInLanguage1" />
-		@if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieInLanguage2))
-		{
-			<meta property="ya:ovs:languages" content="@Model.PageInfo.MovieFile.MovieInLanguage2" />
-		}
-		@if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieSubtitles1))
-		{
-			<meta property="ya:ovs:subtitle:language" content="@Model.PageInfo.MovieFile.MovieSubtitles1" />
-		}
-		@if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieSubtitles2))
-		{
-			<meta property="ya:ovs:subtitle:language" content="@Model.PageInfo.MovieFile.MovieSubtitles2" />
-		}
-		<meta property="ya:ovs:production_company" content="@Model.PageInfo.MovieFile.MovieРroductionCompany" />
-		@if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieDirector1))
-		{
-			<meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieDirector1" />
-			<meta property="ya:ovs:person:role" content="film director" />
-		}
-		@if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieDirector2))
-		{
-			<meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieDirector2" />
-			<meta property="ya:ovs:person:role" content="film director" />
-		}
-		@if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieMusicBy))
-		{
-			<meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieMusicBy" />
-			<meta property="ya:ovs:person:role" content="composer" />
-		}
-		@if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor01))
-		{
-			<meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor01" />
-			<meta property="ya:ovs:person:role" content="actor" />
-		}
-		@if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor02))
-		{
-			<meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor02" />
-			<meta property="ya:ovs:person:role" content="actor" />
-		}
-		@if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor03))
-		{
-			<meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor03" />
-			<meta property="ya:ovs:person:role" content="actor" />
-		}
-		@if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor04))
-		{
-			<meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor04" />
-			<meta property="ya:ovs:person:role" content="actor" />
-		}
-		@if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor05))
-		{
-			<meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor05" />
-			<meta property="ya:ovs:person:role" content="actor" />
-		}
-		@if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor06))
-		{
-			<meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor06" />
-			<meta property="ya:ovs:person:role" content="actor" />
-		}
-		@if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor07))
-		{
-			<meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor07" />
-			<meta property="ya:ovs:person:role" content="actor" />
-		}
-		@if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor08))
-		{
-			<meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor08" />
-			<meta property="ya:ovs:person:role" content="actor" />
-		}
-		@if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor09))
-		{
-			<meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor09" />
-			<meta property="ya:ovs:person:role" content="actor" />
-		}
-		@if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor10))
-		{
-			<meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor10" />
-			<meta property="ya:ovs:person:role" content="actor" />
-		}
-		@if (Model.PageInfo.MovieFile.MoviePoster != null)
-		{
-			<meta property="ya:ovs:poster" content="https://@Context.Request.Host@Model.PageInfo.MovieFile.MoviePoster.ImagePath/@Model.PageInfo.MovieFile.MoviePoster.WebImageFileName" />
-		}
-		else
-		{
-			@if (Model.PageInfo.ImageFileModel != null)
-			{
-				<meta property="ya:ovs:poster" content="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.ImageFileName" />
-			}
-		}
-	}
-
-	<meta property="og:locale" content="ru_RU" />
-	<meta property="og:title" content="@Model.PageInfo.PageTitle" />
-	<meta property="og:description" content="@Model.PageInfo.PageDescription" />
-	<meta property="og:url" content="https://@Context.Request.Host@Context.Request.Path@Context.Request.QueryString" />
-	<meta property="og:site_name" content="Сайт посвященный Сергею Шевкуненко" />
-
-	@* Картинка страница для OpenGraph*@
-	@if (Model.PageInfo.ImageFileModel != null)
-	{
-		@if (!string.IsNullOrEmpty(Model.PageInfo.ImageFileModel.WebImageFileName))
-		{
-			<meta property="og:image" content="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.WebImageFileName" />
-			<meta property="og:image:width" content="@Model.PageInfo.ImageFileModel.WebImageWidth" />
-			<meta property="og:image:height" content="@Model.PageInfo.ImageFileModel.WebImageHeight" />
-			<meta property="og:image:type" content="@Model.PageInfo.ImageFileModel.WebImageMimeType" />
-		}
-		else
-		{
-			<meta property="og:image" content="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.ImageFileName" />
-			<meta property="og:image:width" content="@Model.PageInfo.ImageFileModel.ImageWidth" />
-			<meta property="og:image:height" content="@Model.PageInfo.ImageFileModel.ImageHeight" />
-			<meta property="og:image:type" content="@Model.PageInfo.ImageFileModel.ImageMimeType" />
-		}
-	}
-
-	@* Инфо для Twitter*@
-	<meta name="twitter:card" content="summary" />
-	<meta name="twitter:title" content="@Model.PageInfo.PageTitle" />
-	<meta name="twitter:description" content="@Model.PageInfo.PageDescription" />
-
-	@if (Model.PageInfo.ImageFileModel != null)
-	{
-		@if (!string.IsNullOrEmpty(Model.PageInfo.ImageFileModel.WebImageFileName))
-		{
-			<meta name="twitter:image" content="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.WebImageFileName" />
-		}
-		else
-		{
-			<meta name="twitter:image" content="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.ImageFileName">
-		}
-	}
-
-	@* Загрузка стилей *@
-	<link media="screen" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-		  asp-fallback-href="~/lib/bootstrap/css/bootstrap.min.css"
-		  asp-fallback-test-class="sr-only"
-		  asp-fallback-test-property="position"
-		  asp-fallback-test-value="absolute"
-		  integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-		  crossorigin="anonymous" />
-	<link media="all" rel="stylesheet" href="~/css/style.min.css" asp-append-version="true" />
+            <link rel="@p.IconRel" type="@p.IconType" sizes="@widthHeight" href="@DataConfig.IconsFolder@p.IconPath@p.IconFileName" />
+        }
+    }
 
 
-	@* Включаем скрипты если рабочий сервер *@
-	@if (!Context.Request.Host.ToString().Contains("localhost", StringComparison.InvariantCultureIgnoreCase))
-	{
-		@* Global site tag (gtag.js) - Google Analytics*@
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-3WELF8XC9E"></script>
-		<script>
-			window.dataLayer = window.dataLayer || [];
-			function gtag() { dataLayer.push(arguments); }
-			gtag('js', new Date());
+    @* Browserconfig *@
+    <meta name="msapplication-config" content="@DataConfig.BrowserconfigPath/@Model.PageInfo.BrowserConfig" />
+    <meta name="application-name" lang="ru" content="@Model.PageInfo.PageTitle" />
+    <meta name="msapplication-tooltip" content="@Model.PageInfo.PageTitle" />
+    <meta name="msapplication-TileImage" content="@DataConfig.BrowserconfigIconsFolder@Model.PageInfo.BrowserConfigFolder/@DataConfig.ImageForMsapplication" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="theme-color" content="#fffffff" />
 
-			gtag('config', 'G-3WELF8XC9E');
-		</script>
+    @* Manifest *@
+    <link rel="manifest-temp" href="@DataConfig.ManifestPath/@Model.PageInfo.Manifest" />
 
-		@* Yandex.RTB *@
-		<script>window.yaContextCb = window.yaContextCb || []</script>
-		<script async src="https://yandex.ru/ads/system/context.js"></script>
-	}
+    @* Данные OpenGraph*@
+
+    @* Тип содержимого страницы *@
+    <meta property="og:type" content="@Model.PageInfo.OgType" />
+
+    @if (Model.PageInfo.OgType == "article")
+    {
+        if (Model.BookOrArticle != null)
+        {
+            <meta itemprop="article:author" content="@Model.BookOrArticle.AuthorOfText" />
+            <meta itemprop="article:headline" content="@Model.BookOrArticle.CaptionOfText" />
+            <meta itemprop="article:publisher" content="@Model.BookOrArticle.Publisher" />
+            <meta itemprop="article:published_time" content="@Model.BookOrArticle.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
+            <meta itemprop="article:modified_time" content="@Model.BookOrArticle.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
+            <meta itemprop="article:description" content="@Model.BookOrArticle.BookDescription" />
+
+            <meta property="article:published_time" content="@Model.BookOrArticle.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
+
+            @foreach (var tag in Model.BookOrArticle.TagsForBook.Split(',', StringSplitOptions.RemoveEmptyEntries))
+            {
+                <meta property="article:tag" content="@tag.Trim()" />
+            }
+        }
+    }
+    else if (Model.PageInfo.OgType == "book")
+    {
+        if (Model.BookOrArticle != null)
+        {
+            <meta itemprop="book:author" content="@Model.BookOrArticle.AuthorOfText" />
+            <meta itemprop="book:headline" content="@Model.BookOrArticle.CaptionOfText" />
+            <meta itemprop="book:publisher" content="@Model.BookOrArticle.Publisher" />
+            <meta itemprop="book:published_time" content="@Model.BookOrArticle.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
+            <meta itemprop="book:modified_time" content="@Model.BookOrArticle.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
+            <meta itemprop="book:description" content="@Model.BookOrArticle.BookDescription" />
+            <meta property="book:release_date" content="@Model.BookOrArticle.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")">
+
+            @foreach (var tag in Model.BookOrArticle.TagsForBook.Split(',', StringSplitOptions.RemoveEmptyEntries))
+            {
+                <meta property="book:tag" content="@tag.Trim()" />
+            }
+        }
+    }
+    else if (Model.PageInfo.OgType == "movie" && Model.PageInfo.MovieFile != null)
+    {
+        <link rel="stylesheet" href="https://vjs.zencdn.net/8.16.1/video-js.css" />
+
+        <meta property="og:type" content="video.movie" />
+        <meta property="og:video" content="@Model.PageInfo.MovieFile.MovieContentUrl" />
+        <meta property="video:duration" content="@Convert.ToInt32(Model.PageInfo.MovieFile.MovieDuration.TotalSeconds)" />
+        <meta property="og:video:type" content="@Model.PageInfo.MovieFile.MovieMimeType" />
+        <meta property="og:video:width" content="@Model.PageInfo.MovieFile.MovieWidth" />
+        <meta property="og:video:height" content="@Model.PageInfo.MovieFile.MovieHeight" />
+        <meta property="ya:ovs:upload_date" content="@Model.PageInfo.MovieFile.MovieUploadDate.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")" />
+        <meta property="ya:ovs:adult" content="@Model.PageInfo.MovieFile.MovieAdult.ToString()" />
+        <meta property="ya:ovs:original_name" content="@Model.PageInfo.MovieFile.MovieCaption" />
+        <meta property="video:release_date" content="@Model.PageInfo.MovieFile.MovieDatePublished.ToString("yyyy-MM-dd")" />
+        <meta property="ya:ovs:movie:part" content="@Model.PageInfo.MovieFile.MoviePart" />
+        @if (Model.PageInfo.MovieFile.MovieHeight <= 360)
+        {
+            <meta property="ya:ovs:quality" content="low" />
+        }
+        @if (Model.PageInfo.MovieFile.MovieHeight > 360 & Model.PageInfo.MovieFile.MovieHeight <= 720)
+        {
+            <meta property="ya:ovs:quality" content="medium" />
+        }
+        @if (Model.PageInfo.MovieFile.MovieHeight > 720 & Model.PageInfo.MovieFile.MovieHeight < 1080)
+        {
+            <meta property="ya:ovs:quality" content="HD" />
+        }
+        @if (Model.PageInfo.MovieFile.MovieHeight >= 1080)
+        {
+            <meta property="ya:ovs:quality" content="full HD" />
+        }
+        <meta property="ya:ovs:content_id" content="@Model.PageInfo.MovieFile.MovieFileModelId" />
+        <meta property="ya:ovs:available_platform" content="Desktop" />
+        <meta property="ya:ovs:available_platform" content="Mobile" />
+        <meta property="ya:ovs:content_url" content="@Model.PageInfo.MovieFile.MovieContentUrl" />
+        <meta property="ya:ovs:content_url:public" content="True" />
+        <meta property="ya:ovs:category" content="фильм" />
+        <meta property="ya:ovs:genre" content="@Model.PageInfo.MovieFile.MovieGenre" />
+        <meta property="video:tag" content="@Model.PageInfo.PageKeyWords" />
+        <meta property="ya:ovs:languages" content="@Model.PageInfo.MovieFile.MovieInLanguage1" />
+        @if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieInLanguage2))
+        {
+            <meta property="ya:ovs:languages" content="@Model.PageInfo.MovieFile.MovieInLanguage2" />
+        }
+        @if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieSubtitles1))
+        {
+            <meta property="ya:ovs:subtitle:language" content="@Model.PageInfo.MovieFile.MovieSubtitles1" />
+        }
+        @if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieSubtitles2))
+        {
+            <meta property="ya:ovs:subtitle:language" content="@Model.PageInfo.MovieFile.MovieSubtitles2" />
+        }
+        <meta property="ya:ovs:production_company" content="@Model.PageInfo.MovieFile.MovieРroductionCompany" />
+        @if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieDirector1))
+        {
+            <meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieDirector1" />
+            <meta property="ya:ovs:person:role" content="film director" />
+        }
+        @if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieDirector2))
+        {
+            <meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieDirector2" />
+            <meta property="ya:ovs:person:role" content="film director" />
+        }
+        @if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieMusicBy))
+        {
+            <meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieMusicBy" />
+            <meta property="ya:ovs:person:role" content="composer" />
+        }
+        @if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor01))
+        {
+            <meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor01" />
+            <meta property="ya:ovs:person:role" content="actor" />
+        }
+        @if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor02))
+        {
+            <meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor02" />
+            <meta property="ya:ovs:person:role" content="actor" />
+        }
+        @if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor03))
+        {
+            <meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor03" />
+            <meta property="ya:ovs:person:role" content="actor" />
+        }
+        @if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor04))
+        {
+            <meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor04" />
+            <meta property="ya:ovs:person:role" content="actor" />
+        }
+        @if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor05))
+        {
+            <meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor05" />
+            <meta property="ya:ovs:person:role" content="actor" />
+        }
+        @if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor06))
+        {
+            <meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor06" />
+            <meta property="ya:ovs:person:role" content="actor" />
+        }
+        @if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor07))
+        {
+            <meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor07" />
+            <meta property="ya:ovs:person:role" content="actor" />
+        }
+        @if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor08))
+        {
+            <meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor08" />
+            <meta property="ya:ovs:person:role" content="actor" />
+        }
+        @if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor09))
+        {
+            <meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor09" />
+            <meta property="ya:ovs:person:role" content="actor" />
+        }
+        @if (!string.IsNullOrEmpty(Model.PageInfo.MovieFile.MovieActor10))
+        {
+            <meta property="ya:ovs:person" content="@Model.PageInfo.MovieFile.MovieActor10" />
+            <meta property="ya:ovs:person:role" content="actor" />
+        }
+        @if (Model.PageInfo.MovieFile.MoviePoster != null)
+        {
+            <meta property="ya:ovs:poster" content="https://@Context.Request.Host@Model.PageInfo.MovieFile.MoviePoster.ImagePath/@Model.PageInfo.MovieFile.MoviePoster.WebImageFileName" />
+        }
+        else
+        {
+            @if (Model.PageInfo.ImageFileModel != null)
+            {
+                <meta property="ya:ovs:poster" content="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.ImageFileName" />
+            }
+        }
+    }
+
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:title" content="@Model.PageInfo.PageTitle" />
+    <meta property="og:description" content="@Model.PageInfo.PageDescription" />
+    <meta property="og:url" content="https://@Context.Request.Host@Context.Request.Path@Context.Request.QueryString" />
+    <meta property="og:site_name" content="Сайт посвященный Сергею Шевкуненко" />
+
+    @* Картинка страница для OpenGraph*@
+    @if (Model.PageInfo.ImageFileModel != null)
+    {
+        @if (!string.IsNullOrEmpty(Model.PageInfo.ImageFileModel.WebImageFileName))
+        {
+            <meta property="og:image" content="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.WebImageFileName" />
+            <meta property="og:image:width" content="@Model.PageInfo.ImageFileModel.WebImageWidth" />
+            <meta property="og:image:height" content="@Model.PageInfo.ImageFileModel.WebImageHeight" />
+            <meta property="og:image:type" content="@Model.PageInfo.ImageFileModel.WebImageMimeType" />
+        }
+        else
+        {
+            <meta property="og:image" content="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.ImageFileName" />
+            <meta property="og:image:width" content="@Model.PageInfo.ImageFileModel.ImageWidth" />
+            <meta property="og:image:height" content="@Model.PageInfo.ImageFileModel.ImageHeight" />
+            <meta property="og:image:type" content="@Model.PageInfo.ImageFileModel.ImageMimeType" />
+        }
+    }
+
+    @* Инфо для Twitter*@
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="@Model.PageInfo.PageTitle" />
+    <meta name="twitter:description" content="@Model.PageInfo.PageDescription" />
+
+    @if (Model.PageInfo.ImageFileModel != null)
+    {
+        @if (!string.IsNullOrEmpty(Model.PageInfo.ImageFileModel.WebImageFileName))
+        {
+            <meta name="twitter:image" content="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.WebImageFileName" />
+        }
+        else
+        {
+            <meta name="twitter:image" content="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.ImageFileName">
+        }
+    }
+
+    @* Загрузка стилей *@
+    <link media="screen" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          asp-fallback-href="~/lib/bootstrap/css/bootstrap.min.css"
+          asp-fallback-test-class="sr-only"
+          asp-fallback-test-property="position"
+          asp-fallback-test-value="absolute"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+          crossorigin="anonymous" />
+    <link media="all" rel="stylesheet" href="~/css/style.min.css" asp-append-version="true" />
+
+
+    @* Включаем скрипты если рабочий сервер *@
+    @if (!Context.Request.Host.ToString().Contains("localhost", StringComparison.InvariantCultureIgnoreCase))
+    {
+        @* Global site tag (gtag.js) - Google Analytics*@
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-3WELF8XC9E"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'G-3WELF8XC9E');
+        </script>
+
+        @* Yandex.RTB *@
+        <script>window.yaContextCb = window.yaContextCb || []</script>
+        <script async src="https://yandex.ru/ads/system/context.js"></script>
+    }
 
 </head>

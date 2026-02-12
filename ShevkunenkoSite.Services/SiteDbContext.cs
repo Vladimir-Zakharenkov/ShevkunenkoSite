@@ -32,6 +32,8 @@ public class SiteDbContext(DbContextOptions<SiteDbContext> options) : DbContext(
 
     public DbSet<FilmFileModel> Films => Set<FilmFileModel>();
 
+    public DbSet<ManifestModel> Manifest => Set<ManifestModel>();
+
     #endregion
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

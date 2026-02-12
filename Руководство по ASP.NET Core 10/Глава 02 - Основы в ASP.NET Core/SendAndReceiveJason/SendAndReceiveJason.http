@@ -1,0 +1,6 @@
+@SendAndReceiveJason_HostAddress = http://localhost:5014
+
+GET {{SendAndReceiveJason_HostAddress}}/api/
+Accept: application/json
+
+###

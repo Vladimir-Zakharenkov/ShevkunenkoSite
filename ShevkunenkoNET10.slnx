@@ -14,6 +14,23 @@
   <Folder Name="/MetaDataForMedia/">
     <Project Path="MetaDataForMedia/ConsoleApp1/ConsoleApp1.csproj" />
   </Folder>
+  <Folder Name="/Руководство по ASP.NET Core 10/" />
+  <Folder Name="/Руководство по ASP.NET Core 10/Глава 02/">
+    <File Path="Руководство по ASP.NET Core 10/Глава 02 - Основы в ASP.NET Core/Страница 01 - Создание и запуск приложения.txt" />
+    <File Path="Руководство по ASP.NET Core 10/Глава 02 - Основы в ASP.NET Core/Страница 02 - Конвейер обработки запроса и middleware.txt" />
+    <File Path="Руководство по ASP.NET Core 10/Глава 02 - Основы в ASP.NET Core/Страница 03 - Метод Run и определение терминального middleware.txt" />
+    <File Path="Руководство по ASP.NET Core 10/Глава 02 - Основы в ASP.NET Core/Страница 04 - HttpResponse. Отправка ответа.txt" />
+    <File Path="Руководство по ASP.NET Core 10/Глава 02 - Основы в ASP.NET Core/Страница 05 - HttpRequest. Получение данных запроса.txt" />
+    <File Path="Руководство по ASP.NET Core 10/Глава 02 - Основы в ASP.NET Core/Страница 06 - Отправка файлов.txt" />
+    <File Path="Руководство по ASP.NET Core 10/Глава 02 - Основы в ASP.NET Core/Страница 09 - Отправка и получение json.txt" />
+    <File Path="Руководство по ASP.NET Core 10/Глава 02 - Основы в ASP.NET Core/Страница 10 - Создание API.txt" />
+    <Project Path="Руководство по ASP.NET Core 10/Глава 02 - Основы в ASP.NET Core/HeadersProperty/HeadersProperty.csproj" />
+    <Project Path="Руководство по ASP.NET Core 10/Глава 02 - Основы в ASP.NET Core/MinimalWebApi/MinimalWebApi.csproj" Id="b6099db1-4481-4099-b589-45c75d2a0fdf" />
+    <Project Path="Руководство по ASP.NET Core 10/Глава 02 - Основы в ASP.NET Core/Run/Run.csproj" />
+    <Project Path="Руководство по ASP.NET Core 10/Глава 02 - Основы в ASP.NET Core/SendAndReceiveJason/SendAndReceiveJason.csproj" Id="7dd469a3-b9e9-404b-83c1-577c21a56c7d" />
+    <Project Path="Руководство по ASP.NET Core 10/Глава 02 - Основы в ASP.NET Core/SendFile/SendFile.csproj" />
+    <Project Path="Руководство по ASP.NET Core 10/Глава 02 - Основы в ASP.NET Core/WelcomePage/WelcomePage.csproj" />
+  </Folder>
   <Project Path="../shevkunenko.ru/" Type="Website" DisplayName="shevkunenko.ru" Id="610e8a56-5298-427e-86cb-f1be66e2b7af">
     <BuildType Project="Debug" />
     <Properties Name="WebsiteProperties">

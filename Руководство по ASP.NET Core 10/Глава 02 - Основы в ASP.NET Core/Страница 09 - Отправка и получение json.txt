@@ -1,0 +1,153 @@
+Отправка и получение json
+
+JSON является распространенным форматом для передачи данных. 
+Рассмотрим, как мы можем посылать и получить данные json.
+
+Для отправки json можно воспользоваться методом WriteAsJson()/WriteAsJsonAsync() объекта HttpResponse. 
+Этот метод позволяет сериализовать переданные в него объекты в формат JSON 
+и автоматически для заголовка "content-type" устанавливает значение "application/json; charset=utf-8":
+
+var builder = WebApplication.CreateBuilder();
+var app = builder.Build();
+ 
+app.Run(async (context) =>
+{
+    Person tom = new("Tom", 22);
+    await context.Response.WriteAsJsonAsync(tom);
+});
+ 
+app.Run();
+ 
+public record Person(string Name, int Age);
+
+В данном случае клиенту отправляется объект типа Person, который представляет класс-record, 
+однако это может быть и обычный класс:
+
+https://metanit.com/sharp/aspnet6/pics/2.10.png
+
+Хотя можно было бы воспользоваться и стандартным методом WriteAsync():
+
+app.Run(async (context) =>
+{
+    var response = context.Response;
+    response.Headers.ContentType = "application/json; charset=utf-8";
+    await response.WriteAsync("{\"name\":\"Tom\",\"age\":37}");
+});
+
+Получение JSON. Метод ReadFromJsonAsync
+
+Для получения из запроса объекта в формате JSON в классе HttpRequest определен метод ReadFromJsonAsync(). 
+Он позволяет сериализовать данные в объект определенного типа.
+
+Например, создадим в проекте папку html, в которой определим новый файл index.html.
+
+https://metanit.com/sharp/aspnet6/pics/2.31.png
+
+В файле index.html определим следующий код:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>METANIT.COM</title>
+</head>
+<body>
+    <h2>User form</h2>
+    <div id="message"></div>
+    <div>
+        <p>Name: <br />
+            <input name="userName" id="userName" />
+        </p>
+        <p>Age: <br />
+            <input name="userAge" id="userAge" type="number" />
+        </p>
+        <button id="sendBtn">Send</button>
+    </div>
+    <script>
+        document.getElementById("sendBtn").addEventListener("click", send);
+        async function send() {
+            const response = await fetch("/api/user", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: document.getElementById("userName").value,
+                    age: document.getElementById("userAge").value
+                })
+            });
+            const message = await response.json();
+            document.getElementById("message").innerText = message.text;
+        }
+    </script>
+</body>
+</html>
+
+Здесь по нажатию на кнопку с помощью функции fetch() по адресу "/api/user" будет отправляться объект со свойствами name и age, 
+значения для которых берутся из полей формы. В ответ от сервера веб-страница также получает объект в формате json, 
+в котором имеется свойство text - свойство, которое хранит сообщение от сервера.
+
+Теперь в файле Program.cs определим код для получения данных, отправляемых веб-страницей:
+
+var builder = WebApplication.CreateBuilder();
+var app = builder.Build();
+ 
+app.Run(async (context) =>
+{
+    var response = context.Response;
+    var request = context.Request;
+    if (request.Path == "/api/user")
+    {
+        var message = "Некорректные данные";   // содержание сообщения по умолчанию
+        try
+        {
+            // пытаемся получить данные json
+            var person = await request.ReadFromJsonAsync<Person>();
+            if (person != null) // если данные сконвертированы в Person
+                message = $"Name: {person.Name}  Age: {person.Age}";
+        }
+        catch { }
+        // отправляем пользователю данные
+        await response.WriteAsJsonAsync(new { text = message });
+    }
+    else
+    {
+        response.ContentType = "text/html; charset=utf-8";
+        await response.SendFileAsync("html/index.html");
+    }
+});
+ 
+app.Run();
+ 
+public record Person(string Name, int Age);
+
+В данном случае, если обращение идет по адресу "/api/user", то получаем данные в формате json. 
+При обращениях по другим адресам просто посылаем веб-страницу index.html.
+
+Метод ReadFromJsonAsync() десериализует полученные данные в объект определенного 
+типа - в данном случае типа Person:
+
+var person = await request.ReadFromJsonAsync<Person>();
+if (person != null) // если данные сконвертированы в Person
+    message = $"Name: {person.Name}  Age: {person.Age}";
+
+Таким образом, здесь результат вызова этого метода - значение переменной person 
+будет представлять объект Person.
+
+Но стоит отметить, что если данные запроса не представляют объект JSON, либо если метод ReadFromJsonAsync() 
+не смог связать данные запроса со свойствами класса Person, то вызов этого метода сгенерирует исключение. 
+Поэтому в данном случае вызов метода помещается в конструкцию try..catch. 
+Однако нельзя не отметить, что try..catch здесь является узким местом, и далее мы посмотрим, как от него избавиться.
+
+И в конце в ответ посылаем анонимный объект, который также сериализуется в json с некоторым сообщением, 
+которое хранится в свойстве text. При получении этого сообщения оно выводится на веб-страницу.
+
+https://metanit.com/sharp/aspnet6/pics/2.32.png
+
+Стоит отметить, что проверять на наличие json в запросе можно с помощью метода HasJsonContentType() - он 
+возвращает true, если клиент прислал json.
+
+if (request.HasJsonContentType())
+{
+    var person = await request.ReadFromJsonAsync<Person>();
+    if (person != null)
+        responseText = $"Name: {person.Name}  Age: {person.Age}";
+}

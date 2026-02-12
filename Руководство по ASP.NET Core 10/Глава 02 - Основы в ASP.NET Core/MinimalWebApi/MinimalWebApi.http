@@ -1,0 +1,6 @@
+@MinimalWebApi_HostAddress = http://localhost:5088
+
+GET {{MinimalWebApi_HostAddress}}/api/
+Accept: application/json
+
+###

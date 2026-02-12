@@ -284,4 +284,11 @@ app.MapRazorPages();
 
 #endregion
 
+//app.Run(async (context) =>
+//{
+//    ManifestModel manifest = new();
+
+//    await context.Response.WriteAsJsonAsync(manifest);
+//});
+
 app.Run();
