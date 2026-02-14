@@ -72,7 +72,9 @@
     <meta name="theme-color" content="#fffffff" />
 
     @* Manifest *@
-    <link rel="manifest-temp" href="@DataConfig.ManifestPath/@Model.PageInfo.Manifest" />
+    <link rel="manifest" href="@DataConfig.ManifestPath/@Model.PageInfo.Manifest" />
+    @* <link rel="manifest" href="/manifest/?pageid=@Model.PageInfo.PageInfoModelId" /> *@
+    @* <link rel="manifest" content="{name: Tom,start_url: https://shevkunenko.site/}" /> *@
 
     @* Данные OpenGraph*@
 

@@ -40,6 +40,7 @@
     <script>
 
         document.getElementById("sendBtn").addEventListener("click", send);
+
         async function send() {
             const response = await fetch("/api/user", {
                 method: "POST",
@@ -47,9 +48,17 @@
                 body: JSON.stringify({
                     name: document.getElementById("userName").value,
                     age: document.getElementById("userAge").value
+
+                    //userName: "Tom",
+                    //userAge: 22
+
+                    // name: "Tom",
+                    //age: "twenty-two"
                 })
             });
+
             const message = await response.json();
+
             document.getElementById("message").innerText = message.text;
         }
 

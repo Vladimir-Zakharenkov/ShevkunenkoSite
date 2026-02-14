@@ -1,10 +1,16 @@
-﻿namespace ShevkunenkoSite.Controllers;
+﻿using Azure;
+
+namespace ShevkunenkoSite.Controllers;
 
 // Тестовый контроллер
-public class TestController : Controller
+public class TestController(IPageInfoRepository pageContext) : Controller
 {
-    public IActionResult Test()
+    public async void Test()
     {
-        return View();
+        var pageInfo = pageContext.GetPageInfoByPathAsync(HttpContext);
+
+        await HttpContext.Response.WriteAsJsonAsync(pageInfo);
+
+        //await HttpContext.Response.WriteAsJsonAsync("{\"name\":\"Tom\",\"start_url\":https://shevkunenko.site/}");
     }
 }

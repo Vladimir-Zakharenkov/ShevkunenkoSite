@@ -1,0 +1,5 @@
+﻿@ShevkunenkoSite_HostAddress = https://localhost:7227
+
+GET {{ShevkunenkoSite_HostAddress}}/api/manifest
+
+###

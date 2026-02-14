@@ -21,7 +21,7 @@ public class ManifestModel
 
     public string Launch_handler { get; set; } = string.Empty;
 
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = "Сергей Шевкуненко";
 
     public string Note_taking { get; set; } = string.Empty;
 
@@ -47,7 +47,7 @@ public class ManifestModel
 
     public string Shortcuts { get; set; } = string.Empty;
 
-    public string Start_url { get; set; } = string.Empty;
+    public string Start_url { get; set; } = "";
 
     public string Theme_color { get; set; } = string.Empty;
 }

@@ -1,64 +1,8 @@
+п»їusing System.Text.Json;
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder();
 var app = builder.Build();
-
-#region WriteAsJsonAsync
-
-//app.Run(async (context) =>
-//{
-//    Person tom = new("Tom", 22);
-
-//    await context.Response.WriteAsJsonAsync(tom);
-//});
-
-#endregion
-
-#region WriteAsync
-
-//app.Run(async (context) =>
-//{
-//    var response = context.Response;
-
-//    response.Headers.ContentType = "application/json; charset=utf-8";
-
-//    await response.WriteAsync("{\"name\":\"Tom\",\"age\":37}");
-//});
-
-#endregion
-
-#region try - catch
-
-//app.Run(async (context) =>
-//{
-//    var response = context.Response;
-//    var request = context.Request;
-
-//    if (request.Path == "/api/user")
-//    {
-//        var message = "Некорректные данные";   // содержание сообщения по умолчанию
-
-//        try
-//        {
-//            // пытаемся получить данные json
-//            var person = await request.ReadFromJsonAsync<Person>();
-
-//            if (person != null) // если данные сконвертированы в Person
-//                message = $"Name: {person.Name}  Age: {person.Age}";
-//        }
-//        catch { }
-//        // отправляем пользователю данные
-//        await response.WriteAsJsonAsync(new { text = message });
-//    }
-//    else
-//    {
-//        response.ContentType = "text/html; charset=utf-8";
-
-//        await response.SendFileAsync("html/index.html");
-//    }
-//});
-
-#endregion
-
-#region HasJsonContentType()
 
 app.Run(async (context) =>
 {
@@ -67,29 +11,89 @@ app.Run(async (context) =>
 
     if (request.Path == "/api/user")
     {
-        var message = "Некорректные данные";   // содержание сообщения по умолчанию
+        var responseText = "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Рµ РґР°РЅРЅС‹Рµ";   // СЃРѕРґРµСЂР¶Р°РЅРёРµ СЃРѕРѕР±С‰РµРЅРёСЏ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 
         if (request.HasJsonContentType())
         {
-            var person = await request.ReadFromJsonAsync<Person>();
+            // РѕРїСЂРµРґРµР»СЏРµРј РїР°СЂР°РјРµС‚СЂС‹ СЃРµСЂРёР°Р»РёР·Р°С†РёРё/РґРµСЃРµСЂРёР°Р»РёР·Р°С†РёРё
+            var jsonoptions = new JsonSerializerOptions();
 
+            // РґРѕР±Р°РІР»СЏРµРј РєРѕРЅРІРµСЂС‚РµСЂ РєРѕРґР° json РІ РѕР±СЉРµРєС‚ С‚РёРїР° Person
+            jsonoptions.Converters.Add(new PersonConverter());
+
+            // РґРµСЃРµСЂРёР°Р»РёР·СѓРµРј РґР°РЅРЅС‹Рµ СЃ РїРѕРјРѕС‰СЊСЋ РєРѕРЅРІРµСЂС‚РµСЂР° PersonConverter
+            var person = await request.ReadFromJsonAsync<Person>(jsonoptions);
             if (person != null)
-                message = $"Name: {person.Name}  Age: {person.Age}";
+                responseText = $"Name: {person.Name}  Age: {person.Age}";
         }
 
-        // отправляем пользователю данные
-        await response.WriteAsJsonAsync(new { text = message });
+        await response.WriteAsJsonAsync(new { text = responseText });
     }
     else
     {
         response.ContentType = "text/html; charset=utf-8";
-
         await response.SendFileAsync("html/index.html");
     }
 });
 
-#endregion
-
 app.Run();
 
 public record Person(string Name, int Age);
+
+public class PersonConverter : JsonConverter<Person>
+{
+    public override Person Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        var personName = "Undefined";
+        var personAge = 0;
+
+        while (reader.Read())
+        {
+            if (reader.TokenType == JsonTokenType.PropertyName)
+            {
+                var propertyName = reader.GetString();
+
+                reader.Read();
+
+                switch (propertyName?.ToLower())
+                {
+                    // РµСЃР»Рё СЃРІРѕР№СЃС‚РІРѕ age Рё РѕРЅРѕ СЃРѕРґРµСЂР¶РёС‚ С‡РёСЃР»Рѕ
+                    case "age" when reader.TokenType == JsonTokenType.Number:
+                        personAge = reader.GetInt32();  // СЃС‡РёС‚С‹РІР°РµРј С‡РёСЃР»Рѕ РёР· json
+
+                        break;
+
+                    // РµСЃР»Рё СЃРІРѕР№СЃС‚РІРѕ age Рё РѕРЅРѕ СЃРѕРґРµСЂР¶РёС‚ СЃС‚СЂРѕРєСѓ
+                    case "age" when reader.TokenType == JsonTokenType.String:
+                        string? stringValue = reader.GetString();
+                        // РїС‹С‚Р°РµРјСЃСЏ РєРѕРЅРІРµСЂС‚РёСЂРѕРІР°С‚СЊ СЃС‚СЂРѕРєСѓ РІ С‡РёСЃР»Рѕ
+                        if (int.TryParse(stringValue, out int value))
+                        {
+                            personAge = value;
+                        }
+
+                        break;
+
+                    case "name":    // РµСЃР»Рё СЃРІРѕР№СЃС‚РІРѕ Name/name
+                        string? name = reader.GetString();
+                        if (name != null)
+                            personName = name;
+
+                        break;
+                }
+            }
+        }
+
+        return new Person(personName, personAge);
+    }
+
+    // СЃРµСЂРёР°Р»РёР·СѓРµРј РѕР±СЉРµРєС‚ Person РІ json
+    public override void Write(Utf8JsonWriter writer, Person person, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        writer.WriteString("name", person.Name);
+        writer.WriteNumber("age", person.Age);
+
+        writer.WriteEndObject();
+    }
+}

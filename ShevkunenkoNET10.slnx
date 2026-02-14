@@ -10,9 +10,13 @@
   </Folder>
   <Folder Name="/ManifestScript/">
     <File Path="manifest.js" />
+    <File Path="ssylki.txt" />
   </Folder>
   <Folder Name="/MetaDataForMedia/">
     <Project Path="MetaDataForMedia/ConsoleApp1/ConsoleApp1.csproj" />
+  </Folder>
+  <Folder Name="/MicroSoft Tutorials/">
+    <Project Path="MicroSoft Tutorials/TodoApi/TodoApi.csproj" Id="b58716aa-fa5a-4033-b214-dd50505c88e7" />
   </Folder>
   <Folder Name="/Руководство по ASP.NET Core 10/" />
   <Folder Name="/Руководство по ASP.NET Core 10/Глава 02/">
