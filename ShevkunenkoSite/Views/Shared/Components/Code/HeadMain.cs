@@ -11,10 +11,22 @@ public class HeadMain(
 
         BooksAndArticlesModel? bookOrArticle = null;
 
+        #region Список иконок в теге <head>
+
         List<IconFileModel> iconList = await iconFileContext.IconFiles
             .Where(icon => icon.IconPath == pageInfoModel.PageIconPath)
             .AsNoTracking()
             .ToListAsync();
+
+        if (iconList.Count == 0)
+        {
+            iconList = await iconFileContext.IconFiles
+                .Where(icon => icon.IconPath == "main/")
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        #endregion
 
         if (HttpContext.Request.QueryString.ToString().Contains("articleid", StringComparison.CurrentCultureIgnoreCase))
         {
@@ -26,14 +38,6 @@ public class HeadMain(
             {
                 bookOrArticle = await bookContext.BooksAndArticles.FirstAsync(book => book.BooksAndArticlesModelId == newGuid);
             }
-        }
-
-        if (iconList.Count == 0)
-        {
-            iconList = await iconFileContext.IconFiles
-                .Where(icon => icon.IconPath == "main/")
-                .AsNoTracking()
-                .ToListAsync();
         }
 
         return View(new HeadViewModel

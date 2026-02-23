@@ -14,6 +14,7 @@ public class ImageInfoController(
     private static readonly char[] separator = [','];
 
     #region Список картинок
+
     public async Task<ViewResult> Index
         (
         string? searchString,

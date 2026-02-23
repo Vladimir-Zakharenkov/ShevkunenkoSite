@@ -517,6 +517,42 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.ToTable("IconFile");
                 });
 
+            modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.IconModel", b =>
+                {
+                    b.Property<Guid>("IconModelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("IconId");
+
+                    b.Property<string>("IconFileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconMimeType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconPurpose")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconSize")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PathToIcon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RelForIcon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IconModelId");
+
+                    b.ToTable("Icons");
+                });
+
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.ImageFileModel", b =>
                 {
                     b.Property<Guid>("ImageFileModelId")

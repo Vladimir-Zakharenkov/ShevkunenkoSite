@@ -1,5 +1,4 @@
-https://developer.mozilla.org/ru/docs/Web/Progressive_web_apps/Manifest#заставки
-
+https://developer.mozilla.org/ru/docs/Web/Progressive_web_apps/Manifest
 https://w3c.github.io/manifest/#dfn-browser
 
 https://developer.mozilla.org/ru/docs/Mozilla/Add-ons/WebExtensions/manifest.json

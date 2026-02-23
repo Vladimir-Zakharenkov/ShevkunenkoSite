@@ -45,6 +45,7 @@
 ////                message = $"Name: {person.Name}  Age: {person.Age}";
 ////        }
 ////        catch { }
+///
 ////        // отправляем пользователю данные
 ////        await response.WriteAsJsonAsync(new { text = message });
 ////    }

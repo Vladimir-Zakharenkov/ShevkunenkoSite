@@ -1,0 +1,62 @@
+﻿@model IEnumerable<IconModel>
+
+@if (Model.Count() == 0)
+{
+    <p class="fs-5 text-center text_shadow mb-0">
+        В базе данных нет иконок
+    </p>
+}
+else
+{
+    <p class="fs-5 text-center text-primary mb-0">
+        Количество типов иконок:&nbsp;
+        <span class="text-black text_shadow">
+            @Model.Count()
+        </span>
+    </p>
+}
+
+<hr class="liniya" />
+
+<h1 class="text_shadow">Иконки страниц сайта</h1>
+
+<div class="row row-cols-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-7 row-cols-xxl-8 g-2 justify-content-center">
+
+    @foreach (var iconItem in Model)
+    {
+        <div class="col">
+
+            <a asp-area="Admin"
+               asp-controller="Icon"
+               asp-action="Index"
+               asp-route-iconId=@iconItem.IconModelId
+               title="параметры иконки">
+
+                <div class="card h-100 m-1 p-1 shadw borderforitem">
+
+                    <img src="@DataConfig.IconsFolder@iconItem.PathToIcon/@iconItem.IconFileName" />
+
+                </div>
+
+            </a>
+
+        </div>
+    }
+
+</div>
+
+<div>
+
+    @* Добавить иконку *@
+    <a asp-area="Admin"
+       asp-controller="Icon"
+       asp-action="AddIcon"
+       asp-route-pathForIcon=@null
+       class="btn btn-outline-danger shadw py-1 mt-5 minwidth100px"
+       title="добавить иконку">
+
+        Добавить
+
+    </a>
+
+</div>

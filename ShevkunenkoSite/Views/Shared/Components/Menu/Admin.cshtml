@@ -383,6 +383,7 @@
 
                     <ul class="@ulDropdownMenuClass" aria-labelledby="Icons" itemscope itemtype="http://schema.org/BreadcrumbList">
 
+                        @* Список иконок *@
                         <li class="@liDropdownClass"
                             title="список иконок для страниц"
                             itemprop="itemListElement"
@@ -402,6 +403,7 @@
 
                         </li>
 
+                        @* Добавить иконку *@
                         <li class="@liDropdownClass"
                             title="добавить иконки для страниц"
                             itemprop="itemListElement"
@@ -417,6 +419,26 @@
                             </a>
 
                             <meta itemprop="position" content="1">
+
+                        </li>
+
+                        @* Список иконок (новый) *@
+                        <li class="@liDropdownClass"
+                            title="список иконок для страниц"
+                            itemprop="itemListElement"
+                            itemscope itemtype="http://schema.org/ListItem">
+
+                            <a class="@refDropdownClass"
+                               asp-area="Admin"
+                               asp-controller="Icon"
+                               asp-action="Index"
+                               temprop="item">
+
+                                <span itemprop="name">Список (new)</span>
+
+                            </a>
+
+                            <meta itemprop="position" content="2">
 
                         </li>
 

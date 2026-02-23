@@ -12,15 +12,15 @@ using ShevkunenkoSite.Services;
 namespace ShevkunenkoSite.Services.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    [Migration("20260207083616_07-02-2026-11-34")]
-    partial class _070220261134
+    [Migration("20260217180016_17-02-2026-20-58")]
+    partial class _170220262058
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.1")
+                .HasAnnotation("ProductVersion", "10.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -518,6 +518,36 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.HasKey("IconFileModelId");
 
                     b.ToTable("IconFile");
+                });
+
+            modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.IconModel", b =>
+                {
+                    b.Property<Guid>("IconModelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("IconId");
+
+                    b.Property<string>("IconFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconMimeType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconPurpose")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PathToIcon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RelForIcon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IconModelId");
+
+                    b.ToTable("Icons");
                 });
 
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.ImageFileModel", b =>

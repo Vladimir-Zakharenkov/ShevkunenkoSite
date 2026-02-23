@@ -12,15 +12,15 @@ using ShevkunenkoSite.Services;
 namespace ShevkunenkoSite.Services.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    [Migration("20260204162020_04-02-2026-19-19")]
-    partial class _040220261919
+    [Migration("20260219144010_19-02-2026-17-38")]
+    partial class _190220261738
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.1")
+                .HasAnnotation("ProductVersion", "10.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -518,6 +518,42 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.HasKey("IconFileModelId");
 
                     b.ToTable("IconFile");
+                });
+
+            modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.IconModel", b =>
+                {
+                    b.Property<Guid>("IconModelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("IconId");
+
+                    b.Property<string>("IconFileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconMimeType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconPurpose")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconSize")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PathToIcon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RelForIcon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IconModelId");
+
+                    b.ToTable("Icons");
                 });
 
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.ImageFileModel", b =>
@@ -1102,7 +1138,6 @@ namespace ShevkunenkoSite.Services.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Manifest")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OgType")

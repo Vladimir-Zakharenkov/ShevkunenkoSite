@@ -14,6 +14,8 @@ public class SiteDbContext(DbContextOptions<SiteDbContext> options) : DbContext(
 
     public DbSet<IconFileModel> IconFile => Set<IconFileModel>();
 
+    public DbSet<IconModel> Icons => Set<IconModel>();
+
     public DbSet<MovieFileModel> MovieFile => Set<MovieFileModel>();
 
     public DbSet<AccessModel> Access => Set<AccessModel>();

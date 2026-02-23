@@ -1,0 +1,110 @@
+﻿@model IconModel[]
+
+@{
+    string trStyle = string.Empty;
+
+    IconModel currentIcon;
+
+    Guid currentId;
+
+    if (Guid.TryParse(Context.Request.Query["iconId"], out currentId))
+    {
+        currentIcon = Model.First(icon => icon.IconModelId == currentId);
+    }
+    else
+    {
+        currentIcon = Model[0];
+    }
+}
+
+<img class="maxwidth300px mt-2"
+     src="@DataConfig.IconsFolder@currentIcon.PathToIcon@currentIcon.IconFileName"
+     title="@DataConfig.IconsFolder@currentIcon.PathToIcon@currentIcon.IconFileName"
+     alt="@DataConfig.IconsFolder@currentIcon.PathToIcon@currentIcon.IconFileName" />
+
+<p class="fs-4 text_shadow">
+    @DataConfig.IconsFolder@currentIcon.PathToIcon
+</p>
+
+<p class="fs-4 text_shadow">
+    @currentIcon.IconFileName
+</p>
+
+
+<p class="fs-4">
+    <span class="fw-bold text-primary">
+        Количество иконок:
+    </span>
+    <span class="text_shadow">
+        @Model.Length
+    </span>
+</p>
+
+<div class="table-responsive">
+
+    <table class="table table-sm table-hover caption-top align-middle fs-5">
+
+        <thead>
+
+            <tr class="text-start text-primary">
+
+                <th scope="col" class="text-primary">Image</th>
+                <th scope="col" class="d-none d-md-table-cell text-primary">IconRel</th>
+                <th scope="col" class="text-primary">File</th>
+                <th scope="col" class="d-none d-lg-table-cell text-primary">Size</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var iconItem in Model)
+            {
+                if (iconItem.IconModelId == currentId)
+                {
+                    trStyle = "table-primary";
+                }
+                else
+                {
+                    trStyle = string.Empty;
+                }
+
+                <tr class="text-start text_shadow @trStyle">
+
+                    <td scope="col">
+                        <img class="maxwidth40px"
+                             src="@DataConfig.IconsFolder@iconItem.PathToIcon@iconItem.IconFileName"
+                             title="@DataConfig.IconsFolder@iconItem.PathToIcon@iconItem.IconFileName"
+                             alt="@DataConfig.IconsFolder@iconItem.PathToIcon@iconItem.IconFileName" />
+                    </td>
+                    <td scope="col" class="d-none d-md-table-cell">@iconItem.PathToIcon</td>
+                    <td scope="col">@iconItem.IconFileName</td>
+                    <td scope="col" class="d-none d-lg-table-cell">@iconItem.IconSize</td>
+                    <td scope="col">
+                        <a class="btn btn-outline-primary  minwidth50px shadw"
+                            asp-area="Admin"
+                            asp-controller="IconInfo"
+                            asp-action="Index"
+                            asp-route-iconId="@iconItem.IconModelId"
+                           title="@DataConfig.IconsFolder@iconItem.PathToIcon@iconItem.IconFileName">View</a>
+                    </td>
+                    <td scope="col">
+                        <a class="btn btn-outline-success minwidth50px shadw"
+                            asp-area="Admin"
+                            asp-controller="IconInfo"
+                            asp-action="EditIcon"
+                            asp-route-iconId="@iconItem.IconModelId"
+                           title="@DataConfig.IconsFolder@iconItem.PathToIcon@iconItem.IconFileName">Edit</a>
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

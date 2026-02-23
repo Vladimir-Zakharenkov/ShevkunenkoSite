@@ -10,6 +10,12 @@ public class DataConfig
 
     #endregion
 
+    #region Папка временного хранения
+
+    public static string TempPath { get; set; } = null!;
+
+    #endregion
+
     public static string ImageForMsapplication { get; set; } = null!;
 
     public static string IconItem { get; set; } = null!;

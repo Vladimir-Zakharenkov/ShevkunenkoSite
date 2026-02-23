@@ -10,7 +10,8 @@ public static class ImageFileModelExtension
                     | foundImage.ImageDescription.Contains((imageSearchString ?? string.Empty).Trim(), StringComparison.OrdinalIgnoreCase)
                     | foundImage.SearchFilter.Contains((imageSearchString ?? string.Empty).Trim(), StringComparison.OrdinalIgnoreCase)
                     | foundImage.WebImageFileName.Contains((imageSearchString ?? string.Empty).Trim(), StringComparison.OrdinalIgnoreCase)
-                    | foundImage.ImageFileName.Contains((imageSearchString ?? string.Empty).Trim(), StringComparison.OrdinalIgnoreCase))
+                    | foundImage.ImageFileName.Contains((imageSearchString ?? string.Empty).Trim(), StringComparison.OrdinalIgnoreCase)
+                )
             {
                 yield return foundImage;
             }

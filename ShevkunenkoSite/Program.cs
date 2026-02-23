@@ -163,6 +163,7 @@ services.AddScoped<IBooksAndArticlesRepository, BooksAndArticlesImplementation>(
 services.AddScoped<IAudioBookRepository, AudioBookImplementation>();
 services.AddScoped<IAudioInfoRepository, AudioInfoImplementation>();
 services.AddScoped<IFilmFileRepository, FilmFileImplementation>();
+services.AddScoped<IIconRepository, IconImplementation>();
 
 #endregion
 
@@ -283,12 +284,5 @@ app.MapRazorPages();
 #endregion
 
 #endregion
-
-//app.Run(async (context) =>
-//{
-//    ManifestModel manifest = new();
-
-//    await context.Response.WriteAsJsonAsync(manifest);
-//});
 
 app.Run();

@@ -1,48 +1,33 @@
-﻿// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+﻿namespace ShevkunenkoSite.Controllers;
 
-namespace ShevkunenkoSite.Controllers
+public class ManifestController(IPageInfoRepository pageContext) : Controller
 {
-    [Route("[controller]")]
-    [ApiController]
-    public class ManifestController : ControllerBase
+    async public void Manifest(Guid? pageId)
     {
-        // GET: api/<ManifestController>
-        [HttpGet]
-        public ManifestModel Get(PageInfoModel pageInfo)
+        PageInfoModel pageInfo = new();
+
+        ManifestModel manifest = new();
+
+        if (pageContext.PagesInfo.Where(page => page.PageInfoModelId == pageId).Any())
         {
-            ManifestModel manifest = new();
-
-            //manifest.Start_url = "https://shevkunenko.site" + pageInfo.PageFullPathWithData;
-
-            //    await context.Response.WriteAsJsonAsync(manifest);
-
-
-            return manifest;
+            pageInfo = pageContext.PagesInfo.First(page => page.PageInfoModelId == pageId);
         }
 
-        // GET api/<ManifestController>/5
-        [HttpGet("{pageid}")]
-        public string Get(Guid pageid)
+        manifest.Name = pageInfo.PageTitle;
+
+        manifest.Description = pageInfo.PageDescription;
+
+        if (HttpContext.Request.IsHttps)
         {
-            return "value";
+            manifest.Start_url = "https://" + HttpContext.Request.Host.ToString() + pageInfo.PageFullPathWithData;
+        }
+        else
+        {
+            manifest.Start_url = "http://" + HttpContext.Request.Host.ToString() + pageInfo.PageFullPathWithData;
         }
 
-        // POST api/<ManifestController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        manifest.Id = manifest.Start_url;
 
-        // PUT api/<ManifestController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ManifestController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        await HttpContext.Response.WriteAsJsonAsync(manifest);
     }
 }
