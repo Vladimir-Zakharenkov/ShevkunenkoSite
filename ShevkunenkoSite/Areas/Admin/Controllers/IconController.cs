@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Data.SqlTypes;
 
 namespace ShevkunenkoSite.Areas.Admin.Controllers;
 
@@ -17,10 +16,11 @@ public class IconController(
     [HttpGet]
     public async Task<IActionResult> Index
         (
+        string? iconPath,
         Guid? iconId
         )
     {
-        if (!iconId.HasValue)
+        if (string.IsNullOrEmpty(iconPath))
         {
             var typesOfIcons = iconContext.Icons
                 .Where(icon => icon.IconFileName.Contains("ms-tile-558"));
@@ -29,12 +29,10 @@ public class IconController(
         }
         else
         {
-            if (await iconContext.Icons.Where(icon => icon.IconModelId == iconId).AnyAsync())
+            if (await iconContext.Icons.Where(icon => icon.PathToIcon == iconPath).AnyAsync())
             {
-                var sampleIcon = await iconContext.Icons.FirstAsync(icon => icon.IconModelId == iconId);
-
                 var listOfIcons = await iconContext.Icons
-                    .Where(icon => icon.PathToIcon == sampleIcon.PathToIcon)
+                    .Where(icon => icon.PathToIcon == iconPath)
                     .OrderBy(ic => ic.IconFileName)
                     .ToArrayAsync();
 
@@ -191,6 +189,33 @@ public class IconController(
                                     return View("AddNewType", addIcon);
                                 }
 
+                                if (!tag.Description.Contains("ms-tile-558"))
+                                {
+                                    ModelState.AddModelError("IconFileFormFile", $"Имя файла должно содержать «ms-tile-558»");
+
+                                    #region Удаляем созданный каталог и файл из папки Temp
+
+                                    DirectoryInfo dirInfo = new(pathToNewIcon);
+
+                                    if (dirInfo.Exists)
+                                    {
+                                        dirInfo.Delete(true);
+                                    }
+
+                                    FileInfo fileInfo = new(iconTempPath);
+
+                                    if (fileInfo.Exists)
+                                    {
+                                        fileInfo.Delete();
+                                        // альтернатива с помощью класса File
+                                        // File.Delete(path);
+                                    }
+
+                                    #endregion
+
+                                    return View("AddNewType", addIcon);
+                                }
+
                                 addIcon.IconFileName = tag.Description;
                             }
 
@@ -263,6 +288,33 @@ public class IconController(
                                     return View("AddNewType", addIcon);
                                 }
 
+                                if (tag.Description != "558")
+                                {
+                                    ModelState.AddModelError("IconFileFormFile", $"Ширина файла должна быть «558 px»");
+
+                                    #region Удаляем созданный каталог и файл из папки Temp
+
+                                    DirectoryInfo dirInfo = new(pathToNewIcon);
+
+                                    if (dirInfo.Exists)
+                                    {
+                                        dirInfo.Delete(true);
+                                    }
+
+                                    FileInfo fileInf = new(iconTempPath);
+
+                                    if (fileInf.Exists)
+                                    {
+                                        fileInf.Delete();
+                                        // альтернатива с помощью класса File
+                                        // File.Delete(path);
+                                    }
+
+                                    #endregion
+
+                                    return View("AddNewType", addIcon);
+                                }
+
                                 addIcon.IconSize = tag.Description + 'x';
                             }
 
@@ -275,6 +327,33 @@ public class IconController(
                                 if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
                                 {
                                     ModelState.AddModelError("IconFileFormFile", $"Не определить высоту файла «{addIcon.IconFileFormFile.FileName}»");
+
+                                    #region Удаляем созданный каталог и файл из папки Temp
+
+                                    DirectoryInfo dirInfo = new(pathToNewIcon);
+
+                                    if (dirInfo.Exists)
+                                    {
+                                        dirInfo.Delete(true);
+                                    }
+
+                                    FileInfo fileInf = new(iconTempPath);
+
+                                    if (fileInf.Exists)
+                                    {
+                                        fileInf.Delete();
+                                        // альтернатива с помощью класса File
+                                        // File.Delete(path);
+                                    }
+
+                                    #endregion
+
+                                    return View("AddNewType", addIcon);
+                                }
+
+                                if (tag.Description != "558")
+                                {
+                                    ModelState.AddModelError("IconFileFormFile", "Высота файла  должна быть «558 px»");
 
                                     #region Удаляем созданный каталог и файл из папки Temp
 
@@ -344,12 +423,11 @@ public class IconController(
 
             #endregion
 
-            #region Открытие страницы DetailsPage
+            #region Открытие страницы Index
 
             return RedirectToAction("Index");
 
             #endregion
-
         }
         else
         {

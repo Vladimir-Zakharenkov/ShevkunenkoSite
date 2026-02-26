@@ -17,19 +17,14 @@
     }
 }
 
-<img class="maxwidth300px mt-2"
-     src="@DataConfig.IconsFolder@currentIcon.PathToIcon@currentIcon.IconFileName"
-     title="@DataConfig.IconsFolder@currentIcon.PathToIcon@currentIcon.IconFileName"
-     alt="@DataConfig.IconsFolder@currentIcon.PathToIcon@currentIcon.IconFileName" />
-
-<p class="fs-4 text_shadow">
-    @DataConfig.IconsFolder@currentIcon.PathToIcon
+<p class="fs-4">
+    <span class="fw-bold text-primary">
+        Каталог иконок:
+    </span>
+    <span class="text_shadow">
+        @currentIcon.PathToIcon.TrimEnd('/')
+    </span>
 </p>
-
-<p class="fs-4 text_shadow">
-    @currentIcon.IconFileName
-</p>
-
 
 <p class="fs-4">
     <span class="fw-bold text-primary">
@@ -40,19 +35,47 @@
     </span>
 </p>
 
+<hr class="w-50 mx-auto" />
+
+<img class="maxwidth300px mt-2"
+     src="@DataConfig.IconsFolder@currentIcon.PathToIcon@currentIcon.IconFileName"
+     title="@DataConfig.IconsFolder@currentIcon.PathToIcon@currentIcon.IconFileName"
+     alt="@DataConfig.IconsFolder@currentIcon.PathToIcon@currentIcon.IconFileName" />
+
+<p class="fs-4 text_shadow mt-2">
+    @currentIcon.IconFileName
+</p>
+
+<hr class="w-50 mx-auto" />
+
 <div class="table-responsive">
 
     <table class="table table-sm table-hover caption-top align-middle fs-5">
 
         <thead>
 
-            <tr class="text-start text-primary">
+            <tr class="text-start">
 
-                <th scope="col" class="text-primary">Image</th>
-                <th scope="col" class="d-none d-md-table-cell text-primary">IconRel</th>
-                <th scope="col" class="text-primary">File</th>
-                <th scope="col" class="d-none d-lg-table-cell text-primary">Size</th>
-                <th scope="col"></th>
+                <th scope="col" class="text-primary border border-black border-end-2 border-start-0 border-top-0 border-bottom-0">
+                    Icon
+                </th>
+
+                <th scope="col" class="text-primary border border-black border-end-2 border-start-0 border-top-0 border-bottom-0">
+                    File
+                </th>
+
+                <th scope="col" class="text-primary d-none d-sm-table-cell border border-black border-end-2 border-start-0 border-top-0 border-bottom-0">
+                    Size
+                </th>
+
+                <th scope="col" class="text-primary d-none d-md-table-cell border border-black border-end-2 border-start-0 border-top-0 border-bottom-0">
+                    IconRel
+                </th>
+
+                <th scope="col" class="text-primary d-none d-lg-table-cell border border-black border-end-2 border-start-0 border-top-0 border-bottom-0">
+                    Purpose
+                </th>
+
                 <th scope="col"></th>
 
             </tr>
@@ -72,32 +95,67 @@
                     trStyle = string.Empty;
                 }
 
-                <tr class="text-start text_shadow @trStyle">
+                <tr class="text-start @trStyle">
 
                     <td scope="col">
+
                         <img class="maxwidth40px"
                              src="@DataConfig.IconsFolder@iconItem.PathToIcon@iconItem.IconFileName"
                              title="@DataConfig.IconsFolder@iconItem.PathToIcon@iconItem.IconFileName"
                              alt="@DataConfig.IconsFolder@iconItem.PathToIcon@iconItem.IconFileName" />
+
                     </td>
-                    <td scope="col" class="d-none d-md-table-cell">@iconItem.PathToIcon</td>
-                    <td scope="col">@iconItem.IconFileName</td>
-                    <td scope="col" class="d-none d-lg-table-cell">@iconItem.IconSize</td>
+
                     <td scope="col">
-                        <a class="btn btn-outline-primary  minwidth50px shadw"
-                            asp-area="Admin"
-                            asp-controller="IconInfo"
-                            asp-action="Index"
-                            asp-route-iconId="@iconItem.IconModelId"
-                           title="@DataConfig.IconsFolder@iconItem.PathToIcon@iconItem.IconFileName">View</a>
+
+                        @iconItem.IconFileName
+
                     </td>
-                    <td scope="col">
-                        <a class="btn btn-outline-success minwidth50px shadw"
-                            asp-area="Admin"
-                            asp-controller="IconInfo"
-                            asp-action="EditIcon"
-                            asp-route-iconId="@iconItem.IconModelId"
-                           title="@DataConfig.IconsFolder@iconItem.PathToIcon@iconItem.IconFileName">Edit</a>
+
+                    <td scope="col" class="d-none d-sm-table-cell">
+
+                        @iconItem.IconSize
+
+                    </td>
+
+                    <td scope="col" class="d-none d-md-table-cell">
+
+                        @iconItem.RelForIcon
+
+                    </td>
+
+                    <td scope="col" class="d-none d-lg-table-cell">
+
+                        @iconItem.IconPurpose
+
+                    </td>
+
+                    <td scope="col" class="text-center">
+
+                        <a asp-area="Admin"
+                           asp-controller="Icon"
+                           asp-action="Index"
+                           asp-route-iconPath="@iconItem.PathToIcon"
+                           asp-route-iconId="@iconItem.IconModelId"
+                           class="btn btn-outline-info px-1 py-0 m-1 shadw minwidth40px"
+                           title="подробно">
+
+                            Info
+
+                        </a>
+
+                        <a asp-area="Admin"
+                           asp-controller="Icon"
+                           asp-action="EditIcon"
+                           asp-route-iconPath="@iconItem.PathToIcon"
+                           asp-route-iconId="@iconItem.IconModelId"
+                           class="btn btn-outline-dark px-1 py-0 m-1 shadw minwidth40px"
+                           title="редактировать">
+
+                            Edit
+
+                        </a>
+
                     </td>
 
                 </tr>
