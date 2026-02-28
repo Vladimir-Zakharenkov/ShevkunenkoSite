@@ -130,7 +130,9 @@ else
 
             @if (Model.FileExists)
             {
-                <vc:view-image image-id="@Model.ImageItem.ImageFileModelId" css-class="mx-auto my-2 shadw" icon-type="@Model.IconType" />
+                <vc:view-image image-id="@Model.ImageItem.ImageFileModelId"
+                               css-class="mx-auto my-2 shadw maxwidth300px"
+                               icon-type="@Model.IconType" />
 
                 <p>
                     <span class="fw-bold fs-5 text-primary">Каталог: </span>

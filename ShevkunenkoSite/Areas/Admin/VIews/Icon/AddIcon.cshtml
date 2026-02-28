@@ -4,7 +4,9 @@
     string cssForLabel = "col-form-label text-primary fs-5 me-2";
 }
 
-<h1 class="fs-3 text_shadow mb-3">Добавить иконку</h1>
+<h1 class="fs-3 text_shadow mb-3">
+    Добавить иконку
+</h1>
 
 <div class="row">
 
@@ -15,6 +17,14 @@
               asp-action="AddIcon"
               method="post"
               enctype="multipart/form-data">
+
+            @* скрытые  поля *@
+            <div>
+
+                <input asp-for="PathToIcon" type="hidden" value=@Model.PathToIcon />
+                <input asp-for="NewIcon" type="hidden" value=@false />
+
+            </div>
 
             @* все ошибки ввода данных *@
             @if (Context.Request.Method == "POST")
@@ -73,98 +83,6 @@
                                     <span class="fs-6 text-success">
                                         выбрать файл иконки
                                     </span>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                @* Выбор каталога иконки *@
-                <div class="accordion-item mb-3 mt-2 shadw">
-
-                    @* заголовок группы «выбор каталога иконки» *@
-                    <h2 id="headingChoiceFile" class="accordion-header">
-
-                        <button class="accordion-button collapsed py-0 stranicy"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#ChoicePath"
-                                aria-expanded="true"
-                                aria-controls="ChoicePath">
-
-                            <span class="form-label fs-5">
-                                Выбор папки иконки :
-                            </span>
-
-                        </button>
-
-                    </h2>
-
-                    @* выбрать каталог *@
-                    <div id="ChoicePath"
-                         class="accordion-collapse collapse"
-                         aria-labelledby="headingChoicePath"
-                         data-bs-parent="#accordionAddIcon">
-
-                        <div class="accordion-body accordion-body-nointend text-center">
-
-                            <div>
-
-                                <label asp-for="PathToIcon" class="@cssForLabel"></label>
-
-                                <select asp-for="PathToIcon"
-                                        asp-items="ViewBag.IconPaths"
-                                        class="d-flex col-10 col-sm-6 col-xl-5 col-xxl-4 mx-auto my-1"
-                                        aria-describedby="PathToIconInputHelpBlock">
-
-                                    <option value="@string.Empty" selected>Каталог не выбран</option>
-
-                                </select>
-
-
-                                @if (Context.Request.Method == "POST")
-                                {
-                                    <span asp-validation-for="PathToIcon" class="text-danger"></span>
-                                }
-
-                                <div id="PathToIconInputHelpBlock" class="form-text mt-3">
-
-                                    <span class="fs-6 text-success">
-                                        каталог иконки
-                                    </span>
-
-                                </div>
-
-                                <hr class="w-50 mx-auto" />
-
-                                @* Новый каталог для иконки *@
-                                <div class="row g-2 justify-content-center">
-
-                                    <div class="col-auto">
-                                        <label asp-for="NewIconPath" class="@cssForLabel"></label>
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <input asp-for="NewIconPath"
-                                               id="NewImagePathInput"
-                                               class="form-control text-center"
-                                               aria-describedby="NewIconPathInputHelpBlock" />
-                                    </div>
-
-                                    <div id="NewIconPathInputHelpBlock" class="form-text">
-
-                                        <span class="fs-6 text-success">
-                                            новый каталог
-                                        </span>
-
-                                    </div>
-
-                                    <span asp-validation-for="NewIconPath" class="text-danger"></span>
 
                                 </div>
 

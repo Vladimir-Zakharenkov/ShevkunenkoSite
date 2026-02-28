@@ -12,8 +12,8 @@ using ShevkunenkoSite.Services;
 namespace ShevkunenkoSite.Services.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    [Migration("20260212173846_12-02-2026-20-36")]
-    partial class _120220262036
+    [Migration("20260228212715_28-02-2026-23-21")]
+    partial class _280220262321
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -518,6 +518,42 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.HasKey("IconFileModelId");
 
                     b.ToTable("IconFile");
+                });
+
+            modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.IconModel", b =>
+                {
+                    b.Property<Guid>("IconModelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("IconId");
+
+                    b.Property<string>("IconFileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconMimeType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconPurpose")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconSize")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PathToIcon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RelForIcon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IconModelId");
+
+                    b.ToTable("Icons");
                 });
 
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.ImageFileModel", b =>

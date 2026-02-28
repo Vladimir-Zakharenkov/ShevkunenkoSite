@@ -45,10 +45,9 @@ public record class IconModel
     #region Новый каталог (NotMapped)
 
     [NotMapped]
-    [Required(ErrorMessage = "Введите название каталога")]
     [DataType(DataType.Text)]
     [Display(Name = "Новый каталог :")]
-    public string NewIconPath { get; set; } = string.Empty;
+    public string? NewIconPath { get; set; }
 
     #endregion
 
@@ -57,6 +56,22 @@ public record class IconModel
     [NotMapped]
     [Display(Name = "Новый тип иконки :")]
     public bool NewIcon { get; set; }
+
+    #endregion
+
+    #region Ширина иконки (NotMapped)
+
+    [NotMapped]
+    [Display(Name = "Ширина иконки :")]
+    public string IconWidth { get; set; } = string.Empty;
+
+    #endregion
+
+    #region Высота иконки (NotMapped)
+
+    [NotMapped]
+    [Display(Name = "Высота иконки :")]
+    public string IconHeight { get; set; } = string.Empty;
 
     #endregion
 

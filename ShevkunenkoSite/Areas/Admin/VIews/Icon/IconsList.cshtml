@@ -48,6 +48,35 @@
 
 <hr class="w-50 mx-auto" />
 
+<div class="text-center">
+
+    @* Типы иконок *@
+    <a asp-area="Admin"
+       asp-controller="Icon"
+       asp-action="Index"
+       class="btn btn-outline-primary shadw py-1 me-5 minwidth100px"
+       title="типы иконок">
+
+        Иконки
+
+    </a>
+
+    @* Добавить иконку *@
+    <a asp-area="Admin"
+       asp-controller="Icon"
+       asp-action="AddIcon"
+       asp-route-pathForIcon="@currentIcon.PathToIcon"
+       class="btn btn-outline-danger shadw py-1 minwidth100px"
+       title="добавить иконку">
+
+        Добавить
+
+    </a>
+
+</div>
+
+<hr class="w-50 mx-auto" />
+
 <div class="table-responsive">
 
     <table class="table table-sm table-hover caption-top align-middle fs-5">
@@ -69,7 +98,7 @@
                 </th>
 
                 <th scope="col" class="text-primary d-none d-md-table-cell border border-black border-end-2 border-start-0 border-top-0 border-bottom-0">
-                    IconRel
+                    Rel
                 </th>
 
                 <th scope="col" class="text-primary d-none d-lg-table-cell border border-black border-end-2 border-start-0 border-top-0 border-bottom-0">
