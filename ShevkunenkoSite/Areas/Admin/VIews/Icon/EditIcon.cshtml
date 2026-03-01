@@ -1,0 +1,220 @@
+﻿@model IconModel
+
+@{
+    string cssForLabel = "col-form-label text-primary fs-5 me-2";
+}
+
+<h1 class="fs-3 text_shadow mb-3">
+    Изменить параметры  иконки
+</h1>
+
+<hr class="w-50 mx-auto" />
+
+<img class="maxwidth300px mt-2"
+     src="@DataConfig.IconsFolder@Model.PathToIcon@Model.IconFileName"
+     title="@DataConfig.IconsFolder@Model.PathToIcon@Model.IconFileName"
+     alt="@DataConfig.IconsFolder@Model.PathToIcon@Model.IconFileName" />
+
+<p class="fs-4 text_shadow mt-2">
+    @Model.IconFileName
+</p>
+
+<hr class="w-50 mx-auto" />
+
+
+<div class="row">
+
+    <div class="col col-lg-9 col-xl-8 d-block mx-auto px-2">
+
+        <form asp-area="Admin"
+              asp-controller="Icon"
+              asp-action="EditIcon"
+              method="post"
+              enctype="multipart/form-data">
+
+            @* скрытые  поля *@
+            <div>
+
+                <input asp-for="IconModelId" type="hidden" value=@Model.IconModelId />
+                <input asp-for="IconFileName" type="hidden" value=@Model.IconFileName />
+                <input asp-for="PathToIcon" type="hidden" value=@Model.PathToIcon />
+                <input asp-for="IconMimeType" type="hidden" value=@Model.IconMimeType />
+                <input asp-for="IconSize" type="hidden" value=@Model.IconSize />
+                <input asp-for="NewIcon" type="hidden" value=@false />
+
+            </div>
+
+            @* все ошибки ввода данных *@
+            @if (Context.Request.Method == "POST")
+            {
+                <div asp-validation-summary="All" class="text-danger border border-top-0 border-danger mb-3"></div>
+            }
+
+            @* данные по группам *@
+            <div class="accordion" id="accordionAddIcon">
+
+                @* Параметр rel в метатеге link *@
+                <div class="accordion-item mb-3 mt-2 shadw">
+
+                    @* заголовок группы «параметр rel в метатеге link» *@
+                    <h2 id="headingRel" class="accordion-header">
+
+                        <button class="accordion-button collapsed py-0 stranicy"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#Rel"
+                                aria-expanded="true"
+                                aria-controls="Rel">
+
+                            <span class="form-label fs-5">
+                                Параметр rel :
+                            </span>
+
+                        </button>
+
+                    </h2>
+
+                    @* выбрать параметр rel *@
+                    <div id="Rel"
+                         class="accordion-collapse collapse"
+                         aria-labelledby="headingRel"
+                         data-bs-parent="#accordionAddIcon">
+
+                        <div class="accordion-body accordion-body-nointend text-center">
+
+                            <div class="row g-2 justify-content-center">
+
+                                <label asp-for="RelForIcon" class="@cssForLabel col-auto"></label>
+
+                                <div class="col-auto" aria-describedby="RelForIconInputHelpBlock">
+
+                                    <select asp-for="RelForIcon" id="RelForIconInput" class="form-select">
+
+                                        <option value="apple-touch-icon">apple-touch-icon</option>
+                                        <option value="icon">icon</option>
+                                        <option value="mask-icon">mask-icon</option>
+                                        <option value="shortcut icon">shortcut icon</option>
+
+                                    </select>
+
+                                </div>
+
+                                <div id="RelForIconInputHelpBlock" class="form-text">
+
+                                    <span class="fs-6 text-success">rel в метатеге link</span>
+                                    <br class="d-md-none" />
+                                    <span class="fs-6 text-danger"> - обязательное поле</span>
+
+                                </div>
+
+                                @if (Context.Request.Method == "POST")
+                                {
+                                    <span asp-validation-for="RelForIcon" class="text-danger"></span>
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                @* Параметр purpose для файла manifest *@
+                <div class="accordion-item mb-3 mt-2 shadw">
+
+                    @* заголовок группы «параметр purpose для файла manifest» *@
+                    <h2 id="headingPurpose" class="accordion-header">
+
+                        <button class="accordion-button collapsed py-0 stranicy"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#Purpose"
+                                aria-expanded="true"
+                                aria-controls="Purpose">
+
+                            <span class="form-label fs-5">
+                                Параметр purpose :
+                            </span>
+
+                        </button>
+
+                    </h2>
+
+                    @* выбрать параметр purpose *@
+                    <div id="Purpose"
+                         class="accordion-collapse collapse"
+                         aria-labelledby="headingPurpose"
+                         data-bs-parent="#accordionAddIcon">
+
+                        <div class="accordion-body accordion-body-nointend text-center">
+
+                            <div class="row g-2 justify-content-center">
+
+                                <label asp-for="IconPurpose" class="@cssForLabel col-auto"></label>
+
+                                <div class="col-auto" aria-describedby="PurposeInputHelpBlock">
+
+                                    <select asp-for="IconPurpose" id="PurposeForIconInput" class="form-select">
+
+                                        <option value="any">any</option>
+                                        <option value="monochrome">monochrome</option>
+                                        <option value="maskable">maskable</option>
+
+                                    </select>
+
+                                </div>
+
+                                <div id="PurposeInputHelpBlock" class="form-text">
+
+                                    <span class="fs-6 text-success">purpose в файле manifest</span>
+                                    <br class="d-md-none" />
+                                    <span class="fs-6 text-danger"> - обязательное поле</span>
+
+                                </div>
+
+                                @if (Context.Request.Method == "POST")
+                                {
+                                    <span asp-validation-for="IconPurpose" class="text-danger"></span>
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @* Сохранить - Отменить*@
+            <div class="card-footer p-0 pb-2 mt-4 mx-auto maxwidth700px">
+
+                <button type="submit"
+                        class="btn btn-outline-success m-2 me-3 text-center shadw"
+                        title="сохранить">
+
+                    Сохранить
+
+                </button>
+
+                <a class="btn btn-outline-danger m-2 shadw"
+                   asp-area="Admin"
+                   asp-controller="Icon"
+                   asp-action="Index"
+                   asp-route-iconPath ="@Model.PathToIcon"
+                   asp-route-iconId="@Model.IconModelId"
+                   title="отменить">
+
+                    Отменить
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

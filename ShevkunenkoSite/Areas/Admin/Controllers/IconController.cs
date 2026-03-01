@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Runtime.Intrinsics.Arm;
-using static System.Net.Mime.MediaTypeNames;
+using System.IO;
 
 namespace ShevkunenkoSite.Areas.Admin.Controllers;
 
@@ -739,6 +738,209 @@ public class IconController(
         else
         {
             return View(new IconModel());
+        }
+    }
+
+    #endregion
+
+    #region Изменить параметры иконки
+
+    [HttpGet]
+    public async Task<IActionResult> EditIcon(Guid? iconId)
+    {
+        IconModel editIcon = new();
+
+        if (iconId.HasValue
+            && await iconContext.Icons
+                .Where(icon => icon.IconModelId == iconId)
+                .AnyAsync())
+        {
+            #region Инициализация экземпляра иконки
+
+            editIcon = await iconContext.Icons
+                .FirstAsync(icon => icon.IconModelId == iconId);
+
+            #endregion
+
+            return View(editIcon);
+        }
+        else
+        {
+            return RedirectToAction(nameof(Index));
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [DisableRequestSizeLimit]
+    [RequestSizeLimit(5_268_435_456)]
+    [RequestFormLimits(MultipartBodyLengthLimit = 5268435456)]
+    public async Task<IActionResult> EditIcon(
+[Bind(
+                "IconModelId," +
+                "IconFileName," +
+                "PathToIcon," +
+                "IconMimeType," +
+                "RelForIcon," +
+                "IconSize," +
+                "IconPurpose," +
+                "IconFileFormFile," +
+                "NewIconPath," +
+                "NewIcon"
+        )]
+        IconModel editIcon)
+    {
+        if (ModelState.IsValid)
+        {
+            #region Инициализация экземпляра иконки
+
+            var iconUpdate = await iconContext.Icons
+                .FirstAsync(icon => icon.IconModelId == editIcon.IconModelId);
+
+            #endregion
+
+            #region Параметр PathToIcon
+
+            iconUpdate.PathToIcon = editIcon.PathToIcon;
+
+            #endregion
+
+            #region Параметр FileName
+
+            iconUpdate.IconFileName = editIcon.IconFileName;
+
+            #endregion
+
+            #region Параметр MYME Type
+
+            iconUpdate.IconMimeType = editIcon.IconMimeType;
+
+            #endregion
+
+            #region Параметр IconSize
+
+            iconUpdate.IconSize = editIcon.IconSize;
+
+            #endregion
+
+            #region Параметр RelForIcon
+
+            iconUpdate.RelForIcon = editIcon.RelForIcon;
+
+            #endregion
+
+            #region Параметр IconPurpose
+
+            iconUpdate.IconPurpose = editIcon.IconPurpose;
+
+            #endregion
+
+            #region Сохранить изменения
+
+            await iconContext.SaveChangesInIconsAsync();
+
+            #endregion
+
+            #region Открытие страницы Index
+
+            return RedirectToAction("Index", new { iconPath = iconUpdate.PathToIcon, iconId = iconUpdate.IconModelId });
+
+            #endregion
+        }
+        else
+        {
+            return View(new IconModel());
+        }
+    }
+
+    #endregion
+
+    #region Удалить иконку
+
+    [HttpGet]
+    public async Task<IActionResult> DeleteIcon(Guid? iconId)
+    {
+        IconModel deleteIcon = new();
+
+        if (iconId.HasValue
+            && await iconContext.Icons
+                .Where(icon => icon.IconModelId == iconId)
+                .AnyAsync())
+        {
+            #region Инициализация экземпляра иконки
+
+            deleteIcon = await iconContext.Icons
+                .FirstAsync(icon => icon.IconModelId == iconId);
+
+            #endregion
+
+            return View(deleteIcon);
+        }
+        else
+        {
+            return RedirectToAction(nameof(Index));
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [DisableRequestSizeLimit]
+    [RequestSizeLimit(5_268_435_456)]
+    [RequestFormLimits(MultipartBodyLengthLimit = 5268435456)]
+    public async Task<IActionResult> DeleteIcon(
+[Bind(
+                "IconModelId," +
+                "IconFileName," +
+                "PathToIcon," +
+                "IconMimeType," +
+                "RelForIcon," +
+                "IconSize," +
+                "IconPurpose," +
+                "IconFileFormFile," +
+                "NewIconPath," +
+                "NewIcon"
+        )]
+        IconModel deleteIcon)
+    {
+        if (ModelState.IsValid)
+        {
+            #region Инициализация экземпляра иконки
+
+            var iconDelete = await iconContext.Icons
+                .FirstAsync(icon => icon.IconModelId == deleteIcon.IconModelId);
+
+            #endregion
+
+            #region Перемещаем файл иконки в папку Temp
+
+            string iconPath = Path.Combine(rootPath + DataConfig.IconsFolder + iconDelete.PathToIcon, iconDelete.IconFileName).Replace('\\', '/');
+
+            string iconTempPath = Path.Combine(rootPath + DataConfig.TempPath, iconDelete.IconFileName).Replace('\\', '/');
+
+            FileInfo iconFile = new(iconPath);
+
+            if (iconFile.Exists)
+            {
+                iconFile.MoveTo(iconTempPath);
+            }
+
+            #endregion
+
+            #region Удалить иконку
+
+            await iconContext.DeleteIconAsync(iconDelete.IconModelId);
+
+            #endregion
+
+            #region Открытие страницы Index
+
+            return RedirectToAction("Index", new { iconPath = iconDelete.PathToIcon });
+
+            #endregion
+        }
+        else
+        {
+            return View(deleteIcon);
         }
     }
 

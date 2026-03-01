@@ -3,6 +3,10 @@
 @{
     string trStyle = string.Empty;
 
+    string btnStyle = "btn px-1 py-0 m-1 shadw minwidth40px";
+
+    string delBtn = string.Empty;
+
     IconModel currentIcon;
 
     Guid currentId;
@@ -124,6 +128,15 @@
                     trStyle = string.Empty;
                 }
 
+                if (iconItem.IconFileName.Contains("ms-tile-558."))
+                {
+                    delBtn = "d-none";
+                }
+                else
+                {
+                    delBtn = string.Empty;
+                }
+
                 <tr class="text-start @trStyle">
 
                     <td scope="col">
@@ -166,7 +179,7 @@
                            asp-action="Index"
                            asp-route-iconPath="@iconItem.PathToIcon"
                            asp-route-iconId="@iconItem.IconModelId"
-                           class="btn btn-outline-info px-1 py-0 m-1 shadw minwidth40px"
+                           class="@btnStyle btn-outline-info"
                            title="подробно">
 
                             Info
@@ -176,14 +189,25 @@
                         <a asp-area="Admin"
                            asp-controller="Icon"
                            asp-action="EditIcon"
-                           asp-route-iconPath="@iconItem.PathToIcon"
                            asp-route-iconId="@iconItem.IconModelId"
-                           class="btn btn-outline-dark px-1 py-0 m-1 shadw minwidth40px"
+                           class="@btnStyle btn-outline-success"
                            title="редактировать">
 
                             Edit
 
                         </a>
+
+                        <a asp-area="Admin"
+                           asp-controller="Icon"
+                           asp-action="DeleteIcon"
+                           asp-route-iconId="@iconItem.IconModelId"
+                           class="@btnStyle btn-outline-danger @delBtn"
+                           title="удалить">
+
+                            Del
+
+                        </a>
+
 
                     </td>
 
