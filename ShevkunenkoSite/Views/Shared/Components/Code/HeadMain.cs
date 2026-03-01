@@ -2,31 +2,39 @@
 
 public class HeadMain(
     IPageInfoRepository pageInfoContext,
-    IIconFileRepository iconFileContext,
+    IIconRepository iconContext,
     IBooksAndArticlesRepository bookContext) : ViewComponent
 {
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        PageInfoModel pageInfoModel = await pageInfoContext.GetPageInfoByPathAsync(HttpContext);
+        HeadViewModel headModel = new();
 
-        BooksAndArticlesModel? bookOrArticle = null;
+        #region HttpContext запроса
+
+        headModel.PageInfo = await pageInfoContext.GetPageInfoByPathAsync(HttpContext);
+
+        #endregion
 
         #region Список иконок в теге <head>
 
-        List<IconFileModel> iconList = await iconFileContext.IconFiles
-            .Where(icon => icon.IconPath == pageInfoModel.PageIconPath)
-            .AsNoTracking()
-            .ToListAsync();
-
-        if (iconList.Count == 0)
+        if (await iconContext.Icons.Where(icon => icon.PathToIcon == headModel.PageInfo.PageIconPath).AnyAsync())
         {
-            iconList = await iconFileContext.IconFiles
-                .Where(icon => icon.IconPath == "main/")
+            headModel.IconsForHead = await iconContext.Icons
+                .Where(icon => icon.PathToIcon == headModel.PageInfo.PageIconPath)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+        else
+        {
+            headModel.IconsForHead = await iconContext.Icons
+                .Where(icon => icon.PathToIcon == "main/")
                 .AsNoTracking()
                 .ToListAsync();
         }
 
         #endregion
+
+        #region Если запрос к книге или статье
 
         if (HttpContext.Request.QueryString.ToString().Contains("articleid", StringComparison.CurrentCultureIgnoreCase))
         {
@@ -36,15 +44,12 @@ public class HeadMain(
                     && Guid.TryParse(articleGuid, out Guid newGuid)
                     && await bookContext.BooksAndArticles.Where(book => book.BooksAndArticlesModelId == newGuid).AnyAsync())
             {
-                bookOrArticle = await bookContext.BooksAndArticles.FirstAsync(book => book.BooksAndArticlesModelId == newGuid);
+                headModel.BookOrArticle = await bookContext.BooksAndArticles.FirstAsync(book => book.BooksAndArticlesModelId == newGuid);
             }
         }
 
-        return View(new HeadViewModel
-        {
-            PageInfo = pageInfoModel,
-            IconList = iconList,
-            BookOrArticle = bookOrArticle
-        });
+        #endregion
+
+        return View(headModel);
     }
 }

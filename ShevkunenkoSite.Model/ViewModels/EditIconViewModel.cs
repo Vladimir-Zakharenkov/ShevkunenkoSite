@@ -2,7 +2,7 @@
 
 public class EditIconViewModel
 {
-    public IconFileModel EditIcon { get; set; } = new();
+    public IconModel EditIcon { get; set; } = new();
 
     [DataType(DataType.Upload)]
     [Display(Name = "Выбрать иконку :")]

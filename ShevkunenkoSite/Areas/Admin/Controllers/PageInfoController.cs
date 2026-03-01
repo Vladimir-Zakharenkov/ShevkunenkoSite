@@ -10,7 +10,7 @@ public class PageInfoController(
     IPageInfoRepository pageInfoContext,
     IMovieFileRepository movieContext,
     IFilmFileRepository filmContext,
-    IIconFileRepository iconContext,
+    IIconRepository iconContext,
     IImageFileRepository imageContext,
     IBackgroundFotoRepository backgroundContext,
     IBooksAndArticlesRepository bookAndArticleContext,
@@ -117,16 +117,16 @@ public class PageInfoController(
 
             #region Инициализация экземпляра иконки для страницы
 
-            if (await iconContext.IconFiles
-                .Where(icon => icon.IconPath == pageItem.PageIconPath && icon.IconFileName == DataConfig.IconItem).AnyAsync())
+            if (await iconContext.Icons
+                .Where(icon => icon.PathToIcon == pageItem.PageIconPath && icon.IconFileName == DataConfig.IconItem).AnyAsync())
             {
-                pageItem.IconItem = await iconContext.IconFiles
-                    .FirstAsync(icon => icon.IconPath == pageItem.PageIconPath && icon.IconFileName == DataConfig.IconItem);
+                pageItem.IconItem = await iconContext.Icons
+                    .FirstAsync(icon => icon.PathToIcon == pageItem.PageIconPath && icon.IconFileName == DataConfig.IconItem);
             }
             else
             {
-                pageItem.IconItem = await iconContext.IconFiles
-                    .FirstAsync(icon => icon.IconPath == "main/" && icon.IconFileName == DataConfig.IconItem);
+                pageItem.IconItem = await iconContext.Icons
+                    .FirstAsync(icon => icon.PathToIcon == "main/" && icon.IconFileName == DataConfig.IconItem);
             }
 
             #endregion
@@ -1627,17 +1627,17 @@ public class PageInfoController(
 
             #region Инициализация иконки страницы
 
-            if (await iconContext.IconFiles
-                .Where(icon => icon.IconPath == editPage.PageIconPath && icon.IconFileName == DataConfig.IconItem)
+            if (await iconContext.Icons
+                .Where(icon => icon.PathToIcon == editPage.PageIconPath && icon.IconFileName == DataConfig.IconItem)
                 .AnyAsync())
             {
-                editPage.IconItem = await iconContext.IconFiles
-                    .FirstAsync(icon => icon.IconPath == editPage.PageIconPath && icon.IconFileName == DataConfig.IconItem);
+                editPage.IconItem = await iconContext.Icons
+                    .FirstAsync(icon => icon.PathToIcon == editPage.PageIconPath && icon.IconFileName == DataConfig.IconItem);
             }
             else
             {
-                editPage.IconItem = await iconContext.IconFiles
-                    .FirstAsync(icon => icon.IconPath == "main/" && icon.IconFileName == DataConfig.IconItem);
+                editPage.IconItem = await iconContext.Icons
+                    .FirstAsync(icon => icon.PathToIcon == "main/" && icon.IconFileName == DataConfig.IconItem);
             }
 
             #endregion
@@ -2090,18 +2090,18 @@ public class PageInfoController(
 
             #region Инициализация иконки страницы
 
-            IconFileModel editPageiconItem;
+            IconModel editPageiconItem;
 
-            if (await iconContext.IconFiles
-                .Where(icon => icon.IconPath == pageUpdate.PageIconPath && icon.IconFileName == DataConfig.IconItem).AnyAsync())
+            if (await iconContext.Icons
+                .Where(icon => icon.PathToIcon == pageUpdate.PageIconPath && icon.IconFileName == DataConfig.IconItem).AnyAsync())
             {
-                editPageiconItem = await iconContext.IconFiles
-                    .FirstAsync(icon => icon.IconPath == pageUpdate.PageIconPath && icon.IconFileName == DataConfig.IconItem);
+                editPageiconItem = await iconContext.Icons
+                    .FirstAsync(icon => icon.PathToIcon == pageUpdate.PageIconPath && icon.IconFileName == DataConfig.IconItem);
             }
             else
             {
-                editPageiconItem = await iconContext.IconFiles
-                    .FirstAsync(icon => icon.IconPath == "main/" && icon.IconFileName == DataConfig.IconItem);
+                editPageiconItem = await iconContext.Icons
+                    .FirstAsync(icon => icon.PathToIcon == "main/" && icon.IconFileName == DataConfig.IconItem);
             }
 
             #endregion

@@ -651,14 +651,14 @@
 						{
 							<img itemprop="image"
 								 class="card-img-top m-3 maxwidth300px shadw d-block mx-auto"
-								 src="@DataConfig.IconsFolder/@Model.IconItem.IconPath/@Model.IconItem.IconFileName"
+								 src="@DataConfig.IconsFolder/@Model.IconItem.PathToIcon/@Model.IconItem.IconFileName"
 								 alt="иконка страницы"
 								 title="иконка страницы" />
 
 							<p class="fs-5 text_shadow text-start text-sm-center">
-								<a href="@Url.Content($"{@DataConfig.IconsFolder}{Model.IconItem.IconPath}\\/{Model.IconItem.IconFileName}")"
+								<a href="@Url.Content($"{@DataConfig.IconsFolder}{Model.IconItem.PathToIcon}\\/{Model.IconItem.IconFileName}")"
 								   onclick="this.target='_blank'">
-									@DataConfig.IconsFolder@Model.IconItem.IconPath@Model.IconItem.IconFileName
+									@DataConfig.IconsFolder@Model.IconItem.PathToIcon@Model.IconItem.IconFileName
 								</a>
 							</p>
 						}

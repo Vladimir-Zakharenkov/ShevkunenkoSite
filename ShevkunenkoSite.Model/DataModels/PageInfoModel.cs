@@ -433,7 +433,7 @@ public class PageInfoModel
     #region Экземпляр иконки странницы (NotMapped)
 
     [NotMapped]
-    public IconFileModel? IconItem { get; set; }
+    public IconModel? IconItem { get; set; }
 
     #endregion
 

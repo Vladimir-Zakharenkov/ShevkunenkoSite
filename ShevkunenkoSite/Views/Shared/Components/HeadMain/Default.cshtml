@@ -44,29 +44,22 @@
     }
 
     @* Иконки страницы *@
-    @foreach (var p in Model.IconList)
+    @foreach (var p in Model.IconsForHead)
     {
-        if (p.IconRel == "shortcut icon")
+        if (p.RelForIcon == "shortcut icon")
         {
-            <link rel="shortcut icon" sizes="16x16 20x20 24x24 32x32 40x40 48x48 64x64 256x256" href="@DataConfig.IconsFolder@p.IconPath@p.IconFileName" />
-            <link rel="shortcut icon" type="image/x-icon" sizes="16x16 20x20 24x24 32x32 40x40 48x48 64x64 256x256" href="@DataConfig.IconsFolder@p.IconPath@p.IconFileName" />
-            <link rel="shortcut icon" type="image/vnd.microsoft.icon" sizes="16x16 20x20 24x24 32x32 40x40 48x48 64x64 256x256" href="@DataConfig.IconsFolder@p.IconPath@p.IconFileName" />
-            <link rel="icon" sizes="16x16 20x20 24x24 32x32 40x40 48x48 64x64 256x256" href="@DataConfig.IconsFolder@p.IconPath@p.IconFileName" />
-            <link rel="icon" type="image/x-icon" sizes="16x16 20x20 24x24 32x32 40x40 48x48 64x64 256x256" href="@DataConfig.IconsFolder@p.IconPath@p.IconFileName" />
-            <link rel="icon" type="image/vnd.microsoft.icon" sizes="16x16 20x20 24x24 32x32 40x40 48x48 64x64 256x256" href="@DataConfig.IconsFolder@p.IconPath@p.IconFileName" />
-        }
-        else if (p.IconRel == "mask-icon")
-        {
-            <link rel="mask-icon" type="image/svg+xml" sizes="any" href="@DataConfig.IconsFolder@p.IconPath@p.IconFileName" color="#fffff" />
+            <link rel="shortcut icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.PathToIcon@p.IconFileName" />
+            <link rel="shortcut icon" type="image/x-icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.PathToIcon@p.IconFileName" />
+            <link rel="shortcut icon" type="image/vnd.microsoft.icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.PathToIcon@p.IconFileName" />
+            <link rel="icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.PathToIcon@p.IconFileName" />
+            <link rel="icon" type="image/x-icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.PathToIcon@p.IconFileName" />
+            <link rel="icon" type="image/vnd.microsoft.icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.PathToIcon@p.IconFileName" />
         }
         else
         {
-            string widthHeight = @p.IconWidth + "x" + @p.IconHeight;
-
-            <link rel="@p.IconRel" type="@p.IconType" sizes="@widthHeight" href="@DataConfig.IconsFolder@p.IconPath@p.IconFileName" />
+            <link rel="@p.RelForIcon" type="@p.IconMimeType" sizes="@p.IconSize" href="@DataConfig.IconsFolder@p.PathToIcon@p.IconFileName" />
         }
     }
-
 
     @* Browserconfig *@
     <meta name="msapplication-config" content="@DataConfig.BrowserconfigPath/@Model.PageInfo.BrowserConfig" />

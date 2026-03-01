@@ -153,7 +153,6 @@ if (environment.IsDevelopment())
 
 services.AddScoped<IPageInfoRepository, PageInfoImplementation>();
 services.AddScoped<IBackgroundFotoRepository, BackGroundFotoImplementation>();
-services.AddScoped<IIconFileRepository, IconFileImplementation>();
 services.AddScoped<IImageFileRepository, ImageFileImplementation>();
 services.AddScoped<IMovieFileRepository, MovieFileImplementation>();
 services.AddScoped<IAccessRepository, AccessImplementation>();

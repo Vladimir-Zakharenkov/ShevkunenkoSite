@@ -391,7 +391,7 @@
 
                             <a class="@refDropdownClass"
                                asp-area="Admin"
-                               asp-controller="IconInfo"
+                               asp-controller="Icon"
                                asp-action="Index"
                                temprop="item">
 
@@ -411,7 +411,8 @@
 
                             <a class="@refDropdownClass"
                                asp-area="Admin"
-                               asp-page="/DBCRUD/Icon-Add"
+                               asp-controller="Icon"
+                               asp-action="AddIcon"
                                itemprop="item">
 
                                 <span itemprop="name">Добавить</span>
@@ -419,26 +420,6 @@
                             </a>
 
                             <meta itemprop="position" content="1">
-
-                        </li>
-
-                        @* Список иконок (новый) *@
-                        <li class="@liDropdownClass"
-                            title="список иконок для страниц"
-                            itemprop="itemListElement"
-                            itemscope itemtype="http://schema.org/ListItem">
-
-                            <a class="@refDropdownClass"
-                               asp-area="Admin"
-                               asp-controller="Icon"
-                               asp-action="Index"
-                               temprop="item">
-
-                                <span itemprop="name">Список (new)</span>
-
-                            </a>
-
-                            <meta itemprop="position" content="2">
 
                         </li>
 
