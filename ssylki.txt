@@ -1,4 +1,5 @@
 https://developer.mozilla.org/ru/docs/Web/Progressive_web_apps/Manifest
+
 https://w3c.github.io/manifest/#dfn-browser
 
 https://developer.mozilla.org/ru/docs/Mozilla/Add-ons/WebExtensions/manifest.json
@@ -20,4 +21,6 @@ https://stackoverflow.com/questions/70083563/how-can-i-add-data-from-a-json-to-a
 https://learn.javascript.ru/fetch
 
 https://stackoverflow.com/questions/36369082/relative-paths-with-fetch-in-javascript
+
+https://veomedia.ru/instrumenty/generator-favicon/
 
