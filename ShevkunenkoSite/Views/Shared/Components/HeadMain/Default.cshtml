@@ -43,7 +43,7 @@
 
     }
 
-    @* Иконки страницы *@
+    @*---------------------------------- Иконки страницы --------------------------------------------------------------*@
     @foreach (var p in Model.IconsForHead)
     {
         if (p.RelForIcon == "shortcut icon")
@@ -60,6 +60,7 @@
             <link rel="@p.RelForIcon" type="@p.IconMimeType" sizes="@p.IconSize" href="@DataConfig.IconsFolder@p.PathToIcon@p.IconFileName" />
         }
     }
+    @*-------------------------------------------------------------------------------------------------------------*@
 
     @* Browserconfig *@
     <meta name="msapplication-config" content="@DataConfig.BrowserconfigPath/@Model.PageInfo.BrowserConfig" />
@@ -69,9 +70,10 @@
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#fffffff" />
 
-    @* Manifest *@
+    @*----------------------------------- Manifest --------------------------------------------------------------*@
     @* <link rel="manifest" href="@DataConfig.ManifestPath/@Model.PageInfo.Manifest" /> *@
     <link rel="manifest" crossorigin="use-credentials" href="/manifest/manifest?pageid=@Model.PageInfo.PageInfoModelId" />
+    @*-------------------------------------------------------------------------------------------------------------*@
 
     @* Данные OpenGraph*@
 

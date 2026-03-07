@@ -142,7 +142,7 @@ public class PageInfoModel
     [Required(ErrorMessage = "Выберите папку с иконками")]
     [Display(Name = "Папка с иконками :")]
     [DataType(DataType.Text)]
-    public string PageIconPath { get; set; } = "0.5";
+    public string PageIconPath { get; set; } = string.Empty;
 
     #endregion
 
