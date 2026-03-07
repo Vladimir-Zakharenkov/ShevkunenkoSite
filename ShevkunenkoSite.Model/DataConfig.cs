@@ -4,12 +4,6 @@ namespace ShevkunenkoSite.Models;
 
 public class DataConfig
 {
-    #region Папка с файлами manifest.json
-
-    public static string ManifestPath { get; set; } = null!;
-
-    #endregion
-
     #region Папка временного хранения
 
     public static string TempPath { get; set; } = null!;

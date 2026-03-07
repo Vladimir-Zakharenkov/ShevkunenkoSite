@@ -43,6 +43,8 @@
 
     }
 
+
+
     @*---------------------------------- Иконки страницы --------------------------------------------------------------*@
     @foreach (var p in Model.IconsForHead)
     {
@@ -62,6 +64,8 @@
     }
     @*-------------------------------------------------------------------------------------------------------------*@
 
+
+
     @* Browserconfig *@
     <meta name="msapplication-config" content="@DataConfig.BrowserconfigPath/@Model.PageInfo.BrowserConfig" />
     <meta name="application-name" lang="ru" content="@Model.PageInfo.PageTitle" />
@@ -70,10 +74,13 @@
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#fffffff" />
 
+
+
     @*----------------------------------- Manifest --------------------------------------------------------------*@
-    @* <link rel="manifest" href="@DataConfig.ManifestPath/@Model.PageInfo.Manifest" /> *@
     <link rel="manifest" crossorigin="use-credentials" href="/manifest/manifest?pageid=@Model.PageInfo.PageInfoModelId" />
     @*-------------------------------------------------------------------------------------------------------------*@
+
+
 
     @* Данные OpenGraph*@
 

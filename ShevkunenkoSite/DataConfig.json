@@ -2,8 +2,6 @@
   "ProjectData": {
     "TempPath": "\\Temp\\",
 
-    "ManifestPath": "/manifests/",
-
     "IconsFolder": "/images/pageicons/",
 
     "IconFoldersPath": "/wwwroot/images/pageicons/",
