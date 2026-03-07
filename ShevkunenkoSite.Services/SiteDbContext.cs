@@ -32,7 +32,7 @@ public class SiteDbContext(DbContextOptions<SiteDbContext> options) : DbContext(
 
     public DbSet<FilmFileModel> Films => Set<FilmFileModel>();
 
-    public DbSet<ManifestModel> Manifest => Set<ManifestModel>();
+    public DbSet<IconTypeModel> IconTypes => Set<IconTypeModel>();
 
     #endregion
 
