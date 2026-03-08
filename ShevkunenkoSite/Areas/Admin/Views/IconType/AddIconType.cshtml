@@ -1,0 +1,148 @@
+﻿@model IconTypeModel
+
+@{
+    string cssForLabel = "col-form-label text-primary fs-5 me-2";
+}
+
+<h1 class="fs-3 text_shadow mb-3">Новый тип иконки</h1>
+
+<div class="row">
+
+    <div class="col col-lg-9 col-xl-8 d-block mx-auto px-2">
+
+        <form asp-area="Admin"
+              asp-controller="IconType"
+              asp-action="AddIconType"
+              method="post"
+              enctype="multipart/form-data">
+
+            @* все ошибки ввода данных *@
+            @if (Context.Request.Method == "POST")
+            {
+                <div asp-validation-summary="All" class="text-danger border border-top-0 border-danger mb-3"></div>
+            }
+
+            @* Выбор файла иконки *@
+            <div>
+
+                <label asp-for="IconFileFormFile" class="@cssForLabel"></label>
+
+                <input asp-for="IconFileFormFile"
+                       id="IconFormFileInput"
+                       class="form-control mt-2 w-50 mx-auto"
+                       aria-describedby="IconFormFileInputHelpBlock" />
+
+                @if (Context.Request.Method == "POST")
+                {
+                    <span asp-validation-for="IconFileFormFile" class="text-danger"></span>
+                }
+
+                <div id="IcinFormFileInputHelpBlock" class="form-text mt-3">
+
+                    <span class="fs-6 text-success">
+                        выбрать иконку 558x558
+                    </span>
+
+                </div>
+
+                <hr class="w-50 mx-auto" />
+
+            </div>
+
+            @* Новый каталог для иконки *@
+            <div>
+
+                <div class="col-auto">
+                    <label asp-for="PathToIcon" class="@cssForLabel"></label>
+                </div>
+
+                <div class="col-auto col-sm-8 col-xl-7 mx-auto">
+                    <input asp-for="PathToIcon"
+                           id="NewIconPathInput"
+                           class="form-control text-center"
+                           aria-describedby="NewIconPathInputHelpBlock" />
+                </div>
+
+                <div id="NewIconPathInputHelpBlock" class="form-text">
+
+                    <span class="fs-6 text-success">
+                        новый каталог
+                    </span>
+                    <br class="d-md-none" />
+                    <span class="fs-6 text-danger">
+                        - обязательное поле
+                    </span>
+
+                </div>
+
+                @if (Context.Request.Method == "POST")
+                {
+                    <span asp-validation-for="PathToIcon" class="text-danger"></span>
+                }
+
+                <hr class="w-50 mx-auto" />
+
+            </div>
+
+            @* Описание картинки *@
+            <div>
+
+                <div class="col-auto">
+                    <label class="@cssForLabel" asp-for="IconTypeDescription"></label>
+                </div>
+
+                <textarea id="IconTypeDescriptionInput" class="col-12 col-sm-9 col-lg-10 col-xl-8 mx-auto"
+                          asp-for="IconTypeDescription"
+                          rows="3"
+                          aria-describedby="IconTypeDescriptionHelpBlock">
+                 </textarea>
+
+                <div id="IconTypeDescriptionHelpBlock" class="form-text">
+
+                    <span class="fs-6 text-success">
+                        описание иконки
+                    </span>
+                    <br class="d-md-none" />
+                    <span class="fs-6 text-danger">
+                        - обязательное поле
+                    </span>
+
+                </div>
+
+                @if (Context.Request.Method == "POST")
+                {
+                    <span asp-validation-for="IconTypeDescription" class="text-danger"></span>
+                }
+
+                <hr class="w-50 mx-auto" />
+
+            </div>
+
+            @* Сохранить - Отменить*@
+            <div class="card-footer p-0 pb-2 mt-4 mx-auto maxwidth700px">
+
+                <button type="submit"
+                        class="btn btn-outline-success m-2 me-3 text-center shadw"
+                        title="Сохранить">
+
+                    Сохранить
+
+                </button>
+
+                <a class="btn btn-outline-danger m-2 shadw"
+                   asp-area="Admin"
+                   asp-controller="IconType"
+                   asp-action="Index"
+                   title="отменить">
+
+                    Отменить
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

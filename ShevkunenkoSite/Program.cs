@@ -163,6 +163,7 @@ services.AddScoped<IAudioBookRepository, AudioBookImplementation>();
 services.AddScoped<IAudioInfoRepository, AudioInfoImplementation>();
 services.AddScoped<IFilmFileRepository, FilmFileImplementation>();
 services.AddScoped<IIconRepository, IconImplementation>();
+services.AddScoped<IIconTypeRepository, IconTypeImplementation>();
 
 #endregion
 

@@ -1,9 +1,10 @@
 ﻿@model IEnumerable<IconModel>
 
+
 @if (Model.Count() == 0)
 {
     <p class="fs-5 text-center text_shadow mb-0">
-        В базе данных нет иконок
+        Типы иконок не заданы
     </p>
 }
 else
@@ -18,7 +19,7 @@ else
 
 <hr class="liniya" />
 
-<h1 class="text_shadow">Иконки страниц сайта</h1>
+<h1 class="text_shadow">Типы иконок страниц сайта</h1>
 
 <div class="row row-cols-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-7 row-cols-xxl-8 g-2 justify-content-center">
 
@@ -32,7 +33,7 @@ else
                asp-route-iconPath=@iconItem.PathToIcon
                title="параметры иконки">
 
-                <div class="card h-100 m-1 p-1 shadw borderforitem">
+                <div class="card m-1 p-1 shadw borderforitem">
 
                     <img src="@DataConfig.IconsFolder@iconItem.PathToIcon/@iconItem.IconFileName" />
 
@@ -49,8 +50,8 @@ else
 <div>
 
     <a asp-area="Admin"
-       asp-controller="Icon"
-       asp-action="AddIcon"
+       asp-controller="IconType"
+       asp-action="AddIconType"
        asp-route-pathForIcon=@null
        class="btn btn-outline-danger shadw py-1 mt-5 minwidth100px"
        title="добавить иконку">

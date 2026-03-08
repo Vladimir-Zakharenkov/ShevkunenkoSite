@@ -8,17 +8,17 @@ public interface IIconTypeRepository
 
     #endregion
 
-    //#region Добавить новый тип иконки
+    #region Добавить новый тип иконки
 
-    //Task AddNewIconTypeAsync(IconTypeModel icon);
+    Task AddNewIconTypeAsync(IconTypeModel iconType);
 
-    //#endregion
+    #endregion
 
-    //#region Сохранить данные иконки в БД
+    #region Сохранить данные иконки в БД
 
-    //Task SaveChangesInIconTypesAsync();
+    Task SaveChangesInIconTypesAsync();
 
-    //#endregion
+    #endregion
 
     //#region Удалить иконку из БД
 

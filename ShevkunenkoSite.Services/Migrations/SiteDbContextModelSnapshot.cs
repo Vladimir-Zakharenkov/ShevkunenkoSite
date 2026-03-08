@@ -495,6 +495,9 @@ namespace ShevkunenkoSite.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("IconTypeModelId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("PathToIcon")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -505,7 +508,29 @@ namespace ShevkunenkoSite.Services.Migrations
 
                     b.HasKey("IconModelId");
 
+                    b.HasIndex("IconTypeModelId");
+
                     b.ToTable("Icons");
+                });
+
+            modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.IconTypeModel", b =>
+                {
+                    b.Property<Guid>("IconTypeModelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("IconTypeId");
+
+                    b.Property<string>("IconTypeDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PathToIcon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IconTypeModelId");
+
+                    b.ToTable("IconTypes");
                 });
 
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.ImageFileModel", b =>
@@ -1387,6 +1412,15 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Navigation("FullFilm");
                 });
 
+            modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.IconModel", b =>
+                {
+                    b.HasOne("ShevkunenkoSite.Models.DataModels.IconTypeModel", "IconType")
+                        .WithMany("Icons")
+                        .HasForeignKey("IconTypeModelId");
+
+                    b.Navigation("IconType");
+                });
+
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.MovieFileModel", b =>
                 {
                     b.HasOne("ShevkunenkoSite.Models.DataModels.MovieFileModel", "FullMovie")
@@ -1498,6 +1532,11 @@ namespace ShevkunenkoSite.Services.Migrations
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.FilmFileModel", b =>
                 {
                     b.Navigation("PageInfo");
+                });
+
+            modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.IconTypeModel", b =>
+                {
+                    b.Navigation("Icons");
                 });
 
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.PageInfoModel", b =>

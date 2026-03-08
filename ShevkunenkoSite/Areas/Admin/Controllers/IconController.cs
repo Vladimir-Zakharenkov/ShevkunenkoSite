@@ -116,7 +116,7 @@ public class IconController(
             if (addIcon.NewIcon == true)
             {
                 #region Создание нового каталога
-
+                
                 if (string.IsNullOrEmpty(addIcon.NewIconPath))
                 {
                     ModelState.AddModelError("NewIconPath", "Введите название каталога");
@@ -149,6 +149,7 @@ public class IconController(
                 }
                 else
                 {
+                    
                     #region Копируем файл в папку Temp
 
                     string iconTempPath = Path.Combine(rootPath + DataConfig.TempPath, addIcon.IconFileFormFile.FileName).Replace('\\', '/');
@@ -234,7 +235,7 @@ public class IconController(
                             }
 
                             #endregion
-
+                            
                             #region Определяем MIME Type
 
                             if (tag.Name == "Detected MIME Type")
@@ -270,7 +271,7 @@ public class IconController(
                             }
 
                             #endregion
-
+                            
                             #region Определяем ширину файла
 
                             if (tag.Name == "Image Width")
@@ -333,7 +334,7 @@ public class IconController(
                             }
 
                             #endregion
-
+                            
                             #region Определяем высоту файла
 
                             if (tag.Name == "Image Height")
@@ -404,7 +405,7 @@ public class IconController(
                     addIcon.RelForIcon = "icon";
 
                     addIcon.IconPurpose = "any";
-
+                    
                     #region Копируем файл в папку иконок и удаляем из папки Temp
 
                     string iconPath = Path.Combine(rootPath + DataConfig.IconsFolder + addIcon.PathToIcon, addIcon.IconFileFormFile.FileName).Replace('\\', '/');

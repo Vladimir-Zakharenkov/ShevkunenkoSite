@@ -1,4 +1,6 @@
-﻿namespace ShevkunenkoSite.Models.DataModels;
+﻿using System.Reflection.Metadata;
+
+namespace ShevkunenkoSite.Models.DataModels;
 
 public record class IconModel
 {
@@ -30,6 +32,13 @@ public record class IconModel
     [DataType(DataType.Text)]
     [Display(Name = "Purpose в manifest :")]
     public string IconPurpose { get; set; } = string.Empty;
+
+    #region Связь с таблицей IconTypeModel
+
+    public Guid? IconTypeModelId { get; set; }
+    public IconTypeModel? IconType { get; set; }
+
+    #endregion
 
     #region Свойства NotMapped
 

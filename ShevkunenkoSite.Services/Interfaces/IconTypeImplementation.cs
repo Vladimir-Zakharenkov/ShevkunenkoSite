@@ -8,15 +8,16 @@ public class IconTypeImplementation(SiteDbContext siteContext) : IIconTypeReposi
 
     #endregion
 
-    //#region Добавить новую иконку в БД
+    #region Добавить новую иконку в БД
 
-    //public async Task AddNewIconAsync(IconModel icon)
-    //{
-    //    await siteContext.Icons.AddAsync(icon);
-    //    await SaveChangesInIconsAsync();
-    //}
+    public async Task AddNewIconTypeAsync(IconTypeModel iconType)
+    {
+        await siteContext.IconTypes.AddAsync(iconType);
 
-    //#endregion
+        await SaveChangesInIconTypesAsync();
+    }
+
+    #endregion
 
     //#region Удалить иконку из БД
 
@@ -55,9 +56,9 @@ public class IconTypeImplementation(SiteDbContext siteContext) : IIconTypeReposi
     //}
     //#endregion
 
-    //#region Сохранить данные иконки в БД
+    #region Сохранить данные иконки в БД
 
-    //public async Task SaveChangesInIconsAsync() => await siteContext.SaveChangesAsync();
+    public async Task SaveChangesInIconTypesAsync() => await siteContext.SaveChangesAsync();
 
-    //#endregion
+    #endregion
 }
