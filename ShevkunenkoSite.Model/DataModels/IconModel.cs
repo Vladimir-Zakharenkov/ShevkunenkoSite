@@ -45,23 +45,6 @@ public record class IconModel
 
     #endregion
 
-    #region Новый каталог (NotMapped)
-
-    [NotMapped]
-    [DataType(DataType.Text)]
-    [Display(Name = "Новый каталог :")]
-    public string? NewIconPath { get; set; }
-
-    #endregion
-
-    #region Новый тип иконки (NotMapped)
-
-    [NotMapped]
-    [Display(Name = "Новый тип иконки :")]
-    public bool NewIcon { get; set; }
-
-    #endregion
-
     #region Ширина иконки (NotMapped)
 
     [NotMapped]

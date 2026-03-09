@@ -6,7 +6,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers;
 [Authorize]
 public class IconController(
     IIconRepository iconContext,
-    IIconRepository iconTypeContext,
+    IIconTypeRepository iconTypeContext,
     IWebHostEnvironment hostEnvironment
     ) : Controller
 {
@@ -24,9 +24,9 @@ public class IconController(
         {
             return RedirectToAction("Index", "IconType", new { area = "Admin" });
         }
-        else if (await iconTypeContext.Icons.Where(icon => icon.IconTypeModelId == iconId).AnyAsync())
+        else if (await iconTypeContext.IconTypes.Where(iconType => iconType.IconTypeModelId == iconId).AnyAsync())
         {
-            var listOfIcons = await iconTypeContext.Icons
+            var listOfIcons = await iconContext.Icons
                 .Where(icon => icon.IconTypeModelId == iconId)
                 .OrderBy(icon => icon.IconFileName)
                 .ToArrayAsync();
@@ -52,22 +52,20 @@ public class IconController(
 
     #endregion
 
-    #region Добавить иконку сайта
+    #region Добавить новый размер к существующему типу иконки
 
     [HttpGet]
-    public async Task<IActionResult> AddIcon(Guid? iconId)
+    public async Task<IActionResult> AddIcon(Guid iconId)
     {
-        IconModel addIcon = new();
 
-        if (iconId == null)
+        if (await iconContext.Icons.Where(icon => icon.IconTypeModelId == iconId).AnyAsync())
         {
-            return RedirectToAction("Index", "IconType", new { area = "Admin" });
-        }
-        else if (await iconContext.Icons.Where(icon => icon.IconTypeModelId == iconId).AnyAsync())
-        {
-            addIcon.IconTypeModelId = (Guid)iconId;
+            IconDTOModel addIconDTO = new()
+            {
+                IconTypeModelId = iconId
+            };
 
-            return View(addIcon);
+            return View(addIconDTO);
         }
         else
         {
@@ -82,34 +80,43 @@ public class IconController(
     [RequestFormLimits(MultipartBodyLengthLimit = 5268435456)]
     public async Task<IActionResult> AddIcon(
     [Bind(
-                "IconModelId," +
                 "IconTypeModelId," +
-                "IconFileName," +
-                "PathToIcon," +
-                "IconMimeType," +
                 "RelForIcon," +
-                "IconSize," +
                 "IconPurpose," +
                 "IconFileFormFile"
         )]
-        IconModel addIcon)
+        IconDTOModel addIconDTO)
     {
         if (ModelState.IsValid)
         {
             #region Добавить иконку
 
-            if (addIcon.IconFileFormFile == null)
+            if (addIconDTO.IconFileFormFile == null)
             {
                 ModelState.AddModelError("IconFileFormFile", "Выберите файл иконки");
 
-                return View(addIcon);
+                return View(addIconDTO);
             }
 
-            if (addIcon.IconFileFormFile.FileName.Contains(".svg"))
+            IconModel addIcon = new()
+            {
+                IconTypeModelId = addIconDTO.IconTypeModelId,
+                RelForIcon=addIconDTO.RelForIcon,
+                IconPurpose = addIconDTO.IconPurpose
+            };
+
+            if (await iconTypeContext.IconTypes.Where(iconType => iconType.IconTypeModelId == addIconDTO.IconTypeModelId).AnyAsync())
+            {
+                IconTypeModel typeOfIcon = await iconTypeContext.IconTypes.FirstAsync(iconType => iconType.IconTypeModelId == addIconDTO.IconTypeModelId);
+
+                addIcon.IconType = typeOfIcon;
+            }
+
+            if (addIconDTO.IconFileFormFile.FileName.Contains(".svg"))
             {
                 #region Копируем файл в папку Temp
 
-                string iconTempPath = Path.Combine(rootPath + DataConfig.TempPath, addIcon.IconFileFormFile.FileName).Replace('\\', '/');
+                string iconTempPath = Path.Combine(rootPath + DataConfig.TempPath, addIconDTO.IconFileFormFile.FileName).Replace('\\', '/');
 
                 FileInfo iconFile = new(iconTempPath);
 
@@ -117,12 +124,12 @@ public class IconController(
                 {
                     using FileStream stream = new(iconTempPath, FileMode.Create);
 
-                    await addIcon.IconFileFormFile.CopyToAsync(stream);
+                    await addIconDTO.IconFileFormFile.CopyToAsync(stream);
                 }
 
                 #endregion
 
-                addIcon.IconFileName = addIcon.IconFileFormFile.FileName;
+                addIcon.IconFileName = addIconDTO.IconFileFormFile.FileName;
 
                 addIcon.IconMimeType = "image/svg+xml";
 
@@ -134,7 +141,7 @@ public class IconController(
 
                 #region Копируем файл в папку иконок и удаляем из папки Temp
 
-                string iconPath = Path.Combine(rootPath + DataConfig.IconsFolder + addIcon.IconType.PathToIcon, addIcon.IconFileFormFile.FileName).Replace('\\', '/');
+                string iconPath = Path.Combine(rootPath + DataConfig.IconsFolder + addIcon.IconType.PathToIcon, addIconDTO.IconFileFormFile.FileName).Replace('\\', '/');
 
                 FileInfo iconFileInfo = new(iconPath);
 
@@ -142,7 +149,7 @@ public class IconController(
                 {
                     using FileStream stream = new(iconPath, FileMode.Create);
 
-                    await addIcon.IconFileFormFile.CopyToAsync(stream);
+                    await addIconDTO.IconFileFormFile.CopyToAsync(stream);
                 }
 
                 FileInfo tempFile = new(iconTempPath);
@@ -158,7 +165,7 @@ public class IconController(
             {
                 #region Копируем файл в папку Temp
 
-                string iconTempPath = Path.Combine(rootPath + DataConfig.TempPath, addIcon.IconFileFormFile.FileName).Replace('\\', '/');
+                string iconTempPath = Path.Combine(rootPath + DataConfig.TempPath, addIconDTO.IconFileFormFile.FileName).Replace('\\', '/');
 
                 FileInfo iconFile = new(iconTempPath);
 
@@ -166,7 +173,7 @@ public class IconController(
                 {
                     using FileStream stream = new(iconTempPath, FileMode.Create);
 
-                    await addIcon.IconFileFormFile.CopyToAsync(stream);
+                    await addIconDTO.IconFileFormFile.CopyToAsync(stream);
                 }
 
                 #endregion
@@ -185,7 +192,7 @@ public class IconController(
                         {
                             if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
                             {
-                                ModelState.AddModelError("IconFileFormFile", $"Не определить имя файла «{addIcon.IconFileFormFile.FileName}»");
+                                ModelState.AddModelError("IconFileFormFile", $"Не определить имя файла «{addIconDTO.IconFileFormFile.FileName}»");
 
                                 #region Удаляем файл из папки Temp
 
@@ -198,12 +205,12 @@ public class IconController(
 
                                 #endregion
 
-                                return View(addIcon);
+                                return View(addIconDTO);
                             }
 
-                            if (await iconContext.Icons.Where(icon => icon.IconFileName == addIcon.IconFileFormFile.FileName & icon.IconTypeModelId == addIcon.IconTypeModelId).AnyAsync())
+                            if (await iconContext.Icons.Where(icon => icon.IconFileName == addIconDTO.IconFileFormFile.FileName & icon.IconTypeModelId == addIcon.IconTypeModelId).AnyAsync())
                             {
-                                ModelState.AddModelError("IconFileFormFile", $"Файл «{addIcon.IconFileFormFile.FileName}» существует в каталоге «{addIcon.IconType.PathToIcon}»");
+                                ModelState.AddModelError("IconFileFormFile", $"Файл «{addIconDTO.IconFileFormFile.FileName}» существует в каталоге «{addIcon.IconType.PathToIcon}»");
 
                                 #region Удаляем файл из папки Temp
 
@@ -216,7 +223,7 @@ public class IconController(
 
                                 #endregion
 
-                                return View(addIcon);
+                                return View(addIconDTO);
                             }
 
                             addIcon.IconFileName = tag.Description;
@@ -230,7 +237,7 @@ public class IconController(
                         {
                             if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
                             {
-                                ModelState.AddModelError("IconFileFormFile", $"Не определить MIME файла «{addIcon.IconFileFormFile.FileName}»");
+                                ModelState.AddModelError("IconFileFormFile", $"Не определить MIME файла «{addIconDTO.IconFileFormFile.FileName}»");
 
                                 #region Удаляем созданный каталог и файл из папки Temp
 
@@ -243,7 +250,7 @@ public class IconController(
 
                                 #endregion
 
-                                return View(addIcon);
+                                return View(addIconDTO);
                             }
 
                             addIcon.IconMimeType = tag.Description;
@@ -257,7 +264,7 @@ public class IconController(
                         {
                             if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
                             {
-                                ModelState.AddModelError("IconFileFormFile", $"Не определить ширину файла «{addIcon.IconFileFormFile.FileName}»");
+                                ModelState.AddModelError("IconFileFormFile", $"Не определить ширину файла «{addIconDTO.IconFileFormFile.FileName}»");
 
                                 #region Удаляем файл из папки Temp
 
@@ -270,7 +277,7 @@ public class IconController(
 
                                 #endregion
 
-                                return View(addIcon);
+                                return View(addIconDTO);
                             }
 
                             addIcon.IconWidth = tag.Description;
@@ -284,7 +291,7 @@ public class IconController(
                         {
                             if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
                             {
-                                ModelState.AddModelError("IconFileFormFile", $"Не определить высоту файла «{addIcon.IconFileFormFile.FileName}»");
+                                ModelState.AddModelError("IconFileFormFile", $"Не определить высоту файла «{addIconDTO.IconFileFormFile.FileName}»");
 
                                 #region Удаляем файл из папки Temp
 
@@ -297,7 +304,7 @@ public class IconController(
 
                                 #endregion
 
-                                return View(addIcon);
+                                return View(addIconDTO);
                             }
 
                             addIcon.IconHeight = tag.Description;
@@ -315,7 +322,7 @@ public class IconController(
                 {
                     ModelState.AddModelError("IconFileFormFile", $"Ширина «{addIcon.IconWidth}» и высота «{addIcon.IconHeight}» иконки должны быть равны");
 
-                    return View(addIcon);
+                    return View(addIconDTO);
                 }
                 else if (addIcon.IconFileName.Contains("favicon"))
                 {
@@ -352,7 +359,7 @@ public class IconController(
 
                 #region Копируем файл в папку иконок и удаляем из папки Temp
 
-                string iconPath = Path.Combine(rootPath + DataConfig.IconsFolder + addIcon.IconType.PathToIcon, addIcon.IconFileFormFile.FileName).Replace('\\', '/');
+                string iconPath = Path.Combine(rootPath + DataConfig.IconsFolder + addIcon.IconType.PathToIcon, addIconDTO.IconFileFormFile.FileName).Replace('\\', '/');
 
                 FileInfo iconFileInfo = new(iconPath);
 
@@ -360,7 +367,7 @@ public class IconController(
                 {
                     using FileStream stream = new(iconPath, FileMode.Create);
 
-                    await addIcon.IconFileFormFile.CopyToAsync(stream);
+                    await addIconDTO.IconFileFormFile.CopyToAsync(stream);
                 }
 
                 FileInfo tempFile = new(iconTempPath);
@@ -391,7 +398,7 @@ public class IconController(
         }
         else
         {
-            return View(new IconModel());
+            return View(addIconDTO);
         }
     }
 
@@ -491,7 +498,7 @@ public class IconController(
 
             #region Открытие страницы Index
 
-            return RedirectToAction("Index", new {iconId = iconUpdate.IconModelId });
+            return RedirectToAction("Index", new { iconId = iconUpdate.IconModelId });
 
             #endregion
         }

@@ -12,7 +12,7 @@
     Guid currentId;
 
     if (Guid.TryParse(Context.Request.Query["iconId"], out currentId)
-        && Model.Where(icon => icon.IconModelId == currentId).Any())
+            && Model.Where(icon => icon.IconModelId == currentId).Any())
     {
         currentIcon = Model.First(icon => icon.IconModelId == currentId);
     }
