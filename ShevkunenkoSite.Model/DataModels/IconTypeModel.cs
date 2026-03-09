@@ -19,7 +19,7 @@ public class IconTypeModel
 
     #region Связь с таблицей IconModel
 
-    public ICollection<IconModel> Icons { get; } = [];
+    public ICollection<IconModel> IconList { get; } = [];
 
     #endregion
 

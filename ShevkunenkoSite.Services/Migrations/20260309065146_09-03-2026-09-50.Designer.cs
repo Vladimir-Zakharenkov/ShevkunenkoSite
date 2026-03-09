@@ -12,8 +12,8 @@ using ShevkunenkoSite.Services;
 namespace ShevkunenkoSite.Services.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    [Migration("20260308062259_08-03-2026-09-00")]
-    partial class _080320260900
+    [Migration("20260309065146_09-03-2026-09-50")]
+    partial class _090320260950
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -498,12 +498,8 @@ namespace ShevkunenkoSite.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("IconTypeModelId")
+                    b.Property<Guid>("IconTypeModelId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PathToIcon")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RelForIcon")
                         .IsRequired()
@@ -1418,8 +1414,10 @@ namespace ShevkunenkoSite.Services.Migrations
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.IconModel", b =>
                 {
                     b.HasOne("ShevkunenkoSite.Models.DataModels.IconTypeModel", "IconType")
-                        .WithMany("Icons")
-                        .HasForeignKey("IconTypeModelId");
+                        .WithMany("IconList")
+                        .HasForeignKey("IconTypeModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("IconType");
                 });
@@ -1539,7 +1537,7 @@ namespace ShevkunenkoSite.Services.Migrations
 
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.IconTypeModel", b =>
                 {
-                    b.Navigation("Icons");
+                    b.Navigation("IconList");
                 });
 
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.PageInfoModel", b =>

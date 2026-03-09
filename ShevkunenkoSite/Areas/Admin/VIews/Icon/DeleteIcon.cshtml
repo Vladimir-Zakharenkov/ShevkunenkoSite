@@ -10,9 +10,9 @@
 <hr class="w-50 mx-auto" />
 
 <img class="maxwidth300px mt-2"
-     src="@DataConfig.IconsFolder@Model.PathToIcon@Model.IconFileName"
-     title="@DataConfig.IconsFolder@Model.PathToIcon@Model.IconFileName"
-     alt="@DataConfig.IconsFolder@Model.PathToIcon@Model.IconFileName" />
+     src="@DataConfig.IconsFolder@Model.IconType.PathToIcon@Model.IconFileName"
+     title="@DataConfig.IconsFolder@Model.IconType.PathToIcon@Model.IconFileName"
+     alt="@DataConfig.IconsFolder@Model.IconType.PathToIcon@Model.IconFileName" />
 
 <p class="fs-4 text_shadow mt-2">
     @Model.IconFileName
@@ -53,7 +53,6 @@
            asp-area="Admin"
            asp-controller="Icon"
            asp-action="Index"
-           asp-route-iconPath="@Model.PathToIcon"
            asp-route-iconId="@Model.IconModelId"
            title="отменить">
 

@@ -50,16 +50,16 @@
     {
         if (p.RelForIcon == "shortcut icon")
         {
-            <link rel="shortcut icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.PathToIcon@p.IconFileName" />
-            <link rel="shortcut icon" type="image/x-icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.PathToIcon@p.IconFileName" />
-            <link rel="shortcut icon" type="image/vnd.microsoft.icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.PathToIcon@p.IconFileName" />
-            <link rel="icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.PathToIcon@p.IconFileName" />
-            <link rel="icon" type="image/x-icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.PathToIcon@p.IconFileName" />
-            <link rel="icon" type="image/vnd.microsoft.icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.PathToIcon@p.IconFileName" />
+            <link rel="shortcut icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
+            <link rel="shortcut icon" type="image/x-icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
+            <link rel="shortcut icon" type="image/vnd.microsoft.icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
+            <link rel="icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
+            <link rel="icon" type="image/x-icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
+            <link rel="icon" type="image/vnd.microsoft.icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
         }
         else
         {
-            <link rel="@p.RelForIcon" type="@p.IconMimeType" sizes="@p.IconSize" href="@DataConfig.IconsFolder@p.PathToIcon@p.IconFileName" />
+            <link rel="@p.RelForIcon" type="@p.IconMimeType" sizes="@p.IconSize" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
         }
     }
     @*-------------------------------------------------------------------------------------------------------------*@

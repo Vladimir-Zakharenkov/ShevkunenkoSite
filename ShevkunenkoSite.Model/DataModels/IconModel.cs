@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata;
-
-namespace ShevkunenkoSite.Models.DataModels;
+﻿namespace ShevkunenkoSite.Models.DataModels;
 
 public record class IconModel
 {
@@ -12,10 +10,6 @@ public record class IconModel
     [DataType(DataType.Text)]
     [Display(Name = "Файл иконки :")]
     public string IconFileName { get; set; } = string.Empty;
-
-    [DataType(DataType.Text)]
-    [Display(Name = "Каталог иконки :")]
-    public string PathToIcon { get; set; } = string.Empty;
 
     [DataType(DataType.Text)]
     [Display(Name = "MimeType файла иконки :")]
@@ -35,8 +29,8 @@ public record class IconModel
 
     #region Связь с таблицей IconTypeModel
 
-    public Guid? IconTypeModelId { get; set; }
-    public IconTypeModel? IconType { get; set; }
+    public Guid IconTypeModelId { get; set; }
+    public IconTypeModel IconType { get; set; } = null!;
 
     #endregion
 

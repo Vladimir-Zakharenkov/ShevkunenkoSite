@@ -7,7 +7,6 @@ public static class IconModelExtension
         foreach (var foundIcon in iconModel)
         {
             if (foundIcon.IconFileName.Contains((iconSearchString ?? string.Empty).Trim(), StringComparison.OrdinalIgnoreCase)
-                    | foundIcon.PathToIcon.Contains((iconSearchString ?? string.Empty).Trim(), StringComparison.OrdinalIgnoreCase)
                     | foundIcon.IconMimeType.Contains((iconSearchString ?? string.Empty).Trim(), StringComparison.OrdinalIgnoreCase)
                     | foundIcon.RelForIcon.Contains((iconSearchString ?? string.Empty).Trim(), StringComparison.OrdinalIgnoreCase)
                     | foundIcon.IconSize.Contains((iconSearchString ?? string.Empty).Trim(), StringComparison.OrdinalIgnoreCase)

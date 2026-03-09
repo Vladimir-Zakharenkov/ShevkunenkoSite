@@ -118,15 +118,15 @@ public class PageInfoController(
             #region Инициализация экземпляра иконки для страницы
 
             if (await iconContext.Icons
-                .Where(icon => icon.PathToIcon == pageItem.PageIconPath && icon.IconFileName == DataConfig.IconItem).AnyAsync())
+                .Where(icon => icon.IconType.PathToIcon == pageItem.PageIconPath && icon.IconFileName == DataConfig.IconItem).AnyAsync())
             {
                 pageItem.IconItem = await iconContext.Icons
-                    .FirstAsync(icon => icon.PathToIcon == pageItem.PageIconPath && icon.IconFileName == DataConfig.IconItem);
+                    .FirstAsync(icon => icon.IconType.PathToIcon == pageItem.PageIconPath && icon.IconFileName == DataConfig.IconItem);
             }
             else
             {
                 pageItem.IconItem = await iconContext.Icons
-                    .FirstAsync(icon => icon.PathToIcon == "main/" && icon.IconFileName == DataConfig.IconItem);
+                    .FirstAsync(icon => icon.IconType.PathToIcon == "main/" && icon.IconFileName == DataConfig.IconItem);
             }
 
             #endregion
@@ -1628,16 +1628,16 @@ public class PageInfoController(
             #region Инициализация иконки страницы
 
             if (await iconContext.Icons
-                .Where(icon => icon.PathToIcon == editPage.PageIconPath && icon.IconFileName == DataConfig.IconItem)
+                .Where(icon => icon.IconType.PathToIcon == editPage.PageIconPath && icon.IconFileName == DataConfig.IconItem)
                 .AnyAsync())
             {
                 editPage.IconItem = await iconContext.Icons
-                    .FirstAsync(icon => icon.PathToIcon == editPage.PageIconPath && icon.IconFileName == DataConfig.IconItem);
+                    .FirstAsync(icon => icon.IconType.PathToIcon == editPage.PageIconPath && icon.IconFileName == DataConfig.IconItem);
             }
             else
             {
                 editPage.IconItem = await iconContext.Icons
-                    .FirstAsync(icon => icon.PathToIcon == "main/" && icon.IconFileName == DataConfig.IconItem);
+                    .FirstAsync(icon => icon.IconType.PathToIcon == "main/" && icon.IconFileName == DataConfig.IconItem);
             }
 
             #endregion
@@ -2093,15 +2093,15 @@ public class PageInfoController(
             IconModel editPageiconItem;
 
             if (await iconContext.Icons
-                .Where(icon => icon.PathToIcon == pageUpdate.PageIconPath && icon.IconFileName == DataConfig.IconItem).AnyAsync())
+                .Where(icon => icon.IconType.PathToIcon == pageUpdate.PageIconPath && icon.IconFileName == DataConfig.IconItem).AnyAsync())
             {
                 editPageiconItem = await iconContext.Icons
-                    .FirstAsync(icon => icon.PathToIcon == pageUpdate.PageIconPath && icon.IconFileName == DataConfig.IconItem);
+                    .FirstAsync(icon => icon.IconType.PathToIcon == pageUpdate.PageIconPath && icon.IconFileName == DataConfig.IconItem);
             }
             else
             {
                 editPageiconItem = await iconContext.Icons
-                    .FirstAsync(icon => icon.PathToIcon == "main/" && icon.IconFileName == DataConfig.IconItem);
+                    .FirstAsync(icon => icon.IconType.PathToIcon == "main/" && icon.IconFileName == DataConfig.IconItem);
             }
 
             #endregion

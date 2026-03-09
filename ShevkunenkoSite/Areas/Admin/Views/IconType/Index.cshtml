@@ -30,12 +30,12 @@ else
             <a asp-area="Admin"
                asp-controller="Icon"
                asp-action="Index"
-               asp-route-iconPath=@iconItem.PathToIcon
+               asp-route-iconId=@iconItem.IconTypeModelId
                title="параметры иконки">
 
                 <div class="card m-1 p-1 shadw borderforitem">
 
-                    <img src="@DataConfig.IconsFolder@iconItem.PathToIcon/@iconItem.IconFileName" />
+                    <img src="@DataConfig.IconsFolder@iconItem.IconType.PathToIcon/@iconItem.IconFileName" />
 
                 </div>
 

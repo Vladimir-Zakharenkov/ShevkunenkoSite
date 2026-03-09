@@ -495,12 +495,8 @@ namespace ShevkunenkoSite.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("IconTypeModelId")
+                    b.Property<Guid>("IconTypeModelId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PathToIcon")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RelForIcon")
                         .IsRequired()
@@ -1415,8 +1411,10 @@ namespace ShevkunenkoSite.Services.Migrations
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.IconModel", b =>
                 {
                     b.HasOne("ShevkunenkoSite.Models.DataModels.IconTypeModel", "IconType")
-                        .WithMany("Icons")
-                        .HasForeignKey("IconTypeModelId");
+                        .WithMany("IconList")
+                        .HasForeignKey("IconTypeModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("IconType");
                 });
@@ -1536,7 +1534,7 @@ namespace ShevkunenkoSite.Services.Migrations
 
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.IconTypeModel", b =>
                 {
-                    b.Navigation("Icons");
+                    b.Navigation("IconList");
                 });
 
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.PageInfoModel", b =>

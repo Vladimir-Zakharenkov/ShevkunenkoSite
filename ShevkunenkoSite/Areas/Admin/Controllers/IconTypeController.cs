@@ -64,7 +64,7 @@ public class IconTypeController(
         {
             if (addIconType.IconFileFormFile == null)
             {
-                ModelState.AddModelError("IconFileFormFile", $"Выберите файл иконки");
+                ModelState.AddModelError("IconFileFormFile", "Выберите файл иконки");
 
                 return View(addIconType);
             }
@@ -299,8 +299,6 @@ public class IconTypeController(
 
                 newIcon.IconTypeModelId = newIconType.IconTypeModelId;
 
-                newIcon.PathToIcon = newIconType.PathToIcon;
-
                 await iconContext.AddNewIconAsync(newIcon);
 
                 #endregion
@@ -327,7 +325,7 @@ public class IconTypeController(
 
                 #endregion
 
-                return RedirectToAction("Index", "IconType", new { area = "Admin" }); ;
+                return RedirectToAction("Index", "IconType", new { area = "Admin" });
             }
         }
         else

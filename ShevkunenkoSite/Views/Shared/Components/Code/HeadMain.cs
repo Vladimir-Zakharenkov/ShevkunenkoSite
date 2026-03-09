@@ -17,17 +17,17 @@ public class HeadMain(
 
         #region Список иконок в теге <head>
 
-        if (await iconContext.Icons.Where(icon => icon.PathToIcon == headModel.PageInfo.PageIconPath).AnyAsync())
+        if (await iconContext.Icons.Where(icon => icon.IconType.PathToIcon == headModel.PageInfo.PageIconPath).AnyAsync())
         {
             headModel.IconsForHead = await iconContext.Icons
-                .Where(icon => icon.PathToIcon == headModel.PageInfo.PageIconPath)
+                .Where(icon => icon.IconType.PathToIcon == headModel.PageInfo.PageIconPath)
                 .AsNoTracking()
                 .ToListAsync();
         }
         else
         {
             headModel.IconsForHead = await iconContext.Icons
-                .Where(icon => icon.PathToIcon == "main/")
+                .Where(icon => icon.IconType.PathToIcon == "main/")
                 .AsNoTracking()
                 .ToListAsync();
         }

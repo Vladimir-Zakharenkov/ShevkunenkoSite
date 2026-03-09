@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System.IO;
 
 namespace ShevkunenkoSite.Areas.Admin.Controllers;
 
@@ -7,6 +6,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers;
 [Authorize]
 public class IconController(
     IIconRepository iconContext,
+    IIconRepository iconTypeContext,
     IWebHostEnvironment hostEnvironment
     ) : Controller
 {
@@ -17,35 +17,36 @@ public class IconController(
     [HttpGet]
     public async Task<IActionResult> Index
         (
-        string? iconPath,
         Guid? iconId
         )
     {
-        if (string.IsNullOrEmpty(iconPath))
+        if (iconId == null)
         {
-            var typesOfIcons = iconContext.Icons
-                .Where(icon => icon.IconFileName.Contains("ms-tile-558."));
+            return RedirectToAction("Index", "IconType", new { area = "Admin" });
+        }
+        else if (await iconTypeContext.Icons.Where(icon => icon.IconTypeModelId == iconId).AnyAsync())
+        {
+            var listOfIcons = await iconTypeContext.Icons
+                .Where(icon => icon.IconTypeModelId == iconId)
+                .OrderBy(icon => icon.IconFileName)
+                .ToArrayAsync();
 
-            return View(typesOfIcons);
+            return View(listOfIcons);
+        }
+        else if (await iconContext.Icons.Where(icon => icon.IconModelId == iconId).AnyAsync())
+        {
+            var currentIcon = await iconContext.Icons.FirstAsync(icon => icon.IconModelId == iconId);
+
+            var listOfIcons = await iconContext.Icons
+                .Where(icon => icon.IconTypeModelId == currentIcon.IconTypeModelId)
+                .OrderBy(icon => icon.IconFileName)
+                .ToArrayAsync();
+
+            return View(listOfIcons);
         }
         else
         {
-            if (await iconContext.Icons.Where(icon => icon.PathToIcon == iconPath).AnyAsync())
-            {
-                var listOfIcons = await iconContext.Icons
-                    .Where(icon => icon.PathToIcon == iconPath)
-                    .OrderBy(ic => ic.IconFileName)
-                    .ToArrayAsync();
-
-                return View("IconsList", listOfIcons);
-            }
-            else
-            {
-                var typesOfIcons = iconContext.Icons
-                    .Where(icon => icon.IconFileName.Contains("ms-tile-558"));
-
-                return View(typesOfIcons);
-            }
+            return RedirectToAction("Index", "IconType", new { area = "Admin" });
         }
     }
 
@@ -54,38 +55,23 @@ public class IconController(
     #region Добавить иконку сайта
 
     [HttpGet]
-    public ViewResult AddIcon(string? pathForIcon)
+    public async Task<IActionResult> AddIcon(Guid? iconId)
     {
         IconModel addIcon = new();
 
-        if (pathForIcon == null)
+        if (iconId == null)
         {
-            addIcon.NewIcon = true;
+            return RedirectToAction("Index", "IconType", new { area = "Admin" });
+        }
+        else if (await iconContext.Icons.Where(icon => icon.IconTypeModelId == iconId).AnyAsync())
+        {
+            addIcon.IconTypeModelId = (Guid)iconId;
 
-            return View("AddNewType", addIcon);
+            return View(addIcon);
         }
         else
         {
-            #region Список папок с иконками (не используем)
-
-            string[] dirrectories = System.IO.Directory.GetDirectories(System.IO.Directory.GetCurrentDirectory() + DataConfig.IconFoldersPath, "*", SearchOption.AllDirectories);
-
-            List<string> paths = [];
-
-            foreach (var item in dirrectories)
-            {
-                int indexOfSubstring = item.IndexOf(DataConfig.IconFoldersPath);
-
-                paths.Add(item.Substring(indexOfSubstring + DataConfig.IconFoldersPath.Length));
-            }
-
-            ViewData["IconPaths"] = new SelectList(paths);
-
-            #endregion
-
-            addIcon.PathToIcon = pathForIcon;
-
-            return View(addIcon);
+            return RedirectToAction("Index", "IconType", new { area = "Admin" });
         }
     }
 
@@ -97,627 +83,294 @@ public class IconController(
     public async Task<IActionResult> AddIcon(
     [Bind(
                 "IconModelId," +
+                "IconTypeModelId," +
                 "IconFileName," +
                 "PathToIcon," +
                 "IconMimeType," +
                 "RelForIcon," +
                 "IconSize," +
                 "IconPurpose," +
-                "IconFileFormFile," +
-                "NewIconPath," +
-                "NewIcon"
+                "IconFileFormFile"
         )]
         IconModel addIcon)
     {
         if (ModelState.IsValid)
         {
-            #region Добавить новый тип иконки
+            #region Добавить иконку
 
-            if (addIcon.NewIcon == true)
+            if (addIcon.IconFileFormFile == null)
             {
-                #region Создание нового каталога
-                
-                if (string.IsNullOrEmpty(addIcon.NewIconPath))
-                {
-                    ModelState.AddModelError("NewIconPath", "Введите название каталога");
-                }
-                else
-                {
-                    addIcon.PathToIcon = addIcon.NewIconPath.Trim('/').Trim('\\') + '/';
-                }
+                ModelState.AddModelError("IconFileFormFile", "Выберите файл иконки");
 
-                string pathToNewIcon = Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), DataConfig.IconFoldersPath, addIcon.PathToIcon)).Replace('\\', '/');
+                return View(addIcon);
+            }
 
-                if (System.IO.Directory.Exists(pathToNewIcon))
-                {
-                    ModelState.AddModelError("NewIconPath", $"Каталог «{addIcon.PathToIcon}» уже существует");
+            if (addIcon.IconFileFormFile.FileName.Contains(".svg"))
+            {
+                #region Копируем файл в папку Temp
 
-                    return View("AddNewType", addIcon);
-                }
-                else
+                string iconTempPath = Path.Combine(rootPath + DataConfig.TempPath, addIcon.IconFileFormFile.FileName).Replace('\\', '/');
+
+                FileInfo iconFile = new(iconTempPath);
+
+                if (!iconFile.Exists)
                 {
-                    System.IO.Directory.CreateDirectory(pathToNewIcon);
+                    using FileStream stream = new(iconTempPath, FileMode.Create);
+
+                    await addIcon.IconFileFormFile.CopyToAsync(stream);
                 }
 
                 #endregion
 
-                if (addIcon.IconFileFormFile == null)
+                addIcon.IconFileName = addIcon.IconFileFormFile.FileName;
+
+                addIcon.IconMimeType = "image/svg+xml";
+
+                addIcon.IconSize = "any";
+
+                addIcon.RelForIcon = "mask-icon";
+
+                addIcon.IconPurpose = "maskable";
+
+                #region Копируем файл в папку иконок и удаляем из папки Temp
+
+                string iconPath = Path.Combine(rootPath + DataConfig.IconsFolder + addIcon.IconType.PathToIcon, addIcon.IconFileFormFile.FileName).Replace('\\', '/');
+
+                FileInfo iconFileInfo = new(iconPath);
+
+                if (!iconFileInfo.Exists)
                 {
-                    ModelState.AddModelError("IconFileFormFile", $"Выберите файл иконки");
+                    using FileStream stream = new(iconPath, FileMode.Create);
 
-                    return View("AddNewType", addIcon);
+                    await addIcon.IconFileFormFile.CopyToAsync(stream);
                 }
-                else
+
+                FileInfo tempFile = new(iconTempPath);
+
+                if (tempFile.Exists)
                 {
-                    
-                    #region Копируем файл в папку Temp
-
-                    string iconTempPath = Path.Combine(rootPath + DataConfig.TempPath, addIcon.IconFileFormFile.FileName).Replace('\\', '/');
-
-                    FileInfo iconFile = new(iconTempPath);
-
-                    if (!iconFile.Exists)
-                    {
-                        using FileStream stream = new(iconTempPath, FileMode.Create);
-
-                        await addIcon.IconFileFormFile.CopyToAsync(stream);
-                    }
-
-                    #endregion
-
-                    #region Определение параметров выбранного файла 
-
-                    IReadOnlyList<MetadataExtractor.Directory> iconProperties = ImageMetadataReader.ReadMetadata(iconTempPath);
-
-                    foreach (var iconProperty in iconProperties)
-                    {
-                        foreach (var tag in iconProperty.Tags)
-                        {
-                            #region Определяем FileName
-
-                            if (tag.Name == "File Name")
-                            {
-                                if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
-                                {
-                                    ModelState.AddModelError("IconFileFormFile", $"Не определить имя файла «{addIcon.IconFileFormFile.FileName}»");
-
-                                    #region Удаляем созданный каталог и файл из папки Temp
-
-                                    DirectoryInfo dirInfo = new(pathToNewIcon);
-
-                                    if (dirInfo.Exists)
-                                    {
-                                        dirInfo.Delete(true);
-                                    }
-
-                                    FileInfo fileInfo = new(iconTempPath);
-
-                                    if (fileInfo.Exists)
-                                    {
-                                        fileInfo.Delete();
-                                        // альтернатива с помощью класса File
-                                        // File.Delete(path);
-                                    }
-
-                                    #endregion
-
-                                    return View("AddNewType", addIcon);
-                                }
-
-                                if (!tag.Description.Contains("ms-tile-558"))
-                                {
-                                    ModelState.AddModelError("IconFileFormFile", $"Имя файла должно содержать «ms-tile-558»");
-
-                                    #region Удаляем созданный каталог и файл из папки Temp
-
-                                    DirectoryInfo dirInfo = new(pathToNewIcon);
-
-                                    if (dirInfo.Exists)
-                                    {
-                                        dirInfo.Delete(true);
-                                    }
-
-                                    FileInfo fileInfo = new(iconTempPath);
-
-                                    if (fileInfo.Exists)
-                                    {
-                                        fileInfo.Delete();
-                                        // альтернатива с помощью класса File
-                                        // File.Delete(path);
-                                    }
-
-                                    #endregion
-
-                                    return View("AddNewType", addIcon);
-                                }
-
-                                addIcon.IconFileName = tag.Description;
-                            }
-
-                            #endregion
-                            
-                            #region Определяем MIME Type
-
-                            if (tag.Name == "Detected MIME Type")
-                            {
-                                if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
-                                {
-                                    ModelState.AddModelError("IconFileFormFile", $"Не определить MIME файла «{addIcon.IconFileFormFile.FileName}»");
-
-                                    #region Удаляем созданный каталог и файл из папки Temp
-
-                                    DirectoryInfo dirInfo = new(pathToNewIcon);
-
-                                    if (dirInfo.Exists)
-                                    {
-                                        dirInfo.Delete(true);
-                                    }
-
-                                    FileInfo fileInf = new(iconTempPath);
-
-                                    if (fileInf.Exists)
-                                    {
-                                        fileInf.Delete();
-                                        // альтернатива с помощью класса File
-                                        // File.Delete(path);
-                                    }
-
-                                    #endregion
-
-                                    return View("AddNewType", addIcon);
-                                }
-
-                                addIcon.IconMimeType = tag.Description;
-                            }
-
-                            #endregion
-                            
-                            #region Определяем ширину файла
-
-                            if (tag.Name == "Image Width")
-                            {
-                                if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
-                                {
-                                    ModelState.AddModelError("IconFileFormFile", $"Не определить ширину файла «{addIcon.IconFileFormFile.FileName}»");
-
-                                    #region Удаляем созданный каталог и файл из папки Temp
-
-                                    DirectoryInfo dirInfo = new(pathToNewIcon);
-
-                                    if (dirInfo.Exists)
-                                    {
-                                        dirInfo.Delete(true);
-                                    }
-
-                                    FileInfo fileInf = new(iconTempPath);
-
-                                    if (fileInf.Exists)
-                                    {
-                                        fileInf.Delete();
-                                        // альтернатива с помощью класса File
-                                        // File.Delete(path);
-                                    }
-
-                                    #endregion
-
-                                    return View("AddNewType", addIcon);
-                                }
-
-                                if (tag.Description != "558")
-                                {
-                                    ModelState.AddModelError("IconFileFormFile", $"Ширина файла должна быть «558 px»");
-
-                                    #region Удаляем созданный каталог и файл из папки Temp
-
-                                    DirectoryInfo dirInfo = new(pathToNewIcon);
-
-                                    if (dirInfo.Exists)
-                                    {
-                                        dirInfo.Delete(true);
-                                    }
-
-                                    FileInfo fileInf = new(iconTempPath);
-
-                                    if (fileInf.Exists)
-                                    {
-                                        fileInf.Delete();
-                                        // альтернатива с помощью класса File
-                                        // File.Delete(path);
-                                    }
-
-                                    #endregion
-
-                                    return View("AddNewType", addIcon);
-                                }
-
-                                addIcon.IconSize = tag.Description + 'x';
-                            }
-
-                            #endregion
-                            
-                            #region Определяем высоту файла
-
-                            if (tag.Name == "Image Height")
-                            {
-                                if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
-                                {
-                                    ModelState.AddModelError("IconFileFormFile", $"Не определить высоту файла «{addIcon.IconFileFormFile.FileName}»");
-
-                                    #region Удаляем созданный каталог и файл из папки Temp
-
-                                    DirectoryInfo dirInfo = new(pathToNewIcon);
-
-                                    if (dirInfo.Exists)
-                                    {
-                                        dirInfo.Delete(true);
-                                    }
-
-                                    FileInfo fileInf = new(iconTempPath);
-
-                                    if (fileInf.Exists)
-                                    {
-                                        fileInf.Delete();
-                                        // альтернатива с помощью класса File
-                                        // File.Delete(path);
-                                    }
-
-                                    #endregion
-
-                                    return View("AddNewType", addIcon);
-                                }
-
-                                if (tag.Description != "558")
-                                {
-                                    ModelState.AddModelError("IconFileFormFile", "Высота файла  должна быть «558 px»");
-
-                                    #region Удаляем созданный каталог и файл из папки Temp
-
-                                    DirectoryInfo dirInfo = new(pathToNewIcon);
-
-                                    if (dirInfo.Exists)
-                                    {
-                                        dirInfo.Delete(true);
-                                    }
-
-                                    FileInfo fileInf = new(iconTempPath);
-
-                                    if (fileInf.Exists)
-                                    {
-                                        fileInf.Delete();
-                                        // альтернатива с помощью класса File
-                                        // File.Delete(path);
-                                    }
-
-                                    #endregion
-
-                                    return View("AddNewType", addIcon);
-                                }
-
-                                addIcon.IconSize += tag.Description;
-                            }
-
-                            #endregion
-                        }
-                    }
-
-                    #endregion
-
-                    addIcon.RelForIcon = "icon";
-
-                    addIcon.IconPurpose = "any";
-                    
-                    #region Копируем файл в папку иконок и удаляем из папки Temp
-
-                    string iconPath = Path.Combine(rootPath + DataConfig.IconsFolder + addIcon.PathToIcon, addIcon.IconFileFormFile.FileName).Replace('\\', '/');
-
-                    FileInfo iconFileInfo = new(iconPath);
-
-                    if (!iconFileInfo.Exists)
-                    {
-                        using FileStream stream = new(iconPath, FileMode.Create);
-
-                        await addIcon.IconFileFormFile.CopyToAsync(stream);
-                    }
-
-                    FileInfo tempFile = new(iconTempPath);
-
-                    if (tempFile.Exists)
-                    {
-                        tempFile.Delete();
-                    }
-
-                    #endregion
+                    tempFile.Delete();
                 }
+
+                #endregion
             }
-
-            #endregion
-
-            #region Добавить иконку
-
             else
             {
-                if (addIcon.IconFileFormFile == null)
+                #region Копируем файл в папку Temp
+
+                string iconTempPath = Path.Combine(rootPath + DataConfig.TempPath, addIcon.IconFileFormFile.FileName).Replace('\\', '/');
+
+                FileInfo iconFile = new(iconTempPath);
+
+                if (!iconFile.Exists)
                 {
-                    ModelState.AddModelError("IconFileFormFile", "Выберите файл иконки");
+                    using FileStream stream = new(iconTempPath, FileMode.Create);
+
+                    await addIcon.IconFileFormFile.CopyToAsync(stream);
+                }
+
+                #endregion
+
+                #region Определение параметров выбранного файла 
+
+                IReadOnlyList<MetadataExtractor.Directory> iconProperties = ImageMetadataReader.ReadMetadata(iconTempPath);
+
+                foreach (var iconProperty in iconProperties)
+                {
+                    foreach (var tag in iconProperty.Tags)
+                    {
+                        #region Определяем FileName
+
+                        if (tag.Name == "File Name")
+                        {
+                            if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
+                            {
+                                ModelState.AddModelError("IconFileFormFile", $"Не определить имя файла «{addIcon.IconFileFormFile.FileName}»");
+
+                                #region Удаляем файл из папки Temp
+
+                                FileInfo fileInfo = new(iconTempPath);
+
+                                if (fileInfo.Exists)
+                                {
+                                    fileInfo.Delete();
+                                }
+
+                                #endregion
+
+                                return View(addIcon);
+                            }
+
+                            if (await iconContext.Icons.Where(icon => icon.IconFileName == addIcon.IconFileFormFile.FileName & icon.IconTypeModelId == addIcon.IconTypeModelId).AnyAsync())
+                            {
+                                ModelState.AddModelError("IconFileFormFile", $"Файл «{addIcon.IconFileFormFile.FileName}» существует в каталоге «{addIcon.IconType.PathToIcon}»");
+
+                                #region Удаляем файл из папки Temp
+
+                                FileInfo fileInfo = new(iconTempPath);
+
+                                if (fileInfo.Exists)
+                                {
+                                    fileInfo.Delete();
+                                }
+
+                                #endregion
+
+                                return View(addIcon);
+                            }
+
+                            addIcon.IconFileName = tag.Description;
+                        }
+
+                        #endregion
+
+                        #region Определяем MIME Type
+
+                        if (tag.Name == "Detected MIME Type")
+                        {
+                            if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
+                            {
+                                ModelState.AddModelError("IconFileFormFile", $"Не определить MIME файла «{addIcon.IconFileFormFile.FileName}»");
+
+                                #region Удаляем созданный каталог и файл из папки Temp
+
+                                FileInfo fileInf = new(iconTempPath);
+
+                                if (fileInf.Exists)
+                                {
+                                    fileInf.Delete();
+                                }
+
+                                #endregion
+
+                                return View(addIcon);
+                            }
+
+                            addIcon.IconMimeType = tag.Description;
+                        }
+
+                        #endregion
+
+                        #region Определяем ширину файла
+
+                        if (tag.Name == "Image Width")
+                        {
+                            if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
+                            {
+                                ModelState.AddModelError("IconFileFormFile", $"Не определить ширину файла «{addIcon.IconFileFormFile.FileName}»");
+
+                                #region Удаляем файл из папки Temp
+
+                                FileInfo fileInf = new(iconTempPath);
+
+                                if (fileInf.Exists)
+                                {
+                                    fileInf.Delete();
+                                }
+
+                                #endregion
+
+                                return View(addIcon);
+                            }
+
+                            addIcon.IconWidth = tag.Description;
+                        }
+
+                        #endregion
+
+                        #region Определяем высоту файла
+
+                        if (tag.Name == "Image Height")
+                        {
+                            if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
+                            {
+                                ModelState.AddModelError("IconFileFormFile", $"Не определить высоту файла «{addIcon.IconFileFormFile.FileName}»");
+
+                                #region Удаляем файл из папки Temp
+
+                                FileInfo fileInf = new(iconTempPath);
+
+                                if (fileInf.Exists)
+                                {
+                                    fileInf.Delete();
+                                }
+
+                                #endregion
+
+                                return View(addIcon);
+                            }
+
+                            addIcon.IconHeight = tag.Description;
+                        }
+
+                        #endregion
+                    }
+                }
+
+                #endregion
+
+                #region Параметр IconSize
+
+                if (addIcon.IconWidth != addIcon.IconHeight & addIcon.IconWidth != "580" & addIcon.IconHeight != "270")
+                {
+                    ModelState.AddModelError("IconFileFormFile", $"Ширина «{addIcon.IconWidth}» и высота «{addIcon.IconHeight}» иконки должны быть равны");
 
                     return View(addIcon);
                 }
-
-                if (addIcon.IconFileFormFile.FileName.Contains(".svg"))
+                else if (addIcon.IconFileName.Contains("favicon"))
                 {
-                    #region Копируем файл в папку Temp
-
-                    string iconTempPath = Path.Combine(rootPath + DataConfig.TempPath, addIcon.IconFileFormFile.FileName).Replace('\\', '/');
-
-                    FileInfo iconFile = new(iconTempPath);
-
-                    if (!iconFile.Exists)
-                    {
-                        using FileStream stream = new(iconTempPath, FileMode.Create);
-
-                        await addIcon.IconFileFormFile.CopyToAsync(stream);
-                    }
-
-                    #endregion
-
-                    _ = addIcon.PathToIcon;
-
-                    addIcon.IconFileName = addIcon.IconFileFormFile.FileName;
-
-                    addIcon.IconMimeType = "image/svg+xml";
-
                     addIcon.IconSize = "any";
-
-                    addIcon.RelForIcon = "mask-icon";
-
-                    addIcon.IconPurpose = "maskable";
-
-                    #region Копируем файл в папку иконок и удаляем из папки Temp
-
-                    string iconPath = Path.Combine(rootPath + DataConfig.IconsFolder + addIcon.PathToIcon, addIcon.IconFileFormFile.FileName).Replace('\\', '/');
-
-                    FileInfo iconFileInfo = new(iconPath);
-
-                    if (!iconFileInfo.Exists)
-                    {
-                        using FileStream stream = new(iconPath, FileMode.Create);
-
-                        await addIcon.IconFileFormFile.CopyToAsync(stream);
-                    }
-
-                    FileInfo tempFile = new(iconTempPath);
-
-                    if (tempFile.Exists)
-                    {
-                        tempFile.Delete();
-                    }
-
-                    #endregion
                 }
                 else
                 {
-                    #region Копируем файл в папку Temp
-
-                    string iconTempPath = Path.Combine(rootPath + DataConfig.TempPath, addIcon.IconFileFormFile.FileName).Replace('\\', '/');
-
-                    FileInfo iconFile = new(iconTempPath);
-
-                    if (!iconFile.Exists)
-                    {
-                        using FileStream stream = new(iconTempPath, FileMode.Create);
-
-                        await addIcon.IconFileFormFile.CopyToAsync(stream);
-                    }
-
-                    #endregion
-
-                    #region Параметр PathToIcon
-
-                    _ = addIcon.PathToIcon;
-
-                    #endregion
-
-                    #region Определение параметров выбранного файла 
-
-                    IReadOnlyList<MetadataExtractor.Directory> iconProperties = ImageMetadataReader.ReadMetadata(iconTempPath);
-
-                    foreach (var iconProperty in iconProperties)
-                    {
-                        foreach (var tag in iconProperty.Tags)
-                        {
-                            #region Определяем FileName
-
-                            if (tag.Name == "File Name")
-                            {
-                                if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
-                                {
-                                    ModelState.AddModelError("IconFileFormFile", $"Не определить имя файла «{addIcon.IconFileFormFile.FileName}»");
-
-                                    #region Удаляем файл из папки Temp
-
-                                    FileInfo fileInfo = new(iconTempPath);
-
-                                    if (fileInfo.Exists)
-                                    {
-                                        fileInfo.Delete();
-                                    }
-
-                                    #endregion
-
-                                    return View(addIcon);
-                                }
-
-                                if (await iconContext.Icons.Where(icon => icon.IconFileName == addIcon.IconFileFormFile.FileName & icon.PathToIcon == addIcon.PathToIcon).AnyAsync())
-                                {
-                                    ModelState.AddModelError("IconFileFormFile", $"Файл «{addIcon.IconFileFormFile.FileName}» существует в каталоге «{addIcon.PathToIcon}»");
-
-                                    #region Удаляем файл из папки Temp
-
-                                    FileInfo fileInfo = new(iconTempPath);
-
-                                    if (fileInfo.Exists)
-                                    {
-                                        fileInfo.Delete();
-                                    }
-
-                                    #endregion
-
-                                    return View(addIcon);
-                                }
-
-                                addIcon.IconFileName = tag.Description;
-                            }
-
-                            #endregion
-
-                            #region Определяем MIME Type
-
-                            if (tag.Name == "Detected MIME Type")
-                            {
-                                if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
-                                {
-                                    ModelState.AddModelError("IconFileFormFile", $"Не определить MIME файла «{addIcon.IconFileFormFile.FileName}»");
-
-                                    #region Удаляем созданный каталог и файл из папки Temp
-
-                                    FileInfo fileInf = new(iconTempPath);
-
-                                    if (fileInf.Exists)
-                                    {
-                                        fileInf.Delete();
-                                    }
-
-                                    #endregion
-
-                                    return View(addIcon);
-                                }
-
-                                addIcon.IconMimeType = tag.Description;
-                            }
-
-                            #endregion
-
-                            #region Определяем ширину файла
-
-                            if (tag.Name == "Image Width")
-                            {
-                                if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
-                                {
-                                    ModelState.AddModelError("IconFileFormFile", $"Не определить ширину файла «{addIcon.IconFileFormFile.FileName}»");
-
-                                    #region Удаляем файл из папки Temp
-
-                                    FileInfo fileInf = new(iconTempPath);
-
-                                    if (fileInf.Exists)
-                                    {
-                                        fileInf.Delete();
-                                    }
-
-                                    #endregion
-
-                                    return View(addIcon);
-                                }
-
-                                addIcon.IconWidth = tag.Description;
-                            }
-
-                            #endregion
-
-                            #region Определяем высоту файла
-
-                            if (tag.Name == "Image Height")
-                            {
-                                if (tag.Description == null || string.IsNullOrWhiteSpace(tag.Description) || string.IsNullOrEmpty(tag.Description))
-                                {
-                                    ModelState.AddModelError("IconFileFormFile", $"Не определить высоту файла «{addIcon.IconFileFormFile.FileName}»");
-
-                                    #region Удаляем файл из папки Temp
-
-                                    FileInfo fileInf = new(iconTempPath);
-
-                                    if (fileInf.Exists)
-                                    {
-                                        fileInf.Delete();
-                                    }
-
-                                    #endregion
-
-                                    return View(addIcon);
-                                }
-
-                                addIcon.IconHeight = tag.Description;
-                            }
-
-                            #endregion
-                        }
-                    }
-
-                    #endregion
-
-                    #region Параметр IconSize
-
-                    if (addIcon.IconWidth != addIcon.IconHeight & addIcon.IconWidth != "580" & addIcon.IconHeight != "270")
-                    {
-                        ModelState.AddModelError("IconFileFormFile", $"Ширина «{addIcon.IconWidth}» и высота «{addIcon.IconHeight}» иконки должны быть равны");
-
-                        return View(addIcon);
-                    }
-                    else if (addIcon.IconFileName.Contains("favicon"))
-                    {
-                        addIcon.IconSize = "any";
-                    }
-                    else
-                    {
-                        addIcon.IconSize = addIcon.IconWidth + 'x' + addIcon.IconHeight;
-                    }
-
-                    #endregion
-
-                    #region Параметр RelForIcon
-
-                    _ = addIcon.RelForIcon;
-
-                    if (addIcon.IconFileName.Contains("maskable"))
-                    {
-                        addIcon.RelForIcon = "mask-icon";
-                    }
-
-                    #endregion
-
-                    #region Параметр IconPurpose
-
-                    _ = addIcon.IconPurpose;
-
-                    if (addIcon.IconFileName.Contains("maskable"))
-                    {
-                        addIcon.IconPurpose = "maskable";
-                    }
-
-                    #endregion
-
-                    #region Копируем файл в папку иконок и удаляем из папки Temp
-
-                    string iconPath = Path.Combine(rootPath + DataConfig.IconsFolder + addIcon.PathToIcon, addIcon.IconFileFormFile.FileName).Replace('\\', '/');
-
-                    FileInfo iconFileInfo = new(iconPath);
-
-                    if (!iconFileInfo.Exists)
-                    {
-                        using FileStream stream = new(iconPath, FileMode.Create);
-
-                        await addIcon.IconFileFormFile.CopyToAsync(stream);
-                    }
-
-                    FileInfo tempFile = new(iconTempPath);
-
-                    if (tempFile.Exists)
-                    {
-                        tempFile.Delete();
-                    }
-
-                    #endregion
+                    addIcon.IconSize = addIcon.IconWidth + 'x' + addIcon.IconHeight;
                 }
+
+                #endregion
+
+                #region Параметр RelForIcon
+
+                _ = addIcon.RelForIcon;
+
+                if (addIcon.IconFileName.Contains("maskable"))
+                {
+                    addIcon.RelForIcon = "mask-icon";
+                }
+
+                #endregion
+
+                #region Параметр IconPurpose
+
+                _ = addIcon.IconPurpose;
+
+                if (addIcon.IconFileName.Contains("maskable"))
+                {
+                    addIcon.IconPurpose = "maskable";
+                }
+
+                #endregion
+
+                #region Копируем файл в папку иконок и удаляем из папки Temp
+
+                string iconPath = Path.Combine(rootPath + DataConfig.IconsFolder + addIcon.IconType.PathToIcon, addIcon.IconFileFormFile.FileName).Replace('\\', '/');
+
+                FileInfo iconFileInfo = new(iconPath);
+
+                if (!iconFileInfo.Exists)
+                {
+                    using FileStream stream = new(iconPath, FileMode.Create);
+
+                    await addIcon.IconFileFormFile.CopyToAsync(stream);
+                }
+
+                FileInfo tempFile = new(iconTempPath);
+
+                if (tempFile.Exists)
+                {
+                    tempFile.Delete();
+                }
+
+                #endregion
             }
 
             #endregion
@@ -730,9 +383,9 @@ public class IconController(
 
             #region Открытие страницы Index
 
-            var newIcon = await iconContext.Icons.FirstAsync(icon => icon.IconFileName == addIcon.IconFileName & icon.PathToIcon == addIcon.PathToIcon);
+            var newIcon = await iconContext.Icons.FirstAsync(icon => icon.IconFileName == addIcon.IconFileName & icon.IconTypeModelId == addIcon.IconTypeModelId);
 
-            return RedirectToAction("Index", new { iconPath = addIcon.PathToIcon, iconId = newIcon.IconModelId });
+            return RedirectToAction("Index", new { iconId = newIcon.IconModelId });
 
             #endregion
         }
@@ -800,12 +453,6 @@ public class IconController(
 
             #endregion
 
-            #region Параметр PathToIcon
-
-            iconUpdate.PathToIcon = editIcon.PathToIcon;
-
-            #endregion
-
             #region Параметр FileName
 
             iconUpdate.IconFileName = editIcon.IconFileName;
@@ -844,7 +491,7 @@ public class IconController(
 
             #region Открытие страницы Index
 
-            return RedirectToAction("Index", new { iconPath = iconUpdate.PathToIcon, iconId = iconUpdate.IconModelId });
+            return RedirectToAction("Index", new {iconId = iconUpdate.IconModelId });
 
             #endregion
         }
@@ -892,7 +539,6 @@ public class IconController(
 [Bind(
                 "IconModelId," +
                 "IconFileName," +
-                "PathToIcon," +
                 "IconMimeType," +
                 "RelForIcon," +
                 "IconSize," +
@@ -914,7 +560,7 @@ public class IconController(
 
             #region Перемещаем файл иконки в папку Temp
 
-            string iconPath = Path.Combine(rootPath + DataConfig.IconsFolder + iconDelete.PathToIcon, iconDelete.IconFileName).Replace('\\', '/');
+            string iconPath = Path.Combine(rootPath + DataConfig.IconsFolder + iconDelete.IconType.PathToIcon, iconDelete.IconFileName).Replace('\\', '/');
 
             string iconTempPath = Path.Combine(rootPath + DataConfig.TempPath, iconDelete.IconFileName).Replace('\\', '/');
 
@@ -935,7 +581,7 @@ public class IconController(
 
             #region Открытие страницы Index
 
-            return RedirectToAction("Index", new { iconPath = iconDelete.PathToIcon });
+            return RedirectToAction("Index", new { iconPath = iconDelete.IconTypeModelId });
 
             #endregion
         }

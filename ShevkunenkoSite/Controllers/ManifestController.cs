@@ -34,10 +34,10 @@ public class ManifestController(
         manifest.Id = manifest.Start_url;
 
         manifest.Icons = iconContext.Icons
-                .Where(icon => icon.PathToIcon == pageInfo.PageIconPath && icon.IconMimeType != "image/svg+xml")
+                .Where(icon => icon.IconType.PathToIcon == pageInfo.PageIconPath && icon.IconMimeType != "image/svg+xml")
                 .Select(p => new IconForManifest
                 {
-                    src = DataConfig.IconsFolder + p.PathToIcon + p.IconFileName,
+                    src = DataConfig.IconsFolder + p.IconType.PathToIcon + p.IconFileName,
                     sizes = p.IconSize,
                     type = p.IconMimeType,
                     purpose = p.IconPurpose

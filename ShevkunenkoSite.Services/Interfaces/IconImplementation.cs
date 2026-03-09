@@ -6,7 +6,8 @@ public class IconImplementation(SiteDbContext siteContext) : IIconRepository
 {
     #region Все файлы иконок в БД
 
-    public IQueryable<IconModel> Icons => siteContext.Icons;
+    public IQueryable<IconModel> Icons => siteContext.Icons
+        .Include(icon => icon.IconType);
 
     #endregion
 
