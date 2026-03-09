@@ -36,15 +36,6 @@ public record class IconModel
 
     #region Свойства NotMapped
 
-    #region Выбрать файл иконки (NotMapped)
-
-    [NotMapped]
-    [DataType(DataType.Upload)]
-    [Display(Name = "Выбрать файл иконки :")]
-    public IFormFile? IconFileFormFile { get; set; }
-
-    #endregion
-
     #region Ширина иконки (NotMapped)
 
     [NotMapped]

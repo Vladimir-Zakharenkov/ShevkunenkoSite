@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-
-namespace ShevkunenkoSite.Areas.Admin.Controllers;
+﻿namespace ShevkunenkoSite.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize]
@@ -101,7 +99,7 @@ public class IconController(
             IconModel addIcon = new()
             {
                 IconTypeModelId = addIconDTO.IconTypeModelId,
-                RelForIcon=addIconDTO.RelForIcon,
+                RelForIcon = addIconDTO.RelForIcon,
                 IconPurpose = addIconDTO.IconPurpose
             };
 
@@ -437,19 +435,13 @@ public class IconController(
     [RequestSizeLimit(5_268_435_456)]
     [RequestFormLimits(MultipartBodyLengthLimit = 5268435456)]
     public async Task<IActionResult> EditIcon(
-[Bind(
-                "IconModelId," +
-                "IconFileName," +
-                "PathToIcon," +
-                "IconMimeType," +
-                "RelForIcon," +
-                "IconSize," +
-                "IconPurpose," +
-                "IconFileFormFile," +
-                "NewIconPath," +
-                "NewIcon"
-        )]
-        IconModel editIcon)
+    [Bind(
+            "IconModelId," +
+            "IconTypeModelId," +
+            "RelForIcon," +
+            "IconPurpose"
+    )]
+    IconEditDTOModel editIcon)
     {
         if (ModelState.IsValid)
         {
@@ -457,24 +449,6 @@ public class IconController(
 
             var iconUpdate = await iconContext.Icons
                 .FirstAsync(icon => icon.IconModelId == editIcon.IconModelId);
-
-            #endregion
-
-            #region Параметр FileName
-
-            iconUpdate.IconFileName = editIcon.IconFileName;
-
-            #endregion
-
-            #region Параметр MYME Type
-
-            iconUpdate.IconMimeType = editIcon.IconMimeType;
-
-            #endregion
-
-            #region Параметр IconSize
-
-            iconUpdate.IconSize = editIcon.IconSize;
 
             #endregion
 
@@ -504,7 +478,7 @@ public class IconController(
         }
         else
         {
-            return View(new IconModel());
+            return RedirectToAction("EditIccon", "Icon", new { iconId = editIcon.IconModelId });
         }
     }
 
@@ -543,18 +517,11 @@ public class IconController(
     [RequestSizeLimit(5_268_435_456)]
     [RequestFormLimits(MultipartBodyLengthLimit = 5268435456)]
     public async Task<IActionResult> DeleteIcon(
-[Bind(
-                "IconModelId," +
-                "IconFileName," +
-                "IconMimeType," +
-                "RelForIcon," +
-                "IconSize," +
-                "IconPurpose," +
-                "IconFileFormFile," +
-                "NewIconPath," +
-                "NewIcon"
+    [Bind(
+            "IconModelId," +
+            "IconTypeModelId"
         )]
-        IconModel deleteIcon)
+        IconDeleteDTOModel deleteIcon)
     {
         if (ModelState.IsValid)
         {
@@ -588,13 +555,13 @@ public class IconController(
 
             #region Открытие страницы Index
 
-            return RedirectToAction("Index", new { iconPath = iconDelete.IconTypeModelId });
+            return RedirectToAction("Index", new { iconId = iconDelete.IconTypeModelId });
 
             #endregion
         }
         else
         {
-            return View(deleteIcon);
+            return RedirectToAction("Index", "Icon", new { iconId = deleteIcon.IconTypeModelId });
         }
     }
 
