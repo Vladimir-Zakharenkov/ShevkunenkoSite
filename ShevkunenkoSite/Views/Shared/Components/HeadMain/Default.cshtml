@@ -1,6 +1,7 @@
 ﻿@model HeadViewModel
 
 @{
+    string faviconIconSize = "16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512";
 }
 
 <head>
@@ -16,8 +17,10 @@
     <meta name="HandheldFriendly" content="True" />
     <link rel="canonical" href="https://@Context.Request.Host@Context.Request.Path@Context.Request.QueryString" />
 
-    @* Верификация поисковых систем*@
-    @if (Context.Request.Path.ToString().Contains("sergeyshef.ru", StringComparison.OrdinalIgnoreCase))
+
+
+    @*---------------------------------- Верификация поисковых систем ----------------------------------*@
+    @if (Context.Request.Path.ToString().Contains("sergeyshef.ru", StringComparison.OrdinalIgnoreCase)) 
     {
         <meta name="yandex-verification" content="800b6b429689169b" />
     }
@@ -27,9 +30,11 @@
         <meta name="yandex-verification" content="df8caf709ed9aba7" />
         <meta name="yandex-verification" content="b894f910bafa1187" />
     }
+    @*-------------------------------------------------------------------------------------------------------------*@
 
 
-    @* Картинка страницы *@
+
+    @*----------------------------------------- Картинка страницы ----------------------------------------*@
     @if (Model.PageInfo.ImageFileModel != null)
     {
         @if (!string.IsNullOrEmpty(Model.PageInfo.ImageFileModel.WebImageFileName))
@@ -40,9 +45,8 @@
         {
             <meta itemprop="image" content="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.ImageFileName">
         }
-
     }
-
+    @*-------------------------------------------------------------------------------------------------------------*@
 
 
     @*---------------------------------- Иконки страницы --------------------------------------------------------------*@
@@ -50,12 +54,12 @@
     {
         if (p.RelForIcon == "shortcut icon")
         {
-            <link rel="shortcut icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
-            <link rel="shortcut icon" type="image/x-icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
-            <link rel="shortcut icon" type="image/vnd.microsoft.icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
-            <link rel="icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
-            <link rel="icon" type="image/x-icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
-            <link rel="icon" type="image/vnd.microsoft.icon" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256 512x512" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
+            <link rel="shortcut icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
+            <link rel="shortcut icon" type="image/x-icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
+            <link rel="shortcut icon" type="image/vnd.microsoft.icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
+            <link rel="icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
+            <link rel="icon" type="image/x-icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
+            <link rel="icon" type="image/vnd.microsoft.icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
         }
         else
         {
