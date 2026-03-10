@@ -10,13 +10,19 @@ namespace ShevkunenkoSite.Services.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
+            migrationBuilder.DropColumn(
+                name: "Manifest",
+                table: "PageInfo");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
+            migrationBuilder.AddColumn<string>(
+                name: "Manifest",
+                table: "PageInfo",
+                type: "nvarchar(max)",
+                nullable: true);
         }
     }
 }

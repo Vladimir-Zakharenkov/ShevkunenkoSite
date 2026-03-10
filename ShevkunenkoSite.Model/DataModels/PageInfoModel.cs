@@ -119,14 +119,6 @@ public class PageInfoModel
 
     #endregion
 
-    #region manifest.json
-
-    [Display(Name = "Файл manifest.json :")]
-    [DataType(DataType.Text)]
-    public string? Manifest { get; set; }
-
-    #endregion
-
     #region BrowserConfig и т.п.
 
     [Required(ErrorMessage = "Необходимо указать файл browserconfig")]

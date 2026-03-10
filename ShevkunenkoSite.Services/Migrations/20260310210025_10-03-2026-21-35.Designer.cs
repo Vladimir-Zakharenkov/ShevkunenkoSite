@@ -12,7 +12,7 @@ using ShevkunenkoSite.Services;
 namespace ShevkunenkoSite.Services.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    [Migration("20260310202447_10-03-2026-21-35")]
+    [Migration("20260310210025_10-03-2026-21-35")]
     partial class _100320262135
     {
         /// <inheritdoc />
@@ -1115,9 +1115,6 @@ namespace ShevkunenkoSite.Services.Migrations
 
                     b.Property<Guid?>("ImagePageHeadingId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Manifest")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OgType")
                         .IsRequired()

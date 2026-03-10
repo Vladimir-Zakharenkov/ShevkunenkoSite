@@ -631,19 +631,6 @@ public class PageInfoController(
 
             #endregion
 
-            #region manifest.json
-
-            if (addPage.OgType == "movie")
-            {
-                addPage.Manifest = "movie.json";
-            }
-            else
-            {
-                addPage.Manifest = "main.json";
-            }
-
-            #endregion
-
             #region PageIconPath - BrowserConfig - BrowserConfigFolder
 
             if (addPage.OgType == "movie")
@@ -1131,7 +1118,6 @@ public class PageInfoController(
                 addPage.PageIconPath = "admin/";
                 addPage.BrowserConfig = "admin.xml";
                 addPage.BrowserConfigFolder = "/admin";
-                addPage.Manifest = "admin.json";
             }
 
             #endregion
@@ -2069,23 +2055,6 @@ public class PageInfoController(
             }
 
             _ = pageUpdate.OgType.Trim();
-
-            #endregion
-
-            #region manifest.json
-
-            if (pageUpdate.OgType == "movie")
-            {
-                pageUpdate.Manifest = "movie.json";
-            }
-            else if (editPage.PageArea == "/admin")
-            {
-                pageUpdate.Manifest = "admin.json";
-            }
-            else
-            {
-                pageUpdate.Manifest = "main.json";
-            }
 
             #endregion
 

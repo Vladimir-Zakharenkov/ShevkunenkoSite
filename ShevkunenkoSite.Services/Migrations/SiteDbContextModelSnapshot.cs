@@ -1113,9 +1113,6 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Property<Guid?>("ImagePageHeadingId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Manifest")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("OgType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
