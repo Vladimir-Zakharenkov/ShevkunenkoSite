@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata;
-
-namespace ShevkunenkoSite.Services;
+﻿namespace ShevkunenkoSite.Services;
 
 public class SiteDbContext(DbContextOptions<SiteDbContext> options) : DbContext(options)
 {

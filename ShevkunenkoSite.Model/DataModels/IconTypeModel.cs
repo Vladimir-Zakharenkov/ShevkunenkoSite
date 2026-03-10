@@ -23,6 +23,12 @@ public class IconTypeModel
 
     #endregion
 
+    #region Связь с таблицей PageInfoModel
+
+    //public ICollection<PageInfoModel> PageList { get; } = [];
+
+    #endregion
+
     #region Свойства NotMapped
 
     #region Выбрать файл иконки (NotMapped)

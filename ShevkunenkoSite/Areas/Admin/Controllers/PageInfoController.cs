@@ -11,6 +11,7 @@ public class PageInfoController(
     IMovieFileRepository movieContext,
     IFilmFileRepository filmContext,
     IIconRepository iconContext,
+    //IIconTypeRepository iconTypeContext,
     IImageFileRepository imageContext,
     IBackgroundFotoRepository backgroundContext,
     IBooksAndArticlesRepository bookAndArticleContext,
@@ -20,6 +21,47 @@ public class PageInfoController(
     ) : Controller
 {
     private readonly string rootPath = hostEnvironment.WebRootPath;
+
+    //#region Заполнение поля IconTypeModelId
+
+    //public async void FillIconType()
+    //{
+    //    var allPages = await pageInfoContext.PagesInfo.ToListAsync();
+
+    //    IconTypeModel iconType = new();
+
+    //    foreach (var page in allPages)
+    //    {
+    //        if (page.PageIconPath == "main/")
+    //        {
+    //            iconType = await iconTypeContext.IconTypes.FirstAsync(icon => icon.PathToIcon == "main/");
+
+    //            page.IconTypeModelId = iconType.IconTypeModelId;
+
+    //            await pageInfoContext.SaveChangesInPageAsync();
+    //        }
+
+    //        if (page.PageIconPath == "admin/")
+    //        {
+    //            iconType = await iconTypeContext.IconTypes.FirstAsync(icon => icon.PathToIcon == "admin/");
+
+    //            page.IconTypeModelId = iconType.IconTypeModelId;
+
+    //            await pageInfoContext.SaveChangesInPageAsync();
+    //        }
+
+    //        if (page.PageIconPath == "movie/")
+    //        {
+    //            iconType = await iconTypeContext.IconTypes.FirstAsync(icon => icon.PathToIcon == "movie/");
+
+    //            page.IconTypeModelId = iconType.IconTypeModelId;
+
+    //            await pageInfoContext.SaveChangesInPageAsync();
+    //        }
+    //    }
+    //}
+
+    //#endregion
 
     #region Список страниц сайта
 

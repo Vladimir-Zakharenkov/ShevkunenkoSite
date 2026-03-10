@@ -347,6 +347,13 @@ public class PageInfoModel
 
     #endregion
 
+    #region Связь с таблицей IconTypeModel
+
+    //public Guid IconTypeModelId { get; set; }
+    //public IconTypeModel? IconType { get; set; }
+
+    #endregion
+
     #region Свойства NotMapped
 
     #region Список областей (Area) (NotMapped)

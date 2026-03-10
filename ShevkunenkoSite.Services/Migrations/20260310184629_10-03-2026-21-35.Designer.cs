@@ -12,8 +12,8 @@ using ShevkunenkoSite.Services;
 namespace ShevkunenkoSite.Services.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    [Migration("20260309065146_09-03-2026-09-50")]
-    partial class _090320260950
+    [Migration("20260310184629_10-03-2026-21-35")]
+    partial class _100320262135
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
