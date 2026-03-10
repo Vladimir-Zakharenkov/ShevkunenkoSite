@@ -349,8 +349,8 @@ public class PageInfoModel
 
     #region Связь с таблицей IconTypeModel
 
-    //public Guid IconTypeModelId { get; set; }
-    //public IconTypeModel? IconType { get; set; }
+    public Guid IconTypeModelId { get; set; }
+    public IconTypeModel IconType { get; set; } = null!;
 
     #endregion
 

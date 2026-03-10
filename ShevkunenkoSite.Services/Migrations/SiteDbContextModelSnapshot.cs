@@ -1104,6 +1104,9 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Property<Guid?>("FilmId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("IconTypeModelId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("ImageFileModelId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1243,6 +1246,8 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.HasIndex("FilmId")
                         .IsUnique()
                         .HasFilter("[FilmId] IS NOT NULL");
+
+                    b.HasIndex("IconTypeModelId");
 
                     b.HasIndex("ImageFileModelId");
 
@@ -1480,6 +1485,12 @@ namespace ShevkunenkoSite.Services.Migrations
                         .WithOne("PageInfo")
                         .HasForeignKey("ShevkunenkoSite.Models.DataModels.PageInfoModel", "FilmId");
 
+                    b.HasOne("ShevkunenkoSite.Models.DataModels.IconTypeModel", "IconType")
+                        .WithMany("PageList")
+                        .HasForeignKey("IconTypeModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "ImageFileModel")
                         .WithMany()
                         .HasForeignKey("ImageFileModelId")
@@ -1499,6 +1510,8 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Navigation("BackgroundFileModel");
 
                     b.Navigation("Film");
+
+                    b.Navigation("IconType");
 
                     b.Navigation("ImageFileModel");
 
@@ -1535,6 +1548,8 @@ namespace ShevkunenkoSite.Services.Migrations
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.IconTypeModel", b =>
                 {
                     b.Navigation("IconList");
+
+                    b.Navigation("PageList");
                 });
 
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.PageInfoModel", b =>

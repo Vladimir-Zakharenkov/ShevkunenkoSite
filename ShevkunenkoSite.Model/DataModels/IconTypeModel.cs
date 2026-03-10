@@ -25,7 +25,7 @@ public class IconTypeModel
 
     #region Связь с таблицей PageInfoModel
 
-    //public ICollection<PageInfoModel> PageList { get; } = [];
+    public ICollection<PageInfoModel> PageList { get; } = [];
 
     #endregion
 
