@@ -50,20 +50,20 @@
 
 
     @*---------------------------------- Иконки страницы --------------------------------------------------------------*@
-    @foreach (var p in Model.IconsForHead)
+    @foreach (var icon in Model.IconsForHead)
     {
-        if (p.RelForIcon == "shortcut icon")
+        if (icon.RelForIcon == "shortcut icon")
         {
-            <link rel="shortcut icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
-            <link rel="shortcut icon" type="image/x-icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
-            <link rel="shortcut icon" type="image/vnd.microsoft.icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
-            <link rel="icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
-            <link rel="icon" type="image/x-icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
-            <link rel="icon" type="image/vnd.microsoft.icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
+            <link rel="shortcut icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@icon.IconType.PathToIcon@icon.IconFileName" />
+            <link rel="shortcut icon" type="image/x-icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@icon.IconType.PathToIcon@icon.IconFileName" />
+            <link rel="shortcut icon" type="image/vnd.microsoft.icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@icon.IconType.PathToIcon@icon.IconFileName" />
+            <link rel="icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@icon.IconType.PathToIcon@icon.IconFileName" />
+            <link rel="icon" type="image/x-icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@icon.IconType.PathToIcon@icon.IconFileName" />
+            <link rel="icon" type="image/vnd.microsoft.icon" sizes="@faviconIconSize" href="@DataConfig.IconsFolder@icon.IconType.PathToIcon@icon.IconFileName" />
         }
         else
         {
-            <link rel="@p.RelForIcon" type="@p.IconMimeType" sizes="@p.IconSize" href="@DataConfig.IconsFolder@p.IconType.PathToIcon@p.IconFileName" />
+            <link rel="@icon.RelForIcon" type="@icon.IconMimeType" sizes="@icon.IconSize" href="@DataConfig.IconsFolder@icon.IconType.PathToIcon@icon.IconFileName" />
         }
     }
     @*-------------------------------------------------------------------------------------------------------------*@

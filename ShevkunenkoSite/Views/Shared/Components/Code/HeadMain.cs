@@ -2,14 +2,14 @@
 
 public class HeadMain(
     IPageInfoRepository pageInfoContext,
-    IIconRepository iconContext,
+    IIconRepository iconTypeContext,
     IBooksAndArticlesRepository bookContext) : ViewComponent
 {
     public async Task<IViewComponentResult> InvokeAsync()
     {
         HeadViewModel headModel = new();
 
-        #region HttpContext запроса
+        #region Определяем страницу по HttpContext
 
         headModel.PageInfo = await pageInfoContext.GetPageInfoByPathAsync(HttpContext);
 
@@ -17,19 +17,11 @@ public class HeadMain(
 
         #region Список иконок в теге <head>
 
-        if (await iconContext.Icons.Where(icon => icon.IconType.PathToIcon == headModel.PageInfo.PageIconPath).AnyAsync())
+        if (await iconTypeContext.Icons
+                .Where(icon => icon.IconTypeModelId == headModel.PageInfo.IconTypeModelId).AnyAsync())
         {
-            headModel.IconsForHead = await iconContext.Icons
-                .Where(icon => icon.IconType.PathToIcon == headModel.PageInfo.PageIconPath)
-                .AsNoTracking()
-                .ToListAsync();
-        }
-        else
-        {
-            headModel.IconsForHead = await iconContext.Icons
-                .Where(icon => icon.IconType.PathToIcon == "main/")
-                .AsNoTracking()
-                .ToListAsync();
+            headModel.IconsForHead = await iconTypeContext.Icons
+                    .Where(icon => icon.IconTypeModelId == headModel.PageInfo.IconTypeModelId).ToListAsync();
         }
 
         #endregion

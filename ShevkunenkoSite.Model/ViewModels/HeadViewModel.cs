@@ -6,5 +6,5 @@ public class HeadViewModel
 
     public BooksAndArticlesModel? BookOrArticle { get; set; }
 
-    public List<IconModel> IconsForHead { get; set; } = [];
+    public ICollection<IconModel> IconsForHead { get; set; } = [];
 }

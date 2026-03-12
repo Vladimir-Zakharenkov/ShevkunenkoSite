@@ -92,6 +92,7 @@ public class PageInfoController(
                 // TODO: убрать nullable для картинки фильма 
                 .Include(movie => movie.MovieFile)
                 .Include(movie => movie.MovieFile)
+                .Include(iconType => iconType.IconType).ThenInclude(icon => icon.IconList)
                 .AsNoTracking()
                 .FirstAsync(p => p.PageInfoModelId == pageId);
 
@@ -112,22 +113,6 @@ public class PageInfoController(
                 using StreamReader htmlText = new(rootPath + DataConfig.TextsFolderPath + textItem.FolderForText + textItem.HtmlFileName);
 
                 pageItem.HtmlText = htmlText.ReadToEnd();
-            }
-
-            #endregion
-
-            #region Инициализация экземпляра иконки для страницы
-
-            if (await iconContext.Icons
-                .Where(icon => icon.IconType.PathToIcon == pageItem.PageIconPath && icon.IconFileName == DataConfig.IconItem).AnyAsync())
-            {
-                pageItem.IconItem = await iconContext.Icons
-                    .FirstAsync(icon => icon.IconType.PathToIcon == pageItem.PageIconPath && icon.IconFileName == DataConfig.IconItem);
-            }
-            else
-            {
-                pageItem.IconItem = await iconContext.Icons
-                    .FirstAsync(icon => icon.IconType.PathToIcon == "main/" && icon.IconFileName == DataConfig.IconItem);
             }
 
             #endregion
@@ -1608,6 +1593,7 @@ public class PageInfoController(
                 .Include(audioFile => audioFile.AudioInfo)
                 .Include(movie => movie.MovieFile).ThenInclude(movieImage => movieImage != null ? movieImage.ImageFileModel : null)
                 .Include(movie => movie.MovieFile).ThenInclude(moviePoster => moviePoster != null ? moviePoster.MoviePoster : null)
+                .Include(iconType => iconType.IconType).ThenInclude(icon => icon.IconList)
                 .FirstAsync(i => i.PageInfoModelId == pageId);
 
             #endregion
@@ -1972,6 +1958,9 @@ public class PageInfoController(
             // Список аудиофайлов
             ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
 
+            // Список иконок
+            ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
+
             return View(editPage);
         }
         else
@@ -2111,6 +2100,9 @@ public class PageInfoController(
                         // Список фильмов
                         ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
+                        // Список иконок
+                        ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
+
                         return View(editPage);
                     }
 
@@ -2193,6 +2185,9 @@ public class PageInfoController(
                         // Список фильмов
                         ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
+                        // Список иконок
+                        ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
+
                         return View(editPage);
                     }
                 }
@@ -2237,6 +2232,9 @@ public class PageInfoController(
                         // Список фильмов
                         ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
+                        // Список иконок
+                        ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
+
                         return View(editPage);
                     }
 
@@ -2266,6 +2264,9 @@ public class PageInfoController(
 
                         // Список фильмов
                         ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
+                        // Список иконок
+                        ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
 
                         return View(editPage);
                     }
@@ -2306,6 +2307,9 @@ public class PageInfoController(
 
                         // Список фильмов
                         ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
+                        // Список иконок
+                        ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
 
                         return View(editPage);
                     }
@@ -2353,6 +2357,9 @@ public class PageInfoController(
                         // Список фильмов
                         ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
+                        // Список иконок
+                        ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
+
                         return View(editPage);
                     }
                 }
@@ -2397,6 +2404,9 @@ public class PageInfoController(
                         // Список фильмов
                         ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
+                        // Список иконок
+                        ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
+
                         return View(editPage);
                     }
 
@@ -2424,6 +2434,9 @@ public class PageInfoController(
 
                         // Список фильмов
                         ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
+                        // Список иконок
+                        ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
 
                         return View(editPage);
                     }
@@ -2524,6 +2537,9 @@ public class PageInfoController(
 
                     // Список фильмов
                     ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
+                    // Список иконок
+                    ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
 
                     return View(editPage);
                 }
@@ -2664,6 +2680,9 @@ public class PageInfoController(
                         // Список фильмов
                         ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
+                        // Список иконок
+                        ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
+
                         return View(editPage);
                     }
 
@@ -2745,6 +2764,9 @@ public class PageInfoController(
 
                         // Список фильмов
                         ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
+                        // Список иконок
+                        ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
 
                         return View(editPage);
                     }
