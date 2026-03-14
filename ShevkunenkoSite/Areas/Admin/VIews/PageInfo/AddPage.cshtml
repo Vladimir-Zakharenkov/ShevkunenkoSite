@@ -347,6 +347,55 @@
 
 				</div>
 
+				@* Иконка страницы *@
+				<div class="accordion-item mb-3 shadw">
+
+					<h2 id="headingPageIcon" class="accordion-header shadw">
+
+						<button class="accordion-button collapsed py-0 stranicy"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#PageIcon"
+								aria-expanded="true"
+								aria-controls="PageIcon">
+
+							<span class="form-label fs-5">Иконка страницы :</span>
+
+						</button>
+
+					</h2>
+
+					<div id="PageIcon"
+							class="accordion-collapse collapse"
+							aria-labelledby="headingPageIcon"
+							data-bs-parent="#accordionEditPage">
+
+						<div class="accordion-body accordion-body-nointend text-center">
+
+							<select asp-for="IconTypeModelId"
+									asp-items="ViewBag.IconTypes"
+									class="d-flex col-8 col-sm-4 col-xl-3 mx-auto my-3">
+							</select>
+
+							@if (Context.Request.Method == "POST")
+							{
+								<span asp-validation-for="IconTypeModelId" class="text-danger"></span>
+							}
+
+							<div class="form-text">
+
+								<span class="fs-6 text-success">
+									выбрать иконку
+								</span>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
 				@* Фон для страницы (фотопленка) *@
 				<div class="accordion-item mb-3 mt-2 shadw">
 

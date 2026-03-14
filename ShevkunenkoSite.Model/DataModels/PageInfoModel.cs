@@ -119,7 +119,7 @@ public class PageInfoModel
 
     #endregion
 
-    #region BrowserConfig и т.п.
+    #region BrowserConfig
 
     [Required(ErrorMessage = "Необходимо указать файл browserconfig")]
     [Display(Name = "Файл browserconfig :")]
@@ -421,13 +421,6 @@ public class PageInfoModel
     [DataType(DataType.Upload)]
     [Display(Name = "Картинка под заголовком :")]
     public IFormFile? ImagePageHeadingFormFile { get; set; }
-
-    #endregion
-
-    #region Экземпляр иконки странницы (NotMapped)
-
-    [NotMapped]
-    public IconModel? IconItem { get; set; }
 
     #endregion
 
