@@ -29,7 +29,7 @@
 
 </div>
 
-@* Карточка страницы и индкес сортировки *@
+@* Карточка страницы и индекс сортировки *@
 <div>
 
 	<p>
@@ -98,7 +98,6 @@
 			<div>
 
 				<input asp-for="PageInfoModelId" type="hidden" />
-				<input asp-for="PageIconPath" type="hidden" />
 				<input asp-for="BrowserConfig" type="hidden" />
 				<input asp-for="BrowserConfigFolder" type="hidden" />
 
@@ -416,6 +415,78 @@
 								</div>
 
 							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+				
+				@* Иконка страницы *@
+				<div class="accordion-item mb-3 shadw">
+
+					<h2 id="headingPageIcon" class="accordion-header shadw">
+
+						<button class="accordion-button collapsed py-0 stranicy"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#PageIcon"
+								aria-expanded="true"
+								aria-controls="PageIcon">
+
+							<span class="form-label fs-5">Иконка страницы :</span>
+
+						</button>
+
+					</h2>
+
+					<div id="PageIcon"
+						 class="accordion-collapse collapse"
+						 aria-labelledby="headingPageIcon"
+						 data-bs-parent="#accordionEditPage">
+
+						<div class="accordion-body accordion-body-nointend text-center">
+
+							<a asp-area="Admin"
+									asp-controller="Icon"
+									asp-action="Index"
+									asp-route-iconId="@Model.IconType.IconList.First(icon => icon.IconFileName == "ms-tile-558.webp").IconModelId"
+									class="d-inline-block maxwidth300px mx-auto shadw imageref"
+									title="информация об иконке"
+									onclick="this.target='_blank'">
+
+								<img itemprop="image"
+										class="p-1 w-100"
+										src="@DataConfig.IconsFolder/@Model.IconType.PathToIcon/@Model.IconType.IconList.First(icon => icon.IconFileName == "ms-tile-558.webp").IconFileName"
+										alt="иконка страницы"
+										title="иконка страницы" />
+
+							</a>
+
+							<p class="my-2 fluid-font-size">
+								<span class="text-primary">Папка : </span>
+								<span class="text_shadow">@DataConfig.IconsFolder@Model.IconType.PathToIcon</span>
+							</p>
+
+							<hr class="w-50 mx-auto" />
+
+								<select asp-for="IconTypeModelId"
+										asp-items="ViewBag.IconTypes"
+										class="d-flex col-8 col-sm-4 col-xl-3 mx-auto my-3">
+								</select>
+
+								@if (Context.Request.Method == "POST")
+								{
+									<span asp-validation-for="IconTypeModelId" class="text-danger"></span>
+								}
+
+								<div class="form-text">
+
+									<span class="fs-6 text-success">
+										выбрать иконку
+									</span>
+
+								</div>
 
 						</div>
 
@@ -1130,54 +1201,6 @@
 								}
 
 							</div>
-
-						</div>
-
-					</div>
-
-				</div>
-
-				@* Иконка страницы *@
-				<div class="accordion-item mb-3 shadw">
-
-					<h2 id="headingPageIcon" class="accordion-header shadw">
-
-						<button class="accordion-button collapsed py-0 stranicy"
-								type="button"
-								data-bs-toggle="collapse"
-								data-bs-target="#PageIcon"
-								aria-expanded="true"
-								aria-controls="PageIcon">
-
-							<span class="form-label fs-5">Иконка страницы :</span>
-
-						</button>
-
-					</h2>
-
-					<div id="PageIcon"
-						 class="accordion-collapse collapse"
-						 aria-labelledby="headingPageIcon"
-						 data-bs-parent="#accordionEditPage">
-
-						<div class="accordion-body accordion-body-nointend text-center">
-
-							@if (Context.Request.Method == "GET" && Model.IconItem != null)
-							{
-								<img itemprop="image"
-									 class="card-img-top m-2 width30percent maxwidth300px shadw mx-auto"
-									 src="@DataConfig.IconsFolder/@Model.IconItem.IconType.PathToIcon/@Model.IconItem.IconFileName"
-									 alt="иконка страницы"
-									 title="иконка страницы" />
-
-								<p class="text_shadow my-2 fluid-font-size">
-									@DataConfig.IconsFolder@Model.IconItem.IconType.PathToIcon@Model.IconItem.IconFileName
-								</p>
-							}
-
-							<p class="fs-6 form-text text-success">
-								выбор иконки связан с OgType
-							</p>
 
 						</div>
 

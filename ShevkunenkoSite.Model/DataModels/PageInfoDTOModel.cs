@@ -4,7 +4,9 @@ namespace ShevkunenkoSite.Models.DataModels;
 
 using ShevkunenkoSite.Models.ViewModels;
 
-public class PageInfoModel
+[NotMapped]
+
+public record class PageInfoDTOModel
 {
     #region Идентификатор страницы в базе данных
 
@@ -337,7 +339,6 @@ public class PageInfoModel
     #region Связь с таблицей IconTypeModel
 
     public Guid IconTypeModelId { get; set; }
-    public IconTypeModel IconType { get; set; } = null!;
 
     #endregion
 

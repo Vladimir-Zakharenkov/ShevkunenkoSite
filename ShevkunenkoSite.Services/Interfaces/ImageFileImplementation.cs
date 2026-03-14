@@ -66,66 +66,66 @@ public class ImageFileImplementation(SiteDbContext siteContext) : IImageFileRepo
 
     #region Получить Guid картинки по имени файла
 
-    public async Task<Guid?> GetImageGuidByFileNameAsync(string? imageFillename)
+    public async Task<Guid> GetImageGuidByFileNameAsync(string? imageFilename)
     {
-        if (imageFillename != null)
+        if (imageFilename != null)
         {
-            if (await siteContext.ImageFile.Where(image => image.WebImageFileName == imageFillename).AnyAsync())
+            if (await siteContext.ImageFile.Where(image => image.WebImageFileName == imageFilename).AnyAsync())
             {
-                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.WebImageFileName == imageFillename);
+                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.WebImageFileName == imageFilename);
 
                 return imageObject.ImageFileModelId;
             }
-            else if (await siteContext.ImageFile.Where(image => image.WebIconFileName == imageFillename).AnyAsync())
+            else if (await siteContext.ImageFile.Where(image => image.WebIconFileName == imageFilename).AnyAsync())
             {
-                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.WebIconFileName == imageFillename);
+                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.WebIconFileName == imageFilename);
 
                 return imageObject.ImageFileModelId;
             }
-            else if (await siteContext.ImageFile.Where(image => image.WebIcon200FileName == imageFillename).AnyAsync())
+            else if (await siteContext.ImageFile.Where(image => image.WebIcon200FileName == imageFilename).AnyAsync())
             {
-                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.WebIcon200FileName == imageFillename);
+                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.WebIcon200FileName == imageFilename);
 
                 return imageObject.ImageFileModelId;
             }
-            else if (await siteContext.ImageFile.Where(image => image.WebIcon100FileName == imageFillename).AnyAsync())
+            else if (await siteContext.ImageFile.Where(image => image.WebIcon100FileName == imageFilename).AnyAsync())
             {
-                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.WebIcon100FileName == imageFillename);
+                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.WebIcon100FileName == imageFilename);
 
                 return imageObject.ImageFileModelId;
             }
-            else if (await siteContext.ImageFile.Where(image => image.ImageFileName == imageFillename).AnyAsync())
+            else if (await siteContext.ImageFile.Where(image => image.ImageFileName == imageFilename).AnyAsync())
             {
-                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.ImageFileName == imageFillename);
+                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.ImageFileName == imageFilename);
 
                 return imageObject.ImageFileModelId;
             }
-            else if (await siteContext.ImageFile.Where(image => image.IconFileName == imageFillename).AnyAsync())
+            else if (await siteContext.ImageFile.Where(image => image.IconFileName == imageFilename).AnyAsync())
             {
-                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.IconFileName == imageFillename);
+                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.IconFileName == imageFilename);
 
                 return imageObject.ImageFileModelId;
             }
-            else if (await siteContext.ImageFile.Where(image => image.Icon200FileName == imageFillename).AnyAsync())
+            else if (await siteContext.ImageFile.Where(image => image.Icon200FileName == imageFilename).AnyAsync())
             {
-                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.Icon200FileName == imageFillename);
+                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.Icon200FileName == imageFilename);
 
                 return imageObject.ImageFileModelId;
             }
-            else if (await siteContext.ImageFile.Where(image => image.Icon100FileName == imageFillename).AnyAsync())
+            else if (await siteContext.ImageFile.Where(image => image.Icon100FileName == imageFilename).AnyAsync())
             {
-                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.Icon100FileName == imageFillename);
+                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.Icon100FileName == imageFilename);
 
                 return imageObject.ImageFileModelId;
             }
             else
             {
-                return null;
+                return Guid.Empty;
             }
         }
         else
         {
-            return null;
+            return Guid.Empty;
         }
     }
 }

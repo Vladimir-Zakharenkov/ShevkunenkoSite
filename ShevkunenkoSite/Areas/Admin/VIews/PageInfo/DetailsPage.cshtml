@@ -392,12 +392,24 @@
             <div class="accordion-item mb-3 shadw">
 
                 <h2 id="headingPagePicture" class="accordion-header shadw">
-                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PagePicture" aria-expanded="true" aria-controls="PagePicture">
+
+                    <button class="accordion-button collapsed py-0 stranicy"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#PagePicture"
+                            aria-expanded="true"
+                            aria-controls="PagePicture">
+
                         <span class="form-label fs-5">Карточка :</span>
+
                     </button>
+
                 </h2>
 
-                <div id="PagePicture" class="accordion-collapse collapse" aria-labelledby="headingPagePicture" data-bs-parent="#accordionDetailsPage">
+                <div id="PagePicture"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="headingPagePicture"
+                     data-bs-parent="#accordionDetailsPage">
 
                     <div class="accordion-body accordion-body-nointend text-start text-sm-center">
 
@@ -420,7 +432,7 @@
                             @if (!string.IsNullOrEmpty(Model.ImageFileModel.WebImageFileName))
                             {
                                 <a class="fs-5 text_shadow"
-                                       href="@Url.Content($"{Model.ImageFileModel.ImagePath}\\/{Model.ImageFileModel.WebImageFileName}")"
+                                       href="@Url.Content($" {Model.ImageFileModel.ImagePath}\\ /{Model.ImageFileModel.WebImageFileName}")"
                                        onclick="this.target='_blank'">
                                     @Model.ImageFileModel.ImagePath/@Model.ImageFileModel.WebImageFileName
                                 </a>
@@ -428,7 +440,7 @@
                             else
                             {
                                 <a class="fs-5 text_shadow"
-                                       href="@Url.Content($"{Model.ImageFileModel.ImagePath}\\/{Model.ImageFileModel.WebImageFileName}")"
+                                       href="@Url.Content($" {Model.ImageFileModel.ImagePath}\\ /{Model.ImageFileModel.WebImageFileName}")"
                                        onclick="this.target='_blank'">
                                     @Model.ImageFileModel.ImagePath/@Model.ImageFileModel.ImageFileName
                                 </a>
@@ -550,12 +562,13 @@
                                          class="accordion-collapse collapse pb-2 px-2"
                                          aria-labelledby="headingTxtText">
 
-                                        <textarea id="ClearTextInput" class="form-control fordetails fs-6 mb-2"
-                                                  asp-for="ClearText"
-                                                  readonly
-                                                  rows="10"
-                                                      aria-describedby="ClearTextInputHelpBlock">
-												 </textarea>
+                                        <div class="accordion-body accordion-body-nointend text-center">
+
+                                            <textarea id="ClearTextInput" class="form-control fordetails fs-6 mb-2"
+                                                      asp-for="ClearText"
+                                                      readonly
+                                                      rows="10"
+                                                      aria-describedby="ClearTextInputHelpBlock"></textarea>
 
                                             <div id="ClearTextInputHelpBlock" class="form-text">
                                                 <span class="d-none d-sm-inline-block fs-6 text-success">тег «ClearText» - </span>
@@ -566,1784 +579,1801 @@
 
                                     </div>
 
-                                    @* Файл HTML *@
-                                    <div class="accordion-item my-3 shadw">
+                                </div>
 
-                                        @* Заголовок группы «файл HTML» *@
-                                        <h2 id="headingHtmlText" class="accordion-header shadw">
+                                @* Файл HTML *@
+                                <div class="accordion-item my-3 shadw">
 
-                                            <button class="accordion-button collapsed py-0 stranicy"
-                                                    type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#HtmlText"
-                                                    aria-expanded="true"
-                                                    aria-controls="HtmlText">
+                                    @* Заголовок группы «файл HTML» *@
+                                    <h2 id="headingHtmlText" class="accordion-header shadw">
 
-                                                <span class="form-label fs-5">Файл HTML :</span>
+                                        <button class="accordion-button collapsed py-0 stranicy"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#HtmlText"
+                                                aria-expanded="true"
+                                                aria-controls="HtmlText">
 
-                                            </button>
+                                            <span class="form-label fs-5">Файл HTML :</span>
 
-                                        </h2>
+                                        </button>
 
-                                        <div id="HtmlText"
-                                             class="accordion-collapse collapse pb-2 px-2"
-                                             aria-labelledby="headingHtmlText">
+                                    </h2>
+
+                                    <div id="HtmlText"
+                                         class="accordion-collapse collapse pb-2 px-2"
+                                         aria-labelledby="headingHtmlText">
+
+                                        <div class="accordion-body accordion-body-nointend text-center">
 
                                             <textarea id="HtmlTextInput" class="form-control fordetails fs-6 mb-2"
                                                       asp-for="HtmlText"
                                                       readonly
                                                       rows="10"
-                                                          aria-describedby="HtmlTextInputHelpBlock">
-					                         </textarea>
+                                                      aria-describedby="HtmlTextInputHelpBlock"></textarea>
 
-                                                <div id="HtmlTextInputHelpBlock" class="form-text">
+                                            <div id="HtmlTextInputHelpBlock" class="form-text">
 
-                                                    <span class="d-none d-sm-inline-block fs-6 text-success">тег «HtmlText» - </span>
-                                                    <span class="fs-6 text-success">текст с разметкой</span>
+                                                <span class="d-none d-sm-inline-block fs-6 text-success">тег «HtmlText» - </span>
+                                                <span class="fs-6 text-success">текст с разметкой</span>
 
-                                                </div>
+                                            </div>
 
-                                                <hr class="w-25 mx-auto" />
+                                            <hr class="w-25 mx-auto" />
 
-                                                <div class="bookpages lay1">
+                                            <div class="bookpages lay1">
 
-                                                    <div class="descr lay1 overflow-y-scroll height400">
+                                                <div class="descr lay1 overflow-y-scroll height400">
 
-                                                        @Html.Raw(Model.HtmlText)
-
-                                                    </div>
+                                                    @Html.Raw(Model.HtmlText)
 
                                                 </div>
 
-                                                <div class="form-text mt-3">
+                                            </div>
 
-                                                    <span class="fs-6 text-success">вид текста на сайте</span>
+                                            <div class="form-text mt-3">
 
-                                                </div>
+                                                <span class="fs-6 text-success">вид текста на сайте</span>
 
                                             </div>
 
                                         </div>
 
                                     </div>
-                                }
+
+                                </div>
 
                             </div>
-
-                        </div>
+                        }
 
                     </div>
 
-                    @* Иконка страницы *@
-                    <div class="accordion-item mb-3 shadw">
+                </div>
 
-                        <h2 id="headingPageIcon" class="accordion-header shadw">
+            </div>
 
-                            <button class="accordion-button collapsed py-0 stranicy"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#PageIcon"
-                                    aria-expanded="true"
-                                    aria-controls="PageIcon">
+            @* Иконка страницы *@
+            <div class="accordion-item mb-3 shadw">
 
-                                <span class="form-label fs-5">
-                                    Иконка :
-                                </span>
+                <h2 id="headingPageIcon" class="accordion-header shadw">
 
-                            </button>
+                    <button class="accordion-button collapsed py-0 stranicy"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#PageIcon"
+                            aria-expanded="true"
+                            aria-controls="PageIcon">
 
-                        </h2>
+                        <span class="form-label fs-5">Иконка страницы :</span>
 
-                        <div id="PageIcon"
-                             class="accordion-collapse collapse"
-                             aria-labelledby="headingPageIcon"
-                             data-bs-parent="#accordionDetailsPage">
+                    </button>
 
-                            <div class="accordion-body accordion-body-nointend">
+                </h2>
 
-                                <img class="card-img-top m-3 maxwidth300px shadw d-block mx-auto"
-                                     src="@DataConfig.IconsFolder/@Model.IconType.PathToIcon/@Model.IconType.IconList.First(icon => icon.IconFileName == "ms-tile-558.webp").IconFileName"
-                                     alt="иконка страницы"
-                                     title="иконка страницы"
-                                     itemprop="image" />
+                <div id="PageIcon"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="headingPageIcon"
+                     data-bs-parent="#accordionDetailsPage">
 
-                                <p class="fs-5 text_shadow text-start text-sm-center">
+                    <div class="accordion-body accordion-body-nointend text-center">
 
-                                    <span class="text-primary">
-                                        Папка иконок :
-                                    </span>
-                                    « @DataConfig.IconsFolder@Model.IconType.PathToIcon »
-								
-                                </p>
+                        <a asp-area="Admin"
+                               asp-controller="Icon"
+                               asp-action="Index"
+                               asp-route-iconId="@Model.IconType.IconList.First(icon => icon.IconFileName == "ms-tile-558.webp").IconModelId"
+                               class="d-inline-block maxwidth300px mx-auto shadw imageref"
+                               title="информация об иконке"
+                               onclick="this.target='_blank'">
 
-                            </div>
+                            <img itemprop="image"
+                                 class="p-1 w-100"
+                                 src="@DataConfig.IconsFolder/@Model.IconType.PathToIcon/@Model.IconType.IconList.First(icon => icon.IconFileName == "ms-tile-558.webp").IconFileName"
+                                 alt="иконка страницы"
+                                 title="иконка страницы" />
 
-                        </div>
+                        </a>
 
-                    </div>
-
-                    @* Тег «title» *@
-                    <div class="accordion-item mb-3 shadw">
-
-                        <h2 id="headingPageTitle" class="accordion-header shadw">
-
-                            <button class="accordion-button collapsed py-0 stranicy"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#PageTitle"
-                                    aria-expanded="true"
-                                    aria-controls="PageTitle">
-
-                                <span class="form-label fs-5">Заголовок (title) :</span>
-
-                            </button>
-
-                        </h2>
-
-                        <div id="PageTitle"
-                             class="accordion-collapse collapse"
-                             aria-labelledby="headingPageTitle"
-                             data-bs-parent="#accordionDetailsPage">
-
-                            <div class="accordion-body accordion-body-nointend text-center">
-
-                                <p class="text-start fluid-font-size">
-                                    @Model.PageTitle
-                                </p>
-
-                                <p class="fs-6 form-text text-success">
-                                    тег «title»
-                                </p>
-
-                            </div>
-
-                        </div>
+                        <p class="my-2 fluid-font-size">
+                            <span class="text-primary">Папка : </span>
+                            <span class="text_shadow">@DataConfig.IconsFolder@Model.IconType.PathToIcon</span>
+                        </p>
 
                     </div>
 
-                    @* Тег «description» *@
-                    <div class="accordion-item mb-3 shadw">
+                </div>
 
-                        <h2 id="headingPageDescription" class="accordion-header shadw">
-                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageDescription" aria-expanded="true" aria-controls="PageDescription">
-                                <span class="form-label fs-5">Описание :</span>
-                            </button>
-                        </h2>
+            </div>
 
-                        <div id="PageDescription" class="accordion-collapse collapse" aria-labelledby="headingPageDescription" data-bs-parent="#accordionDetailsPage">
+            @* Тег «title» *@
+            <div class="accordion-item mb-3 shadw">
 
-                            <div class="accordion-body accordion-body-nointend text-center">
+                <h2 id="headingPageTitle" class="accordion-header shadw">
 
-                                <p class="text-start fluid-font-size">
-                                    @Model.PageDescription
-                                </p>
+                    <button class="accordion-button collapsed py-0 stranicy"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#PageTitle"
+                            aria-expanded="true"
+                            aria-controls="PageTitle">
 
-                                <p class="fs-6 form-text text-success">
-                                    тег «description»
-                                </p>
+                        <span class="form-label fs-5">Заголовок (title) :</span>
 
-                            </div>
+                    </button>
 
-                        </div>
+                </h2>
 
-                    </div>
+                <div id="PageTitle"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="headingPageTitle"
+                     data-bs-parent="#accordionDetailsPage">
 
-                    @* Тег «keywords» *@
-                    <div class="accordion-item mb-3 shadw">
+                    <div class="accordion-body accordion-body-nointend text-center">
 
-                        <h2 id="headingPageKeywords" class="accordion-header shadw">
-                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageKeywords" aria-expanded="true" aria-controls="PageKeywords">
-                                <span class="form-label fs-5 d-sm-none">Ключ-слова :</span>
-                                <span class="form-label fs-5 d-none d-sm-inline">Ключевые слова :</span>
-                            </button>
-                        </h2>
+                        <p class="text-start fluid-font-size">
+                            @Model.PageTitle
+                        </p>
 
-                        <div id="PageKeywords" class="accordion-collapse collapse" aria-labelledby="headingPageKeywords" data-bs-parent="#accordionDetailsPage">
-
-                            <div class="accordion-body accordion-body-nointend">
-
-                                <p class="text-start fluid-font-size">
-                                    @Model.PageKeyWords
-                                </p>
-
-                                <p class="fs-6 form-text text-success text-center">
-                                    тег «keywords»
-                                </p>
-
-                            </div>
-
-                        </div>
+                        <p class="fs-6 form-text text-success">
+                            тег «title»
+                        </p>
 
                     </div>
 
-                    @* Заголовок страницы *@
-                    <div class="accordion-item mb-3 shadw">
+                </div>
 
-                        <h2 id="headingPageHeading" class="accordion-header shadw">
-                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageHeading" aria-expanded="true" aria-controls="PageHeading">
-                                <span class="form-label fs-5 d-sm-none">Заголовок (H1) :</span>
-                                <span class="form-label fs-5 d-none d-sm-inline">Заголовок вверху страницы (H1) :</span>
-                            </button>
-                        </h2>
+            </div>
 
-                        <div id="PageHeading" class="accordion-collapse collapse" aria-labelledby="headingPageHeading" data-bs-parent="#accordionDetailsPage">
+            @* Тег «description» *@
+            <div class="accordion-item mb-3 shadw">
 
-                            <div class="accordion-body accordion-body-nointend text-center">
+                <h2 id="headingPageDescription" class="accordion-header shadw">
+                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageDescription" aria-expanded="true" aria-controls="PageDescription">
+                        <span class="form-label fs-5">Описание :</span>
+                    </button>
+                </h2>
 
-                                @if (!string.IsNullOrEmpty(Model.PageHeading))
+                <div id="PageDescription" class="accordion-collapse collapse" aria-labelledby="headingPageDescription" data-bs-parent="#accordionDetailsPage">
+
+                    <div class="accordion-body accordion-body-nointend text-center">
+
+                        <p class="text-start fluid-font-size">
+                            @Model.PageDescription
+                        </p>
+
+                        <p class="fs-6 form-text text-success">
+                            тег «description»
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @* Тег «keywords» *@
+            <div class="accordion-item mb-3 shadw">
+
+                <h2 id="headingPageKeywords" class="accordion-header shadw">
+                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageKeywords" aria-expanded="true" aria-controls="PageKeywords">
+                        <span class="form-label fs-5 d-sm-none">Ключ-слова :</span>
+                        <span class="form-label fs-5 d-none d-sm-inline">Ключевые слова :</span>
+                    </button>
+                </h2>
+
+                <div id="PageKeywords" class="accordion-collapse collapse" aria-labelledby="headingPageKeywords" data-bs-parent="#accordionDetailsPage">
+
+                    <div class="accordion-body accordion-body-nointend">
+
+                        <p class="text-start fluid-font-size">
+                            @Model.PageKeyWords
+                        </p>
+
+                        <p class="fs-6 form-text text-success text-center">
+                            тег «keywords»
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @* Заголовок страницы *@
+            <div class="accordion-item mb-3 shadw">
+
+                <h2 id="headingPageHeading" class="accordion-header shadw">
+                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageHeading" aria-expanded="true" aria-controls="PageHeading">
+                        <span class="form-label fs-5 d-sm-none">Заголовок (H1) :</span>
+                        <span class="form-label fs-5 d-none d-sm-inline">Заголовок вверху страницы (H1) :</span>
+                    </button>
+                </h2>
+
+                <div id="PageHeading" class="accordion-collapse collapse" aria-labelledby="headingPageHeading" data-bs-parent="#accordionDetailsPage">
+
+                    <div class="accordion-body accordion-body-nointend text-center">
+
+                        @if (!string.IsNullOrEmpty(Model.PageHeading))
+                        {
+                            <h1 class="text_shadow fluid-font-size">
+                                @Html.Raw(Model.PageHeading)
+                            </h1>
+                        }
+                        else
+                        {
+                            <p class="fs-6 form-text text-success">
+                                заголовок не задан
+                            </p>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @* Картинка заголовка страницы *@
+            <div class="accordion-item mb-3 shadw">
+
+                <h2 id="headingImagePageHeading" class="accordion-header shadw">
+                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#ImagePageHeading" aria-expanded="true" aria-controls="ImagePageHeading">
+                        <span class="form-label fs-5 d-sm-none">
+                            Картинка верх :
+                        </span>
+                        <span class="form-label fs-5 d-none d-sm-inline">
+                            Картинка вверху страницы :
+                        </span>
+                    </button>
+                </h2>
+
+                <div id="ImagePageHeading" class="accordion-collapse collapse" aria-labelledby="headingImagePageHeading" data-bs-parent="#accordionDetailsPage">
+
+                    <div class="accordion-body accordion-body-nointend">
+
+                        @if (Model.ImagePageHeadingId != null)
+                        {
+                            <a asp-area="Admin"
+                                   asp-controller="ImageInfo"
+                                   asp-action="DetailsImage"
+                                   asp-route-imageid="@Model.ImagePageHeadingId"
+                                   class="d-block mx-auto mb-3 maxwidth600px shadw imageref"
+                                   title="информация о картинке"
+                                   onclick="this.target='_blank'">
+                                <vc:view-image image-id="@Model.ImagePageHeadingId" css-class="" icon-type="" />
+                            </a>
+
+                            @if (!string.IsNullOrEmpty(Model.ImagePageHeading!.WebImageFileName))
+                            {
+                                <a class="fs-5 text_shadow d-block text-lg-center"
+                                       href="@Url.Content($" {Model.ImagePageHeading.ImagePath}\\ /{Model.ImagePageHeading.WebImageFileName}")"
+                                       onclick="this.target='_blank'">
+                                    @Model.ImagePageHeading.ImagePath/@Model.ImagePageHeading.WebImageFileName
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="fs-5 text_shadow d-block text-lg-center"
+                                       href="@Url.Content($" {Model.ImagePageHeading.ImagePath}\\ /{Model.ImagePageHeading.ImageFileName}")"
+                                       onclick="this.target='_blank'">
+                                    @Model.ImagePageHeading.ImagePath/@Model.ImagePageHeading.ImageFileName
+                                </a>
+                            }
+                        }
+                        else
+                        {
+                            <p class="fs-6 form-text text-success text-center">
+                                картинка не задана
+                            </p>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @* Текст страницы *@
+            <div class="accordion-item mb-3 shadw">
+
+                <h2 id="headingPageText" class="accordion-header shadw">
+                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageText" aria-expanded="true" aria-controls="PageText">
+                        <span class="form-label fs-5 d-sm-none">
+                            Текст :
+                        </span>
+                        <span class="form-label fs-5 d-none d-sm-inline">
+                            Текст страницы :
+                        </span>
+                    </button>
+                </h2>
+
+                <div id="PageText" class="accordion-collapse collapse" aria-labelledby="headingPageText" data-bs-parent="#accordionDetailsPage">
+
+                    <div class="accordion-body accordion-body-nointend text-center">
+
+                        @if (!string.IsNullOrEmpty(Model.TextOfPage))
+                        {
+                            <div class="px-2 border border-secondary mb-3 paragraph fluid-font-size" itemprop="text">
+
+                                @Html.Raw(Model.TextOfPage)
+
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="fs-6 form-text text-success">
+                                текст не задан
+                            </p>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @* Параметры Sitemap, Manifest, Browserconfig *@
+            <div class="accordion-item mb-3 shadw">
+
+                <h2 id="headingPageSitemap" class="accordion-header shadw">
+                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageSitemap" aria-expanded="true" aria-controls="PageSitemap">
+                        <span class="form-label fs-5">Sitemap<span class="d-none d-sm-inline">, Manifest, Browserconfig</span> :</span>
+                    </button>
+                </h2>
+
+                <div id="PageSitemap" class="accordion-collapse collapse" aria-labelledby="headingPageSitemap" data-bs-parent="#accordionDetailsPage">
+
+                    <div class="accordion-body accordion-body-nointend text-start text-sm-center">
+
+                        <p class="fs-5 mb-0">
+                            <span class="text-primary fw-bold d-sm-none">
+                                Дата :
+                            </span>
+                            <span class="text-primary fw-bold d-none d-sm-inline">
+                                Дата изменения :
+                            </span>
+                            <br class="d-sm-none" />
+                            <span class="text_shadow">
+                                @Model.PageLastmod
+                            </span>
+                            <br />
+                            <span class="fs-6 form-text text-success d-block text-center">
+                                тег «lastReviewed»
+                            </span>
+                        </p>
+
+                        <hr class="w-75 mx-auto" />
+
+                        <p class="fs-5 mb-0">
+                            <span class="text-primary fw-bold d-sm-none">
+                                Обновление :
+                            </span>
+                            <span class="text-primary fw-bold d-none d-sm-inline">
+                                Частота обновления :
+                            </span>
+                            <br class="d-sm-none" />
+                            <span class="text_shadow">
+                                @Model.Changefreq
+                            </span>
+                            <br />
+                            <span class="fs-6 form-text text-success d-block text-center">
+                                тег «changefreq»
+                            </span>
+                        </p>
+
+                        <hr class="w-75 mx-auto" />
+
+                        <p class="fs-5 mb-0">
+                            <span class="text-primary fw-bold d-sm-none">
+                                Приоритет :
+                            </span>
+                            <span class="text-primary fw-bold d-none d-sm-inline">
+                                Приоритет страницы :
+                            </span>
+                            <br class="d-sm-none" />
+                            <span class="text_shadow">
+                                @Model.Priority
+                            </span>
+                            <br />
+                            <span class="fs-6 form-text text-success d-block text-center">
+                                тег «priority»
+                            </span>
+                        </p>
+
+                        <hr class="w-75 mx-auto" />
+
+                        <p class="fs-5 mb-0">
+                            <span class="text-primary fw-bold d-sm-none">
+                                Browserconfig :
+                            </span>
+                            <span class="text-primary fw-bold d-none d-sm-inline">
+                                Файл browserconfig :
+                            </span>
+                            <br class="d-sm-none" />
+                            <span class="text_shadow">
+                                <a class="text-black text_shadow"
+                                       href="/browserconfigs/@Model.BrowserConfig"
+                                       onclick="this.target='_blank'">
+                                    @Model.BrowserConfig
+                                </a>
+                            </span>
+                            <br />
+                            <span class="fs-6 form-text text-success d-block text-center d-sm-none">
+                                «msapplication-config»
+                            </span>
+                            <span class="fs-6 form-text text-success text-center d-none d-sm-block">
+                                meta name=«msapplication-config»
+                            </span>
+                        </p>
+
+                        <hr class="w-75 mx-auto" />
+
+                        <p class="fs-5 mb-0">
+                            <span class="text-primary fw-bold d-sm-none">
+                                Папка иконок :
+                            </span>
+                            <span class="text-primary fw-bold d-none d-sm-inline">
+                                Папка иконок browserconfig :
+                            </span>
+                            <br class="d-sm-none" />
+                            <span class="text_shadow">
+                                @Model.BrowserConfigFolder
+                            </span>
+                            <br />
+                            <span class="fs-6 form-text text-success d-block text-center d-sm-none">
+                                иконки browserconfig
+                            </span>
+                            <span class="fs-6 form-text text-success text-center d-none d-sm-block">
+                                папка иконок файла browserconfig.xml
+                            </span>
+                        </p>
+
+                        <hr class="w-75 mx-auto" />
+
+                        <p class="fs-5 mb-0">
+                            <span class="text-primary fw-bold d-sm-none">
+                                Open Graph :
+                            </span>
+                            <span class="text-primary fw-bold d-none d-sm-inline">
+                                Open Graph (og:type) :
+                            </span>
+                            <br class="d-sm-none" />
+                            <span class="text_shadow">
+                                @Model.OgType
+                            </span>
+                            <br />
+                            <span class="fs-6 form-text text-success d-block text-center d-sm-none">
+                                «og:type»
+                            </span>
+                            <span class="fs-6 form-text text-success text-center d-none d-sm-block">
+                                meta property="og:type"
+                            </span>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @* Ссылки на текущую страницу по GUID1 *@
+            <div class="accordion-item mb-3 shadw">
+
+                <h2 id="headingLinkToCurrentPage" class="accordion-header shadw">
+                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#LinkToCurrentPage" aria-expanded="true" aria-controls="LinkToCurrentPage">
+                        <span class="form-label fs-5">
+                            <span class="d-sm-none">
+                                Ref-In GUID1
+                            </span>
+                            <span class="d-none d-sm-inline">
+                                Ссылки на страницу по GUID1
+                            </span> :
+                        </span>
+                    </button>
+                </h2>
+
+                <div id="LinkToCurrentPage" class="accordion-collapse collapse" aria-labelledby="headingLinkToCurrentPage" data-bs-parent="#accordionDetailsPage">
+
+                    <div class="accordion-body accordion-body-nointend text-start">
+
+                        @if (Model.LinksFromPagesByGuid != null && Model.LinksFromPagesByGuid.Count > 0)
+                        {
+                            @foreach (var item in Model.LinksFromPagesByGuid)
+                            {
+                                if (i == 0)
                                 {
-                                    <h1 class="text_shadow fluid-font-size">
-                                        @Html.Raw(Model.PageHeading)
-                                    </h1>
+                                    i = 1;
                                 }
                                 else
                                 {
-                                    <p class="fs-6 form-text text-success">
-                                        заголовок не задан
-                                    </p>
+                                    i++;
                                 }
 
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    @* Картинка заголовка страницы *@
-                    <div class="accordion-item mb-3 shadw">
-
-                        <h2 id="headingImagePageHeading" class="accordion-header shadw">
-                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#ImagePageHeading" aria-expanded="true" aria-controls="ImagePageHeading">
-                                <span class="form-label fs-5 d-sm-none">
-                                    Картинка верх :
-                                </span>
-                                <span class="form-label fs-5 d-none d-sm-inline">
-                                    Картинка вверху страницы :
-                                </span>
-                            </button>
-                        </h2>
-
-                        <div id="ImagePageHeading" class="accordion-collapse collapse" aria-labelledby="headingImagePageHeading" data-bs-parent="#accordionDetailsPage">
-
-                            <div class="accordion-body accordion-body-nointend">
-
-                                @if (Model.ImagePageHeadingId != null)
-                                {
-                                    <a asp-area="Admin"
-                                           asp-controller="ImageInfo"
-                                           asp-action="DetailsImage"
-                                           asp-route-imageid="@Model.ImagePageHeadingId"
-                                           class="d-block mx-auto mb-3 maxwidth600px shadw imageref"
-                                           title="информация о картинке"
-                                           onclick="this.target='_blank'">
-                                        <vc:view-image image-id="@Model.ImagePageHeadingId" css-class="" icon-type="" />
-                                    </a>
-
-                                    @if (!string.IsNullOrEmpty(Model.ImagePageHeading!.WebImageFileName))
-                                    {
-                                        <a class="fs-5 text_shadow d-block text-lg-center"
-                                               href="@Url.Content($"{Model.ImagePageHeading.ImagePath}\\/{Model.ImagePageHeading.WebImageFileName}")"
-                                               onclick="this.target='_blank'">
-                                            @Model.ImagePageHeading.ImagePath/@Model.ImagePageHeading.WebImageFileName
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <a class="fs-5 text_shadow d-block text-lg-center"
-                                               href="@Url.Content($"{Model.ImagePageHeading.ImagePath}\\/{Model.ImagePageHeading.ImageFileName}")"
-                                               onclick="this.target='_blank'">
-                                            @Model.ImagePageHeading.ImagePath/@Model.ImagePageHeading.ImageFileName
-                                        </a>
-                                    }
-                                }
-                                else
-                                {
-                                    <p class="fs-6 form-text text-success text-center">
-                                        картинка не задана
-                                    </p>
-                                }
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    @* Текст страницы *@
-                    <div class="accordion-item mb-3 shadw">
-
-                        <h2 id="headingPageText" class="accordion-header shadw">
-                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageText" aria-expanded="true" aria-controls="PageText">
-                                <span class="form-label fs-5 d-sm-none">
-                                    Текст :
-                                </span>
-                                <span class="form-label fs-5 d-none d-sm-inline">
-                                    Текст страницы :
-                                </span>
-                            </button>
-                        </h2>
-
-                        <div id="PageText" class="accordion-collapse collapse" aria-labelledby="headingPageText" data-bs-parent="#accordionDetailsPage">
-
-                            <div class="accordion-body accordion-body-nointend text-center">
-
-                                @if (!string.IsNullOrEmpty(Model.TextOfPage))
-                                {
-                                    <div class="px-2 border border-secondary mb-3 paragraph fluid-font-size" itemprop="text">
-
-                                        @Html.Raw(Model.TextOfPage)
-
-                                    </div>
-                                }
-                                else
-                                {
-                                    <p class="fs-6 form-text text-success">
-                                        текст не задан
-                                    </p>
-                                }
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    @* Параметры Sitemap, Manifest, Browserconfig *@
-                    <div class="accordion-item mb-3 shadw">
-
-                        <h2 id="headingPageSitemap" class="accordion-header shadw">
-                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageSitemap" aria-expanded="true" aria-controls="PageSitemap">
-                                <span class="form-label fs-5">Sitemap<span class="d-none d-sm-inline">, Manifest, Browserconfig</span> :</span>
-                            </button>
-                        </h2>
-
-                        <div id="PageSitemap" class="accordion-collapse collapse" aria-labelledby="headingPageSitemap" data-bs-parent="#accordionDetailsPage">
-
-                            <div class="accordion-body accordion-body-nointend text-start text-sm-center">
-
-                                <p class="fs-5 mb-0">
-                                    <span class="text-primary fw-bold d-sm-none">
-                                        Дата :
-                                    </span>
-                                    <span class="text-primary fw-bold d-none d-sm-inline">
-                                        Дата изменения :
-                                    </span>
-                                    <br class="d-sm-none" />
-                                    <span class="text_shadow">
-                                        @Model.PageLastmod
+                                <p class="fs-5 border-bottom py-2 fluid-font-size">
+                                    <span class="text-primary fw-bold fluid-font-size">
+                                        №@i
                                     </span>
                                     <br />
-                                    <span class="fs-6 form-text text-success d-block text-center">
-                                        тег «lastReviewed»
-                                    </span>
-                                </p>
-
-                                <hr class="w-75 mx-auto" />
-
-                                <p class="fs-5 mb-0">
-                                    <span class="text-primary fw-bold d-sm-none">
-                                        Обновление :
-                                    </span>
-                                    <span class="text-primary fw-bold d-none d-sm-inline">
-                                        Частота обновления :
-                                    </span>
-                                    <br class="d-sm-none" />
-                                    <span class="text_shadow">
-                                        @Model.Changefreq
-                                    </span>
-                                    <br />
-                                    <span class="fs-6 form-text text-success d-block text-center">
-                                        тег «changefreq»
-                                    </span>
-                                </p>
-
-                                <hr class="w-75 mx-auto" />
-
-                                <p class="fs-5 mb-0">
-                                    <span class="text-primary fw-bold d-sm-none">
-                                        Приоритет :
-                                    </span>
-                                    <span class="text-primary fw-bold d-none d-sm-inline">
-                                        Приоритет страницы :
-                                    </span>
-                                    <br class="d-sm-none" />
-                                    <span class="text_shadow">
-                                        @Model.Priority
-                                    </span>
-                                    <br />
-                                    <span class="fs-6 form-text text-success d-block text-center">
-                                        тег «priority»
-                                    </span>
-                                </p>
-
-                                <hr class="w-75 mx-auto" />
-
-                                <p class="fs-5 mb-0">
-                                    <span class="text-primary fw-bold d-sm-none">
-                                        Browserconfig :
-                                    </span>
-                                    <span class="text-primary fw-bold d-none d-sm-inline">
-                                        Файл browserconfig :
-                                    </span>
-                                    <br class="d-sm-none" />
-                                    <span class="text_shadow">
-                                        <a class="text-black text_shadow"
-                                               href="/browserconfigs/@Model.BrowserConfig"
-                                               onclick="this.target='_blank'">
-                                            @Model.BrowserConfig
-                                        </a>
-                                    </span>
-                                    <br />
-                                    <span class="fs-6 form-text text-success d-block text-center d-sm-none">
-                                        «msapplication-config»
-                                    </span>
-                                    <span class="fs-6 form-text text-success text-center d-none d-sm-block">
-                                        meta name=«msapplication-config»
-                                    </span>
-                                </p>
-
-                                <hr class="w-75 mx-auto" />
-
-                                <p class="fs-5 mb-0">
-                                    <span class="text-primary fw-bold d-sm-none">
-                                        Папка иконок :
-                                    </span>
-                                    <span class="text-primary fw-bold d-none d-sm-inline">
-                                        Папка иконок browserconfig :
-                                    </span>
-                                    <br class="d-sm-none" />
-                                    <span class="text_shadow">
-                                        @Model.BrowserConfigFolder
-                                    </span>
-                                    <br />
-                                    <span class="fs-6 form-text text-success d-block text-center d-sm-none">
-                                        иконки browserconfig
-                                    </span>
-                                    <span class="fs-6 form-text text-success text-center d-none d-sm-block">
-                                        папка иконок файла browserconfig.xml
-                                    </span>
-                                </p>
-
-                                <hr class="w-75 mx-auto" />
-
-                                <p class="fs-5 mb-0">
-                                    <span class="text-primary fw-bold d-sm-none">
-                                        Open Graph :
-                                    </span>
-                                    <span class="text-primary fw-bold d-none d-sm-inline">
-                                        Open Graph (og:type) :
-                                    </span>
-                                    <br class="d-sm-none" />
-                                    <span class="text_shadow">
-                                        @Model.OgType
-                                    </span>
-                                    <br />
-                                    <span class="fs-6 form-text text-success d-block text-center d-sm-none">
-                                        «og:type»
-                                    </span>
-                                    <span class="fs-6 form-text text-success text-center d-none d-sm-block">
-                                        meta property="og:type"
-                                    </span>
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    @* Ссылки на текущую страницу по GUID1 *@
-                    <div class="accordion-item mb-3 shadw">
-
-                        <h2 id="headingLinkToCurrentPage" class="accordion-header shadw">
-                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#LinkToCurrentPage" aria-expanded="true" aria-controls="LinkToCurrentPage">
-                                <span class="form-label fs-5">
-                                    <span class="d-sm-none">
-                                        Ref-In GUID1
-                                    </span>
                                     <span class="d-none d-sm-inline">
-                                        Ссылки на страницу по GUID1
-                                    </span> :
-                                </span>
-                            </button>
-                        </h2>
-
-                        <div id="LinkToCurrentPage" class="accordion-collapse collapse" aria-labelledby="headingLinkToCurrentPage" data-bs-parent="#accordionDetailsPage">
-
-                            <div class="accordion-body accordion-body-nointend text-start">
-
-                                @if (Model.LinksFromPagesByGuid != null && Model.LinksFromPagesByGuid.Count > 0)
-                                {
-                                    @foreach (var item in Model.LinksFromPagesByGuid)
-                                    {
-                                        if (i == 0)
-                                        {
-                                            i = 1;
-                                        }
-                                        else
-                                        {
-                                            i++;
-                                        }
-
-                                        <p class="fs-5 border-bottom py-2 fluid-font-size">
-                                            <span class="text-primary fw-bold fluid-font-size">
-                                                №@i
-                                            </span>
-                                            <br />
-                                            <span class="d-none d-sm-inline">
-                                                <span class="fw-bold fluid-font-size">
-                                                    GUID -
-                                                </span>
-                                                <br class="d-xl-none" />
-                                                <span class="text_shadow fluid-font-size">
-                                                    @item.PageInfoModelId
-                                                </span>
-                                            </span>
-                                            <br class="d-none d-sm-block" />
-                                            <span>
-                                                <span class="fw-bold fluid-font-size">
-                                                    Title -
-                                                </span>
-                                                <br class="d-xl-none" />
-                                                <span class="text_shadow fluid-font-size">
-                                                    @item.PageTitle
-                                                </span>
-                                            </span>
-                                        </p>
-                                    }
-
-                                    <div class="row row-cols-2 row-cols-lg-3 row-cols-xxl-4 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-2">
-
-                                        @foreach (var item in Model.LinksFromPagesByGuid)
-                                        {
-                                            <div class="col p-1 p-lg-2">
-
-                                                <div class="card shadw rounded-3 cardborder" title="@item.PageTitle">
-
-                                                    <a asp-area="Admin"
-                                                           asp-controller="PageInfo"
-                                                           asp-action="DetailsPage"
-                                                           asp-route-pageid="@item.PageInfoModelId"
-                                                           class="rounded-3 p-0 p-md-1 shadw"
-                                                           onclick="this.target='_blank'"
-                                                           title="данные о странице">
-
-                                                        <vc:view-image image-id="@item.ImageFileModelId"
-                                                                       css-class="card-img-top shadw rounded-3"
-                                                                       icon-type="webicon300" />
-
-                                                        @if (!string.IsNullOrEmpty(@item.PageCardText))
-                                                        {
-                                                            <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 shadw cardBodyBg">
-
-                                                                <p class="card-title p-0 mb-0 fw-medium fontadaptive text-center">@item.PageCardText</p>
-
-                                                            </div>
-                                                        }
-
-                                                    </a>
-
-                                                </div>
-
-                                            </div>
-                                        }
-
-                                    </div>
-                                }
-                                else
-                                {
-                                    <p class="fs-6 form-text text-success text-center">
-                                        нет ссылок по GUID1
-                                    </p>
-                                }
-
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    @* Ссылки на текущую страницу по GUID2 *@
-                    <div class="accordion-item mb-3 shadw">
-
-                        <h2 id="headingLinkToCurrentPage2" class="accordion-header shadw">
-                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#LinkToCurrentPage2" aria-expanded="true" aria-controls="LinkToCurrentPage2">
-                                <span class="form-label fs-5">
-                                    <span class="d-sm-none">
-                                        Ref-In GUID2
+                                        <span class="fw-bold fluid-font-size">
+                                            GUID -
+                                        </span>
+                                        <br class="d-xl-none" />
+                                        <span class="text_shadow fluid-font-size">
+                                            @item.PageInfoModelId
+                                        </span>
                                     </span>
-                                    <span class="d-none d-sm-inline">
-                                        Ссылки на страницу по GUID2
-                                    </span> :
-                                </span>
-                            </button>
-                        </h2>
-
-                        <div id="LinkToCurrentPage2" class="accordion-collapse collapse" aria-labelledby="headingLinkToCurrentPage2" data-bs-parent="#accordionDetailsPage">
-
-                            <div class="accordion-body accordion-body-nointend text-start">
-
-                                @if (Model.LinksFromPagesByGuid2 != null && Model.LinksFromPagesByGuid2.Count > 0)
-                                {
-                                    @foreach (var item in Model.LinksFromPagesByGuid2)
-                                    {
-                                        if (i == 0)
-                                        {
-                                            i = 1;
-                                        }
-                                        else
-                                        {
-                                            i++;
-                                        }
-
-                                        <p class="fs-5 border-bottom py-2 fluid-font-size">
-                                            <span class="text-primary fw-bold fluid-font-size">
-                                                №@i
-                                            </span>
-                                            <br />
-                                            <span class="d-none d-sm-inline">
-                                                <span class="fw-bold fluid-font-size">
-                                                    GUID -
-                                                </span>
-                                                <br class="d-xl-none" />
-                                                <span class="text_shadow fluid-font-size">
-                                                    @item.PageInfoModelId
-                                                </span>
-                                            </span>
-                                            <br class="d-none d-sm-block" />
-                                            <span>
-                                                <span class="fw-bold fluid-font-size">
-                                                    Title -
-                                                </span>
-                                                <br class="d-xl-none" />
-                                                <span class="text_shadow fluid-font-size">
-                                                    @item.PageTitle
-                                                </span>
-                                            </span>
-                                        </p>
-                                    }
-
-                                    <div class="row row-cols-2 row-cols-lg-3 row-cols-xxl-4 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-2">
-
-                                        @foreach (var item in Model.LinksFromPagesByGuid2)
-                                        {
-                                            <div class="col p-1 p-lg-2">
-
-                                                <div class="card shadw rounded-3 cardborder" title="@item.PageTitle">
-
-                                                    <a asp-area="Admin"
-                                                           asp-controller="PageInfo"
-                                                           asp-action="DetailsPage"
-                                                           asp-route-pageid="@item.PageInfoModelId"
-                                                           class="rounded-3 p-0 p-md-1 shadw"
-                                                           onclick="this.target='_blank'"
-                                                           title="данные о странице">
-
-                                                        <vc:view-image image-id="@item.ImageFileModelId"
-                                                                       css-class="card-img-top shadw rounded-3"
-                                                                       icon-type="webicon300" />
-
-                                                        @if (!string.IsNullOrEmpty(@item.PageCardText))
-                                                        {
-                                                            <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 shadw cardBodyBg">
-
-                                                                <p class="card-title p-0 mb-0 fw-medium fontadaptive text-center">@item.PageCardText</p>
-
-                                                            </div>
-                                                        }
-
-                                                    </a>
-
-                                                </div>
-
-                                            </div>
-                                        }
-
-                                    </div>
-                                }
-                                else
-                                {
-                                    <p class="fs-6 form-text text-success text-center">
-                                        нет ссылок по GUID2
-                                    </p>
-                                }
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    @* Фильтры поиска текущей страницы *@
-                    <div class="accordion-item mb-3 shadw">
-
-                        <h2 id="headingPageFilter" class="accordion-header shadw">
-
-                            <button class="accordion-button collapsed py-0 stranicy"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#PageFilter"
-                                    aria-expanded="true"
-                                    aria-controls="PageFilter">
-
-                                <span class="form-label fs-5">
+                                    <br class="d-none d-sm-block" />
                                     <span>
-                                        Фильтры поиска
+                                        <span class="fw-bold fluid-font-size">
+                                            Title -
+                                        </span>
+                                        <br class="d-xl-none" />
+                                        <span class="text_shadow fluid-font-size">
+                                            @item.PageTitle
+                                        </span>
                                     </span>
-                                    <span class="d-none d-lg-inline">
-                                        текущей страницы
-                                    </span> :
-                                </span>
+                                </p>
+                            }
 
-                            </button>
+                            <div class="row row-cols-2 row-cols-lg-3 row-cols-xxl-4 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-2">
 
-                        </h2>
-
-                        <div id="PageFilter"
-                             class="accordion-collapse collapse"
-                             aria-labelledby="headingPageFilter"
-                             data-bs-parent="#accordionDetailsPage">
-
-                            <div class="accordion-body accordion-body-nointend">
-
-                                @if (!string.IsNullOrEmpty(Model.PageFilter))
+                                @foreach (var item in Model.LinksFromPagesByGuid)
                                 {
-                                    string[] pageFilterOut = Model.PageFilter.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                                    <div class="col p-1 p-lg-2">
 
-                                    @for (int sf = 0; sf < pageFilterOut.Count(); sf++)
-                                    {
-                                        <p class="text-start text_shadow fluid-font-size border-bottom pb-2">
-                                            # @pageFilterOut[sf]
-                                        </p>
-                                    }
+                                        <div class="card shadw rounded-3 cardborder" title="@item.PageTitle">
 
-                                    <p class="fs-6 form-text text-success text-center">
-                                        <span class="d-sm-none">
-                                            фильтры поиска
-                                        </span>
-                                        <span class="d-none d-sm-inline">
-                                            фильтры поиска страницы
-                                        </span>
-                                    </p>
+                                            <a asp-area="Admin"
+                                                   asp-controller="PageInfo"
+                                                   asp-action="DetailsPage"
+                                                   asp-route-pageid="@item.PageInfoModelId"
+                                                   class="rounded-3 p-0 p-md-1 shadw"
+                                                   onclick="this.target='_blank'"
+                                                   title="данные о странице">
 
-                                    <h2 class="text_shadow my-3 text-center fluid-font-size">
-                                        Страницы, ссылающиеся на текущую
-                                    </h2>
+                                                <vc:view-image image-id="@item.ImageFileModelId"
+                                                               css-class="card-img-top shadw rounded-3"
+                                                               icon-type="webicon300" />
 
-                                    @if (Model.DictionaryOfOutPages != null && Model.DictionaryOfOutPages.Count > 0)
-                                    {
-                                        <div id="accordionFiltersOfPage" class="accordion">
-
-                                            @foreach (var (caption, listOfPages) in Model.DictionaryOfOutPages)
-                                            {
-                                                if (listOfPages.Count > 0)
+                                                @if (!string.IsNullOrEmpty(@item.PageCardText))
                                                 {
-                                                    innerAccordion++;
+                                                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 shadw cardBodyBg">
 
-                                                    <div class="accordion-item mb-2 shadw">
-
-                                                        <h2 class="accordion-header">
-
-                                                            <button class="accordion-button stranicy"
-                                                                    type="button"
-                                                                    data-bs-toggle="collapse"
-                                                                    data-bs-target="#collapseOne_@innerAccordion"
-                                                                    aria-expanded="true"
-                                                                    aria-controls="collapseOne_@innerAccordion">
-
-                                                                <span class="fluid-font-size">
-                                                                    # @caption
-                                                                </span>
-
-                                                            </button>
-
-                                                        </h2>
-
-                                                        <div id="collapseOne_@innerAccordion"
-                                                             class="accordion-collapse collapse"
-                                                             data-bs-parent="#accordionFiltersOfPage">
-
-                                                            <div class="accordion-body p-1">
-
-                                                                <div class="row mt-1 justify-content-center g-1
-                                                                    @(listOfPages.Count < 4 ? "row-cols-3" : "")
-                                                                    @((listOfPages.Count % 4 == 0 || listOfPages.Count == 7) ? "row-cols-4" : "")
-                                                                    @((listOfPages.Count > 4 & listOfPages.Count % 4 != 0 & listOfPages.Count != 7) ? "row-cols-3 row-cols-lg-4 row-cols-xxl-5" : "")">
-
-                                                                    @foreach (var item in listOfPages)
-                                                                    {
-                                                                        <div class="col">
-
-                                                                            <a asp-area="Admin"
-                                                                                   asp-controller="PageInfo"
-                                                                                   asp-action="DetailsPage"
-                                                                                   asp-route-pageid="@item.PageInfoModelId"
-                                                                                   class="d-block rounded-3 p-1 imageref"
-                                                                                   onclick="this.target='_blank'"
-                                                                                   title="данные о странице">
-
-                                                                                <div class="card p-0 rounded-3 shadw" title="@item.PageTitle">
-
-                                                                                    <vc:view-image image-id="@item.ImageFileModelId"
-                                                                                                   css-class="d-flex card-img-top rounded-3 p-0"
-                                                                                                   icon-type="webicon300" />
-
-                                                                                    <div class="d-none d-sm-flex card-body p-1 justify-content-center">
-
-                                                                                        @if (!string.IsNullOrEmpty(@item.PageCardText))
-                                                                                        {
-                                                                                            <p class="card-text px-2 text-indent-0 arial fontadaptive shadw">
-                                                                                                @item.PageCardText
-                                                                                            </p>
-                                                                                        }
-                                                                                        else
-                                                                                        {
-                                                                                            <p class="card-text px-2 text-indent-0 arial fontadaptive shadw">
-                                                                                                БЕЗ ТЕКСТА
-                                                                                            </p>
-                                                                                        }
-
-                                                                                    </div>
-
-                                                                                </div>
-
-                                                                            </a>
-
-                                                                        </div>
-                                                                    }
-
-                                                                </div>
-
-                                                            </div>
-
-                                                        </div>
+                                                        <p class="card-title p-0 mb-0 fw-medium fontadaptive text-center">@item.PageCardText</p>
 
                                                     </div>
                                                 }
-                                            }
 
-                                        </div>
-                                    }
-                                }
-                                else
-                                {
-                                    <p class="fs-6 form-text text-success text-center">
-                                        фильтры поиска не заданы
-                                    </p>
-                                }
-
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    @* Ссылки на страницы *@
-                    <div class="accordion-item mb-3 shadw">
-
-                        <h2 id="headingPageLinksByFilters" class="accordion-header shadw">
-
-                            <button class="accordion-button collapsed py-0 stranicy"
-                                    type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#PageLinksByFilters"
-                                    aria-expanded="true"
-                                    aria-controls="PageLinksByFilters">
-
-                                <span class="form-label fs-5">
-                                    Ссылки на страницы :
-                                </span>
-
-                            </button>
-
-                        </h2>
-
-                        <div id="PageLinksByFilters"
-                             class="accordion-collapse collapse"
-                             aria-labelledby="headingPageLinksByFilters"
-                             data-bs-parent="#accordionDetailsPage">
-
-                            <div class="accordion-body accordion-body-nointend text-center">
-
-                                <div id="switchForPageLinks" class="accordion">
-
-                                    @* Состояние (включено или выключено) *@
-                                    <div class="accordion-item mb-3 shadw">
-
-                                        <h2 id="headingSwitchPageLinks" class="accordion-header shadw">
-
-                                            <button class="accordion-button collapsed py-0 stranicy"
-                                                    type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#SwitchPage"
-                                                    aria-expanded="true"
-                                                    aria-controls="SwitchPage">
-
-                                                <span class="form-label fs-5">
-                                                    Состояние :
-                                                </span>
-
-                                            </button>
-
-                                        </h2>
-
-                                        <div id="SwitchPage"
-                                             class="accordion-collapse collapse"
-                                             aria-labelledby="headingSwitchPageLinks"
-                                             data-bs-parent="#switchForPageLinks">
-
-                                            <div class="accordion-body accordion-body-nointend text-center">
-
-                                                @if (Model.PageLinksByFilters)
-                                                {
-                                                    <p class="fs-4 mb-2 text_shadow">
-                                                        <span>включено</span>
-                                                    </p>
-                                                }
-                                                else
-                                                {
-                                                    <p class="fs-4 mb-2 text_shadow">
-                                                        <span>выключено</span>
-                                                    </p>
-                                                }
-
-                                            </div>
+                                            </a>
 
                                         </div>
 
                                     </div>
+                                }
 
-                                    @* Фильтры связанных страниц *@
-                                    <div class="accordion-item mb-3 shadw">
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="fs-6 form-text text-success text-center">
+                                нет ссылок по GUID1
+                            </p>
+                        }
 
-                                        @* Заголовок группы *@
-                                        <h2 id="headingPageLinkFilters" class="accordion-header shadw">
+                    </div>
 
-                                            <button class="accordion-button collapsed py-0 stranicy"
-                                                    type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#PageLinkFilters"
-                                                    aria-expanded="true"
-                                                    aria-controls="PageLinkFilters">
+                </div>
 
-                                                <span class="form-label fs-5">
-                                                    Фильтры выбора :
-                                                </span>
+            </div>
 
-                                            </button>
+            @* Ссылки на текущую страницу по GUID2 *@
+            <div class="accordion-item mb-3 shadw">
 
-                                        </h2>
+                <h2 id="headingLinkToCurrentPage2" class="accordion-header shadw">
+                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#LinkToCurrentPage2" aria-expanded="true" aria-controls="LinkToCurrentPage2">
+                        <span class="form-label fs-5">
+                            <span class="d-sm-none">
+                                Ref-In GUID2
+                            </span>
+                            <span class="d-none d-sm-inline">
+                                Ссылки на страницу по GUID2
+                            </span> :
+                        </span>
+                    </button>
+                </h2>
 
-                                        <div id="PageLinkFilters"
-                                             class="accordion-collapse collapse"
-                                             aria-labelledby="headingPageLinkFilters"
-                                             data-bs-parent="#switchForPageLinks">
+                <div id="LinkToCurrentPage2" class="accordion-collapse collapse" aria-labelledby="headingLinkToCurrentPage2" data-bs-parent="#accordionDetailsPage">
 
-                                            <div class="accordion-body accordion-body-nointend text-center">
+                    <div class="accordion-body accordion-body-nointend text-start">
 
-                                                @if (!string.IsNullOrEmpty(Model.PageFilterOut))
+                        @if (Model.LinksFromPagesByGuid2 != null && Model.LinksFromPagesByGuid2.Count > 0)
+                        {
+                            @foreach (var item in Model.LinksFromPagesByGuid2)
+                            {
+                                if (i == 0)
+                                {
+                                    i = 1;
+                                }
+                                else
+                                {
+                                    i++;
+                                }
+
+                                <p class="fs-5 border-bottom py-2 fluid-font-size">
+                                    <span class="text-primary fw-bold fluid-font-size">
+                                        №@i
+                                    </span>
+                                    <br />
+                                    <span class="d-none d-sm-inline">
+                                        <span class="fw-bold fluid-font-size">
+                                            GUID -
+                                        </span>
+                                        <br class="d-xl-none" />
+                                        <span class="text_shadow fluid-font-size">
+                                            @item.PageInfoModelId
+                                        </span>
+                                    </span>
+                                    <br class="d-none d-sm-block" />
+                                    <span>
+                                        <span class="fw-bold fluid-font-size">
+                                            Title -
+                                        </span>
+                                        <br class="d-xl-none" />
+                                        <span class="text_shadow fluid-font-size">
+                                            @item.PageTitle
+                                        </span>
+                                    </span>
+                                </p>
+                            }
+
+                            <div class="row row-cols-2 row-cols-lg-3 row-cols-xxl-4 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-2">
+
+                                @foreach (var item in Model.LinksFromPagesByGuid2)
+                                {
+                                    <div class="col p-1 p-lg-2">
+
+                                        <div class="card shadw rounded-3 cardborder" title="@item.PageTitle">
+
+                                            <a asp-area="Admin"
+                                                   asp-controller="PageInfo"
+                                                   asp-action="DetailsPage"
+                                                   asp-route-pageid="@item.PageInfoModelId"
+                                                   class="rounded-3 p-0 p-md-1 shadw"
+                                                   onclick="this.target='_blank'"
+                                                   title="данные о странице">
+
+                                                <vc:view-image image-id="@item.ImageFileModelId"
+                                                               css-class="card-img-top shadw rounded-3"
+                                                               icon-type="webicon300" />
+
+                                                @if (!string.IsNullOrEmpty(@item.PageCardText))
                                                 {
-                                                    string[] pageFilterOut = Model.PageFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                                                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 shadw cardBodyBg">
 
-                                                    @* Список фильтров *@
-                                                    <div>
-
-                                                        @for (int sf = 0; sf < pageFilterOut.Count(); sf++)
-                                                        {
-                                                            <p class="text-start text_shadow fluid-font-size border-bottom pb-2">
-                                                                # @pageFilterOut[sf]
-                                                            </p>
-                                                        }
-
-                                                        <p class="fs-6 form-text text-success text-center">
-                                                            <span class="d-sm-none">
-                                                                фильтры поиска
-                                                            </span>
-                                                            <span class="d-none d-sm-inline">
-                                                                фильтры поиска страниц
-                                                            </span>
-                                                        </p>
+                                                        <p class="card-title p-0 mb-0 fw-medium fontadaptive text-center">@item.PageCardText</p>
 
                                                     </div>
+                                                }
 
-                                                    <h2 class="text_shadow my-3 text-center fluid-font-size">
-                                                        Страницы по фильтрам
-                                                    </h2>
+                                            </a>
 
-                                                    @if (Model.DictionaryOfLinksByPageFilterOut != null && Model.DictionaryOfLinksByPageFilterOut.Count > 0)
-                                                    {
-                                                        <div id="accordionFiltersOfPage" class="accordion">
+                                        </div>
 
-                                                            @foreach (var (caption, modelForPageLinks) in Model.DictionaryOfLinksByPageFilterOut)
+                                    </div>
+                                }
+
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="fs-6 form-text text-success text-center">
+                                нет ссылок по GUID2
+                            </p>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @* Фильтры поиска текущей страницы *@
+            <div class="accordion-item mb-3 shadw">
+
+                <h2 id="headingPageFilter" class="accordion-header shadw">
+
+                    <button class="accordion-button collapsed py-0 stranicy"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#PageFilter"
+                            aria-expanded="true"
+                            aria-controls="PageFilter">
+
+                        <span class="form-label fs-5">
+                            <span>
+                                Фильтры поиска
+                            </span>
+                            <span class="d-none d-lg-inline">
+                                текущей страницы
+                            </span> :
+                        </span>
+
+                    </button>
+
+                </h2>
+
+                <div id="PageFilter"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="headingPageFilter"
+                     data-bs-parent="#accordionDetailsPage">
+
+                    <div class="accordion-body accordion-body-nointend">
+
+                        @if (!string.IsNullOrEmpty(Model.PageFilter))
+                        {
+                            string[] pageFilterOut = Model.PageFilter.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+                            @for (int sf = 0; sf < pageFilterOut.Count(); sf++)
+                            {
+                                <p class="text-start text_shadow fluid-font-size border-bottom pb-2">
+                                    # @pageFilterOut[sf]
+                                </p>
+                            }
+
+                            <p class="fs-6 form-text text-success text-center">
+                                <span class="d-sm-none">
+                                    фильтры поиска
+                                </span>
+                                <span class="d-none d-sm-inline">
+                                    фильтры поиска страницы
+                                </span>
+                            </p>
+
+                            <h2 class="text_shadow my-3 text-center fluid-font-size">
+                                Страницы, ссылающиеся на текущую
+                            </h2>
+
+                            @if (Model.DictionaryOfOutPages != null && Model.DictionaryOfOutPages.Count > 0)
+                            {
+                                <div id="accordionFiltersOfPage" class="accordion">
+
+                                    @foreach (var (caption, listOfPages) in Model.DictionaryOfOutPages)
+                                    {
+                                        if (listOfPages.Count > 0)
+                                        {
+                                            innerAccordion++;
+
+                                            <div class="accordion-item mb-2 shadw">
+
+                                                <h2 class="accordion-header">
+
+                                                    <button class="accordion-button stranicy"
+                                                            type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#collapseOne_@innerAccordion"
+                                                            aria-expanded="true"
+                                                            aria-controls="collapseOne_@innerAccordion">
+
+                                                        <span class="fluid-font-size">
+                                                            # @caption
+                                                        </span>
+
+                                                    </button>
+
+                                                </h2>
+
+                                                <div id="collapseOne_@innerAccordion"
+                                                     class="accordion-collapse collapse"
+                                                     data-bs-parent="#accordionFiltersOfPage">
+
+                                                    <div class="accordion-body p-1">
+
+                                                        <div class="row mt-1 justify-content-center g-1
+                                                            @(listOfPages.Count < 4 ? "row-cols-3" : "")
+                                                            @((listOfPages.Count % 4 == 0 || listOfPages.Count == 7) ? "row-cols-4" : "")
+                                                            @((listOfPages.Count > 4 & listOfPages.Count % 4 != 0 & listOfPages.Count != 7) ? "row-cols-3 row-cols-lg-4 row-cols-xxl-5" : "")">
+
+                                                            @foreach (var item in listOfPages)
                                                             {
-                                                                innerAccordion++;
+                                                                <div class="col">
 
-                                                                <div class="accordion-item mb-3 shadw">
+                                                                    <a asp-area="Admin"
+                                                                           asp-controller="PageInfo"
+                                                                           asp-action="DetailsPage"
+                                                                           asp-route-pageid="@item.PageInfoModelId"
+                                                                           class="d-block rounded-3 p-1 imageref"
+                                                                           onclick="this.target='_blank'"
+                                                                           title="данные о странице">
 
-                                                                    @* Заголовок группы *@
-                                                                    <h2 id="headingFiltersOfPage" class="accordion-header shadw">
-                                                                        <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_@innerAccordion" aria-expanded="false" aria-controls="collapseOne_@innerAccordion">
-                                                                            <span class="form-label fs-5">@caption :</span>
-                                                                        </button>
-                                                                    </h2>
+                                                                        <div class="card p-0 rounded-3 shadw" title="@item.PageTitle">
 
-                                                                    <div id="collapseOne_@innerAccordion" class="accordion-collapse collapse" aria-labelledby="headingFiltersOfPage" data-bs-parent="#accordionFiltersOfPage">
+                                                                            <vc:view-image image-id="@item.ImageFileModelId"
+                                                                                           css-class="d-flex card-img-top rounded-3 p-0"
+                                                                                           icon-type="webicon300" />
 
-                                                                        <div class="accordion-body accordion-body-nointend text-center">
+                                                                            <div class="d-none d-sm-flex card-body p-1 justify-content-center">
 
-                                                                            <div class="row mt-1 justify-content-center g-1
-                                                                                @(modelForPageLinks.Count < 4 ? "row-cols-3" : "")
-                                                                                @((modelForPageLinks.Count % 4 == 0 || modelForPageLinks.Count == 7) ? "row-cols-4" : "")
-                                                                                @((modelForPageLinks.Count > 4 & modelForPageLinks.Count % 4 != 0 & modelForPageLinks.Count != 7) ? "row-cols-3 row-cols-lg-4 row-cols-xxl-5" : "")">
-
-                                                                                @foreach (var item in modelForPageLinks)
+                                                                                @if (!string.IsNullOrEmpty(@item.PageCardText))
                                                                                 {
-                                                                                    <div class="col">
-
-                                                                                        <a asp-area="Admin"
-                                                                                               asp-controller="PageInfo"
-                                                                                               asp-action="DetailsPage"
-                                                                                               asp-route-pageid="@item.PageInfoModelId"
-                                                                                               class="d-block rounded-3 p-1 imageref"
-                                                                                               onclick="this.target='_blank'"
-                                                                                               title="данные о странице">
-
-                                                                                            <div class="card p-0 rounded-3 shadw" title="@item.PageTitle">
-
-                                                                                                <vc:view-image image-id="@item.ImageFileModelId"
-                                                                                                               css-class="card-img-top rounded-3 p-0"
-                                                                                                               icon-type="webicon300" />
-
-
-                                                                                                <div class="d-none d-sm-flex card-body p-1 justify-content-center">
-
-                                                                                                    @if (!string.IsNullOrEmpty(@item.PageCardText))
-                                                                                                    {
-                                                                                                        <p class="card-text px-2 text-indent-0 arial fontadaptive shadw">
-                                                                                                            @item.PageCardText
-                                                                                                        </p>
-                                                                                                    }
-                                                                                                    else
-                                                                                                    {
-                                                                                                        <p class="card-text px-2 text-indent-0 arial fontadaptive shadw">
-                                                                                                            БЕЗ ТЕКСТА
-                                                                                                        </p>
-                                                                                                    }
-
-                                                                                                </div>
-
-                                                                                            </div>
-
-                                                                                        </a>
-
-                                                                                    </div>
+                                                                                    <p class="card-text px-2 text-indent-0 arial fontadaptive shadw">
+                                                                                        @item.PageCardText
+                                                                                    </p>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <p class="card-text px-2 text-indent-0 arial fontadaptive shadw">
+                                                                                        БЕЗ ТЕКСТА
+                                                                                    </p>
                                                                                 }
 
                                                                             </div>
 
                                                                         </div>
 
-                                                                    </div>
+                                                                    </a>
 
                                                                 </div>
                                                             }
 
                                                         </div>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <p class="fs-6 form-text text-success text-center">
-                                                        <span class="d-sm-none">
-                                                            фильтры не заданы
-                                                        </span>
-                                                        <span class="d-none d-sm-inline">
-                                                            фильтры поиска не заданы
-                                                        </span>
-                                                    </p>
-                                                }
-
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    @* Ссылки на видео *@
-                    <div class="accordion-item mb-3 shadw">
-
-                        <h2 id="headingVideoLinks" class="accordion-header shadw">
-                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#VideoLinks" aria-expanded="true" aria-controls="VideoLinks">
-                                <span class="form-label fs-5">Ссылки на видео :</span>
-                            </button>
-                        </h2>
-
-                        <div id="VideoLinks" class="accordion-collapse collapse" aria-labelledby="headingVideoLinks" data-bs-parent="#accordionDetailsPage">
-
-                            <div class="accordion-body accordion-body-nointend text-center">
-
-                                <div id="switchForVideoLinks" class="accordion">
-
-                                    @* Состояние (включено или выключено) *@
-                                    <div class="accordion-item mb-3 shadw">
-
-                                        <h2 id="headingSwitchVideoLinks" class="accordion-header shadw">
-                                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#SwitchVideo" aria-expanded="true" aria-controls="SwitchVideo">
-                                                <span class="form-label fs-5">Состояние :</span>
-                                            </button>
-                                        </h2>
-
-                                        <div id="SwitchVideo" class="accordion-collapse collapse" aria-labelledby="headingSwitchVideoLinks" data-bs-parent="#switchForVideoLinks">
-
-                                            <div class="accordion-body accordion-body-nointend text-center">
-
-                                                @if (Model.VideoLinks)
-                                                {
-                                                    <p class="fs-4 mb-2 text_shadow">
-                                                        <span>включено</span>
-                                                    </p>
-                                                }
-                                                else
-                                                {
-                                                    <p class="fs-4 mb-2 text_shadow">
-                                                        <span>выключено</span>
-                                                    </p>
-                                                }
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                    @* Фильтры связанных видео *@
-                                    <div class="accordion-item mb-3 shadw">
-
-                                        @* Заголовок группы *@
-                                        <h2 id="headingPageVideoFilters" class="accordion-header shadw">
-                                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageVideoFilters" aria-expanded="true" aria-controls="PageVideoFilters">
-                                                <span class="form-label fs-5">Фильтры для видео :</span>
-                                            </button>
-                                        </h2>
-
-                                        <div id="PageVideoFilters" class="accordion-collapse collapse" aria-labelledby="headingPageVideoFilters" data-bs-parent="#switchForVideoLinks">
-
-                                            <div class="accordion-body accordion-body-nointend text-center">
-
-                                                @if (!string.IsNullOrEmpty(Model.VideoFilterOut))
-                                                {
-                                                    string[] videoFilterOut = Model.VideoFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
-
-                                                    @for (int sf = 0; sf < videoFilterOut.Count(); sf++)
-                                                    {
-                                                        <p class="text-start text_shadow fluid-font-size border-bottom pb-2">
-                                                            # @videoFilterOut[sf]
-                                                        </p>
-                                                    }
-
-                                                    <p class="fs-6 form-text text-success text-center">
-                                                        <span class="d-sm-none">
-                                                            фильтры поиска
-                                                        </span>
-                                                        <span class="d-none d-sm-inline">
-                                                            фильтры поиска видео
-                                                        </span>
-                                                    </p>
-
-                                                    <h2 class="text_shadow my-3 text-center fluid-font-size">
-                                                        Видео по фильтрам
-                                                    </h2>
-
-                                                    @if (Model.DictionaryOfLinksByVideoFilterOut != null && Model.DictionaryOfLinksByVideoFilterOut.Count > 0)
-                                                    {
-                                                        <div id="accordionFiltersOfVideo" class="accordion">
-
-                                                            @foreach (var (caption, modelForVideoLinks) in Model.DictionaryOfLinksByVideoFilterOut)
-                                                            {
-                                                                innerAccordion++;
-
-                                                                <div class="accordion-item mb-3 shadw">
-
-                                                                    @* Заголовок группы *@
-                                                                    <h2 id="headingFiltersOfVideo" class="accordion-header shadw">
-                                                                        <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_@innerAccordion" aria-expanded="false" aria-controls="collapseOne_@innerAccordion">
-                                                                            <span class="form-label fs-5">@caption :</span>
-                                                                        </button>
-                                                                    </h2>
-
-                                                                    <div id="collapseOne_@innerAccordion" class="accordion-collapse collapse" aria-labelledby="headingFiltersOfVideo" data-bs-parent="#accordionFiltersOfVideo">
-
-                                                                        <div class="accordion-body accordion-body-nointend text-center">
-
-                                                                            <vc:video-links movies-list="@modelForVideoLinks" link-to-info-about-movie="true" />
-
-                                                                        </div>
-
-                                                                    </div>
-
-
-                                                                </div>
-                                                            }
-
-                                                        </div>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <p class="fs-6 form-text text-success text-center">
-                                                        <span class="d-sm-none">
-                                                            фильтры не заданы
-                                                        </span>
-                                                        <span class="d-none d-sm-inline">
-                                                            фильтры поиска не заданы
-                                                        </span>
-                                                    </p>
-                                                }
-
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    @* Ссылки на страницы по GUID1 *@
-                    <div class="accordion-item mb-3 shadw">
-
-                        <h2 id="headingPageLinksByGuid1" class="accordion-header">
-                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageLinksByGuid1" aria-expanded="true" aria-controls="PageLinksByGuid1">
-                                <span class="form-label fs-5">Ссылки  по GUID1 :</span>
-                            </button>
-                        </h2>
-
-                        <div id="PageLinksByGuid1" class="accordion-collapse collapse" aria-labelledby="headingPageLinksByGuid1" data-bs-parent="#accordionDetailsPage">
-
-                            <div class="accordion-body accordion-body-nointend text-center">
-
-                                <div id="PageLinksByGuid1_accordion" class="accordion">
-
-                                    @* Состояние (включено - выключено)*@
-                                    <div class="accordion-item mb-3 shadw">
-
-                                        <h2 id="headingPageLinksByGuid1_accordion" class="accordion-header">
-                                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#SwitchPageLinksByGUID1" aria-expanded="true" aria-controls="SwitchPageLinksByGUID1">
-                                                <span class="form-label fs-5">Состояние :</span>
-                                            </button>
-                                        </h2>
-
-                                        <div id="SwitchPageLinksByGUID1" class="accordion-collapse collapse" aria-labelledby="headingPageLinksByGuid1_accordion" data-bs-parent="#PageLinksByGuid1_accordion">
-
-                                            <div class="accordion-body accordion-body-nointend text-center">
-
-                                                @if (Model.PageLinks)
-                                                {
-                                                    <p class="fs-4 mb-2 text_shadow">
-                                                        <span>включено</span>
-                                                    </p>
-                                                }
-                                                else
-                                                {
-                                                    <p class="fs-4 mb-2 text_shadow">
-                                                        <span>выключено</span>
-                                                    </p>
-                                                }
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                    @* Ссылки на страницы по Guid1 *@
-                                    <div class="accordion-item mb-3 shadw">
-
-                                        <h2 id="headingLinksGuid1" class="accordion-header">
-                                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#RefPagesGuid1" aria-expanded="true" aria-controls="RefPagesGuid1">
-                                                <span class="form-label fs-5">Страницы по GUID1 :</span>
-                                            </button>
-                                        </h2>
-
-                                        <div id="RefPagesGuid1" class="accordion-collapse collapse" aria-labelledby="headingLinksGuid1" data-bs-parent="#PageLinksByGuid1_accordion">
-
-                                            <div class="accordion-body accordion-body-nointend text-start">
-
-                                                @if (Model.LinksToPagesByGuid != null && Model.LinksToPagesByGuid.Count > 0)
-                                                {
-                                                    @foreach (var item in Model.LinksToPagesByGuid)
-                                                    {
-                                                        if (i == 0)
-                                                        {
-                                                            i = 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            i++;
-                                                        }
-
-                                                        <p class="fs-5 border-bottom py-2 fluid-font-size">
-                                                            <span class="text-primary fw-bold fluid-font-size">
-                                                                №@i
-                                                            </span>
-                                                            <br />
-                                                            <span class="d-none d-sm-inline">
-                                                                <span class="fw-bold fluid-font-size">
-                                                                    GUID -
-                                                                </span>
-                                                                <br class="d-xl-none" />
-                                                                <span class="text_shadow fluid-font-size">
-                                                                    @item.PageInfoModelId
-                                                                </span>
-                                                            </span>
-                                                            <br class="d-none d-sm-block" />
-                                                            <span>
-                                                                <span class="fw-bold fluid-font-size">
-                                                                    Title -
-                                                                </span>
-                                                                <br class="d-xl-none" />
-                                                                <span class="text_shadow fluid-font-size">
-                                                                    @item.PageTitle
-                                                                </span>
-                                                            </span>
-                                                        </p>
-                                                    }
-
-                                                    <div class="row row-cols-2 row-cols-lg-3 row-cols-xxl-4 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-2">
-
-                                                        @foreach (var item in Model.LinksToPagesByGuid)
-                                                        {
-                                                            <div class="col p-1 p-lg-2">
-
-                                                                <div class="card shadw rounded-3 cardborder" title="@item.PageTitle">
-
-                                                                    <a asp-area="Admin"
-                                                                           asp-controller="PageInfo"
-                                                                           asp-action="DetailsPage"
-                                                                           asp-route-pageid="@item.PageInfoModelId"
-                                                                           class="rounded-3 p-0 p-md-1 shadw"
-                                                                           onclick="this.target='_blank'"
-                                                                           title="данные о странице">
-
-                                                                        <vc:view-image image-id="@item.ImageFileModelId"
-                                                                                       css-class="card-img-top shadw rounded-3"
-                                                                                       icon-type="webicon300" />
-
-                                                                        @if (!string.IsNullOrEmpty(@item.PageCardText))
-                                                                        {
-                                                                            <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 shadw cardBodyBg">
-
-                                                                                <p class="card-title p-0 mb-0 fw-medium fontadaptive text-center">@item.PageCardText</p>
-
-                                                                            </div>
-                                                                        }
-
-                                                                    </a>
-
-                                                                </div>
-
-                                                            </div>
-                                                        }
 
                                                     </div>
-                                                }
-                                                else
-                                                {
-                                                    <p class="fs-6 form-text text-success text-center">
-                                                        нет ссылок по GUID1
-                                                    </p>
-                                                }
 
+                                                </div>
 
                                             </div>
-
-                                        </div>
-
-                                    </div>
+                                        }
+                                    }
 
                                 </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="fs-6 form-text text-success text-center">
+                                фильтры поиска не заданы
+                            </p>
+                        }
 
-                            </div>
-
-                        </div>
 
                     </div>
-
-                    @* Ссылки на страницы по GUID2 *@
-                    <div class="accordion-item mb-3 shadw">
-
-                        <h2 id="headingPageLinksByGuid2" class="accordion-header">
-                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageLinksByGuid2" aria-expanded="true" aria-controls="PageLinksByGuid2">
-                                <span class="form-label fs-5">Ссылки  по GUID2 :</span>
-                            </button>
-                        </h2>
-
-                        <div id="PageLinksByGuid2" class="accordion-collapse collapse" aria-labelledby="headingPageLinksByGuid2" data-bs-parent="#accordionDetailsPage">
-
-                            <div class="accordion-body accordion-body-nointend text-center">
-
-                                <div id="PageLinksByGuid2_accordion" class="accordion">
-
-                                    @* Состояние (включено - выключено)*@
-                                    <div class="accordion-item mb-3 shadw">
-
-                                        <h2 id="headingPageLinksByGuid2_accordion" class="accordion-header">
-                                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#SwitchPageLinksByGUID2" aria-expanded="true" aria-controls="SwitchPageLinksByGUID2">
-                                                <span class="form-label fs-5">Состояние :</span>
-                                            </button>
-                                        </h2>
-
-                                        <div id="SwitchPageLinksByGUID2" class="accordion-collapse collapse" aria-labelledby="headingPageLinksByGuid2_accordion" data-bs-parent="#PageLinksByGuid2_accordion">
-
-                                            <div class="accordion-body accordion-body-nointend text-center">
-
-                                                @if (Model.PageLinks2)
-                                                {
-                                                    <p class="fs-4 mb-2 text_shadow">
-                                                        <span>включено</span>
-                                                    </p>
-                                                }
-                                                else
-                                                {
-                                                    <p class="fs-4 mb-2 text_shadow">
-                                                        <span>выключено</span>
-                                                    </p>
-                                                }
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                    @* Ссылки на страницы по Guid2 *@
-                                    <div class="accordion-item mb-3 shadw">
-
-                                        <h2 id="headingLinksGuid2" class="accordion-header">
-                                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#RefPagesGuid2" aria-expanded="true" aria-controls="RefPagesGuid2">
-                                                <span class="form-label fs-5">Страницы по GUID1 :</span>
-                                            </button>
-                                        </h2>
-
-                                        <div id="RefPagesGuid2" class="accordion-collapse collapse" aria-labelledby="headingLinksGuid2" data-bs-parent="#PageLinksByGuid2_accordion">
-
-                                            <div class="accordion-body accordion-body-nointend text-start">
-
-                                                @if (Model.LinksToPagesByGuid2 != null && Model.LinksToPagesByGuid2.Count > 0)
-                                                {
-                                                    @foreach (var item in Model.LinksToPagesByGuid2)
-                                                    {
-                                                        if (i == 0)
-                                                        {
-                                                            i = 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            i++;
-                                                        }
-
-                                                        <p class="fs-5 border-bottom py-2 fluid-font-size">
-                                                            <span class="text-primary fw-bold fluid-font-size">
-                                                                №@i
-                                                            </span>
-                                                            <br />
-                                                            <span class="d-none d-sm-inline">
-                                                                <span class="fw-bold fluid-font-size">
-                                                                    GUID -
-                                                                </span>
-                                                                <br class="d-xl-none" />
-                                                                <span class="text_shadow fluid-font-size">
-                                                                    @item.PageInfoModelId
-                                                                </span>
-                                                            </span>
-                                                            <br class="d-none d-sm-block" />
-                                                            <span>
-                                                                <span class="fw-bold fluid-font-size">
-                                                                    Title -
-                                                                </span>
-                                                                <br class="d-xl-none" />
-                                                                <span class="text_shadow fluid-font-size">
-                                                                    @item.PageTitle
-                                                                </span>
-                                                            </span>
-                                                        </p>
-                                                    }
-
-                                                    <div class="row row-cols-2 row-cols-lg-3 row-cols-xxl-4 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-2">
-
-                                                        @foreach (var item in Model.LinksToPagesByGuid2)
-                                                        {
-                                                            <div class="col p-1 p-lg-2">
-
-                                                                <div class="card shadw rounded-3 cardborder" title="@item.PageTitle">
-
-                                                                    <a asp-area="Admin"
-                                                                           asp-controller="PageInfo"
-                                                                           asp-action="DetailsPage"
-                                                                           asp-route-pageid="@item.PageInfoModelId"
-                                                                           class="rounded-3 p-0 p-md-1 shadw"
-                                                                           onclick="this.target='_blank'"
-                                                                           title="данные о странице">
-
-                                                                        <vc:view-image image-id="@item.ImageFileModelId"
-                                                                                       css-class="card-img-top shadw rounded-3"
-                                                                                       icon-type="webicon300" />
-
-                                                                        @if (!string.IsNullOrEmpty(@item.PageCardText))
-                                                                        {
-                                                                            <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 shadw cardBodyBg">
-
-                                                                                <p class="card-title p-0 mb-0 fw-medium fontadaptive text-center">@item.PageCardText</p>
-
-                                                                            </div>
-                                                                        }
-
-                                                                    </a>
-
-                                                                </div>
-
-                                                            </div>
-                                                        }
-
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    <p class="fs-6 form-text text-success text-center">
-                                                        нет ссылок по GUID2
-                                                    </p>
-                                                }
-
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    @* Фотоальбом *@
-                    <div class="accordion-item mb-3 shadw">
-
-                        <h2 id="headingPictures" class="accordion-header">
-                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#Pictures" aria-expanded="true" aria-controls="Pictures">
-                                <span class="form-label fs-5">Картинки :</span>
-                            </button>
-                        </h2>
-
-                        <div id="Pictures" class="accordion-collapse collapse" aria-labelledby="headingPictures" data-bs-parent="#accordionDetailsPage">
-
-                            <div class="accordion-body accordion-body-nointend text-center">
-
-                                <div id="Pictures_accordion" class="accordion">
-
-                                    @* Состояние (включено - выключено)*@
-                                    <div class="accordion-item mb-3 shadw">
-
-                                        <h2 id="headingPicturesCondition" class="accordion-header">
-                                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PicturesCondition" aria-expanded="true" aria-controls="PicturesCondition">
-                                                <span class="form-label fs-5">Состояние :</span>
-                                            </button>
-                                        </h2>
-
-                                        <div id="PicturesCondition" class="accordion-collapse collapse" aria-labelledby="headingPicturesCondition" data-bs-parent="#Pictures_accordion">
-
-                                            <div class="accordion-body accordion-body-nointend text-center">
-
-                                                @if (Model.PhotoLinks)
-                                                {
-                                                    <p class="fs-4 mb-2 text_shadow">
-                                                        <span>включено</span>
-                                                    </p>
-                                                }
-                                                else
-                                                {
-                                                    <p class="fs-4 mb-2 text_shadow">
-                                                        <span>выключено</span>
-                                                    </p>
-                                                }
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                    @* Картинки *@
-                                    <div class="accordion-item mb-3 shadw">
-
-                                        <h2 id="headingPicturesAlbum" class="accordion-header">
-                                            <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PicturesAlbum" aria-expanded="true" aria-controls="PicturesAlbum">
-                                                <span class="form-label fs-5">Фотоальбом :</span>
-                                            </button>
-                                        </h2>
-
-                                        <div id="PicturesAlbum" class="accordion-collapse collapse" aria-labelledby="headingPicturesAlbum" data-bs-parent="#Pictures_accordion">
-
-                                            <div class="accordion-body accordion-body-nointend text-start">
-
-                                                @if (!string.IsNullOrEmpty(Model.PhotoFilterOut))
-                                                {
-                                                    string[] photoFilterOut = Model.PhotoFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
-
-                                                    @for (int sf = 0; sf < photoFilterOut.Count(); sf++)
-                                                    {
-                                                        <p class="text-start text_shadow fluid-font-size border-bottom pb-2">
-                                                            # @photoFilterOut[sf]
-                                                        </p>
-                                                    }
-
-                                                    <p class="fs-6 form-text text-success text-center">
-                                                        <span class="d-sm-none">
-                                                            фильтры поиска
-                                                        </span>
-                                                        <span class="d-none d-sm-inline">
-                                                            фильтры поиска картинок
-                                                        </span>
-                                                    </p>
-                                                }
-                                                else
-                                                {
-                                                    <p class="fs-6 form-text text-success text-center">
-                                                        нет фильтров картинок
-                                                    </p>
-                                                }
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                @* Управление страницей *@
-                <div class="card-footer border p-0 my-2">
-
-                    <a asp-area="Admin"
-                           asp-controller="PageInfo"
-                           asp-action="EditPage"
-                           asp-route-pageid="@Model.PageInfoModelId"
-                           class="btn btn-outline-dark py-1 m-2 shadw minwidth100px"
-                           title="редактировать данные">
-
-                        Изменить
-
-                    </a>
-
-                    <a asp-area="Admin"
-                           asp-controller="PageInfo"
-                           asp-action="DeletePage"
-                           asp-route-pageid="@Model.PageInfoModelId"
-                           class="btn btn-outline-danger py-1 m-2 shadw minwidth100px"
-                           title="удалить страницу">
-
-                        Удалить
-
-                    </a>
-
-                    <a href="@Url.Content(Model.PageFullPathWithData)"
-                           class="btn btn-outline-primary py-1 m-2 shadw minwidth100px"
-                           title="просмотр">
-
-                        Просмотр
-
-                    </a>
-
-                    @if (!string.IsNullOrEmpty(Model.PagePathNickName))
-                    {
-                        <a href="@Url.Content(Model.PagePathNickName)"
-                               class="btn btn-outline-primary py-1 m-2 shadw minwidth100px"
-                               title="просмотр">
-
-                            Псевдоним
-
-                        </a>
-                    }
-
-                    <a asp-area="Admin"
-                           asp-controller="PageInfo"
-                           asp-action="Index"
-                           class="btn btn-outline-success py-1 m-2 shadw minwidth100px"
-                           title="список страниц">
-
-                        Список
-
-                    </a>
-
-                    @if (Model.MovieFile != null)
-                    {
-                        <a asp-area="Admin"
-                               asp-controller="MovieInfo"
-                               asp-action="DetailsMovie"
-                               asp-route-movieid="@Model.MovieFile.MovieFileModelId"
-                               class="btn btn-outline-info py-1 m-2 shadw minwidth100px"
-                               title="данные фильма">
-
-                            Фильм
-
-                        </a>
-                    }
 
                 </div>
 
             </div>
 
-            @* кадры справа *@
-            <div class="col-2 mx-auto d-none d-lg-block overflow-y-auto overflow-x-hidden height850">
+            @* Ссылки на страницы *@
+            <div class="accordion-item mb-3 shadw">
 
-                @if (Model.FramesAroundMainContent != null && Model.FramesAroundMainContent.FramesOnTheRight != null)
-                {
-                    @foreach (var item in Model.FramesAroundMainContent.FramesOnTheRight)
-                    {
-                        <a href="@item.ImagePath/@(string.IsNullOrEmpty(item.WebImageHDFileName) == false ? item.WebImageHDFileName : item.WebImageFileName)"
-                               class=""
-                               title="@item.ImageAltTitle"
-                               onclick="this.target='_blank'">
+                <h2 id="headingPageLinksByFilters" class="accordion-header shadw">
 
-                            <vc:view-image image-id="@item.ImageFileModelId"
-                                           css-class="my-2 w-100 shadw imageref"
-                                           icon-type="webicon200" />
+                    <button class="accordion-button collapsed py-0 stranicy"
+                            type="button" data-bs-toggle="collapse"
+                            data-bs-target="#PageLinksByFilters"
+                            aria-expanded="true"
+                            aria-controls="PageLinksByFilters">
 
-                        </a>
-                    }
-                }
-                else
-                {
-                    <div class="col-2 d-none d-lg-block"></div>
-                }
+                        <span class="form-label fs-5">
+                            Ссылки на страницы :
+                        </span>
+
+                    </button>
+
+                </h2>
+
+                <div id="PageLinksByFilters"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="headingPageLinksByFilters"
+                     data-bs-parent="#accordionDetailsPage">
+
+                    <div class="accordion-body accordion-body-nointend text-center">
+
+                        <div id="switchForPageLinks" class="accordion">
+
+                            @* Состояние (включено или выключено) *@
+                            <div class="accordion-item mb-3 shadw">
+
+                                <h2 id="headingSwitchPageLinks" class="accordion-header shadw">
+
+                                    <button class="accordion-button collapsed py-0 stranicy"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#SwitchPage"
+                                            aria-expanded="true"
+                                            aria-controls="SwitchPage">
+
+                                        <span class="form-label fs-5">
+                                            Состояние :
+                                        </span>
+
+                                    </button>
+
+                                </h2>
+
+                                <div id="SwitchPage"
+                                     class="accordion-collapse collapse"
+                                     aria-labelledby="headingSwitchPageLinks"
+                                     data-bs-parent="#switchForPageLinks">
+
+                                    <div class="accordion-body accordion-body-nointend text-center">
+
+                                        @if (Model.PageLinksByFilters)
+                                        {
+                                            <p class="fs-4 mb-2 text_shadow">
+                                                <span>включено</span>
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="fs-4 mb-2 text_shadow">
+                                                <span>выключено</span>
+                                            </p>
+                                        }
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            @* Фильтры связанных страниц *@
+                            <div class="accordion-item mb-3 shadw">
+
+                                @* Заголовок группы *@
+                                <h2 id="headingPageLinkFilters" class="accordion-header shadw">
+
+                                    <button class="accordion-button collapsed py-0 stranicy"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#PageLinkFilters"
+                                            aria-expanded="true"
+                                            aria-controls="PageLinkFilters">
+
+                                        <span class="form-label fs-5">
+                                            Фильтры выбора :
+                                        </span>
+
+                                    </button>
+
+                                </h2>
+
+                                <div id="PageLinkFilters"
+                                     class="accordion-collapse collapse"
+                                     aria-labelledby="headingPageLinkFilters"
+                                     data-bs-parent="#switchForPageLinks">
+
+                                    <div class="accordion-body accordion-body-nointend text-center">
+
+                                        @if (!string.IsNullOrEmpty(Model.PageFilterOut))
+                                        {
+                                            string[] pageFilterOut = Model.PageFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+                                            @* Список фильтров *@
+                                            <div>
+
+                                                @for (int sf = 0; sf < pageFilterOut.Count(); sf++)
+                                                {
+                                                    <p class="text-start text_shadow fluid-font-size border-bottom pb-2">
+                                                        # @pageFilterOut[sf]
+                                                    </p>
+                                                }
+
+                                                <p class="fs-6 form-text text-success text-center">
+                                                    <span class="d-sm-none">
+                                                        фильтры поиска
+                                                    </span>
+                                                    <span class="d-none d-sm-inline">
+                                                        фильтры поиска страниц
+                                                    </span>
+                                                </p>
+
+                                            </div>
+
+                                            <h2 class="text_shadow my-3 text-center fluid-font-size">
+                                                Страницы по фильтрам
+                                            </h2>
+
+                                            @if (Model.DictionaryOfLinksByPageFilterOut != null && Model.DictionaryOfLinksByPageFilterOut.Count > 0)
+                                            {
+                                                <div id="accordionFiltersOfPage" class="accordion">
+
+                                                    @foreach (var (caption, modelForPageLinks) in Model.DictionaryOfLinksByPageFilterOut)
+                                                    {
+                                                        innerAccordion++;
+
+                                                        <div class="accordion-item mb-3 shadw">
+
+                                                            @* Заголовок группы *@
+                                                            <h2 id="headingFiltersOfPage" class="accordion-header shadw">
+                                                                <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_@innerAccordion" aria-expanded="false" aria-controls="collapseOne_@innerAccordion">
+                                                                    <span class="form-label fs-5">@caption :</span>
+                                                                </button>
+                                                            </h2>
+
+                                                            <div id="collapseOne_@innerAccordion" class="accordion-collapse collapse" aria-labelledby="headingFiltersOfPage" data-bs-parent="#accordionFiltersOfPage">
+
+                                                                <div class="accordion-body accordion-body-nointend text-center">
+
+                                                                    <div class="row mt-1 justify-content-center g-1
+                                                                        @(modelForPageLinks.Count < 4 ? "row-cols-3" : "")
+                                                                        @((modelForPageLinks.Count % 4 == 0 || modelForPageLinks.Count == 7) ? "row-cols-4" : "")
+                                                                        @((modelForPageLinks.Count > 4 & modelForPageLinks.Count % 4 != 0 & modelForPageLinks.Count != 7) ? "row-cols-3 row-cols-lg-4 row-cols-xxl-5" : "")">
+
+                                                                        @foreach (var item in modelForPageLinks)
+                                                                        {
+                                                                            <div class="col">
+
+                                                                                <a asp-area="Admin"
+                                                                                       asp-controller="PageInfo"
+                                                                                       asp-action="DetailsPage"
+                                                                                       asp-route-pageid="@item.PageInfoModelId"
+                                                                                       class="d-block rounded-3 p-1 imageref"
+                                                                                       onclick="this.target='_blank'"
+                                                                                       title="данные о странице">
+
+                                                                                    <div class="card p-0 rounded-3 shadw" title="@item.PageTitle">
+
+                                                                                        <vc:view-image image-id="@item.ImageFileModelId"
+                                                                                                       css-class="card-img-top rounded-3 p-0"
+                                                                                                       icon-type="webicon300" />
+
+
+                                                                                        <div class="d-none d-sm-flex card-body p-1 justify-content-center">
+
+                                                                                            @if (!string.IsNullOrEmpty(@item.PageCardText))
+                                                                                            {
+                                                                                                <p class="card-text px-2 text-indent-0 arial fontadaptive shadw">
+                                                                                                    @item.PageCardText
+                                                                                                </p>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <p class="card-text px-2 text-indent-0 arial fontadaptive shadw">
+                                                                                                    БЕЗ ТЕКСТА
+                                                                                                </p>
+                                                                                            }
+
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                </a>
+
+                                                                            </div>
+                                                                        }
+
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    }
+
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <p class="fs-6 form-text text-success text-center">
+                                                <span class="d-sm-none">
+                                                    фильтры не заданы
+                                                </span>
+                                                <span class="d-none d-sm-inline">
+                                                    фильтры поиска не заданы
+                                                </span>
+                                            </p>
+                                        }
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @* Ссылки на видео *@
+            <div class="accordion-item mb-3 shadw">
+
+                <h2 id="headingVideoLinks" class="accordion-header shadw">
+                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#VideoLinks" aria-expanded="true" aria-controls="VideoLinks">
+                        <span class="form-label fs-5">Ссылки на видео :</span>
+                    </button>
+                </h2>
+
+                <div id="VideoLinks" class="accordion-collapse collapse" aria-labelledby="headingVideoLinks" data-bs-parent="#accordionDetailsPage">
+
+                    <div class="accordion-body accordion-body-nointend text-center">
+
+                        <div id="switchForVideoLinks" class="accordion">
+
+                            @* Состояние (включено или выключено) *@
+                            <div class="accordion-item mb-3 shadw">
+
+                                <h2 id="headingSwitchVideoLinks" class="accordion-header shadw">
+                                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#SwitchVideo" aria-expanded="true" aria-controls="SwitchVideo">
+                                        <span class="form-label fs-5">Состояние :</span>
+                                    </button>
+                                </h2>
+
+                                <div id="SwitchVideo" class="accordion-collapse collapse" aria-labelledby="headingSwitchVideoLinks" data-bs-parent="#switchForVideoLinks">
+
+                                    <div class="accordion-body accordion-body-nointend text-center">
+
+                                        @if (Model.VideoLinks)
+                                        {
+                                            <p class="fs-4 mb-2 text_shadow">
+                                                <span>включено</span>
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="fs-4 mb-2 text_shadow">
+                                                <span>выключено</span>
+                                            </p>
+                                        }
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            @* Фильтры связанных видео *@
+                            <div class="accordion-item mb-3 shadw">
+
+                                @* Заголовок группы *@
+                                <h2 id="headingPageVideoFilters" class="accordion-header shadw">
+                                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageVideoFilters" aria-expanded="true" aria-controls="PageVideoFilters">
+                                        <span class="form-label fs-5">Фильтры для видео :</span>
+                                    </button>
+                                </h2>
+
+                                <div id="PageVideoFilters" class="accordion-collapse collapse" aria-labelledby="headingPageVideoFilters" data-bs-parent="#switchForVideoLinks">
+
+                                    <div class="accordion-body accordion-body-nointend text-center">
+
+                                        @if (!string.IsNullOrEmpty(Model.VideoFilterOut))
+                                        {
+                                            string[] videoFilterOut = Model.VideoFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+                                            @for (int sf = 0; sf < videoFilterOut.Count(); sf++)
+                                            {
+                                                <p class="text-start text_shadow fluid-font-size border-bottom pb-2">
+                                                    # @videoFilterOut[sf]
+                                                </p>
+                                            }
+
+                                            <p class="fs-6 form-text text-success text-center">
+                                                <span class="d-sm-none">
+                                                    фильтры поиска
+                                                </span>
+                                                <span class="d-none d-sm-inline">
+                                                    фильтры поиска видео
+                                                </span>
+                                            </p>
+
+                                            <h2 class="text_shadow my-3 text-center fluid-font-size">
+                                                Видео по фильтрам
+                                            </h2>
+
+                                            @if (Model.DictionaryOfLinksByVideoFilterOut != null && Model.DictionaryOfLinksByVideoFilterOut.Count > 0)
+                                            {
+                                                <div id="accordionFiltersOfVideo" class="accordion">
+
+                                                    @foreach (var (caption, modelForVideoLinks) in Model.DictionaryOfLinksByVideoFilterOut)
+                                                    {
+                                                        innerAccordion++;
+
+                                                        <div class="accordion-item mb-3 shadw">
+
+                                                            @* Заголовок группы *@
+                                                            <h2 id="headingFiltersOfVideo" class="accordion-header shadw">
+                                                                <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_@innerAccordion" aria-expanded="false" aria-controls="collapseOne_@innerAccordion">
+                                                                    <span class="form-label fs-5">@caption :</span>
+                                                                </button>
+                                                            </h2>
+
+                                                            <div id="collapseOne_@innerAccordion" class="accordion-collapse collapse" aria-labelledby="headingFiltersOfVideo" data-bs-parent="#accordionFiltersOfVideo">
+
+                                                                <div class="accordion-body accordion-body-nointend text-center">
+
+                                                                    <vc:video-links movies-list="@modelForVideoLinks" link-to-info-about-movie="true" />
+
+                                                                </div>
+
+                                                            </div>
+
+
+                                                        </div>
+                                                    }
+
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <p class="fs-6 form-text text-success text-center">
+                                                <span class="d-sm-none">
+                                                    фильтры не заданы
+                                                </span>
+                                                <span class="d-none d-sm-inline">
+                                                    фильтры поиска не заданы
+                                                </span>
+                                            </p>
+                                        }
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @* Ссылки на страницы по GUID1 *@
+            <div class="accordion-item mb-3 shadw">
+
+                <h2 id="headingPageLinksByGuid1" class="accordion-header">
+                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageLinksByGuid1" aria-expanded="true" aria-controls="PageLinksByGuid1">
+                        <span class="form-label fs-5">Ссылки  по GUID1 :</span>
+                    </button>
+                </h2>
+
+                <div id="PageLinksByGuid1" class="accordion-collapse collapse" aria-labelledby="headingPageLinksByGuid1" data-bs-parent="#accordionDetailsPage">
+
+                    <div class="accordion-body accordion-body-nointend text-center">
+
+                        <div id="PageLinksByGuid1_accordion" class="accordion">
+
+                            @* Состояние (включено - выключено)*@
+                            <div class="accordion-item mb-3 shadw">
+
+                                <h2 id="headingPageLinksByGuid1_accordion" class="accordion-header">
+                                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#SwitchPageLinksByGUID1" aria-expanded="true" aria-controls="SwitchPageLinksByGUID1">
+                                        <span class="form-label fs-5">Состояние :</span>
+                                    </button>
+                                </h2>
+
+                                <div id="SwitchPageLinksByGUID1" class="accordion-collapse collapse" aria-labelledby="headingPageLinksByGuid1_accordion" data-bs-parent="#PageLinksByGuid1_accordion">
+
+                                    <div class="accordion-body accordion-body-nointend text-center">
+
+                                        @if (Model.PageLinks)
+                                        {
+                                            <p class="fs-4 mb-2 text_shadow">
+                                                <span>включено</span>
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="fs-4 mb-2 text_shadow">
+                                                <span>выключено</span>
+                                            </p>
+                                        }
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            @* Ссылки на страницы по Guid1 *@
+                            <div class="accordion-item mb-3 shadw">
+
+                                <h2 id="headingLinksGuid1" class="accordion-header">
+                                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#RefPagesGuid1" aria-expanded="true" aria-controls="RefPagesGuid1">
+                                        <span class="form-label fs-5">Страницы по GUID1 :</span>
+                                    </button>
+                                </h2>
+
+                                <div id="RefPagesGuid1" class="accordion-collapse collapse" aria-labelledby="headingLinksGuid1" data-bs-parent="#PageLinksByGuid1_accordion">
+
+                                    <div class="accordion-body accordion-body-nointend text-start">
+
+                                        @if (Model.LinksToPagesByGuid != null && Model.LinksToPagesByGuid.Count > 0)
+                                        {
+                                            @foreach (var item in Model.LinksToPagesByGuid)
+                                            {
+                                                if (i == 0)
+                                                {
+                                                    i = 1;
+                                                }
+                                                else
+                                                {
+                                                    i++;
+                                                }
+
+                                                <p class="fs-5 border-bottom py-2 fluid-font-size">
+                                                    <span class="text-primary fw-bold fluid-font-size">
+                                                        №@i
+                                                    </span>
+                                                    <br />
+                                                    <span class="d-none d-sm-inline">
+                                                        <span class="fw-bold fluid-font-size">
+                                                            GUID -
+                                                        </span>
+                                                        <br class="d-xl-none" />
+                                                        <span class="text_shadow fluid-font-size">
+                                                            @item.PageInfoModelId
+                                                        </span>
+                                                    </span>
+                                                    <br class="d-none d-sm-block" />
+                                                    <span>
+                                                        <span class="fw-bold fluid-font-size">
+                                                            Title -
+                                                        </span>
+                                                        <br class="d-xl-none" />
+                                                        <span class="text_shadow fluid-font-size">
+                                                            @item.PageTitle
+                                                        </span>
+                                                    </span>
+                                                </p>
+                                            }
+
+                                            <div class="row row-cols-2 row-cols-lg-3 row-cols-xxl-4 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-2">
+
+                                                @foreach (var item in Model.LinksToPagesByGuid)
+                                                {
+                                                    <div class="col p-1 p-lg-2">
+
+                                                        <div class="card shadw rounded-3 cardborder" title="@item.PageTitle">
+
+                                                            <a asp-area="Admin"
+                                                                   asp-controller="PageInfo"
+                                                                   asp-action="DetailsPage"
+                                                                   asp-route-pageid="@item.PageInfoModelId"
+                                                                   class="rounded-3 p-0 p-md-1 shadw"
+                                                                   onclick="this.target='_blank'"
+                                                                   title="данные о странице">
+
+                                                                <vc:view-image image-id="@item.ImageFileModelId"
+                                                                               css-class="card-img-top shadw rounded-3"
+                                                                               icon-type="webicon300" />
+
+                                                                @if (!string.IsNullOrEmpty(@item.PageCardText))
+                                                                {
+                                                                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 shadw cardBodyBg">
+
+                                                                        <p class="card-title p-0 mb-0 fw-medium fontadaptive text-center">@item.PageCardText</p>
+
+                                                                    </div>
+                                                                }
+
+                                                            </a>
+
+                                                        </div>
+
+                                                    </div>
+                                                }
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <p class="fs-6 form-text text-success text-center">
+                                                нет ссылок по GUID1
+                                            </p>
+                                        }
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @* Ссылки на страницы по GUID2 *@
+            <div class="accordion-item mb-3 shadw">
+
+                <h2 id="headingPageLinksByGuid2" class="accordion-header">
+                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageLinksByGuid2" aria-expanded="true" aria-controls="PageLinksByGuid2">
+                        <span class="form-label fs-5">Ссылки  по GUID2 :</span>
+                    </button>
+                </h2>
+
+                <div id="PageLinksByGuid2" class="accordion-collapse collapse" aria-labelledby="headingPageLinksByGuid2" data-bs-parent="#accordionDetailsPage">
+
+                    <div class="accordion-body accordion-body-nointend text-center">
+
+                        <div id="PageLinksByGuid2_accordion" class="accordion">
+
+                            @* Состояние (включено - выключено)*@
+                            <div class="accordion-item mb-3 shadw">
+
+                                <h2 id="headingPageLinksByGuid2_accordion" class="accordion-header">
+                                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#SwitchPageLinksByGUID2" aria-expanded="true" aria-controls="SwitchPageLinksByGUID2">
+                                        <span class="form-label fs-5">Состояние :</span>
+                                    </button>
+                                </h2>
+
+                                <div id="SwitchPageLinksByGUID2" class="accordion-collapse collapse" aria-labelledby="headingPageLinksByGuid2_accordion" data-bs-parent="#PageLinksByGuid2_accordion">
+
+                                    <div class="accordion-body accordion-body-nointend text-center">
+
+                                        @if (Model.PageLinks2)
+                                        {
+                                            <p class="fs-4 mb-2 text_shadow">
+                                                <span>включено</span>
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="fs-4 mb-2 text_shadow">
+                                                <span>выключено</span>
+                                            </p>
+                                        }
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            @* Ссылки на страницы по Guid2 *@
+                            <div class="accordion-item mb-3 shadw">
+
+                                <h2 id="headingLinksGuid2" class="accordion-header">
+                                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#RefPagesGuid2" aria-expanded="true" aria-controls="RefPagesGuid2">
+                                        <span class="form-label fs-5">Страницы по GUID1 :</span>
+                                    </button>
+                                </h2>
+
+                                <div id="RefPagesGuid2" class="accordion-collapse collapse" aria-labelledby="headingLinksGuid2" data-bs-parent="#PageLinksByGuid2_accordion">
+
+                                    <div class="accordion-body accordion-body-nointend text-start">
+
+                                        @if (Model.LinksToPagesByGuid2 != null && Model.LinksToPagesByGuid2.Count > 0)
+                                        {
+                                            @foreach (var item in Model.LinksToPagesByGuid2)
+                                            {
+                                                if (i == 0)
+                                                {
+                                                    i = 1;
+                                                }
+                                                else
+                                                {
+                                                    i++;
+                                                }
+
+                                                <p class="fs-5 border-bottom py-2 fluid-font-size">
+                                                    <span class="text-primary fw-bold fluid-font-size">
+                                                        №@i
+                                                    </span>
+                                                    <br />
+                                                    <span class="d-none d-sm-inline">
+                                                        <span class="fw-bold fluid-font-size">
+                                                            GUID -
+                                                        </span>
+                                                        <br class="d-xl-none" />
+                                                        <span class="text_shadow fluid-font-size">
+                                                            @item.PageInfoModelId
+                                                        </span>
+                                                    </span>
+                                                    <br class="d-none d-sm-block" />
+                                                    <span>
+                                                        <span class="fw-bold fluid-font-size">
+                                                            Title -
+                                                        </span>
+                                                        <br class="d-xl-none" />
+                                                        <span class="text_shadow fluid-font-size">
+                                                            @item.PageTitle
+                                                        </span>
+                                                    </span>
+                                                </p>
+                                            }
+
+                                            <div class="row row-cols-2 row-cols-lg-3 row-cols-xxl-4 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-2">
+
+                                                @foreach (var item in Model.LinksToPagesByGuid2)
+                                                {
+                                                    <div class="col p-1 p-lg-2">
+
+                                                        <div class="card shadw rounded-3 cardborder" title="@item.PageTitle">
+
+                                                            <a asp-area="Admin"
+                                                                   asp-controller="PageInfo"
+                                                                   asp-action="DetailsPage"
+                                                                   asp-route-pageid="@item.PageInfoModelId"
+                                                                   class="rounded-3 p-0 p-md-1 shadw"
+                                                                   onclick="this.target='_blank'"
+                                                                   title="данные о странице">
+
+                                                                <vc:view-image image-id="@item.ImageFileModelId"
+                                                                               css-class="card-img-top shadw rounded-3"
+                                                                               icon-type="webicon300" />
+
+                                                                @if (!string.IsNullOrEmpty(@item.PageCardText))
+                                                                {
+                                                                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 shadw cardBodyBg">
+
+                                                                        <p class="card-title p-0 mb-0 fw-medium fontadaptive text-center">@item.PageCardText</p>
+
+                                                                    </div>
+                                                                }
+
+                                                            </a>
+
+                                                        </div>
+
+                                                    </div>
+                                                }
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <p class="fs-6 form-text text-success text-center">
+                                                нет ссылок по GUID2
+                                            </p>
+                                        }
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @* Фотоальбом *@
+            <div class="accordion-item mb-3 shadw">
+
+                <h2 id="headingPictures" class="accordion-header">
+
+                    <button class="accordion-button collapsed py-0 stranicy"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#Pictures"
+                            aria-expanded="true"
+                            aria-controls="Pictures">
+
+                        <span class="form-label fs-5">Картинки :</span>
+
+                    </button>
+
+                </h2>
+
+                <div id="Pictures" class="accordion-collapse collapse" aria-labelledby="headingPictures" data-bs-parent="#accordionDetailsPage">
+
+                    <div class="accordion-body accordion-body-nointend text-center">
+
+                        <div id="Pictures_accordion" class="accordion">
+
+                            @* Состояние (включено - выключено)*@
+                            <div class="accordion-item mb-3 shadw">
+
+                                <h2 id="headingPicturesCondition" class="accordion-header">
+                                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PicturesCondition" aria-expanded="true" aria-controls="PicturesCondition">
+                                        <span class="form-label fs-5">Состояние :</span>
+                                    </button>
+                                </h2>
+
+                                <div id="PicturesCondition" class="accordion-collapse collapse" aria-labelledby="headingPicturesCondition" data-bs-parent="#Pictures_accordion">
+
+                                    <div class="accordion-body accordion-body-nointend text-center">
+
+                                        @if (Model.PhotoLinks)
+                                        {
+                                            <p class="fs-4 mb-2 text_shadow">
+                                                <span>включено</span>
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="fs-4 mb-2 text_shadow">
+                                                <span>выключено</span>
+                                            </p>
+                                        }
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            @* Картинки *@
+                            <div class="accordion-item mb-3 shadw">
+
+                                <h2 id="headingPicturesAlbum" class="accordion-header">
+                                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PicturesAlbum" aria-expanded="true" aria-controls="PicturesAlbum">
+                                        <span class="form-label fs-5">Фотоальбом :</span>
+                                    </button>
+                                </h2>
+
+                                <div id="PicturesAlbum" class="accordion-collapse collapse" aria-labelledby="headingPicturesAlbum" data-bs-parent="#Pictures_accordion">
+
+                                    <div class="accordion-body accordion-body-nointend text-start">
+
+                                        @if (!string.IsNullOrEmpty(Model.PhotoFilterOut))
+                                        {
+                                            string[] photoFilterOut = Model.PhotoFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+                                            @for (int sf = 0; sf < photoFilterOut.Count(); sf++)
+                                            {
+                                                <p class="text-start text_shadow fluid-font-size border-bottom pb-2">
+                                                    # @photoFilterOut[sf]
+                                                </p>
+                                            }
+
+                                            <p class="fs-6 form-text text-success text-center">
+                                                <span class="d-sm-none">
+                                                    фильтры поиска
+                                                </span>
+                                                <span class="d-none d-sm-inline">
+                                                    фильтры поиска картинок
+                                                </span>
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="fs-6 form-text text-success text-center">
+                                                нет фильтров картинок
+                                            </p>
+                                        }
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
         </div>
+
+        @* Управление страницей *@
+        <div class="card-footer border p-0 my-2">
+
+            <a asp-area="Admin"
+                   asp-controller="PageInfo"
+                   asp-action="EditPage"
+                   asp-route-pageid="@Model.PageInfoModelId"
+                   class="btn btn-outline-dark py-1 m-2 shadw minwidth100px"
+                   title="редактировать данные">
+
+                Изменить
+
+            </a>
+
+            <a asp-area="Admin"
+                   asp-controller="PageInfo"
+                   asp-action="DeletePage"
+                   asp-route-pageid="@Model.PageInfoModelId"
+                   class="btn btn-outline-danger py-1 m-2 shadw minwidth100px"
+                   title="удалить страницу">
+
+                Удалить
+
+            </a>
+
+            <a href="@Url.Content(Model.PageFullPathWithData)"
+                   class="btn btn-outline-primary py-1 m-2 shadw minwidth100px"
+                   title="просмотр">
+
+                Просмотр
+
+            </a>
+
+            @if (!string.IsNullOrEmpty(Model.PagePathNickName))
+            {
+                <a href="@Url.Content(Model.PagePathNickName)"
+                       class="btn btn-outline-primary py-1 m-2 shadw minwidth100px"
+                       title="просмотр">
+
+                    Псевдоним
+
+                </a>
+            }
+
+            <a asp-area="Admin"
+                   asp-controller="PageInfo"
+                   asp-action="Index"
+                   class="btn btn-outline-success py-1 m-2 shadw minwidth100px"
+                   title="список страниц">
+
+                Список
+
+            </a>
+
+            @if (Model.MovieFile != null)
+            {
+                <a asp-area="Admin"
+                       asp-controller="MovieInfo"
+                       asp-action="DetailsMovie"
+                       asp-route-movieid="@Model.MovieFile.MovieFileModelId"
+                       class="btn btn-outline-info py-1 m-2 shadw minwidth100px"
+                       title="данные фильма">
+
+                    Фильм
+
+                </a>
+            }
+
+        </div>
+
+    </div>
+
+    @* кадры справа *@
+    <div class="col-2 mx-auto d-none d-lg-block overflow-y-auto overflow-x-hidden height850">
+
+        @if (Model.FramesAroundMainContent != null && Model.FramesAroundMainContent.FramesOnTheRight != null)
+        {
+            @foreach (var item in Model.FramesAroundMainContent.FramesOnTheRight)
+            {
+                <a href="@item.ImagePath/@(string.IsNullOrEmpty(item.WebImageHDFileName) == false ? item.WebImageHDFileName : item.WebImageFileName)"
+                       class=""
+                       title="@item.ImageAltTitle"
+                       onclick="this.target='_blank'">
+
+                    <vc:view-image image-id="@item.ImageFileModelId"
+                                   css-class="my-2 w-100 shadw imageref"
+                                   icon-type="webicon200" />
+
+                </a>
+            }
+        }
+        else
+        {
+            <div class="col-2 d-none d-lg-block"></div>
+        }
+
+    </div>
+
+</div>

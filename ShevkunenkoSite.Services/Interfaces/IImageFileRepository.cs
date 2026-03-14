@@ -34,7 +34,7 @@ public interface IImageFileRepository
 
     #region Получить GUID картинки по имени файла
 
-    Task<Guid?>? GetImageGuidByFileNameAsync(string imageFillename);
+    Task<Guid> GetImageGuidByFileNameAsync(string imageFilename);
 
     #endregion
 }

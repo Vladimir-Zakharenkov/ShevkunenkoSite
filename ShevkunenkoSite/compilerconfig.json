@@ -5,6 +5,6 @@
   },
   {
     "outputFile": "wwwroot/js/java-script.js",
-    "inputFile": "wwwroot/js/site.js"
+    "inputFile": "wwwroot/js/JavaScriptForSite.js"
   }
 ]
