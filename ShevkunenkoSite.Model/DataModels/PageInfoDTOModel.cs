@@ -318,8 +318,6 @@ public record class PageInfoDTOModel
 
     public Guid? FilmId { get; set; }
 
-    public FilmFileModel? Film { get; set; }
-
     #endregion
 
     #region Связь с таблицей IconTypeModel

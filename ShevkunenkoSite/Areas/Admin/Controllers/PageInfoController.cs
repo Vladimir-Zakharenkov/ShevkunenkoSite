@@ -1155,7 +1155,7 @@ public class PageInfoController(
             }
             else
             {
-                newPage.PageLoc = addPage.Action;
+                newPage.PageLoc = "/" + addPage.Action.Trim().ToLower();
             }
 
             #endregion
@@ -1221,7 +1221,7 @@ public class PageInfoController(
 
             if (addPage.PageAsRazorPage)
             {
-                checkPageFullPathWithData = addPage.PageArea + addPage.PageLoc + addPage.RoutData;
+                checkPageFullPathWithData = newPage.PageArea + newPage.PageLoc + newPage.RoutData;
 
                 if (await pageInfoContext.PagesInfo.Where(p => p.PageFullPathWithData == checkPageFullPathWithData).AnyAsync())
                 {
@@ -1414,7 +1414,7 @@ public class PageInfoController(
                 }
                 else
                 {
-                    newPage.ImagePageHeadingId = addPage.ImagePageHeadingId;
+                    newPage.ImagePageHeadingId = null;
                 }
             }
 
