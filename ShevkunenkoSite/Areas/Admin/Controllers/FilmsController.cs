@@ -146,7 +146,12 @@ public class FilmsController(
                 "FilmTotalParts," +
                 "FilmPart," +
                 "PosterForFilmFormFile," +
+                "FilmPosterId," +
+                "FilmImageId," +
                 "ImageForFilmFormFile"
+
+
+
         )]
         FilmFileModel filmItem)
     {
@@ -584,18 +589,18 @@ public class FilmsController(
 
             if (filmItem.PosterForFilmFormFile != null)
             {
-                var posterGuid = imageContext.GetImageGuidByFileNameAsync(filmItem.PosterForFilmFormFile.FileName);
+                var posterGuid = await imageContext.GetImageGuidByFileNameAsync(filmItem.PosterForFilmFormFile.FileName);
 
-                if (posterGuid != null)
+                if (posterGuid != Guid.Empty)
                 {
-                    filmItem.FilmPosterId = await posterGuid;
+                    filmItem.FilmPosterId = posterGuid;
+                }
+                else
+                {
+                    ModelState.AddModelError("PosterForFilmFormFile", $"Вы выбрали файл «{filmItem.PosterForFilmFormFile.FileName}»" + Environment.NewLine + "Файла с таким именем нет в базе данных");
 
-                    if (filmItem.FilmPosterId == null)
-                    {
-                        ModelState.AddModelError("PosterForFilmFormFile", $"Вы выбрали файл «{filmItem.PosterForFilmFormFile.FileName}»" + Environment.NewLine + "Файла с таким именем нет в базе данных");
+                    return View(filmItem);
 
-                        return View(filmItem);
-                    }
                 }
             }
             else
@@ -605,18 +610,17 @@ public class FilmsController(
 
             if (filmItem.ImageForFilmFormFile != null)
             {
-                var imageGuid = imageContext.GetImageGuidByFileNameAsync(filmItem.ImageForFilmFormFile.FileName);
+                var imageGuid = await imageContext.GetImageGuidByFileNameAsync(filmItem.ImageForFilmFormFile.FileName);
 
-                if (imageGuid != null)
+                if (imageGuid != Guid.Empty)
                 {
-                    filmItem.FilmImageId = await imageGuid;
+                    filmItem.FilmImageId = imageGuid;
+                }
+                else
+                {
+                    ModelState.AddModelError("ImageForFilmFormFile", $"Вы выбрали файл «{filmItem.ImageForFilmFormFile.FileName}»" + Environment.NewLine + "Файла с таким именем нет в базе данных");
 
-                    if (filmItem.FilmImageId == null)
-                    {
-                        ModelState.AddModelError("ImageForFilmFormFile", $"Вы выбрали файл «{filmItem.ImageForFilmFormFile.FileName}»" + Environment.NewLine + "Файла с таким именем нет в базе данных");
-
-                        return View(filmItem);
-                    }
+                    return View(filmItem);
                 }
             }
             else
