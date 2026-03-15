@@ -12,8 +12,8 @@ using ShevkunenkoSite.Services;
 namespace ShevkunenkoSite.Services.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    [Migration("20260314200058_14-03-2026-22-59")]
-    partial class _140320262259
+    [Migration("20260315142442_15-03-202617-23")]
+    partial class _150320261723
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1086,14 +1086,6 @@ namespace ShevkunenkoSite.Services.Migrations
 
                     b.Property<Guid>("BackgroundFileModelId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("BrowserConfig")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BrowserConfigFolder")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Changefreq")
                         .IsRequired()

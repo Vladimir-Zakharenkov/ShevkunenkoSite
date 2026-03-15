@@ -121,20 +121,6 @@ public record class PageInfoDTOModel
 
     #endregion
 
-    #region BrowserConfig и т.п.
-
-    [Required(ErrorMessage = "Необходимо указать файл browserconfig")]
-    [Display(Name = "Файл browserconfig :")]
-    [DataType(DataType.Text)]
-    public string BrowserConfig { get; set; } = "main.xml";
-
-    [Required(ErrorMessage = "Укажите каталог иконок browserconfig")]
-    [Display(Name = "Каталог иконок browserconfig :")]
-    [DataType(DataType.Text)]
-    public string BrowserConfigFolder { get; set; } = "main";
-
-    #endregion
-
     #region OpenGraph
 
     [Required(ErrorMessage = "Необходимо указать og:type")]

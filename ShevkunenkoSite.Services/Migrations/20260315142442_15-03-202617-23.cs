@@ -5,13 +5,17 @@
 namespace ShevkunenkoSite.Services.Migrations
 {
     /// <inheritdoc />
-    public partial class _100320262135 : Migration
+    public partial class _150320261723 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Manifest",
+                name: "BrowserConfig",
+                table: "PageInfo");
+
+            migrationBuilder.DropColumn(
+                name: "BrowserConfigFolder",
                 table: "PageInfo");
         }
 
@@ -19,10 +23,18 @@ namespace ShevkunenkoSite.Services.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Manifest",
+                name: "BrowserConfig",
                 table: "PageInfo",
                 type: "nvarchar(max)",
-                nullable: true);
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "BrowserConfigFolder",
+                table: "PageInfo",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
         }
     }
 }

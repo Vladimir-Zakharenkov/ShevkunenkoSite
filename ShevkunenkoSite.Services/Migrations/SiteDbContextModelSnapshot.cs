@@ -1084,14 +1084,6 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Property<Guid>("BackgroundFileModelId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("BrowserConfig")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BrowserConfigFolder")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Changefreq")
                         .IsRequired()
                         .HasMaxLength(7)

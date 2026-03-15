@@ -38,8 +38,6 @@
     <Folder Include="Areas\Videos\Models\" />
     <Folder Include="Pages\Shared\Layouts\" />
     <Folder Include="wwwroot\Archive\Texts\" />
-    <Folder Include="wwwroot\images\browserconfig\admin\" />
-    <Folder Include="wwwroot\images\manifest\admin\" />
     <Folder Include="wwwroot\images\test-100\" />
     <Folder Include="wwwroot\js\ckeditor5\sample\img\" />
   </ItemGroup>
