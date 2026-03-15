@@ -70,20 +70,19 @@
 
 
 
-    @* Browserconfig *@
-    <meta name="msapplication-config" content="@DataConfig.BrowserconfigPath/@Model.PageInfo.BrowserConfig" />
+    @*---------------------------------- Browserconfig --------------------------------------------------------------*@
+    <meta name="msapplication-config" content="/browserconfig" />
     <meta name="application-name" lang="ru" content="@Model.PageInfo.PageTitle" />
     <meta name="msapplication-tooltip" content="@Model.PageInfo.PageTitle" />
-    <meta name="msapplication-TileImage" content="@DataConfig.BrowserconfigIconsFolder@Model.PageInfo.BrowserConfigFolder/@DataConfig.ImageForMsapplication" />
+    <meta name="msapplication-TileImage" content="/images/pageicons/@Model.PageInfo.IconType.PathToIcon.Trim('/')/ms-tile-144.webp" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#fffffff" />
-
+    @*-------------------------------------------------------------------------------------------------------------*@
 
 
     @*----------------------------------- Manifest --------------------------------------------------------------*@
     <link rel="manifest" crossorigin="use-credentials" href="/manifest/manifest?pageid=@Model.PageInfo.PageInfoModelId" />
     @*-------------------------------------------------------------------------------------------------------------*@
-
 
 
     @* Данные OpenGraph*@

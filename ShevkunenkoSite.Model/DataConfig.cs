@@ -10,39 +10,57 @@ public class DataConfig
 
     #endregion
 
-    public static string ImageForMsapplication { get; set; } = null!;
-
-    public static string IconItem { get; set; } = null!;
+    #region Папка с иконками
 
     public static string IconsFolder { get; set; } = null!;
 
-    public static string BrowserconfigIconsFolder { get; set; } = null!;
+    #endregion
 
-    public static string BrowserconfigPath { get; set; } = null!;
+    #region Папка с иконками на диске
 
-    public static string Test { get; set; } = string.Empty;
-
-    // GUID картинки NoImage
-    public static string NoImage { get; set; } = null!;
-
-    // каталог с каталогами иконок для страниц
     public static string IconFoldersPath { get; set; } = null!;
 
-    // каталог с файлами фильмов
+    #endregion
+
+    #region Картинка NoImage
+
+    public static string NoImage { get; set; } = null!;
+
+    #endregion
+
+    #region Папка для фильмов
+
     public static string MovieFoldersPath { get; set; } = null!;
 
-    // каталог с аудиофайлами
+    #endregion
+
+    #region Папка для аудиофайлов
+
     public static string AudioFoldersPath { get; set; } = null!;
 
-    // каталог с файлами текстов
+    #endregion
+
+    #region Папка для текстов
+
     public static string TextsFolderPath { get; set; } = null!;
 
-    // каталог для архива файлов текстов
+    #endregion
+
+    #region Папка-архив для текста
+
     public static string ArchiveTextsFolderPath { get; set; } = null!;
 
-    // количество ссылок на странице для постраничного представления
+    #endregion
+
+    #region Число ссылок на странице для постраничного представления
+
     public static int NumberOfItemsPerPage { get; set; }
 
-    //  количество картинок  слева (справа) вокруг основного содержания
+    #endregion
+
+    #region Число картинок  слева (справа) вокруг основного содержания
+
     public static int NumberOfPicturesAround { get; set; }
+
+    #endregion
 }

@@ -5,7 +5,7 @@ public class PageInfoImplementation(SiteDbContext siteContext) : IPageInfoReposi
     #region Инициализация PagesInfo
 
     public IQueryable<PageInfoModel> PagesInfo => siteContext.PageInfo
-        //.Include(icon => icon.IconType)
+        .Include(iconType => iconType.IconType).ThenInclude(icon => icon.IconList)
         .Include(image => image.ImageFileModel)
         .Include(text => text.TextInfo).ThenInclude(book => book != null ? book.BooksAndArticlesModel : null).ThenInclude(articleLogo => articleLogo!.LogoOfArticle != null ? articleLogo.LogoOfArticle : null)
         .Include(background => background.BackgroundFileModel)

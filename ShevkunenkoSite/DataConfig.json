@@ -6,15 +6,7 @@
 
     "IconFoldersPath": "/wwwroot/images/pageicons/",
 
-    "IconItem": "icon-96.webp",
-
     "NoImage": "29F51581-8F24-4EDC-1F48-08DAE2B985EA",
-
-    "BrowserconfigIconsFolder": "/images/browserconfig",
-
-    "ImageForMsapplication": "ms-icon-144x144.png",
-
-    "BrowserconfigPath": "/browserconfigs",
 
     "MovieFoldersPath": "F:\\site-video",
 
@@ -23,8 +15,6 @@
     "TextsFolderPath": "\\texts\\",
 
     "ArchiveTextsFolderPath": "\\Archive\\Texts\\",
-
-    "Test": "appsetting",
 
     "NumberOfItemsPerPage": 12,
 

@@ -34,6 +34,7 @@ services.AddRazorPages(options =>
     options.Conventions.AuthorizeAreaFolder("Admin", "/DBCRUD");
     options.Conventions.AddPageRoute("/Sitemap", "sitemap.xml");
     options.Conventions.AddPageRoute("/Robots", "robots.txt");
+    options.Conventions.AddPageRoute("/Browserconfig", "browserconfig.xml");
 });
 
 #endregion

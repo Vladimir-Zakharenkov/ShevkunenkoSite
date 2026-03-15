@@ -9,8 +9,6 @@ public class ManifestController(
     {
         PageInfoModel pageInfo = new();
 
-        //PageInfoModel pageInfo = await pageContext.GetPageInfoByPathAsync(HttpContext);
-
         ManifestModel manifest = new();
 
         if (pageContext.PagesInfo.Where(page => page.PageInfoModelId == pageId).Any())
