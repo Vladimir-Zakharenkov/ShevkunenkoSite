@@ -1524,7 +1524,7 @@ public class PageInfoController(
 
             #region Открытие страницы DetailsPage
 
-            PageInfoModel infoPage = await pageInfoContext.PagesInfo.FirstAsync(p => p.PageFullPathWithData == checkPageFullPathWithData);
+            PageInfoModel infoPage = await pageInfoContext.PagesInfo.FirstAsync(p => p.PageTitle == newPage.PageTitle);
 
             return RedirectToAction("DetailsPage", new { pageId = infoPage.PageInfoModelId, Area = "Admin" });
 

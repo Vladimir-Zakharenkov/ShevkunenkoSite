@@ -1,0 +1,228 @@
+﻿@model ItemsListViewModel
+
+@{
+    string btn = "btn py-0 px-1 mb-2 ms-1 shadw width50px";
+}
+
+@* Значение строки поиска *@
+<div>
+
+    @if (!String.IsNullOrEmpty(Model.SearchString))
+    {
+        <div class="row mb-0">
+
+            <p class="col-12 fs-5 text-primary">
+                Поиск по строке: <span class="text-black text_shadow">@Model.SearchString</span>
+            </p>
+
+        </div>
+    }
+
+</div>
+
+@* Количество фильмов *@
+<div>
+
+    @if (Model.TotalItems == 0)
+    {
+        <div class="row">
+
+            <div class="col text-center p-2">
+
+                <p class="fs-5 text_shadow mb-0">
+                    В базе данных нет фильмов
+                </p>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="row">
+
+            <div class="col-12 text-center mb-0">
+
+                <p class="fs-5 text-primary mb-0">
+                    Количество фильмов:&nbsp;
+                    <span class="text-black text_shadow">
+                        @Model.TotalItems
+                    </span>
+                </p>
+
+            </div>
+
+        </div>
+    }
+
+    <hr class="liniya" />
+
+</div>
+
+@* Добавить фильм - Иконки - Поиск фильмов *@
+<div class="row">
+
+    @* Добавить фильм - Иконки фильмов *@
+    <div class="col-12 col-md-6 col-lg-4">
+
+        @* Добавить фильм *@
+        <a asp-area="Admin"
+           asp-controller="Films"
+           asp-action="AddFilm"
+           class="btn btn-outline-danger shadw py-1 mt-2 me-3 minwidth100px"
+           title="добавить фильм">
+
+            Добавить
+
+        </a>
+
+        @* Список фильмов *@
+        <a asp-area="Admin"
+           asp-controller="Films"
+           asp-action="Index"
+           asp-route-searchString="@Model.SearchString"
+           asp-route-pageCard="false"
+           class="btn btn-outline-primary shadw py-1 mt-2 minwidth100px"
+           title="список фильмов">
+
+            Список
+
+        </a>
+
+    </div>
+
+    <hr class="col-12 w-75 mt-3 d-md-none mx-auto" />
+
+    @* Поиск фильмов *@
+    <div class="col-12 col-md-6 col-lg-8 mb-2">
+
+        <form method="get"
+              asp-area="Admin"
+              asp-controller="Films"
+              asp-action="Index"
+              asp-route-pageCard="true"
+              class="text-center text-md-end mt-md-2">
+
+            <input asp-for="SearchString"
+                   class="d-inline-block align-middle mt-1 w-50"
+                   type="text" />
+
+            <input asp-for="PageCard" type="hidden" value="true" />
+
+            <input class="btn btn-outline-success shadw py-1 me-md-3"
+                   type="submit"
+                   value="Поиск"
+                   title="поиск фильмов" />
+
+        </form>
+
+    </div>
+
+    <hr class="liniya" />
+
+</div>
+
+@* Иконки страниц *@
+<div class="row row-cols-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-7 row-cols-xxl-8 g-2 justify-content-center">
+
+    @foreach (var film in Model.AllFilmFiles ?? Enumerable.Empty<FilmFileModel>())
+    {
+        <div class="col">
+
+            <div class="card h-100 me-1 mb-1 p-1 shadw borderforitem" title="@film.FilmCaption">
+
+                <vc:view-image image-id="@film.FilmPosterId"
+                               css-class="card-img-top shadw rounded-3"
+                               icon-type="webicon300" />
+
+                <div class="card-body p-0 mt-2 shadw cardBodyBg">
+
+                    @if (!string.IsNullOrEmpty(film.FilmCaption))
+                    {
+                        <p class="card-title lh-1 fontadaptive my-1 mt-2">@film.FilmCaption</p>
+                    }
+                    else
+                    {
+                        <p class="card-title lh-1 text-danger fontadaptive my-1 mt-2">текст не задан</p>
+                    }
+
+                </div>
+
+                <div class="card-footer text-muted p-1">
+
+                    <hr class="liniya" />
+
+                    <a asp-area="Admin"
+                           asp-controller="Films"
+                           asp-action="DetailsFilm"
+                           asp-route-filmId="@film.FilmFileModelId"
+                           class="@btn btn-outline-info"
+                           title="подробно">
+
+                        Info
+
+                    </a>
+
+                    <a asp-area="Admin"
+                           asp-controller="Films"
+                           asp-action="EditFilm"
+                           asp-route-pageId="@film.FilmFileModelId"
+                           class="@btn btn-outline-dark"
+                           title="редактировать">
+
+                        Edit
+
+                    </a>
+
+                    <a asp-area="Admin"
+                           asp-controller="Films"
+                           asp-action="DeleteFilm"
+                           asp-route-pageId="@film.FilmFileModelId"
+                           class="@btn btn-outline-danger"
+                           title="удалить">
+
+                        Del
+
+                    </a>
+
+                    <a asp-area=""
+                           asp-controller="Films"
+                           asp-action="Film"
+                           asp-route-filmCaption="@film.FilmCaption"
+                           asp-route-videoHosting="@film.FilmContentUrl"
+                           class="@btn btn-outline-primary"
+                           title="смотреть">
+
+                        Go
+
+                    </a>
+
+                    @if (film.PageInfo != null)
+                    {
+                        <a asp-area=""
+                               asp-controller="Films"
+                               asp-action="Film"
+                               asp-route-filmCaption="@film.FilmCaption"
+                               asp-route-videoHosting="@film.FilmContentUrl"
+                               class="@btn btn-outline-primary"
+                               title="смотреть">
+
+                            Go
+
+                        </a>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+
+@* Разбивка на страницы *@
+@if (Model.TotalItems > DataConfig.NumberOfItemsPerPage)
+{
+    <div pagination="@Model"></div>
+}

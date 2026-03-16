@@ -32,7 +32,7 @@ public class PagingInfoViewModel
 
     #endregion
 
-    #region Карточка объекта
+    #region Иконка объекта
 
     public bool PageCard { get; set; }
 

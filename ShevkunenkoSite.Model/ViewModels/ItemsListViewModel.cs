@@ -38,15 +38,15 @@ public class ItemsListViewModel : PagingInfoViewModel
 
     #endregion
 
-    #region Страницы сайта
-
-    public PageInfoModel[]? AllSitePages { get; set; }
-
-    #endregion
-
     #region Фильмы
 
     public FilmFileModel[]? AllFilmFiles { get; set; }
+
+    #endregion
+
+    #region Страницы сайта
+
+    public PageInfoModel[]? AllSitePages { get; set; }
 
     #endregion
 }
