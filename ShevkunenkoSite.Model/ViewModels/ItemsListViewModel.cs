@@ -37,7 +37,7 @@ public class ItemsListViewModel : PagingInfoViewModel
     public IconModel[]? AllIconFiles { get; set; }
 
     #endregion
-
+    
     #region Фильмы
 
     public FilmFileModel[]? AllFilmFiles { get; set; }

@@ -257,6 +257,25 @@ app.MapControllerRoute(
 
 #endregion
 
+#region Страница фильма
+
+app.MapControllerRoute(
+    name: "search_of_films",
+    pattern: "Фильмы на сайте/Страница - {pageNumber}",
+    defaults: new { Controller = "Films", Action = "Index" });
+
+app.MapControllerRoute(
+    name: "list_of_films",
+    pattern: "Фильмы на сайте",
+    defaults: new { Controller = "Films", Action = "Index" });
+
+app.MapControllerRoute(
+    name: "film",
+    pattern: "Фильм - «{filmCaption}»",
+    defaults: new { Controller = "Films", Action = "Film" });
+
+#endregion
+
 #region Альбом фотографий из книги
 
 app.MapControllerRoute(

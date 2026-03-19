@@ -37,6 +37,7 @@
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Videos\Models\" />
     <Folder Include="Pages\Shared\Layouts\" />
+    <Folder Include="Temp\" />
     <Folder Include="wwwroot\Archive\Texts\" />
     <Folder Include="wwwroot\images\test-100\" />
     <Folder Include="wwwroot\js\ckeditor5\sample\img\" />

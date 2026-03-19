@@ -1,1 +1,134 @@
-﻿<h1>Индекс</h1>
+﻿@model ItemsListViewModel
+
+@{
+}
+
+@* Значение строки поиска *@
+<div>
+
+    @if (!String.IsNullOrEmpty(Model.SearchString))
+    {
+        <div class="row mb-0">
+
+            <p class="col-12 fs-5 text-primary">
+                Поиск по строке: <span class="text-black text_shadow">@Model.SearchString</span>
+            </p>
+
+        </div>
+    }
+
+</div>
+
+@* Количество фильмов *@
+<div>
+
+    @if (Model.TotalItems == 0)
+    {
+        <div class="row">
+
+            <div class="col text-center p-2">
+
+                <p class="fs-5 text_shadow mb-0">
+                    В базе данных нет фильмов
+                </p>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="row">
+
+            <div class="col-12 text-center mb-0">
+
+                <p class="fs-5 text-primary mb-0">
+                    Количество фильмов:&nbsp;
+                    <span class="text-black text_shadow">
+                        @Model.TotalItems
+                    </span>
+                </p>
+
+            </div>
+
+        </div>
+    }
+
+    <hr class="liniya" />
+
+</div>
+
+@* Добавить фильм - Иконки - Поиск фильмов *@
+<div class="row">
+
+    @* Поиск фильмов *@
+    <div class="col-12 col-md-6 col-lg-8 mb-2">
+
+        <form method="get"
+            asp-area=""
+            asp-controller="Films"
+            asp-action="Index"
+            asp-route-pageNumber="1"
+            class="text-center text-md-end mt-md-2">
+
+            <input asp-for="SearchString"
+                   class="d-inline-block align-middle mt-1 w-50"
+                   type="text" />
+
+            <input class="btn btn-outline-success shadw py-1"
+                   type="submit"
+                   value="Поиск"
+                   title="поиск фильмов" />
+
+        </form>
+
+    </div>
+
+    <hr class="liniya" />
+
+</div>
+
+@* Иконки фильмов *@
+<div class="row row-cols-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-7 row-cols-xxl-8 g-2 justify-content-center">
+
+    @foreach (var film in Model.AllFilmFiles ?? Enumerable.Empty<FilmFileModel>())
+    {
+        <a asp-area=""
+               asp-controller="Films"
+               asp-action="Film"
+               asp-route-filmCaption="@film.FilmCaption"
+               asp-route-videoHosting="@film.FilmContentUrl"
+               class="d-flex col"
+               title="смотреть">
+
+            <div class="card h-100 me-1 mb-1 p-1 shadw borderforitem" title="@film.FilmCaption">
+
+                <vc:view-image image-id="@film.FilmPosterId"
+                               css-class="card-img-top shadw rounded-3"
+                               icon-type="webicon300" />
+
+                <div class="card-body p-0 mt-2 shadw cardBodyBg">
+
+                    @if (!string.IsNullOrEmpty(film.FilmCaption))
+                    {
+                        <p class="card-title lh-1 fontadaptive my-1 mt-2">@film.FilmCaption</p>
+                    }
+                    else
+                    {
+                        <p class="card-title lh-1 text-danger fontadaptive my-1 mt-2">текст не задан</p>
+                    }
+
+                </div>
+
+            </div>
+
+        </a>
+    }
+
+</div>
+
+@* Разбивка на страницы *@
+@if (Model.TotalItems > DataConfig.NumberOfItemsPerPage)
+{
+    <div pagination="@Model"></div>
+}

@@ -564,46 +564,6 @@ public class PageInfoController(
 
             #endregion
 
-            #region Title-Description-KeyWords
-
-            if (addPage.TextFileFormFile != null)
-            {
-                if (addPage.TextFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    newPage.PageTitle = "Николай Модестов «Следствие продолжается» страница " + (addPage.SortOfPage - 1).ToString();
-
-                    newPage.PageDescription = addPage.PageTitle + ".";
-
-                    newPage.PageKeyWords = "Следствие продолжается, Николай Модестов, криминал, 90-е годы,";
-                }
-            }
-            else
-            {
-                newPage.PageTitle = addPage.PageTitle.Trim();
-                newPage.PageDescription = addPage.PageDescription.Trim();
-                newPage.PageKeyWords = addPage.PageKeyWords.Trim();
-            }
-
-            #endregion
-
-            #region OgType
-
-            if (addPage.FilmId != null)
-            {
-                newPage.OgType = "movie";
-            }
-            else
-            {
-                newPage.OgType = addPage.OgType.Trim();
-            }
-
-            if (addPage.PageTitle.Contains("Следствие продолжается", StringComparison.InvariantCultureIgnoreCase))
-            {
-                newPage.OgType = "book";
-            }
-
-            #endregion
-
             #region Добавить видео для страницы
 
             if (addPage.FilmFileFormFile != null)
@@ -650,6 +610,46 @@ public class PageInfoController(
             else
             {
                 newPage.FilmId = null;
+            }
+
+            #endregion
+
+            #region Title-Description-KeyWords
+
+            if (addPage.TextFileFormFile != null)
+            {
+                if (addPage.TextFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    newPage.PageTitle = "Николай Модестов «Следствие продолжается» страница " + (addPage.SortOfPage - 1).ToString();
+
+                    newPage.PageDescription = addPage.PageTitle + ".";
+
+                    newPage.PageKeyWords = "Следствие продолжается, Николай Модестов, криминал, 90-е годы,";
+                }
+            }
+            else
+            {
+                newPage.PageTitle = addPage.PageTitle.Trim();
+                newPage.PageDescription = addPage.PageDescription.Trim();
+                newPage.PageKeyWords = addPage.PageKeyWords.Trim();
+            }
+
+            #endregion
+
+            #region OgType
+
+            if (addPage.FilmId != null)
+            {
+                newPage.OgType = "movie";
+            }
+            else
+            {
+                newPage.OgType = addPage.OgType.Trim();
+            }
+
+            if (addPage.PageTitle.Contains("Следствие продолжается", StringComparison.InvariantCultureIgnoreCase))
+            {
+                newPage.OgType = "book";
             }
 
             #endregion
@@ -916,7 +916,7 @@ public class PageInfoController(
                     {
                         var newBackground = await backgroundContext.BackgroundFiles.FirstAsync(bk => bk.LeftBackground == addPage.BackgroundFormFile.FileName);
 
-                       newPage.BackgroundFileModelId = newBackground.BackgroundFileModelId;
+                        newPage.BackgroundFileModelId = newBackground.BackgroundFileModelId;
                     }
                     else if (await backgroundContext.BackgroundFiles.Where(bk => bk.RightBackground == addPage.BackgroundFormFile.FileName).AnyAsync())
                     {
@@ -2045,13 +2045,13 @@ public class PageInfoController(
             pageUpdate.PageAsRazorPage = editPage.PageAsRazorPage;
 
             #endregion
-            
+
             #region Текст карточки страницы
 
             pageUpdate.PageCardText = editPage.PageCardText.Trim().ToUpper();
 
             #endregion
-            
+
             #region Изменить адрес страницы
 
             #region Area
@@ -2186,7 +2186,7 @@ public class PageInfoController(
             #endregion
 
             #endregion
-            
+
             #region Изменить индекс сортировки
 
             pageUpdate.SortOfPage = editPage.SortOfPage;
@@ -2198,7 +2198,7 @@ public class PageInfoController(
             pageUpdate.PageFilter = editPage.PageFilter.Trim();
 
             #endregion
-            
+
             #region Изменить данные для Sitemap
 
             pageUpdate.PageLastmod = DateTime.Now;
@@ -2206,9 +2206,9 @@ public class PageInfoController(
             pageUpdate.Priority = editPage.Priority.Trim();
 
             #endregion
-            
+
             #region Изменить группы связанных ссылок
-            
+
             #region Поиск связанных страниц по фильтрам
 
             pageUpdate.PageLinksByFilters = editPage.PageLinksByFilters;
@@ -2223,7 +2223,7 @@ public class PageInfoController(
             }
 
             #endregion
-            
+
             #region Поиск связанных страниц по GUID (1)
 
             pageUpdate.PageLinks = editPage.PageLinks;
@@ -2238,7 +2238,7 @@ public class PageInfoController(
             }
 
             #endregion
-            
+
             #region Поиск связанных страниц по GUID (2)
 
             pageUpdate.PageLinks2 = editPage.PageLinks2;
@@ -2253,7 +2253,7 @@ public class PageInfoController(
             }
 
             #endregion
-            
+
             #region Поиск связанных видео
 
             pageUpdate.VideoLinks = editPage.VideoLinks;
@@ -2268,7 +2268,7 @@ public class PageInfoController(
             }
 
             #endregion
-            
+
             #region Альбом картинок
 
             pageUpdate.PhotoLinks = editPage.PhotoLinks;
@@ -2606,46 +2606,43 @@ public class PageInfoController(
             {
                 pageUpdate.ImagePageHeadingId = editPage.ImagePageHeadingId;
             }
-            else
+            else if (editPage.ImagePageHeadingFormFile != null)
             {
-                if (editPage.ImagePageHeadingFormFile != null)
+                if (await imageContext.GetImageGuidByFileNameAsync(editPage.ImagePageHeadingFormFile.FileName) != Guid.Empty)
                 {
-                    if (await imageContext.GetImageGuidByFileNameAsync(editPage.ImagePageHeadingFormFile.FileName) != Guid.Empty)
-                    {
-                        var imageGuid = await imageContext.GetImageGuidByFileNameAsync(editPage.ImagePageHeadingFormFile.FileName);
+                    var imageGuid = await imageContext.GetImageGuidByFileNameAsync(editPage.ImagePageHeadingFormFile.FileName);
 
-                        pageUpdate.ImagePageHeadingId = imageGuid;
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("ImagePageHeadingFormFile", $"Добавьте картинку «{editPage.ImagePageHeadingFormFile.FileName}» в базу данных");
-
-                        #region ViewData
-
-                        // Список картинок сайта
-                        ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
-
-                        // Список картинок для фона (фотопленка)
-                        ViewData["BackgroundImages"] = new SelectList(backgroundContext.BackgroundFiles.OrderBy(orderBackgroundImage => orderBackgroundImage.WebLeftBackground), "BackgroundFileModelId", "WebLeftBackground");
-
-                        // Список текстовых файлов
-                        ViewData["Texts"] = new SelectList(textFileContext.Texts.OrderBy(orderText => orderText.TxtFileName), "TextInfoModelId", "TxtFileName");
-
-                        // Список аудиофайлов
-                        ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
-
-                        // Список типов иконок
-                        ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
-
-                        #endregion
-
-                        return View(pageUpdate);
-                    }
+                    pageUpdate.ImagePageHeadingId = imageGuid;
                 }
                 else
                 {
-                    pageUpdate.ImagePageHeadingId = editPage.ImagePageHeadingId;
+                    ModelState.AddModelError("ImagePageHeadingFormFile", $"Добавьте картинку «{editPage.ImagePageHeadingFormFile.FileName}» в базу данных");
+
+                    #region ViewData
+
+                    // Список картинок сайта
+                    ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
+                    // Список картинок для фона (фотопленка)
+                    ViewData["BackgroundImages"] = new SelectList(backgroundContext.BackgroundFiles.OrderBy(orderBackgroundImage => orderBackgroundImage.WebLeftBackground), "BackgroundFileModelId", "WebLeftBackground");
+
+                    // Список текстовых файлов
+                    ViewData["Texts"] = new SelectList(textFileContext.Texts.OrderBy(orderText => orderText.TxtFileName), "TextInfoModelId", "TxtFileName");
+
+                    // Список аудиофайлов
+                    ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                    // Список типов иконок
+                    ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
+
+                    #endregion
+
+                    return View(pageUpdate);
                 }
+            }
+            else
+            {
+                pageUpdate.ImagePageHeadingId = null;
             }
 
             #endregion

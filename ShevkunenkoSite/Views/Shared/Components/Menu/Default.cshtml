@@ -640,6 +640,26 @@
 
                             <ul class="dropdown-menu dropdown-submenu bg-transparent border-0 mt-1" itemscope itemtype="http://schema.org/BreadcrumbList">
 
+                                @* Фильмы на сайте *@
+                                <li class="bg-light p-0 mb-1 rounded-1 maxwidthcontent"
+                                    title="экранизации Анатолия Рыбакова"
+                                    itemprop="itemListElement"
+                                    itemscope itemtype="http://schema.org/ListItem">
+
+                                    <a class="@refDropdownClass"
+                                           asp-area=""
+                                           asp-controller="Films"
+                                           asp-action="Index"
+                                           itemprop="item">
+
+                                        <span itemprop="name">Фильмы на сайте</span>
+
+                                    </a>
+
+                                    <meta itemprop="position" content="0">
+
+                                </li>
+
                                 @* Экранизации Анатолия Рыбакова *@
                                 <li class="bg-light p-0 mb-1 rounded-1 maxwidthcontent"
                                     title="экранизации Анатолия Рыбакова"
@@ -657,7 +677,7 @@
 
                                     </a>
 
-                                    <meta itemprop="position" content="0">
+                                    <meta itemprop="position" content="1">
 
                                 </li>
 
@@ -677,7 +697,7 @@
 
                                     </a>
 
-                                    <meta itemprop="position" content="1">
+                                    <meta itemprop="position" content="2">
 
                                 </li>
 
@@ -696,7 +716,7 @@
 
                                     </a>
 
-                                    <meta itemprop="position" content="2">
+                                    <meta itemprop="position" content="3">
 
                                 </li>
 
@@ -717,13 +737,13 @@
 
                                     </a>
 
-                                    <meta itemprop="position" content="3">
+                                    <meta itemprop="position" content="4">
 
                                 </li>
 
-                                @* Мой серебряный шар*@
+                                @* Композитор - Эннио Морриконе *@
                                 <li class="bg-light p-0 mb-1 rounded-1 maxwidthcontent"
-                                    title="музыка Эннио Морриконе"
+                                    title="композитор Эннио Морриконе"
                                     itemprop="itemListElement"
                                     itemscope itemtype="http://schema.org/ListItem">
 
@@ -731,17 +751,16 @@
                                            asp-area=""
                                            asp-controller="Films"
                                            asp-action="Index"
-                                           asp-route-filmFilter="композитор-Эннио-Морриконе"
+                                           asp-route-searchString="Композитор - Эннио Морриконе"
                                            itemprop="item">
 
-                                        <span itemprop="name">композитор Эннио Морриконе</span>
+                                        <span itemprop="name">Композитор - Эннио Морриконе</span>
 
                                     </a>
 
-                                    <meta itemprop="position" content="4">
+                                    <meta itemprop="position" content="5">
 
                                 </li>
-
 
                             </ul>
 
