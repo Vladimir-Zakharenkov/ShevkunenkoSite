@@ -1,5 +1,7 @@
 ﻿// Ignore Spelling: Org Рroduction Imbd Poisk Online Teatr Vk Yandex
 
+using ShevkunenkoSite.Models.ViewModels;
+
 namespace ShevkunenkoSite.Models.DataModels;
 
 public class FilmFileModel
@@ -301,13 +303,13 @@ public class FilmFileModel
 
     // картинка для карточки фильма
     [Display(Name = "Картинка к фильму (Guid):")]
-    public Guid? FilmImageId { get; set; }
-    public ImageFileModel? FilmImage { get; set; }
+    public Guid FilmImageId { get; set; }
+    public ImageFileModel FilmImage { get; set; } = null!;
 
     // постер для фильм
     [Display(Name = "Постер к фильму (Guid):")]
-    public Guid? FilmPosterId { get; set; }
-    public ImageFileModel? FilmPoster { get; set; }
+    public Guid FilmPosterId { get; set; }
+    public ImageFileModel FilmPoster { get; set; } = null!;
 
     #endregion
 
@@ -334,7 +336,7 @@ public class FilmFileModel
 
     #endregion
 
-    #region Постер и картинка фильма
+    #region Выбор постера и картинки фильма
 
     [NotMapped]
     [Required(ErrorMessage = "Выберите постер для фильма")]
@@ -347,6 +349,23 @@ public class FilmFileModel
     [DataType(DataType.Upload)]
     [Display(Name = "Картинка фильма:")]
     public IFormFile? ImageForFilmFormFile { get; set; }
+
+    #endregion
+
+    #region Кадры слева и справа от видео
+
+    [NotMapped]
+    public IEnumerable<ImageFileModel> FramesOnTheLeft { get; set; } = [];
+
+    [NotMapped]
+    public IEnumerable<ImageFileModel> FramesOnTheRight { get; set; } = [];
+
+    #endregion
+
+    #region Текущий видеохостинг
+
+    [NotMapped]
+    public Uri? CurrentVideoHost { get; set; }
 
     #endregion
 

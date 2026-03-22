@@ -3,8 +3,8 @@
 public class FramesAroundMainContentModel
 {
     [Display(Name = "Кадры слева :")]
-    public ImageFileModel[]? FramesOnTheLeft { get; set; }
+    public IEnumerable<ImageFileModel> FramesOnTheLeft { get; set; } = [];
 
     [Display(Name = "Кадры справа :")]
-    public ImageFileModel[]? FramesOnTheRight { get; set; }
+    public IEnumerable<ImageFileModel> FramesOnTheRight { get; set; } = [];
 }

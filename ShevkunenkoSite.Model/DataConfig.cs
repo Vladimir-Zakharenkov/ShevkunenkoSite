@@ -52,6 +52,60 @@ public class DataConfig
 
     #endregion
 
+    #region Картинка YouTube
+
+    public static Guid YoutubeImage {  get; set; }
+
+    #endregion
+
+    #region Картинка VkVideo
+
+    public static Guid VkVideoImage { get; set; }
+
+    #endregion
+
+    #region Картинка MailRuVideo
+
+    public static Guid MailRuVideoImage { get; set; }
+
+    #endregion
+
+    #region Картинка OkVideo
+
+    public static Guid OkVideoImage { get; set; }
+
+    #endregion
+
+    #region Картинка AsusVideo
+
+    public static Guid AsusVideoImage { get; set; }
+
+    #endregion
+
+    #region Картинка YandexDisk
+
+    public static Guid YandexDiskImage { get; set; }
+
+    #endregion
+
+    #region Картинка Kino-Teatr.ru
+
+    public static Guid KinoTeatrImage { get; set; }
+
+    #endregion
+
+    #region Картинка Kinopoisk.ru
+
+    public static Guid KinopoiskImage { get; set; }
+
+    #endregion
+
+    #region Картинка IMDB.com
+
+    public static Guid ImdbImage { get; set; }
+
+    #endregion
+
     #region Число ссылок на странице для постраничного представления
 
     public static int NumberOfItemsPerPage { get; set; }

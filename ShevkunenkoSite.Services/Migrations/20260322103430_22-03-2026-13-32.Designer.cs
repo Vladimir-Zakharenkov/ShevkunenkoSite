@@ -12,8 +12,8 @@ using ShevkunenkoSite.Services;
 namespace ShevkunenkoSite.Services.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    [Migration("20260315184801_15-03-2026-21-43")]
-    partial class _150320262143
+    [Migration("20260322103430_22-03-2026-13-32")]
+    partial class _220320261332
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -378,7 +378,7 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Property<int>("FilmHeight")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("FilmImageId")
+                    b.Property<Guid>("FilmImageId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FilmImbd")
@@ -423,7 +423,7 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Property<int?>("FilmPart")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("FilmPosterId")
+                    b.Property<Guid>("FilmPosterId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FilmSubtitles1")
@@ -1384,11 +1384,15 @@ namespace ShevkunenkoSite.Services.Migrations
                 {
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "FilmImage")
                         .WithMany()
-                        .HasForeignKey("FilmImageId");
+                        .HasForeignKey("FilmImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "FilmPoster")
                         .WithMany()
-                        .HasForeignKey("FilmPosterId");
+                        .HasForeignKey("FilmPosterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.FilmFileModel", "FullFilm")
                         .WithMany()

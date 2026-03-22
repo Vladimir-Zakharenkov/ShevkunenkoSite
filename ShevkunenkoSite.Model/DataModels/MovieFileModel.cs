@@ -372,7 +372,7 @@ public class MovieFileModel
 
     #region Карусель кадров
 
-    [Display(Name = "Карусель кадров:")] // карусель кадров фильма
+    [Display(Name = "Карусель кадров:")] 
     public bool Carousel { get; set; } = false;
 
     [Required(AllowEmptyStrings = true)]

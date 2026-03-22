@@ -72,11 +72,11 @@
 
             @* Изменить *@
             <a asp-area="Admin"
-               asp-controller="Films"
-               asp-action="EditFilm"
-               asp-route-movieId="@Model.FilmFileModelId"
-               class="btn btn-outline-success py-1 px-0 m-2 shadw width80px"
-               title="изменить данные">
+                   asp-controller="Films"
+                   asp-action="EditFilm"
+                   asp-route-movieId="@Model.FilmFileModelId"
+                   class="btn btn-outline-success py-1 px-0 m-2 shadw width80px"
+                   title="изменить данные">
 
                 Изменить
 
@@ -84,11 +84,11 @@
 
             @* Удалить *@
             <a asp-area="Admin"
-               asp-controller="Films"
-               asp-action="DeleteFilm"
-               asp-route-movieId="@Model.FilmFileModelId"
-               class="btn btn-outline-danger py-1 px-0 m-2 shadw width80px"
-               title="удалить фильм">
+                   asp-controller="Films"
+                   asp-action="DeleteFilm"
+                   asp-route-movieId="@Model.FilmFileModelId"
+                   class="btn btn-outline-danger py-1 px-0 m-2 shadw width80px"
+                   title="удалить фильм">
 
                 Удалить
 
@@ -96,10 +96,10 @@
 
             @* Список фильмов сайта *@
             <a asp-area="Admin"
-               asp-controller="Films"
-               asp-action="Index"
-               class="btn btn-outline-primary py-1 px-0 m-2 shadw width80px"
-               title="список фильмов">
+                   asp-controller="Films"
+                   asp-action="Index"
+                   class="btn btn-outline-primary py-1 px-0 m-2 shadw width80px"
+                   title="список фильмов">
 
                 Список
 
@@ -148,10 +148,10 @@
                                 <br />
 
                                 <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
-                                   href="@Model.FilmContentUrl"
-                                   onclick="this.target='_blank'"
-                                   title="sergeyshef.ru"
-                                   itemprop="relatedLink">
+                                       href="@Model.FilmContentUrl"
+                                       onclick="this.target='_blank'"
+                                       title="sergeyshef.ru"
+                                       itemprop="relatedLink">
 
                                     Смотреть
 
@@ -208,29 +208,24 @@
 
                     <div class="accordion-body accordion-body-nointend  text-center">
 
-                        @if (Model.FilmImageId != null)
+                        <vc:view-image image-id="@Model.FilmImageId"
+                                       css-class="card-img-top m-2 shadw w-75"
+                                       icon-type="webimage" />
+
+                        @if (!string.IsNullOrEmpty(Model.FilmImage.WebImageFileName))
                         {
-                            <vc:view-image image-id="@Model.FilmImageId"
-                                           css-class="card-img-top m-2 shadw w-75"
-                                           icon-type="webimage" />
+                            <p class="fs-5 mb-0 text_shadow">
+                                @Model.FilmImage.ImagePath/@Model.FilmImage.WebImageFileName
+                            </p>
+                        }
+                        else
+                        {
+                            <p class="fs-5 mb-0 text_shadow">
+                                @Model.FilmImage.ImagePath/@Model.FilmImage.ImageFileName
+                            </p>
+                        }
 
-                            @if (Model.FilmImage != null)
-                            {
-                                @if (!string.IsNullOrEmpty(Model.FilmImage.WebImageFileName))
-                                {
-                                    <p class="fs-5 mb-0 text_shadow">
-                                        @Model.FilmImage.ImagePath/@Model.FilmImage.WebImageFileName
-                                    </p>
-                                }
-                                else
-                                {
-                                    <p class="fs-5 mb-0 text_shadow">
-                                        @Model.FilmImage.ImagePath/@Model.FilmImage.ImageFileName
-                                    </p>
-                                }
-                            }
-
-                            <a class="btn btn-outline-primary py-1 my-3 shadw"
+                        <a class="btn btn-outline-primary py-1 my-3 shadw"
                                asp-area="Admin"
                                asp-controller="ImageInfo"
                                asp-action="DetailsImage"
@@ -238,22 +233,15 @@
                                onclick="this.target='_blank'"
                                title="данные картинки">
 
-                                Картинка
+                            Картинка
 
-                            </a>
+                        </a>
 
-                            <p>
-                                <span class="fs-6 form-text text-success px-2">
-                                    картинка для видео
-                                </span>
-                            </p>
-                        }
-                        else
-                        {
-                            <p class="fs-5 text_shadow">
-                                Картинка для видео отсутствует
-                            </p>
-                        }
+                        <p>
+                            <span class="fs-6 form-text text-success px-2">
+                                картинка для видео
+                            </span>
+                        </p>
 
                     </div>
 
@@ -307,12 +295,12 @@
                             }
 
                             <a class="btn btn-outline-primary py-1 my-3 shadw"
-                               asp-area="Admin"
-                               asp-controller="ImageInfo"
-                               asp-action="DetailsImage"
-                               asp-route-imageId="@Model.FilmPosterId"
-                               onclick="this.target='_blank'"
-                               title="данные постера">
+                                   asp-area="Admin"
+                                   asp-controller="ImageInfo"
+                                   asp-action="DetailsImage"
+                                   asp-route-imageId="@Model.FilmPosterId"
+                                   onclick="this.target='_blank'"
+                                   title="данные постера">
 
                                 Постер
 
@@ -1314,10 +1302,10 @@
                                 <br />
 
                                 <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
-                                   href="@Model.FilmContentUrl"
-                                   onclick="this.target='_blank'"
-                                   title="sergeyshef.ru"
-                                   itemprop="relatedLink">
+                                       href="@Model.FilmContentUrl"
+                                       onclick="this.target='_blank'"
+                                       title="sergeyshef.ru"
+                                       itemprop="relatedLink">
 
                                     Смотреть
 
@@ -1358,10 +1346,10 @@
                                 <br />
 
                                 <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
-                                   href="@Model.FilmYouTube"
-                                   onclick="this.target='_blank'"
-                                   title="youtube.com"
-                                   itemprop="relatedLink">
+                                       href="@Model.FilmYouTube"
+                                       onclick="this.target='_blank'"
+                                       title="youtube.com"
+                                       itemprop="relatedLink">
 
                                     Смотреть
 
@@ -1402,10 +1390,10 @@
                                 <br />
 
                                 <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
-                                   href="@Model.FilmVkVideo"
-                                   onclick="this.target='_blank'"
-                                   title="vk.ru"
-                                   itemprop="relatedLink">
+                                       href="@Model.FilmVkVideo"
+                                       onclick="this.target='_blank'"
+                                       title="vk.ru"
+                                       itemprop="relatedLink">
 
                                     Смотреть
 
@@ -1446,10 +1434,10 @@
                                 <br />
 
                                 <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
-                                   href="@Model.FilmMailRuVideo"
-                                   onclick="this.target='_blank'"
-                                   title="mail.ru"
-                                   itemprop="relatedLink">
+                                       href="@Model.FilmMailRuVideo"
+                                       onclick="this.target='_blank'"
+                                       title="mail.ru"
+                                       itemprop="relatedLink">
 
                                     Смотреть
 
@@ -1490,10 +1478,10 @@
                                 <br />
 
                                 <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
-                                   href="@Model.FilmOkVideo"
-                                   onclick="this.target='_blank'"
-                                   title="ok.ru"
-                                   itemprop="relatedLink">
+                                       href="@Model.FilmOkVideo"
+                                       onclick="this.target='_blank'"
+                                       title="ok.ru"
+                                       itemprop="relatedLink">
 
                                     Смотреть
 
@@ -1534,10 +1522,10 @@
                                 <br />
 
                                 <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
-                                   href="@Model.FilmYandexDiskVideo"
-                                   onclick="this.target='_blank'"
-                                   title="disk.yandex.ru"
-                                   itemprop="relatedLink">
+                                       href="@Model.FilmYandexDiskVideo"
+                                       onclick="this.target='_blank'"
+                                       title="disk.yandex.ru"
+                                       itemprop="relatedLink">
 
                                     Смотреть
 
@@ -1608,10 +1596,10 @@
                                 <br />
 
                                 <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
-                                   href="@Model.FilmKinoTeatrRu"
-                                   onclick="this.target='_blank'"
-                                   title="kino-teatr.ru"
-                                   itemprop="relatedLink">
+                                       href="@Model.FilmKinoTeatrRu"
+                                       onclick="this.target='_blank'"
+                                       title="kino-teatr.ru"
+                                       itemprop="relatedLink">
 
                                     Смотреть
 
@@ -1652,10 +1640,10 @@
                                 <br />
 
                                 <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
-                                   href="@Model.FilmKinoPoisk"
-                                   onclick="this.target='_blank'"
-                                   title="kinopoisk.ru"
-                                   itemprop="relatedLink">
+                                       href="@Model.FilmKinoPoisk"
+                                       onclick="this.target='_blank'"
+                                       title="kinopoisk.ru"
+                                       itemprop="relatedLink">
 
                                     Смотреть
 
@@ -1696,10 +1684,10 @@
                                 <br />
 
                                 <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
-                                   href="@Model.FilmImbd"
-                                   onclick="this.target='_blank'"
-                                   title="imbd.com"
-                                   itemprop="relatedLink">
+                                       href="@Model.FilmImbd"
+                                       onclick="this.target='_blank'"
+                                       title="imbd.com"
+                                       itemprop="relatedLink">
 
                                     Смотреть
 
@@ -1733,11 +1721,11 @@
 
             @* Изменить *@
             <a asp-area="Admin"
-               asp-controller="Films"
-               asp-action="EditFilm"
-               asp-route-movieId="@Model.FilmFileModelId"
-               class="btn btn-outline-success py-1 px-0 m-2 shadw width80px"
-               title="изменить данные">
+                   asp-controller="Films"
+                   asp-action="EditFilm"
+                   asp-route-movieId="@Model.FilmFileModelId"
+                   class="btn btn-outline-success py-1 px-0 m-2 shadw width80px"
+                   title="изменить данные">
 
                 Изменить
 
@@ -1745,11 +1733,11 @@
 
             @* Удалить *@
             <a asp-area="Admin"
-               asp-controller="Films"
-               asp-action="DeleteFilm"
-               asp-route-movieId="@Model.FilmFileModelId"
-               class="btn btn-outline-danger py-1 px-0 m-2 shadw width80px"
-               title="удалить фильм">
+                   asp-controller="Films"
+                   asp-action="DeleteFilm"
+                   asp-route-movieId="@Model.FilmFileModelId"
+                   class="btn btn-outline-danger py-1 px-0 m-2 shadw width80px"
+                   title="удалить фильм">
 
                 Удалить
 
@@ -1757,10 +1745,10 @@
 
             @* Список фильмов сайта *@
             <a asp-area="Admin"
-               asp-controller="Films"
-               asp-action="Index"
-               class="btn btn-outline-primary py-1 px-0 m-2 shadw width80px"
-               title="список фильмов">
+                   asp-controller="Films"
+                   asp-action="Index"
+                   class="btn btn-outline-primary py-1 px-0 m-2 shadw width80px"
+                   title="список фильмов">
 
                 Список
 

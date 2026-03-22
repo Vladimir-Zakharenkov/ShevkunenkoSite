@@ -82,7 +82,7 @@
     <div class="row">
 
         @* кадры слева *@
-        @if (Model.FramesAroundMainContent != null && Model.FramesAroundMainContent.FramesOnTheLeft != null && Model.FramesAroundMainContent.FramesOnTheLeft.Length > 0)
+        @if (Model.FramesAroundMainContent != null && Model.FramesAroundMainContent.FramesOnTheLeft != null && Model.FramesAroundMainContent.FramesOnTheLeft.Count() > 0)
         {
             <div class="col-2 mx-auto d-none d-md-block overflow-y-auto overflow-x-hidden height1000">
 
@@ -249,7 +249,7 @@
         </div>
 
         @* кадры справа *@
-        @if (Model.FramesAroundMainContent != null && Model.FramesAroundMainContent.FramesOnTheRight != null && Model.FramesAroundMainContent.FramesOnTheRight.Length > 0)
+        @if (Model.FramesAroundMainContent != null && Model.FramesAroundMainContent.FramesOnTheRight != null && Model.FramesAroundMainContent.FramesOnTheRight.Count() > 0)
         {
             <div class="col-2 mx-auto d-none d-md-block overflow-y-auto overflow-x-hidden height1000">
 
