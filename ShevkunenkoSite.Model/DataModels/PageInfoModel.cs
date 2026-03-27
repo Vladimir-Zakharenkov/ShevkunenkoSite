@@ -44,6 +44,7 @@ public class PageInfoModel
     [DataType(DataType.Text)]
     public string RoutData { get; set; } = string.Empty;
 
+    // Вычисляемое поле [PageArea] + [Controller] + [PageLoc]
     [DataType(DataType.Text)]
     public string PageFullPath { get; set; } = string.Empty;
 
@@ -314,9 +315,9 @@ public class PageInfoModel
 
     #region One-to-One with FilmFileModel as child
 
-    public Guid? FilmId { get; set; }
+    public Guid? FilmFileModelId { get; set; }
 
-    public FilmFileModel? Film { get; set; }
+    public FilmFileModel? FilmFileModel { get; set; }
 
     #endregion
 

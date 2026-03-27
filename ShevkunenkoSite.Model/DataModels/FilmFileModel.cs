@@ -315,7 +315,7 @@ public class FilmFileModel
 
     #region One-to-One with PageInfoModel as parent
 
-    public PageInfoModel? PageInfo { get; set; }
+    public PageInfoModel? PageInfoModel { get; set; }
 
     #endregion
 

@@ -257,25 +257,6 @@ app.MapControllerRoute(
 
 #endregion
 
-#region Страница фильма
-
-app.MapControllerRoute(
-    name: "search_of_films",
-    pattern: "Фильмы на сайте/Страница - {pageNumber}",
-    defaults: new { Controller = "Films", Action = "Index" });
-
-app.MapControllerRoute(
-    name: "list_of_films",
-    pattern: "Фильмы на сайте",
-    defaults: new { Controller = "Films", Action = "Index" });
-
-app.MapControllerRoute(
-    name: "film",
-    pattern: "Фильм - «{filmCaption}»",
-    defaults: new { Controller = "Films", Action = "Film" });
-
-#endregion
-
 #region Альбом фотографий из книги
 
 app.MapControllerRoute(
@@ -292,6 +273,44 @@ app.MapControllerRoute(
     name: "album_photo",
     pattern: "{albumCaption}/Альбом/Фото-{imageId}",
     defaults: new { Controller = "Books", Action = "PhotoAlbum" });
+
+#endregion
+
+#region Страница фильма
+
+app.MapControllerRoute(
+    name: "search_of_films",
+    pattern: "Фильмы--на--сайте/Страница--{pageNumber}",
+    defaults: new { Controller = "Films", Action = "Index" });
+
+app.MapControllerRoute(
+    name: "list_of_films",
+    pattern: "Фильмы--на--сайте",
+    defaults: new { Controller = "Films", Action = "Index" });
+
+app.MapControllerRoute(
+    name: "film",
+    pattern: "Фильм--«{filmCaption}»",
+    defaults: new { Controller = "Films", Action = "Film" });
+
+#endregion
+
+#region Альбом фотографий из фильма
+
+app.MapControllerRoute(
+    name: "album_page_photo_film",
+    pattern: "{albumCaption}/Альбом/Страница-{pageNumber}/Фото-{imageId}",
+    defaults: new { Controller = "Films", Action = "PhotoAlbum" });
+
+app.MapControllerRoute(
+    name: "album_paging_film",
+    pattern: "{albumCaption}/Альбом/Страница-{pageNumber}",
+    defaults: new { Controller = "Films", Action = "PhotoAlbum" });
+
+app.MapControllerRoute(
+    name: "album_photo_film",
+    pattern: "{albumCaption}/Альбом/Фото-{imageId}",
+    defaults: new { Controller = "Films", Action = "PhotoAlbum" });
 
 #endregion
 

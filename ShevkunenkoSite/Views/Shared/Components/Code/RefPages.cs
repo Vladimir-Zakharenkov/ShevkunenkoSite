@@ -3,6 +3,7 @@
 public class RefPages(
     IPageInfoRepository pageInfoContext,
     IMovieFileRepository movieContext,
+    IFilmFileRepository filmContext,
     IImageFileRepository imageContext) : ViewComponent
 {
     public async Task<IViewComponentResult> InvokeAsync()
@@ -91,7 +92,31 @@ public class RefPages(
 
             #endregion
 
-            #region Список списков фильмов по текстовому фильтрам
+            #region Словарь списков фильмов (films) по текстовому фильтрам
+
+            if (string.IsNullOrEmpty(pageInfoModel.VideoFilterOut) == false && pageInfoModel.VideoLinks == true)
+            {
+                string[] videoFilterOut = pageInfoModel.VideoFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+                if (videoFilterOut.Length > 0)
+                {
+                    for (int i = 0; i < videoFilterOut.Length; i++)
+                    {
+                        if (await filmContext.FilmFiles.Where(film => film.SearchFilterForFilm != null && film.SearchFilterForFilm.Contains(videoFilterOut[i])).AnyAsync())
+                        {
+                            var listOfFilm = await filmContext.FilmFiles.Where(film => film.SearchFilterForFilm != null && film.SearchFilterForFilm.Contains(videoFilterOut[i] + ',')).ToListAsync();
+
+                            _ = listOfFilm.Distinct();
+
+                            refsUnderPage.DictionaryOfFilms[videoFilterOut[i]] = listOfFilm;
+                        }
+                    }
+                }
+            }
+
+            #endregion
+
+            #region Список списков фильмов (movies) по текстовому фильтрам
 
             if (pageInfoModel.VideoFilterOut != null && pageInfoModel.VideoFilterOut != string.Empty && pageInfoModel.VideoLinks == true)
             {
@@ -179,11 +204,12 @@ public class RefPages(
             #endregion
         }
 
-        if ((refsUnderPage.DictionaryOfPages != null && refsUnderPage.DictionaryOfPages.Count < 1)
-            & (refsUnderPage.DictionaryOfPictures != null && refsUnderPage.DictionaryOfPictures.Count < 1)
-            & (refsUnderPage.ListOfVideoLinksViewModel != null && refsUnderPage.ListOfVideoLinksViewModel.Count < 1)
-            & (refsUnderPage.LinksToPagesByGuid != null && refsUnderPage.LinksToPagesByGuid.Count < 1)
-            & (refsUnderPage.LinksToPagesByGuid2 != null && refsUnderPage.LinksToPagesByGuid2.Count < 1)
+        if (refsUnderPage.DictionaryOfPages.Count < 1
+            & refsUnderPage.DictionaryOfPictures.Count < 1
+            & refsUnderPage.DictionaryOfFilms.Count < 1
+            & refsUnderPage.ListOfVideoLinksViewModel.Count < 1
+            & refsUnderPage.LinksToPagesByGuid.Count < 1
+            & refsUnderPage.LinksToPagesByGuid2.Count < 1
             )
         {
             return View("Empty");

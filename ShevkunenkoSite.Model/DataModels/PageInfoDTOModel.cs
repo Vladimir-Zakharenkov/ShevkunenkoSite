@@ -316,7 +316,7 @@ public record class PageInfoDTOModel
 
     #region One-to-One with FilmFileModel as child
 
-    public Guid? FilmId { get; set; }
+    public Guid? FilmFileModelId { get; set; }
 
     #endregion
 

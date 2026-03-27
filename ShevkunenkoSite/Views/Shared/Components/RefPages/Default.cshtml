@@ -3,147 +3,181 @@
 @* Ссылки на связанные страницы по GUID (1) *@
 <div>
 
-	@if (Model.LinksToPagesByGuid != null && Model.LinksToPagesByGuid.Count > 0)
-	{
-		@if (Model.LinksToPagesByGuid.Count < 4)
-		{
-			@* Если ссылок меньше 3 - укрупняем картинку ссылки *@
-			<div class="row row-cols-3 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-3">
+    @if (Model.LinksToPagesByGuid != null && Model.LinksToPagesByGuid.Count > 0)
+    {
+        @if (Model.LinksToPagesByGuid.Count < 4)
+        {
+            @* Если ссылок меньше 3 - укрупняем картинку ссылки *@
+            <div class="row row-cols-3 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-3">
 
-				<hr class="liniya" />
+                <hr class="liniya" />
 
-				@foreach (var item in Model.LinksToPagesByGuid)
-				{
-					<vc:card-of-page page="@item" />
-				}
+                @foreach (var item in Model.LinksToPagesByGuid)
+                {
+                    <vc:card-of-page page="@item" />
+                }
 
-			</div>
-		}
-		else
-		{
-			@* Стандартный размер картинки ссылки *@
-			<div class="row row-cols-3 row-cols-lg-4 row-cols-xxl-5 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-3">
+            </div>
+        }
+        else
+        {
+            @* Стандартный размер картинки ссылки *@
+            <div class="row row-cols-3 row-cols-lg-4 row-cols-xxl-5 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-3">
 
-				<hr class="liniya" />
+                <hr class="liniya" />
 
-				@foreach (var item in Model.LinksToPagesByGuid)
-				{
-					<vc:card-of-page page="@item" />
-				}
+                @foreach (var item in Model.LinksToPagesByGuid)
+                {
+                    <vc:card-of-page page="@item" />
+                }
 
-			</div>
-		}
-	}
+            </div>
+        }
+    }
 
 </div>
 
 @*Ссылки на связанные страницы по GUID (2) *@
 <div>
 
-	@if (Model.LinksToPagesByGuid2 != null && Model.LinksToPagesByGuid2.Count > 0)
-	{
-		@* Если ссылок меньше 3 - укрупняем картинку ссылки *@
-		@if (Model.LinksToPagesByGuid2.Count < 3)
-		{
-			<div class="row row-cols-2 row-cols-lg-3 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-3">
+    @if (Model.LinksToPagesByGuid2 != null && Model.LinksToPagesByGuid2.Count > 0)
+    {
+        @* Если ссылок меньше 3 - укрупняем картинку ссылки *@
+        @if (Model.LinksToPagesByGuid2.Count < 3)
+        {
+            <div class="row row-cols-2 row-cols-lg-3 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-3">
 
-				<hr class="liniya" />
+                <hr class="liniya" />
 
-				@foreach (var item in Model.LinksToPagesByGuid2)
-				{
-					<vc:card-of-page page="@item" />
-				}
+                @foreach (var item in Model.LinksToPagesByGuid2)
+                {
+                    <vc:card-of-page page="@item" />
+                }
 
-			</div>
-		}
-		@* Стандартный размер картинки ссылки *@
-		else
-		{
-			<div class="row row-cols-3 row-cols-lg-4 row-cols-xxl-5 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-3">
+            </div>
+        }
+        @* Стандартный размер картинки ссылки *@
+        else
+        {
+            <div class="row row-cols-3 row-cols-lg-4 row-cols-xxl-5 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-3">
 
-				<hr class="liniya" />
+                <hr class="liniya" />
 
-				@foreach (var item in Model.LinksToPagesByGuid2)
-				{
-					<vc:card-of-page page="@item" />
-				}
+                @foreach (var item in Model.LinksToPagesByGuid2)
+                {
+                    <vc:card-of-page page="@item" />
+                }
 
-			</div>
-		}
-	}
+            </div>
+        }
+    }
 
 </div>
 
 @* Ссылки на связанные страницы по фильтру *@
 <div class="d-print-none mt-3">
 
-	@if (Model.DictionaryOfPages != null && Model.DictionaryOfPages.Count > 0)
-	{
-		foreach (var (caption, listOfPages) in Model.DictionaryOfPages)
-		{
-			if (listOfPages.Count > 0)
-			{
-				<h2 class="text_shadow mt-4">@caption</h2>
+    @if (Model.DictionaryOfPages != null && Model.DictionaryOfPages.Count > 0)
+    {
+        foreach (var (caption, listOfPages) in Model.DictionaryOfPages)
+        {
+            if (listOfPages.Count > 0)
+            {
+                <h2 class="text_shadow mt-4">@caption</h2>
 
-				<hr class="liniya w-75" />
+                <hr class="liniya w-75" />
 
-				<div class="row row-cols-3 row-cols-sm-4 row-cols-lg-5 row-cols-xxl-6 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-1">
+                <div class="row row-cols-3 row-cols-sm-4 row-cols-lg-5 row-cols-xxl-6 g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-1">
 
-					@foreach (var itemOfList in listOfPages)
-					{
-						<vc:card-of-page page="@itemOfList" />
-					}
+                    @foreach (var itemOfList in listOfPages)
+                    {
+                        <vc:card-of-page page="@itemOfList" />
+                    }
 
-				</div>
-			}
-		}
-	}
+                </div>
+            }
+        }
+    }
 
 </div>
 
-@* Ссылки на связанные видео *@
+@* Ссылки на связанные видео (films) *@
 <div>
 
-	@if (Model.ListOfVideoLinksViewModel != null && Model.ListOfVideoLinksViewModel.Count > 0)
-	{
-		foreach (var videoLinksViewModel in Model.ListOfVideoLinksViewModel)
-		{
-			<vc:video-links movies-list="@videoLinksViewModel" />
-		}
-	}
+    @if (Model.DictionaryOfFilms.Count > 0)
+    {
+        <div class="d-print-none mt-3">
+
+            @foreach (var (caption, listOfFilms) in Model.DictionaryOfFilms)
+            {
+                if (listOfFilms.Count > 0)
+                {
+                    <h2 class="text_shadow mt-4">@caption</h2>
+
+                    <hr class="liniya w-75" />
+
+                    <div class="row g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-1
+                        @(listOfFilms.Count < 4 ? "row-cols-3" : "")
+                        @((listOfFilms.Count % 4 == 0 || listOfFilms.Count == 7) ? "row-cols-4" : "")
+                        @((listOfFilms.Count > 4 & listOfFilms.Count % 4 != 0 & listOfFilms.Count != 7) ? "row-cols-3 row-cols-lg-4 row-cols-xxl-5" : "")">
+
+                        @foreach (var item in listOfFilms)
+                        {
+                            <vc:view-image image-id="@item.FilmPosterId.ToString()" css-class="" icon-type="webicon200" />
+                        }
+
+                    </div>
+                }
+            }
+
+        </div>
+    }
+
+</div>
+
+@* Ссылки на связанные видео (movies) *@
+<div>
+
+    @if (Model.ListOfVideoLinksViewModel != null && Model.ListOfVideoLinksViewModel.Count > 0)
+    {
+        foreach (var videoLinksViewModel in Model.ListOfVideoLinksViewModel)
+        {
+            <vc:video-links movies-list="@videoLinksViewModel" />
+        }
+    }
 
 </div>
 
 @* Ссылки на картинки по фильтру *@
 <div>
 
-	@if (Model.DictionaryOfPictures != null && Model.DictionaryOfPictures.Count > 0)
-	{
-		<div class="d-print-none mt-3">
+    @if (Model.DictionaryOfPictures != null && Model.DictionaryOfPictures.Count > 0)
+    {
+        <div class="d-print-none mt-3">
 
-			@foreach (var (caption, listOfPictures) in Model.DictionaryOfPictures)
-			{
-				if (listOfPictures.Count > 0)
-				{
-					<h2 class="text_shadow mt-4">@caption (фото)</h2>
+            @foreach (var (caption, listOfPictures) in Model.DictionaryOfPictures)
+            {
+                if (listOfPictures.Count > 0)
+                {
+                    <h2 class="text_shadow mt-4">@caption (фото)</h2>
 
-					<hr class="liniya w-75" />
+                    <hr class="liniya w-75" />
 
-					<div class="row g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-1
-												                                    @(listOfPictures.Count < 4 ? "row-cols-3" : "")
-												                                                @((listOfPictures.Count % 4 == 0 || listOfPictures.Count == 7) ? "row-cols-4" : "")
-												                                                            @((listOfPictures.Count > 4 & listOfPictures.Count % 4 != 0 & listOfPictures.Count != 7) ? "row-cols-3 row-cols-lg-4 row-cols-xxl-5" : "")">
+                    <div class="row g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-1
+                        @(listOfPictures.Count < 4 ? "row-cols-3" : "")
+                        @((listOfPictures.Count % 4 == 0 || listOfPictures.Count == 7) ? "row-cols-4" : "")
+                        @((listOfPictures.Count > 4 & listOfPictures.Count % 4 != 0 & listOfPictures.Count != 7) ? "row-cols-3 row-cols-lg-4 row-cols-xxl-5" : "")">
 
-						@foreach (var item in listOfPictures)
-						{
-							<vc:view-image image-id="@item.ImageFileModelId.ToString()" css-class="" icon-type="webicon100" />
-						}
+                        @foreach (var item in listOfPictures)
+                        {
+                            <vc:view-image image-id="@item.ImageFileModelId.ToString()" css-class="" icon-type="webicon100" />
+                        }
 
-					</div>
-				}
-			}
+                    </div>
+                }
+            }
 
-		</div>
-	}
+        </div>
+    }
 
 </div>

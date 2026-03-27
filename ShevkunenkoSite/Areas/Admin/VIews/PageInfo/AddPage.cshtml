@@ -233,7 +233,7 @@
 
 								<hr class="w-50 mx-auto" />
 
-								<select asp-for="FilmId"
+								<select asp-for="FilmFileModelId"
 										asp-items="ViewBag.FilmFIles"
 										class="d-flex col-12 col-sm-7 col-lg-6 mx-auto my-3"
 										aria-describedby="FilmFormFileInputHelpBlock">
@@ -245,7 +245,7 @@
 
 								@if (Context.Request.Method == "POST")
 								{
-									<span asp-validation-for="FilmId" class="text-danger"></span>
+									<span asp-validation-for="FilmFileModelId" class="text-danger"></span>
 								}
 
 								<div class="form-text">

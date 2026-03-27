@@ -23,42 +23,71 @@ public class PageInfoImplementation(SiteDbContext siteContext) : IPageInfoReposi
 
     public async Task<PageInfoModel> GetPageInfoByPathAsync(HttpContext httpContext)
     {
+        #region Запрос без данных
+
         string pagePath = httpContext.Request.Path.ToString().ToLower().TrimEnd('/');
+
+        #endregion
+
+        #region Коллекция данных запроса
 
         IQueryCollection pageQuery = httpContext.Request.Query;
 
-        string pageQueryString = httpContext.Request.QueryString.ToString();
+        string routData = string.Empty; //Данные запроса
 
-        string routData = string.Empty;
+        #endregion
+
+        #region Поиск совпадения пути и данных
 
         if (pageQuery.Count > 0)
         {
+            #region Определить данные запроса
+
             foreach (var item in pageQuery)
             {
-                if (routData == string.Empty)
-                {
-                    routData = "?" + item.Key + "=" + item.Value;
-                }
-                else
-                {
-                    routData = routData + "&" + item.Key + "=" + item.Value;
-                }
+                routData = routData == string.Empty ? $"?{item.Key}={item.Value}" : $"{routData}&{item.Key}={item.Value}";
             }
 
-            for (int i = 0; i < httpContext.Request.Query.Count; i++)
+            #endregion
+
+            for (int i = 0; i < pageQuery.Count; i++)
             {
+                #region Если совпали пути и данные
+
                 if (await PagesInfo.Where(p => p.PageFullPath == pagePath & p.RoutData == routData).AnyAsync())
                 {
                     return await PagesInfo.FirstAsync(p => p.PageFullPath == pagePath & p.RoutData == routData);
                 }
+
+                #endregion
+
+                #region Если совпал путь + /index и данные
+
                 else if (await PagesInfo.Where(p => p.PageFullPath == pagePath + "/index" & p.RoutData == routData).AnyAsync())
                 {
                     return await PagesInfo.FirstAsync(p => p.PageFullPath == pagePath + "/index" & p.RoutData == routData);
                 }
+
+                #endregion
+
+                #region Если совпал псевдоним (1) и данные
+
                 else if (await PagesInfo.Where(p => p.PagePathNickName == pagePath & p.RoutData == routData).AnyAsync())
                 {
                     return await PagesInfo.FirstAsync(p => p.PagePathNickName == pagePath & p.RoutData == routData);
                 }
+
+                #endregion
+
+                #region Если совпал псевдоним (2) и данные
+
+                else if (await PagesInfo.Where(p => p.PagePathNickName2 == pagePath & p.RoutData == routData).AnyAsync())
+                {
+                    return await PagesInfo.FirstAsync(p => p.PagePathNickName2 == pagePath & p.RoutData == routData);
+                }
+
+                #endregion
+
                 else
                 {
                     if (i == httpContext.Request.Query.Count - 1)
@@ -84,45 +113,94 @@ public class PageInfoImplementation(SiteDbContext siteContext) : IPageInfoReposi
             }
         }
 
+        #endregion
+
+        #region Если в адресе нет данных или с данными поиск не удался
+
         if (routData == string.Empty)
         {
+            #region Если нет строки запроса
+
             if (string.IsNullOrEmpty(pagePath))
             {
                 return await PagesInfo.FirstAsync(p => p.PageFullPath == "/shevkunenko/index");
             }
+
+            #endregion
+
+            #region Совпадение пути
+
             else if (await PagesInfo.Where(p => p.PageFullPath == pagePath).AnyAsync())
             {
                 var pageInfo = await PagesInfo.FirstAsync(p => p.PageFullPath == pagePath);
 
-                if (!string.IsNullOrEmpty(pageInfo.RoutData))
+                #region Если совпал путь и не совпали данные (кроме пути с index)
+
+                if (!string.IsNullOrEmpty(pageInfo.RoutData) & !pagePath.EndsWith("index"))
                 {
                     return await PagesInfo.FirstAsync(p => p.PageFullPath == "/shevkunenko/error404");
                 }
 
+                #endregion
+
                 return (pageInfo);
             }
+
+            #endregion
+
+            #region Совпадение пути и псевдонима (1)
+
             else if (await PagesInfo.Where(p => p.PagePathNickName == pagePath).AnyAsync())
             {
-                return await PagesInfo
-                                    .FirstAsync(p => p.PagePathNickName == pagePath);
+                return await PagesInfo.FirstAsync(p => p.PagePathNickName == pagePath);
             }
+
+            #endregion
+
+            #region Совпадение пути и псевдонима (2)
+
             else if (await PagesInfo.Where(p => p.PagePathNickName2 == pagePath).AnyAsync())
             {
                 return await PagesInfo.FirstAsync(p => p.PagePathNickName2 == pagePath);
             }
+
+            #endregion
+
+            #region Совпадение пути + /index
+
             else if (await PagesInfo.Where(p => p.PageFullPath == pagePath + "/index").AnyAsync())
             {
                 return await PagesInfo.FirstAsync(p => p.PageFullPath == pagePath + "/index");
             }
+
+            #endregion
+
+            #region Совпадение пути с псевдонимом (1) + /index
+
             else if (await PagesInfo.Where(p => p.PagePathNickName == pagePath + "/index").AnyAsync())
             {
                 return await PagesInfo.FirstAsync(p => p.PagePathNickName == pagePath + "/index");
             }
+
+            #endregion
+
+            #region Совпадение пути с псевдонимом (2) + /index
+
+            else if (await PagesInfo.Where(p => p.PagePathNickName2 == pagePath + "/index").AnyAsync())
+            {
+                return await PagesInfo.FirstAsync(p => p.PagePathNickName2 == pagePath + "/index");
+            }
+
+            #endregion
+
             else
             {
                 return await PagesInfo.FirstAsync(p => p.PageFullPath == "/shevkunenko/error404");
             }
         }
+
+        #endregion
+
         else
         {
             return await PagesInfo.FirstAsync(p => p.PageFullPath == "/shevkunenko/error404");

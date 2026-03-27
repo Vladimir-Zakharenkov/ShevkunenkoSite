@@ -152,3 +152,93 @@
 .maxwidth900px {
     max-width: 900px;
 }
+
+@media only screen and (max-width: 767px) {
+    .foto-around {
+        height: 0;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 859px) {
+    .foto-around {
+        height: 470px;
+    }
+}
+
+@media only screen and (min-width: 860px) and (max-width: 929px) {
+    .foto-around {
+        height: 480px;
+    }
+}
+
+@media only screen and (min-width: 930px) and (max-width: 1049px) {
+    .foto-around {
+        height: 500px;
+    }
+}
+
+@media only screen and (min-width: 1050px) and (max-width: 1099px) {
+    .foto-around {
+        height: 520px;
+    }
+}
+
+@media only screen and (min-width: 1100px) and (max-width: 1200px) {
+    .foto-around {
+        height: 540px;
+    }
+}
+
+@media only screen and (min-width: 1201px) and (max-width: 1273px) {
+    .foto-around {
+        height: 560px;
+    }
+}
+
+@media only screen and (min-width: 1274px) and (max-width: 1349px) {
+    .foto-around {
+        height: 580px;
+    }
+}
+
+@media only screen and (min-width: 1350px) and (max-width: 1399px) {
+    .foto-around {
+        height: 600px;
+    }
+}
+
+@media only screen and (min-width: 1400px) and (max-width: 1479px) {
+    .foto-around {
+        height: 620px;
+    }
+}
+
+@media only screen and (min-width: 1480px) and (max-width: 1559px) {
+    .foto-around {
+        height: 640px;
+    }
+}
+
+@media only screen and (min-width: 1560px) and (max-width: 1629px) {
+    .foto-around {
+        height: 660px;
+    }
+}
+
+@media only screen and (min-width: 1630px) and (max-width: 1709px) {
+    .foto-around {
+        height: 680px;
+    }
+}
+
+@media only screen and (min-width: 1710px) and (max-width: 1769px) {
+    .foto-around {
+        height: 700px;
+    }
+}
+
+@media only screen and (min-width: 1770px) and (max-width: 2000px) {
+    .foto-around {
+        height: 720px;
+    }
+}

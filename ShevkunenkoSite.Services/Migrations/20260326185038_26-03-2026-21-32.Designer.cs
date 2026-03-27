@@ -12,8 +12,8 @@ using ShevkunenkoSite.Services;
 namespace ShevkunenkoSite.Services.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    [Migration("20260322103430_22-03-2026-13-32")]
-    partial class _220320261332
+    [Migration("20260326185038_26-03-2026-21-32")]
+    partial class _260320262132
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1096,7 +1096,7 @@ namespace ShevkunenkoSite.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("FilmId")
+                    b.Property<Guid?>("FilmFileModelId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IconTypeModelId")
@@ -1231,9 +1231,9 @@ namespace ShevkunenkoSite.Services.Migrations
 
                     b.HasIndex("BackgroundFileModelId");
 
-                    b.HasIndex("FilmId")
+                    b.HasIndex("FilmFileModelId")
                         .IsUnique()
-                        .HasFilter("[FilmId] IS NOT NULL");
+                        .HasFilter("[FilmFileModelId] IS NOT NULL");
 
                     b.HasIndex("IconTypeModelId");
 
@@ -1473,9 +1473,9 @@ namespace ShevkunenkoSite.Services.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShevkunenkoSite.Models.DataModels.FilmFileModel", "Film")
-                        .WithOne("PageInfo")
-                        .HasForeignKey("ShevkunenkoSite.Models.DataModels.PageInfoModel", "FilmId");
+                    b.HasOne("ShevkunenkoSite.Models.DataModels.FilmFileModel", "FilmFileModel")
+                        .WithOne("PageInfoModel")
+                        .HasForeignKey("ShevkunenkoSite.Models.DataModels.PageInfoModel", "FilmFileModelId");
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.IconTypeModel", "IconType")
                         .WithMany("PageList")
@@ -1501,7 +1501,7 @@ namespace ShevkunenkoSite.Services.Migrations
 
                     b.Navigation("BackgroundFileModel");
 
-                    b.Navigation("Film");
+                    b.Navigation("FilmFileModel");
 
                     b.Navigation("IconType");
 
@@ -1534,7 +1534,7 @@ namespace ShevkunenkoSite.Services.Migrations
 
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.FilmFileModel", b =>
                 {
-                    b.Navigation("PageInfo");
+                    b.Navigation("PageInfoModel");
                 });
 
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.IconTypeModel", b =>

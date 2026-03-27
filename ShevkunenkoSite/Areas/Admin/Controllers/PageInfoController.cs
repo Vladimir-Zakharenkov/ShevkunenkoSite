@@ -563,7 +563,7 @@ public class PageInfoController(
             PageInfoModel newPage = new();
 
             #endregion
-
+            
             #region Добавить видео для страницы
 
             if (addPage.FilmFileFormFile != null)
@@ -572,12 +572,12 @@ public class PageInfoController(
                 {
                     var addFilm = await filmContext.FilmFiles.FirstAsync(filmFile => filmFile.FilmFileName == addPage.FilmFileFormFile.FileName);
 
-                    newPage.FilmId = addFilm.FilmFileModelId;
+                    newPage.FilmFileModelId = addFilm.FilmFileModelId;
                 }
                 else
                 {
                     ModelState.AddModelError("FilmFileFormFile", $"Файла «{addPage.FilmFileFormFile.FileName}» нет в базе данных");
-
+                    
                     #region ViewData
 
                     // Список фильмов
@@ -603,13 +603,13 @@ public class PageInfoController(
                     return View(newPage);
                 }
             }
-            else if (addPage.FilmFileFormFile == null & addPage.FilmId != Guid.Empty)
+            else if (addPage.FilmFileFormFile == null & addPage.FilmFileModelId != Guid.Empty)
             {
-                newPage.FilmId = addPage.FilmId;
+                newPage.FilmFileModelId = addPage.FilmFileModelId;
             }
             else
             {
-                newPage.FilmId = null;
+                newPage.FilmFileModelId = null;
             }
 
             #endregion
@@ -638,7 +638,7 @@ public class PageInfoController(
 
             #region OgType
 
-            if (addPage.FilmId != null)
+            if (addPage.FilmFileModelId != null)
             {
                 newPage.OgType = "movie";
             }
@@ -2023,7 +2023,7 @@ public class PageInfoController(
 
             #region OgType
 
-            if (editPage.FilmId != null)
+            if (editPage.FilmFileModelId != null)
             {
                 pageUpdate.OgType = "movie";
             }
