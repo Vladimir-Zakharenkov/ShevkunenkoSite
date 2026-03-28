@@ -359,7 +359,7 @@ public class BooksController(
 
         #endregion
 
-        #region Если не указан Id картинки и заголовок альбома
+        #region Если не указан imageId картинки и заголовок альбома
 
         if (imageId == null & string.IsNullOrEmpty(albumCaption))
         {

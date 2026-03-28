@@ -1,0 +1,155 @@
+﻿@using Microsoft.AspNetCore.Http
+@model PhotoAlbumViewModel
+
+@{
+    int i = 0;
+}
+
+<h1 class="text_shadow">
+
+    @Model.CaptionOfAlbum.Replace("--", " ")
+
+    @if (Model.NoteForCaptionOfAlbum != null)
+    {
+        <br />
+        <span class="h2">
+            (@Model.NoteForCaptionOfAlbum)
+        </span>
+    }
+
+</h1>
+
+<hr class="liniya" />
+
+@* Просмотр страницы альбома *@
+@if (Model.AlbumOrPhoto)
+{
+    <div class="row row-cols-3 row-cols-lg-4 row-cols-xxl-6 g-2 justify-content-center">
+
+        @foreach (var imageItem in Model.ItemsOnPage)
+        {
+            <div class="col">
+
+                <div class="card h-100 me-1 mb-1 p-0 p-sm-1 shadw borderforitem">
+
+                    <a asp-area=""
+                           asp-controller="Films"
+                           asp-action="FilmPhotoAlbum"
+                           asp-route-filmCaption="@Model.CaptionOfAlbum"
+                           asp-route-imageId="@imageItem.ImageFileModelId"
+                           title="смотреть фото">
+
+                        <vc:view-image image-id="@imageItem.ImageFileModelId"
+                                       css-class="card-img-top shadw"
+                                       icon-type="webicon300" />
+
+                    </a>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+}
+else
+{
+    @* Просмотр картинки *@
+    <div class="row py-2">
+
+        <div class="col">
+
+            <div id="fotoAlbumCarousel" class="carousel slide carousel-dark rounded-3 pb-5 shadw">
+
+                <div class="carousel-indicators pb-5">
+
+                    @for (int k = 0; k < Model.ItemsOnPage.Count(); k++)
+                    {
+                        if (Model.CurrentImageId == Model.ItemsOnPage.ToArray()[k].ImageFileModelId)
+                        {
+                            <button type="button" data-bs-target="#fotoAlbumCarousel" data-bs-slide-to="@k" class="active width9percent" aria-current="true" aria-label="Фото @k">
+                                <vc:view-image image-id="@Model.ItemsOnPage.ToArray()[k].ImageFileModelId"
+                                               css-class="d-block mx-auto mt-1 imageref p-0"
+                                               icon-type="" />
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" data-bs-target="#fotoAlbumCarousel" data-bs-slide-to="@k" class="width9percent" aria-label="Фото @k">
+                                <vc:view-image image-id="@Model.ItemsOnPage.ToArray()[k].ImageFileModelId"
+                                               css-class="d-block mx-auto mt-1 imageref p-0"
+                                               icon-type="" />
+                            </button>
+                        }
+                    }
+
+                </div>
+
+                <div class="carousel-inner pb-5">
+
+                    @foreach (var picture in Model.ItemsOnPage ?? Enumerable.Empty<ImageFileModel>())
+                    {
+                        @if (Model.CurrentImageId == picture.ImageFileModelId)
+                        {
+                            <div class="carousel-item active p-1 rounded-3 shadw">
+
+                                <vc:view-image image-id=@picture.ImageFileModelId
+                                               css-class="d-block mx-auto shadw"
+                                               icon-type="" />
+
+                                <p class="d-none d-md-block fs-4 mt-3 text_shadow maxwidth700px mx-auto">
+                                    @picture.ImageDescription.TrimEnd('.')
+                                </p>
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="carousel-item p-1 rounded-3 shadw">
+
+                                <vc:view-image image-id=@picture.ImageFileModelId
+                                               css-class="d-block mx-auto shadw"
+                                               icon-type="" />
+
+                                <p class="d-none d-md-block fs-4 mt-3 text_shadow maxwidth700px mx-auto">
+                                    @picture.ImageDescription
+                                </p>
+
+                            </div>
+                        }
+
+                        i++;
+                    }
+
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#fotoAlbumCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#fotoAlbumCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+}
+
+
+@* Страницы альбома *@
+<div class="row p-2 m-2">
+
+    <h2 class="text_shadow fs-3 mb-0">страницы альбома</h2>
+
+    <div pagination="@Model"
+         album-caption="@Model.CaptionOfAlbum"
+         data-toggle="buttons"
+         role="group"
+         aria-label="фотоальбом">
+    </div>
+
+</div>

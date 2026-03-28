@@ -1,0 +1,167 @@
+﻿@model FilmFileModel
+
+<a asp-area=""
+       asp-controller="Films"
+       asp-action="Film"
+       asp-route-filmCaption="@Model.FilmCaption"
+       class="d-flex col justify-content-center"
+       title="смотреть">
+
+    <div class="card pb-1 shadw borderforitem" title="@Model.FilmCaption.Replace("--", " ")">
+
+        @* http://schema.org/VideoObject *@
+        <span itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+
+            <meta itemprop="name" content="@Model.FilmCaption.Replace("--", " ")"  />
+            <meta itemprop="caption" content="@Model.FilmCaption.Replace("--", " ")" />
+
+            @if (!string.IsNullOrEmpty(Model.FilmFileName))
+            {
+                <link itemprop="url" href="@Model.FilmContentUrl" />
+                <link itemprop="contentUrl" href="@Model.FilmContentUrl" />
+            }
+
+            <meta itemprop="description" content="@Model.FilmDescriptionForSchemaOrg" />
+
+            @if (Model.FilmDuration != TimeSpan.Zero)
+            {
+                <meta itemprop="duration" content="@Model.FilmDuration.ToString("'T'hh'H'mm'M'ss'S'")" />
+            }
+
+            <meta itemprop="isFamilyFriendly" content="@Model.FilmIsFamilyFriendly.ToString()" />
+            <link itemprop="thumbnail" href="@Model.FilmPoster.ImagePath/@Model.FilmPoster.WebImageFileName" />
+            <link itemprop="thumbnailUrl" href="@Model.FilmImage.ImagePath/@Model.FilmImage.WebImageFileName" />
+            <meta itemprop="uploadDate" content="@Model.FilmUploadDate.ToString("yyyy-MM-dd")" />
+
+            @if (Model.FilmHeight > 0)
+            {
+                <meta itemprop="height" content="@Model.FilmHeight" />
+            }
+            @if (Model.FilmWidth > 0)
+            {
+                <meta itemprop="width" content="@Model.FilmWidth" />
+            }
+            @if (Model.FilmHeight <= 360)
+            {
+                <meta itemprop="videoQuality" content="low" />
+            }
+
+            @if (Model.FilmHeight > 360 & Model.FilmHeight <= 720)
+            {
+                <meta itemprop="videoQuality" content="medium" />
+            }
+
+            @if (Model.FilmHeight > 720 & Model.FilmHeight < 1080)
+            {
+                <meta itemprop="videoQuality" content="HD" />
+            }
+
+            @if (Model.FilmHeight >= 1080)
+            {
+                <meta itemprop="videoQuality" content="full HD" />
+            }
+
+            @if (Model.FilmFileSize > 0)
+            {
+                <meta itemprop="contentSize" content="@Model.FilmFileSize.ToString().Substring(0, Model.FilmFileSize.ToString().Length - 3)" />
+            }
+            <meta itemprop="dateReleased" content="@Model.FilmDatePublished.ToString("yyyy-MM-dd")" />
+            <meta itemprop="dateCreated" content="@Model.FilmDateCreated.ToString("yyyy-MM-dd")" />
+            <meta itemprop="inLanguage" content="@Model.FilmInLanguage1" />
+            @if (!string.IsNullOrEmpty(Model.FilmInLanguage2))
+            {
+                <meta itemprop="inLanguage" content="@Model.FilmInLanguage2" />
+            }
+
+            @if (!string.IsNullOrEmpty(Model.FilmSubtitles1))
+            {
+                <meta itemprop="subtitleLanguage" content="@Model.FilmSubtitles1" />
+            }
+
+            @if (!string.IsNullOrEmpty(Model.FilmSubtitles2))
+            {
+                <meta itemprop="subtitleLanguage" content="@Model.FilmSubtitles2" />
+            }
+            <meta itemprop="part" content="@Model.FilmPart" />
+            <meta itemprop="genre" content="@Model.FilmGenre" />
+            <meta itemprop="content_id" content="@Model.FilmFileModelId" />
+            <meta itemprop="productionCompany" content="@Model.FilmРroductionCompany" />
+            @if (!string.IsNullOrEmpty(Model.FilmDirector1))
+            {
+                <meta itemprop="director" content="@Model.FilmDirector1" />
+            }
+
+            @if (!string.IsNullOrEmpty(Model.FilmDirector2))
+            {
+                <meta itemprop="director" content="@Model.FilmDirector2" />
+            }
+
+            @if (!string.IsNullOrEmpty(Model.FilmMusicBy))
+            {
+                <meta itemprop="musicBy" content="@Model.FilmMusicBy" />
+            }
+
+            @if (!string.IsNullOrEmpty(Model.FilmActor01))
+            {
+                <meta itemprop="actor" content="@Model.FilmActor01" />
+            }
+
+            @if (!string.IsNullOrEmpty(Model.FilmActor02))
+            {
+                <meta itemprop="actor" content="@Model.FilmActor02" />
+            }
+
+            @if (!string.IsNullOrEmpty(Model.FilmActor03))
+            {
+                <meta itemprop="actor" content="@Model.FilmActor03" />
+            }
+
+            @if (!string.IsNullOrEmpty(Model.FilmActor04))
+            {
+                <meta itemprop="actor" content="@Model.FilmActor04" />
+            }
+
+            @if (!string.IsNullOrEmpty(Model.FilmActor05))
+            {
+                <meta itemprop="actor" content="@Model.FilmActor05" />
+            }
+
+            @if (!string.IsNullOrEmpty(Model.FilmActor06))
+            {
+                <meta itemprop="actor" content="@Model.FilmActor06" />
+            }
+
+            @if (!string.IsNullOrEmpty(Model.FilmActor07))
+            {
+                <meta itemprop="actor" content="@Model.FilmActor07" />
+            }
+
+            @if (!string.IsNullOrEmpty(Model.FilmActor08))
+            {
+                <meta itemprop="actor" content="@Model.FilmActor08" />
+            }
+
+            @if (!string.IsNullOrEmpty(Model.FilmActor09))
+            {
+                <meta itemprop="actor" content="@Model.FilmActor09" />
+            }
+
+            @if (!string.IsNullOrEmpty(Model.FilmActor10))
+            {
+                <meta itemprop="actor" content="@Model.FilmActor10" />
+            }
+
+            <meta itemprop="image" content="@Model.FilmImage.ImagePath/@Model.FilmImage.WebImageFileName"  />
+            <meta itemprop="playerType" content="@Model.FilmMimeType" />
+            <meta itemprop="availablePlatform" content="Desktop" />
+            <meta itemprop="availablePlatform" content="Mobile" />
+
+        </span>
+
+        <vc:view-image image-id="@Model.FilmPosterId"
+                       css-class="card-img-top shadw rounded-3"
+                       icon-type="webicon200" />
+
+    </div>
+
+</a>

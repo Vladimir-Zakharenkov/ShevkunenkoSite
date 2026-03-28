@@ -123,7 +123,7 @@
 
                         @foreach (var item in listOfFilms)
                         {
-                            <vc:view-image image-id="@item.FilmPosterId.ToString()" css-class="" icon-type="webicon200" />
+                            @await Html.PartialAsync("_LinkToFilmPartial", item)
                         }
 
                     </div>

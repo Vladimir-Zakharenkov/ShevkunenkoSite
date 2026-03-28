@@ -104,9 +104,11 @@ public class RefPages(
                     {
                         if (await filmContext.FilmFiles.Where(film => film.SearchFilterForFilm != null && film.SearchFilterForFilm.Contains(videoFilterOut[i])).AnyAsync())
                         {
-                            var listOfFilm = await filmContext.FilmFiles.Where(film => film.SearchFilterForFilm != null && film.SearchFilterForFilm.Contains(videoFilterOut[i] + ',')).ToListAsync();
+                            var listOfFilm = await filmContext.FilmFiles
+                                .Where(film => film.SearchFilterForFilm != null && film.SearchFilterForFilm.Contains(videoFilterOut[i] + ','))
+                                .ToListAsync();
 
-                            _ = listOfFilm.Distinct();
+                            _ = listOfFilm.Distinct().OrderBy(film => film.FilmDatePublished);
 
                             refsUnderPage.DictionaryOfFilms[videoFilterOut[i]] = listOfFilm;
                         }

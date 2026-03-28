@@ -35,7 +35,7 @@
 					<a asp-area=""
 					   asp-controller="Books"
 					   asp-action="PhotoAlbum"
-					   asp-route-albumCaption="@Model.CaptionOfAlbum"
+					   asp-route-albumCaption="@Model.CaptionOfAlbum.Trim()"
 					   asp-route-imageId="@imageItem.ImageFileModelId"
 					   title="смотреть фото">
 

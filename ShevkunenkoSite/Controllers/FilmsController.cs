@@ -1,5 +1,4 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using System.Runtime.Intrinsics.X86;
 
 namespace ShevkunenkoSite.Controllers
 {
@@ -145,11 +144,11 @@ namespace ShevkunenkoSite.Controllers
         #region Кадры фильма
 
         [HttpGet]
-        public async Task<IActionResult> PhotoAlbum(Guid? imageId, string? albumCaption, int pageNumber = 1)
+        public async Task<IActionResult> FilmPhotoAlbum(Guid? imageId, string? filmCaption, int pageNumber = 1)
         {
             #region Если не задан или не найден фильм по filmCaption
 
-            if (string.IsNullOrEmpty(albumCaption) || await filmContext.FilmFiles.Where(film => film.FilmCaption == albumCaption).AnyAsync() == false)
+            if (string.IsNullOrEmpty(filmCaption) || await filmContext.FilmFiles.Where(film => film.FilmCaption == filmCaption.Trim()).AnyAsync() == false)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -160,7 +159,7 @@ namespace ShevkunenkoSite.Controllers
 
             if (imageId != null && await imageContext.ImageFiles.Where(img => img.ImageFileModelId == imageId).AnyAsync() == false)
             {
-                return RedirectToAction(nameof(Film), new { albumCaption });
+                return RedirectToAction(nameof(Film), new { filmCaption });
             }
 
             #endregion
@@ -175,9 +174,9 @@ namespace ShevkunenkoSite.Controllers
 
             #region Если нельзя найти картинки по filmCaption
 
-            if (await imageContext.ImageFiles.Where(img => img.SearchFilter.Contains(albumCaption + album)).AnyAsync() == false)
+            if (await imageContext.ImageFiles.Where(img => img.SearchFilter.Contains(filmCaption + album)).AnyAsync() == false)
             {
-                return RedirectToAction(nameof(Film), new { albumCaption });
+                return RedirectToAction(nameof(Film), new { filmCaption });
             }
 
             #endregion
@@ -210,7 +209,7 @@ namespace ShevkunenkoSite.Controllers
                 {
                     #region Определение заголовка и подзаголовка альбома
 
-                    string[] filters = imageItem.SearchFilter.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                    string[] filters = imageItem.SearchFilter.Split(',', StringSplitOptions.TrimEntries);
 
                     string? filterForCaption = Array.Find(filters, p => p.Contains(album));
 
@@ -302,7 +301,7 @@ namespace ShevkunenkoSite.Controllers
                 #region Массив картинок по определенному названию альбома
 
                 var allItems = from m in imageContext.ImageFiles
-                   .Where(p => p.SearchFilter.Contains(albumCaption + album))
+                   .Where(p => p.SearchFilter.Contains(filmCaption + album))
                    .OrderBy(p => p.SortOfPicture)
                                select m;
 
@@ -319,7 +318,7 @@ namespace ShevkunenkoSite.Controllers
                 if (pageNumber < 1
                     || pageNumber > (arrayOfItems.Length % photoAlbumView.ItemsPerPage == 0 ? (arrayOfItems.Length / photoAlbumView.ItemsPerPage) : (arrayOfItems.Length / photoAlbumView.ItemsPerPage + 1)))
                 {
-                    return RedirectToAction(nameof(PhotoAlbum), new { pageNumber = 1 });
+                    return RedirectToAction(nameof(FilmPhotoAlbum), new { pageNumber = 1 });
                 }
 
                 #endregion
@@ -337,7 +336,7 @@ namespace ShevkunenkoSite.Controllers
 
                 #region Определение заголовка и подзаголовка альбома
 
-                string[] filters = itemsOnPage[0].SearchFilter.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                string[] filters = itemsOnPage[0].SearchFilter.Split(',', StringSplitOptions.TrimEntries);
 
                 string? filterForCaption = Array.Find(filters, p => p.Contains(album));
 

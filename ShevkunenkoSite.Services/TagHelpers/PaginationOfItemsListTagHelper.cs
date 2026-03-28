@@ -33,8 +33,20 @@ public class PaginationOfItemsListTagHelper(IUrlHelperFactory helperFactory) : T
                             newRef.Attributes["href"] = urlHelper.Action(actionValue.ToString(),
                             new
                             {
-                                pageNumber = i,
                                 albumCaption = AlbumCaption,
+                                pageNumber = i,
+                                imageId = string.Empty
+                            });
+
+                            newRef.Attributes["title"] = "страница " + i;
+                        }
+                        else if (actionValue.ToString() == "FilmPhotoAlbum")
+                        {
+                            newRef.Attributes["href"] = urlHelper.Action(actionValue.ToString(),
+                            new
+                            {
+                                filmCaption = AlbumCaption,
+                                pageNumber = i,
                                 imageId = string.Empty
                             });
 

@@ -65,11 +65,11 @@
     <div class="col-12 col-md-6 col-lg-8 mb-2">
 
         <form method="get"
-            asp-area=""
-            asp-controller="Films"
-            asp-action="Index"
-            asp-route-pageNumber="1"
-            class="text-center text-md-end mt-md-2">
+              asp-area=""
+              asp-controller="Films"
+              asp-action="Index"
+              asp-route-pageNumber="1"
+              class="text-center text-md-end mt-md-2">
 
             <input asp-for="SearchString"
                    class="d-inline-block align-middle mt-1 w-50"
@@ -110,7 +110,7 @@
 
                     @if (!string.IsNullOrEmpty(film.FilmCaption))
                     {
-                        <p class="card-title lh-1 fontadaptive my-1 mt-2">@film.FilmCaption</p>
+                        <p class="card-title lh-1 fontadaptive my-1 mt-2">@film.FilmCaption.Replace("--", " ")</p>
                     }
                     else
                     {
