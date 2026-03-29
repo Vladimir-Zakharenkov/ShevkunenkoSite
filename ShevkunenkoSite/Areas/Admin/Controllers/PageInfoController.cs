@@ -622,7 +622,7 @@ public class PageInfoController(
                 {
                     newPage.PageTitle = "Николай Модестов «Следствие продолжается» страница " + (addPage.SortOfPage - 1).ToString();
 
-                    newPage.PageDescription = addPage.PageTitle + ".";
+                    newPage.PageDescription = newPage.PageTitle + ".";
 
                     newPage.PageKeyWords = "Следствие продолжается, Николай Модестов, криминал, 90-е годы,";
                 }
@@ -647,7 +647,7 @@ public class PageInfoController(
                 newPage.OgType = addPage.OgType.Trim();
             }
 
-            if (addPage.PageTitle.Contains("Следствие продолжается", StringComparison.InvariantCultureIgnoreCase))
+            if (addPage.TextFileFormFile != null && addPage.TextFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-", StringComparison.InvariantCultureIgnoreCase))
             {
                 newPage.OgType = "book";
             }
@@ -657,6 +657,11 @@ public class PageInfoController(
             #region Иконка страницы
 
             newPage.IconTypeModelId = addPage.IconTypeModelId;
+
+            if (addPage.TextFileFormFile != null && addPage.TextFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-", StringComparison.InvariantCultureIgnoreCase))
+            {
+                newPage.IconTypeModelId = new("56502785-C13D-4AFA-8E47-08DE7D26AC08");
+            }
 
             #endregion
 
@@ -1080,7 +1085,7 @@ public class PageInfoController(
             }
             else
             {
-                if (addPage.PageTitle.Contains("Следствие продолжается", StringComparison.InvariantCultureIgnoreCase))
+                if (addPage.TextFileFormFile != null && addPage.TextFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-", StringComparison.InvariantCultureIgnoreCase))
                 {
                     newPage.Controller = "/books";
                 }
@@ -1100,7 +1105,7 @@ public class PageInfoController(
             }
             else
             {
-                if (addPage.PageTitle.Contains("Следствие продолжается", StringComparison.InvariantCultureIgnoreCase))
+                if (addPage.TextFileFormFile != null && addPage.TextFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-", StringComparison.InvariantCultureIgnoreCase))
                 {
                     newPage.Action = "/book";
                 }
@@ -1158,11 +1163,16 @@ public class PageInfoController(
                 newPage.PageLoc = "/" + addPage.Action.Trim().ToLower();
             }
 
+            if (addPage.TextFileFormFile != null && addPage.TextFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-", StringComparison.InvariantCultureIgnoreCase))
+            {
+                newPage.PageLoc = "/book";
+            }
+
             #endregion
 
             #region Данные (RoutData)
 
-            if (addPage.PageTitle.Contains("Следствие продолжается", StringComparison.InvariantCultureIgnoreCase))
+            if (addPage.TextFileFormFile != null && addPage.TextFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-", StringComparison.InvariantCultureIgnoreCase))
             {
                 newPage.RoutData = "?bookcaption=следствие-продолжается&pagenumber=" + (addPage.SortOfPage - 1).ToString();
             }
@@ -1179,7 +1189,7 @@ public class PageInfoController(
 
             #region Псевдоним страницы (1)
 
-            if (addPage.PageTitle.Contains("Следствие продолжается", StringComparison.InvariantCultureIgnoreCase))
+            if (addPage.TextFileFormFile != null && addPage.TextFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-", StringComparison.InvariantCultureIgnoreCase))
             {
                 newPage.PagePathNickName = "/%D0%BA%D0%BD%D0%B8%D0%B3%D0%B0/%D1%81%D0%BB%D0%B5%D0%B4%D1%81%D1%82%D0%B2%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B4%D0%BE%D0%BB%D0%B6%D0%B0%D0%B5%D1%82%D1%81%D1%8F/%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0-" + (addPage.SortOfPage - 1).ToString();
             }
@@ -1438,13 +1448,6 @@ public class PageInfoController(
 
             newPage.PageLinksByFilters = addPage.PageLinksByFilters;
 
-            if (addPage.PageTitle.Contains("Следствие продолжается", StringComparison.InvariantCultureIgnoreCase))
-            {
-                newPage.PageFilterOut = "Книги Николая Модестова, Книги о Сергее Шевкуненко,";
-
-                newPage.PageLinksByFilters = true;
-            }
-
             if (addPage.PageFilterOut != null)
             {
                 newPage.PageFilterOut = addPage.PageFilterOut.Trim();
@@ -1452,6 +1455,13 @@ public class PageInfoController(
             else
             {
                 newPage.PageFilterOut = null;
+            }
+
+            if (addPage.TextFileFormFile != null && addPage.TextFileFormFile.FileName.Contains("sledstvie-prodoljaetsya-", StringComparison.InvariantCultureIgnoreCase))
+            {
+                newPage.PageFilterOut = "Книги Николая Модестова, Книги о Сергее Шевкуненко,";
+
+                newPage.PageLinksByFilters = true;
             }
 
             #endregion

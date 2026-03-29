@@ -133,7 +133,17 @@ public class BooksController(
 
             articleViewModel.ListOfPictures = [.. listOfPictures.AsEnumerable().Shuffle()];
 
-            if (articleViewModel.ListOfPictures.Count >= (DataConfig.NumberOfPicturesAround + DataConfig.NumberOfPicturesAround))
+            if (articleViewModel.ListOfPictures.Count > 1 && articleViewModel.ListOfPictures.Count < DataConfig.NumberOfPicturesAround * 2)
+            {
+                articleViewModel.FramesAroundMainContent = new FramesAroundMainContentModel
+                {
+                    FramesOnTheLeft = [.. articleViewModel.ListOfPictures.Take(articleViewModel.ListOfPictures.Count / 2)],
+                    FramesOnTheRight = [.. articleViewModel.ListOfPictures.Skip(articleViewModel.ListOfPictures.Count / 2)]
+                };
+
+                articleViewModel.ShowPicturesAround = true;
+            }
+            else if (articleViewModel.ListOfPictures.Count >= DataConfig.NumberOfPicturesAround * 2)
             {
                 articleViewModel.FramesAroundMainContent = new FramesAroundMainContentModel
                 {
@@ -147,8 +157,8 @@ public class BooksController(
             {
                 articleViewModel.FramesAroundMainContent = new FramesAroundMainContentModel
                 {
-                    FramesOnTheLeft = [],
-                    FramesOnTheRight = []
+                    FramesOnTheLeft = articleViewModel.ListOfPictures,
+                    FramesOnTheRight = articleViewModel.ListOfPictures
                 };
             }
         }
@@ -378,7 +388,7 @@ public class BooksController(
 
         #endregion
 
-        #region Если нельзя найти картинку по указанному названию альбома
+        #region Если нельзя найти картинки по указанному названию альбома
 
         if (albumCaption != null & await imageFileContext.ImageFiles
                     .Where(img => img.SearchFilter.Contains(albumCaption + album)).AnyAsync() == false)
@@ -416,7 +426,7 @@ public class BooksController(
             {
                 #region Определение заголовка и подзаголовка альбома
 
-                string[] filters = imageItem.SearchFilter.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                string[] filters = imageItem.SearchFilter.Split(',', StringSplitOptions.TrimEntries);
 
                 string? filterForCaption = Array.Find(filters, p => p.Contains(album));
 
