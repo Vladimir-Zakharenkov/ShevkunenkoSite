@@ -12161,25 +12161,10 @@ body {
   hyphens: auto;
   /* перенос слова не менее 6 букв, не менее 3 букв до преноса, не менее 3 букв на следующей строке*/
   -ms-hyphenate-limit-chars: 6 3 3;
-  /* -webkit-hyphenate-limit-chars: 6 3 3;
-   -moz-hyphenate-limit-chars: 6 3 3;
-   -o-hyphenate-limit-chars: 6 3 3;
-   -webkit-hyphenate-limit-before: 3;
-   -webkit-hyphenate-limit-after: 3;
-   hyphenate-limit-chars: 6 3 3;*/
+  /* -webkit-hyphenate-limit-chars: 6 3 3; -moz-hyphenate-limit-chars: 6 3 3; -o-hyphenate-limit-chars: 6 3 3; -webkit-hyphenate-limit-before: 3; -webkit-hyphenate-limit-after: 3; hyphenate-limit-chars: 6 3 3;*/
   /*ограничить количество строк подряд с переносами*/
-  -ms-hyphenate-limit-lines: 2;
-  /* -webkit-hyphenate-limit-lines: 2;
-  -moz-hyphenate-limit-lines: 2;
-  -o-hyphenate-limit-lines: 2;
-  hyphenate-limit-lines: 2;*/
-  /*запрет переноса последнего слова в абзаце */
-  /*-ms-hyphenate-limit-last: always;
-  -webkit-hyphenate-limit-last: always;
-  -moz-hyphenate-limit-last: always;
-  -o-hyphenate-limit-last: always;
-  hyphenate-limit-last: always;
-   hyphenate-limit-zone: 8% */
+  -ms-hyphenate-limit-lines: 2; /* -webkit-hyphenate-limit-lines: 2; -moz-hyphenate-limit-lines: 2; -o-hyphenate-limit-lines: 2; hyphenate-limit-lines: 2;*/
+  /*запрет переноса последнего слова в абзаце */ /*-ms-hyphenate-limit-last: always; -webkit-hyphenate-limit-last: always; -moz-hyphenate-limit-last: always; -o-hyphenate-limit-last: always; hyphenate-limit-last: always;  hyphenate-limit-zone: 8% */
 }
 
 .shadw {
@@ -12362,8 +12347,7 @@ a:active, .dropdown:active {
 .cardborder a:hover, .borderforitem:hover {
   border: 3px ridge rgba(194, 10, 41, 0.9);
   opacity: 0.8;
-  transition: all 0.6s ease-in-out;
-  /*color: rgba(194, 10, 41, 0.9);*/
+  transition: all 0.6s ease-in-out; /*color: rgba(194, 10, 41, 0.9);*/
 }
 
 #MovieIsFamilyFriendlyInput, #MovieAdultInput, #MovieInMainListInput {
@@ -12728,20 +12712,13 @@ li#yandex-search * {
 
 /* градиент кнопок навигации */
 .nav_old_site a {
-  background: hsla(330, 0%, 20%, 0.6);
-  /* FF3.6+ */
-  background: -moz-linear-gradient(top, hsl(11, 90%, 50%) 0%, hsl(9, 86%, 55%) 10%, hsl(13, 33%, 16%) 40%, hsl(0, 67%, 1%) 50%, hsl(13, 33%, 16%) 60%, hsl(9, 86%, 55%) 90%, hsl(11, 90%, 50%) 100%);
-  /* Chrome,Safari4+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, hsl(11, 90%, 50%)), color-stop(10%, hsl(9, 86%, 55%)), color-stop(40%, hsl(13, 33%, 16%)), color-stop(50%, hsl(0, 67%, 1%)), color-stop(60%, hsl(13, 33%, 16%)), color-stop(90%, hsl(9, 86%, 55%)), color-stop(100%, hsl(11, 90%, 50%)));
-  /* Chrome10+,Safari5.1+ */
-  background: -webkit-linear-gradient(top, hsl(11, 90%, 50%) 0%, hsl(9, 86%, 55%) 10%, hsl(13, 33%, 16%) 40%, hsl(0, 67%, 1%) 50%, hsl(13, 33%, 16%) 60%, hsl(9, 86%, 55%) 90%, hsl(11, 90%, 50%) 100%);
-  /* Opera 11.10+ */
-  background: -o-linear-gradient(top, hsl(11, 90%, 50%) 0%, hsl(9, 86%, 55%) 10%, hsl(13, 33%, 16%) 40%, hsl(0, 67%, 1%) 50%, hsl(13, 33%, 16%) 60%, hsl(9, 86%, 55%) 90%, hsl(11, 90%, 50%) 100%);
-  /* IE10+ */
-  background: -ms-linear-gradient(top, hsl(11, 90%, 50%) 0%, hsl(9, 86%, 55%) 10%, hsl(13, 33%, 16%) 40%, hsl(0, 67%, 1%) 50%, hsl(13, 33%, 16%) 60%, hsl(9, 86%, 55%) 90%, hsl(11, 90%, 50%) 100%);
-  /* W3C */
-  background: linear-gradient(to bottom, hsl(11, 90%, 50%) 0%, hsl(9, 86%, 55%) 10%, hsl(13, 33%, 16%) 40%, hsl(0, 67%, 1%) 50%, hsl(13, 33%, 16%) 60%, hsl(9, 86%, 55%) 90%, hsl(11, 90%, 50%) 100%);
-  /* IE6-9 */
+  background: hsla(330, 0%, 20%, 0.6); /* FF3.6+ */
+  background: -moz-linear-gradient(top, hsl(11, 90%, 50%) 0%, hsl(9, 86%, 55%) 10%, hsl(13, 33%, 16%) 40%, hsl(0, 67%, 1%) 50%, hsl(13, 33%, 16%) 60%, hsl(9, 86%, 55%) 90%, hsl(11, 90%, 50%) 100%); /* Chrome,Safari4+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, hsl(11, 90%, 50%)), color-stop(10%, hsl(9, 86%, 55%)), color-stop(40%, hsl(13, 33%, 16%)), color-stop(50%, hsl(0, 67%, 1%)), color-stop(60%, hsl(13, 33%, 16%)), color-stop(90%, hsl(9, 86%, 55%)), color-stop(100%, hsl(11, 90%, 50%))); /* Chrome10+,Safari5.1+ */
+  background: -webkit-linear-gradient(top, hsl(11, 90%, 50%) 0%, hsl(9, 86%, 55%) 10%, hsl(13, 33%, 16%) 40%, hsl(0, 67%, 1%) 50%, hsl(13, 33%, 16%) 60%, hsl(9, 86%, 55%) 90%, hsl(11, 90%, 50%) 100%); /* Opera 11.10+ */
+  background: -o-linear-gradient(top, hsl(11, 90%, 50%) 0%, hsl(9, 86%, 55%) 10%, hsl(13, 33%, 16%) 40%, hsl(0, 67%, 1%) 50%, hsl(13, 33%, 16%) 60%, hsl(9, 86%, 55%) 90%, hsl(11, 90%, 50%) 100%); /* IE10+ */
+  background: -ms-linear-gradient(top, hsl(11, 90%, 50%) 0%, hsl(9, 86%, 55%) 10%, hsl(13, 33%, 16%) 40%, hsl(0, 67%, 1%) 50%, hsl(13, 33%, 16%) 60%, hsl(9, 86%, 55%) 90%, hsl(11, 90%, 50%) 100%); /* W3C */
+  background: linear-gradient(to bottom, hsl(11, 90%, 50%) 0%, hsl(9, 86%, 55%) 10%, hsl(13, 33%, 16%) 40%, hsl(0, 67%, 1%) 50%, hsl(13, 33%, 16%) 60%, hsl(9, 86%, 55%) 90%, hsl(11, 90%, 50%) 100%); /* IE6-9 */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#f2380e", endColorstr="#f2380e",GradientType=0 );
   background-size: 100% 200%;
 }
