@@ -1,11 +1,5 @@
-﻿.cardborder a, .borderforitem {
-    border: 3px ridge transparent;
-    transition: all .6s ease-in-out;
-    color: black;
+﻿.cardborder a, .borderforitem { border: 3px ridge transparent; transition: all .6s ease-in-out; color: black;
 }
 
-.cardborder a:hover, .borderforitem:hover {
-    border: 3px ridge rgba(194, 10, 41, 0.9);
-    opacity: .8;
-    transition: all .6s ease-in-out; /*color: rgba(194, 10, 41, 0.9);*/
+.cardborder a:hover, .borderforitem:hover { border: 3px ridge rgba(194, 10, 41, 0.9); opacity: .8; transition: all .6s ease-in-out; /*color: rgba(194, 10, 41, 0.9);*/
 }

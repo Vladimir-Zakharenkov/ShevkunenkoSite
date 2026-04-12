@@ -1,54 +1,26 @@
 ﻿/* Кнопка «Поделиться» */
-.ya-share2__item_more.ya-share2__item_has-pretty-view .ya-share2__link_more {
-    background: rgba(0,0,0,0.00) !important;
-    border-color: transparent !important;
-    border-radius: 0px !important;
-    padding: 1px .4rem !important;
-    font-family: "Times New Roman",Times,serif !important;
-    font-size: 1.1rem !important;
-    margin-bottom: 0 !important;
+.ya-share2__item_more.ya-share2__item_has-pretty-view .ya-share2__link_more { background: rgba(0,0,0,0.00) !important; border-color: transparent !important; border-radius: 0px !important; padding: 1px .4rem !important; font-family: "Times New Roman",Times,serif !important; font-size: 1.1rem !important; margin-bottom: 0 !important;
 }
 
 /* Меню ссылок */
-.ya-share2__popup {
-    background-color: rgba(0,0,0,0.00) !important;
-    padding-left: 1rem;
+.ya-share2__popup { background-color: rgba(0,0,0,0.00) !important; padding-left: 1rem;
 }
 
-.ya-share2__container_size_m .ya-share2__popup:not(.ya-share2__popup_mobile) {
-    border-radius: 0;
-    box-shadow: 0px 8px 24px rgba(0,0,0,0.00), 0px 0px 4px rgba(0,0,0,0.0) !important;
+.ya-share2__container_size_m .ya-share2__popup:not(.ya-share2__popup_mobile) { border-radius: 0; box-shadow: 0px 8px 24px rgba(0,0,0,0.00), 0px 0px 4px rgba(0,0,0,0.0) !important;
 }
 
-.ya-share2__popup_list-direction_horizontal {
-    left: -10px !important;
+.ya-share2__popup_list-direction_horizontal { left: -10px !important;
 }
 
 /* Кнопки соц сетей */
-.ya-share2__container_size_m .ya-share2__popup:not(.ya-share2__popup_mobile) .ya-share2__item, .ya-share2__container_size_m.ya-share2__container_as-popup .ya-share2__item {
-    max-width: max-content;
-    border-radius: .2rem !important;
-    padding-right: .27rem !important;
-    padding-left: .27rem !important;
-    background: rgba(230, 230, 230, 1) !important;
-    border: 2px ridge #dee2e6 !important;
-    font-family: "Times New Roman",Times,serif !important;
-    font-size: 1.1rem;
-    transition: all .3s ease-in-out;
+.ya-share2__container_size_m .ya-share2__popup:not(.ya-share2__popup_mobile) .ya-share2__item, .ya-share2__container_size_m.ya-share2__container_as-popup .ya-share2__item { max-width: max-content; border-radius: .2rem !important; padding-right: .27rem !important; padding-left: .27rem !important; background: rgba(230, 230, 230, 1) !important; border: 2px ridge #dee2e6 !important; font-family: "Times New Roman",Times,serif !important; font-size: 1.1rem; transition: all .3s ease-in-out;
 }
 
-.ya-share2__container_size_m .ya-share2__popup:not(.ya-share2__popup_mobile) .ya-share2__item:hover, .ya-share2__container_size_m.ya-share2__container_as-popup .ya-share2__item {
-    border-color: darkred !important;
+.ya-share2__container_size_m .ya-share2__popup:not(.ya-share2__popup_mobile) .ya-share2__item:hover, .ya-share2__container_size_m.ya-share2__container_as-popup .ya-share2__item { border-color: darkred !important;
 }
 
-.ya-share2__list.ya-share2__list_direction_vertical > .ya-share2__item:first-child {
-    margin-top: -2px !important;
+.ya-share2__list.ya-share2__list_direction_vertical > .ya-share2__item:first-child { margin-top: -2px !important;
 }
 
-.ya-share2__list.ya-share2__list_direction_vertical > .ya-share2__item {
-    margin-bottom: .3rem !important;
-    display: inline-block !important;
-    width: contain !important;
-    background: rgba(0,0,0,0.03) !important;
-    box-shadow: 0 15px 10px -10px hsla(350deg,60%,0%,.5),0 1px 4px hsla(350deg,60%,0%,.3),0 0 40px hsla(350deg,60%,0%,.1) inset !important;
+.ya-share2__list.ya-share2__list_direction_vertical > .ya-share2__item { margin-bottom: .3rem !important; display: inline-block !important; width: contain !important; background: rgba(0,0,0,0.03) !important; box-shadow: 0 15px 10px -10px hsla(350deg,60%,0%,.5),0 1px 4px hsla(350deg,60%,0%,.3),0 0 40px hsla(350deg,60%,0%,.1) inset !important;
 }

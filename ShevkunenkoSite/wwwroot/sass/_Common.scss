@@ -2,80 +2,39 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Philosopher&display=swap');
 
-@media screen {
-    html {
-        width: 100%;
-        height: 100%;
-    }
+@media screen { html {     width: 100%;     height: 100%; }
 }
 
-@media print {
-    html {
-        margin-left: 1cm;
-    }
+@media print { html {     margin-left: 1cm; }
 }
 
-@media screen {
-    body {
-        font-family: 'Philosopher', sans-serif;
-    }
+@media screen { body {     font-family: 'Philosopher', sans-serif; }
 }
 
-@media print {
-    body {
-        font-family: Times, 'Times New Roman', serif;
-        font-size: 14pt;
-    }
+@media print { body {     font-family: Times, 'Times New Roman', serif;     font-size: 14pt; }
 }
 
-@media screen {
-    .container-fluid-1920 {
-        max-width: 1920px;
-        min-width: 320px;
-    }
+@media screen { .container-fluid-1920 {     max-width: 1920px;     min-width: 320px; }
 }
 
-@media print {
-    .container-fluid-1920 {
-        width: 100%;
-        height: 100%;
-    }
+@media print { .container-fluid-1920 {     width: 100%;     height: 100%; }
 }
 
 /* тег hr */
-.liniya {
-    width: 96%;
-    height: 1px !important;
-    color: hsla(330,60%,45%,.9);
-    border-color: hsla(0,90%,40%,.9);
-    box-shadow: .1em .1em .1em hsla(0,0%,0%,.6);
-    opacity: .9 !important;
-    margin: 0.5rem auto;
+.liniya { width: 96%; height: 1px !important; color: hsla(330,60%,45%,.9); border-color: hsla(0,90%,40%,.9); box-shadow: .1em .1em .1em hsla(0,0%,0%,.6); opacity: .9 !important; margin: 0.5rem auto;
 }
 
-.footer-image img {
-    border-width: 0 !important;
+.footer-image img { border-width: 0 !important;
 }
 
-.footer-image a:hover {
-    text-decoration: none;
+.footer-image a:hover { text-decoration: none;
 }
 
-@media screen {
-    .fotoplenka {
-        background-size: 100% auto;
-        background-repeat: repeat-y;
-        background-position: center;
-        background-position: top;
-    }
+@media screen { .fotoplenka {     background-size: 100% auto;     background-repeat: repeat-y;     background-position: center;     background-position: top; }
 }
 
-@media print {
-    .fotoplenka {
-        display: none;
-    }
+@media print { .fotoplenka {     display: none; }
 }
 
-.ten {
-    box-shadow: .5rem .4rem .4rem hsla(0,0%,0%,.6);
+.ten { box-shadow: .5rem .4rem .4rem hsla(0,0%,0%,.6);
 }

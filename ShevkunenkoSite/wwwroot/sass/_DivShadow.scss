@@ -2,62 +2,27 @@
 $shadow-bottom-right: hsla(0,0%,40%,1);
 $shadow-top-left: hsla(0,70%,100%,1);
 
-.shadw {
-    background: $shadow-background;
-    box-shadow: 0 15px 10px -10px hsla(350,60%,0%,.5), 0 1px 4px hsla(350,60%,0%,.3), 0 0 40px hsla(350,60%,0%,.1) inset;
-    border-right: 1px ridge $shadow-bottom-right;
-    border-bottom: 1px ridge $shadow-bottom-right;
-    border-top: 1px ridge $shadow-top-left;
-    border-left: 1px ridge $shadow-top-left;
+.shadw { background: $shadow-background; box-shadow: 0 15px 10px -10px hsla(350,60%,0%,.5), 0 1px 4px hsla(350,60%,0%,.3), 0 0 40px hsla(350,60%,0%,.1) inset; border-right: 1px ridge $shadow-bottom-right; border-bottom: 1px ridge $shadow-bottom-right; border-top: 1px ridge $shadow-top-left; border-left: 1px ridge $shadow-top-left;
 }
 
-.shadw:after {
-    content: "";
-    position: absolute;
-    z-index: -2;
+.shadw:after { content: ""; position: absolute; z-index: -2;
 }
 
-.lay1 {
-    position: relative;
-    background: hsla(0,50%,99%,1);
-    box-shadow: 0 15px 10px -10px hsla(180,60%,0%,.5), 0 1px 4px hsla(180,60%,0%,.3), 0 0 40px hsla(180,60%,0%,.1) inset;
-    border-right: 1px ridge hsla(0,0%,40%,1);
-    border-bottom: 1px ridge hsla(0,0%,40%,1);
-    border-top: 1px ridge hsla(0,70%,100%,1);
-    border-left: 1px ridge hsla(0,70%,100%,1);
+.lay1 { position: relative; background: hsla(0,50%,99%,1); box-shadow: 0 15px 10px -10px hsla(180,60%,0%,.5), 0 1px 4px hsla(180,60%,0%,.3), 0 0 40px hsla(180,60%,0%,.1) inset; border-right: 1px ridge hsla(0,0%,40%,1); border-bottom: 1px ridge hsla(0,0%,40%,1); border-top: 1px ridge hsla(0,70%,100%,1); border-left: 1px ridge hsla(0,70%,100%,1);
 }
 
-.lay1:before, .lay1:after {
-    content: "";
-    position: absolute;
-    z-index: -2;
+.lay1:before, .lay1:after { content: ""; position: absolute; z-index: -2;
 }
 
-@media print {
-    .shadw {
-        background: none;
-        box-shadow: none;
-        border-right: none;
-        border-bottom: none;
-        border-top: none;
-        border-left: none;
-    }
+@media print { .shadw {     background: none;     box-shadow: none;     border-right: none;     border-bottom: none;     border-top: none;     border-left: none; }
 }
 
-@media print {
-    .shadw:after, .shadw:before {
-        content: none;
-        position: relative;
-        z-index: auto;
-    }
+@media print { .shadw:after, .shadw:before {     content: none;     position: relative;     z-index: auto; }
 }
 
 // реверс фона и текста
 .stranicy {
 }
 
-.stranicy:hover {
-    color: hsla(1,60%,100%,1) !important;
-    background-color: hsla(240, 60%, 50%,1) !important;
-    transition: all .5s ease;
+.stranicy:hover { color: hsla(1,60%,100%,1) !important; background-color: hsla(240, 60%, 50%,1) !important; transition: all .5s ease;
 }

@@ -1,244 +1,156 @@
-﻿.height400 {
-    height: 400px !important;
+﻿.height400 { height: 400px !important;
 }
 
-.height600 {
-    height: 600px;
+.height600 { height: 600px;
 }
 
-.height850 {
-    position: relative;
-    height: 850px;
+.height850 { position: relative; height: 850px;
 }
 
-.height1000 {
-    height: 1000px;
+.height1000 { height: 1000px;
 }
 
-.width40px {
-    width: 40px !important;
+.width40px { width: 40px !important;
 }
 
-.width50px {
-    width: 50px !important;
+.width50px { width: 50px !important;
 }
 
-.width60px {
-    width: 60px !important;
+.width60px { width: 60px !important;
 }
 
-.width80px {
-    width: 80px !important;
+.width80px { width: 80px !important;
 }
 
-.width100px {
-    width: 100px !important;
+.width100px { width: 100px !important;
 }
 
-@media screen {
-    .minheight900 {
-        min-height: 900px;
-    }
+@media screen { .minheight900 {     min-height: 900px; }
 }
 
-@media print {
-    .minheight900 {
-        min-height: 21cm;
-    }
+@media print { .minheight900 {     min-height: 21cm; }
 }
 
-.width12percent {
-    max-width: 12%;
+.width12percent { max-width: 12%;
 }
 
-.maxwidthcontent {
-    max-width: max-content;
+.maxwidthcontent { max-width: max-content;
 }
 
-.maxwidth28percent {
-    max-width: 28%;
+.maxwidth28percent { max-width: 28%;
 }
 
-.maxwidth50percent {
-    max-width: 50%;
+.maxwidth50percent { max-width: 50%;
 }
 
-.maxwidth80percent {
-    max-width: 80%;
+.maxwidth80percent { max-width: 80%;
 }
 
-.maxwidth90percent {
-    max-width: 90%;
+.maxwidth90percent { max-width: 90%;
 }
 
-.width70percent {
-    width: 70%;
+.width70percent { width: 70%;
 }
 
-.width50percent {
-    max-width: 50%;
+.width50percent { max-width: 50%;
 }
 
-.width30percent {
-    width: 30%;
-    min-width: 180px;
+.width30percent { width: 30%; min-width: 180px;
 }
 
-.minwidth30px {
-    min-width: 30px !important;
+.minwidth30px { min-width: 30px !important;
 }
 
-.width9percent {
-    min-width: 9% !important;
+.width9percent { min-width: 9% !important;
 }
 
-.minwidth40px {
-    min-width: 40px !important;
+.minwidth40px { min-width: 40px !important;
 }
 
-.minwidth50px {
-    min-width: 50px;
+.minwidth50px { min-width: 50px;
 }
 
-.minwidth60px {
-    min-width: 60px;
+.minwidth60px { min-width: 60px;
 }
 
-.minwidth100px {
-    min-width: 100px;
+.minwidth100px { min-width: 100px;
 }
 
-.minwidth300px {
-    min-width: 300px;
+.minwidth300px { min-width: 300px;
 }
 
-.maxwidth40px {
-    max-width: 40px !important;
+.maxwidth40px { max-width: 40px !important;
 }
 
-.maxwidth60px {
-    max-width: 60px !important;
+.maxwidth60px { max-width: 60px !important;
 }
 
-.maxwidth100px {
-    max-width: 100px;
+.maxwidth100px { max-width: 100px;
 }
 
-.maxwidth200px {
-    max-width: 200px;
+.maxwidth200px { max-width: 200px;
 }
 
-.maxwidth300px {
-    max-width: 300px;
+.maxwidth300px { max-width: 300px;
 }
 
-.maxwidth400px {
-    max-width: 400px;
+.maxwidth400px { max-width: 400px;
 }
 
 
-.maxwidth600px {
-    max-width: 600px;
+.maxwidth600px { max-width: 600px;
 }
 
-.maxwidth700px {
-    max-width: 700px;
+.maxwidth700px { max-width: 700px;
 }
 
-.maxwidth800px {
-    max-width: 800px;
+.maxwidth800px { max-width: 800px;
 }
 
-.maxwidth900px {
-    max-width: 900px;
+.maxwidth900px { max-width: 900px;
 }
 
-@media only screen and (max-width: 767px) {
-    .foto-around {
-        height: 0;
-    }
+@media only screen and (max-width: 767px) { .foto-around {     height: 0; }
 }
 
-@media only screen and (min-width: 768px) and (max-width: 859px) {
-    .foto-around {
-        height: 470px;
-    }
+@media only screen and (min-width: 768px) and (max-width: 859px) { .foto-around {     height: 470px; }
 }
 
-@media only screen and (min-width: 860px) and (max-width: 929px) {
-    .foto-around {
-        height: 480px;
-    }
+@media only screen and (min-width: 860px) and (max-width: 929px) { .foto-around {     height: 480px; }
 }
 
-@media only screen and (min-width: 930px) and (max-width: 1049px) {
-    .foto-around {
-        height: 500px;
-    }
+@media only screen and (min-width: 930px) and (max-width: 1049px) { .foto-around {     height: 500px; }
 }
 
-@media only screen and (min-width: 1050px) and (max-width: 1099px) {
-    .foto-around {
-        height: 520px;
-    }
+@media only screen and (min-width: 1050px) and (max-width: 1099px) { .foto-around {     height: 520px; }
 }
 
-@media only screen and (min-width: 1100px) and (max-width: 1200px) {
-    .foto-around {
-        height: 540px;
-    }
+@media only screen and (min-width: 1100px) and (max-width: 1200px) { .foto-around {     height: 540px; }
 }
 
-@media only screen and (min-width: 1201px) and (max-width: 1273px) {
-    .foto-around {
-        height: 560px;
-    }
+@media only screen and (min-width: 1201px) and (max-width: 1273px) { .foto-around {     height: 560px; }
 }
 
-@media only screen and (min-width: 1274px) and (max-width: 1349px) {
-    .foto-around {
-        height: 580px;
-    }
+@media only screen and (min-width: 1274px) and (max-width: 1349px) { .foto-around {     height: 580px; }
 }
 
-@media only screen and (min-width: 1350px) and (max-width: 1399px) {
-    .foto-around {
-        height: 600px;
-    }
+@media only screen and (min-width: 1350px) and (max-width: 1399px) { .foto-around {     height: 600px; }
 }
 
-@media only screen and (min-width: 1400px) and (max-width: 1479px) {
-    .foto-around {
-        height: 620px;
-    }
+@media only screen and (min-width: 1400px) and (max-width: 1479px) { .foto-around {     height: 620px; }
 }
 
-@media only screen and (min-width: 1480px) and (max-width: 1559px) {
-    .foto-around {
-        height: 640px;
-    }
+@media only screen and (min-width: 1480px) and (max-width: 1559px) { .foto-around {     height: 640px; }
 }
 
-@media only screen and (min-width: 1560px) and (max-width: 1629px) {
-    .foto-around {
-        height: 660px;
-    }
+@media only screen and (min-width: 1560px) and (max-width: 1629px) { .foto-around {     height: 660px; }
 }
 
-@media only screen and (min-width: 1630px) and (max-width: 1709px) {
-    .foto-around {
-        height: 680px;
-    }
+@media only screen and (min-width: 1630px) and (max-width: 1709px) { .foto-around {     height: 680px; }
 }
 
-@media only screen and (min-width: 1710px) and (max-width: 1769px) {
-    .foto-around {
-        height: 700px;
-    }
+@media only screen and (min-width: 1710px) and (max-width: 1769px) { .foto-around {     height: 700px; }
 }
 
-@media only screen and (min-width: 1770px) and (max-width: 2000px) {
-    .foto-around {
-        height: 720px;
-    }
+@media only screen and (min-width: 1770px) and (max-width: 2000px) { .foto-around {     height: 720px; }
 }
