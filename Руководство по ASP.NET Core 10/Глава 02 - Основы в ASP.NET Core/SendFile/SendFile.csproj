@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NuGet.Packaging" Version="7.3.1" />
+    <PackageReference Include="NuGet.Protocol" Version="7.3.1" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="deti-arbata-01-01.webp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
