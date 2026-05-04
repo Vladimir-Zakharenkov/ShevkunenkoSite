@@ -28,7 +28,7 @@ public static class ModelStateHelpers
 
         var modelState = new ModelStateDictionary();
 
-        foreach (var item in errorList)
+        foreach (var item in errorList!)
         {
             modelState.SetModelValue(item.Key, item.RawValue, item.AttemptedValue);
 

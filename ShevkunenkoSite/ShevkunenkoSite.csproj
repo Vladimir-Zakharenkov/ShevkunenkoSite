@@ -27,7 +27,6 @@
     <PackageReference Include="NAudio.Core" Version="2.3.0" />
     <PackageReference Include="NuGet.Packaging" Version="7.3.1" />
     <PackageReference Include="NuGet.Protocol" Version="7.3.1" />
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.7" />
     <PackageReference Include="WebMarkupMin.AspNetCoreLatest" Version="2.21.0" />
   </ItemGroup>
 

@@ -13100,3 +13100,19 @@ li#yandex-search * {
     height: 720px;
   }
 }
+.note {
+  display: inline;
+  vertical-align: super;
+  font: 10pt/12pt verdana;
+  font-weight: bold;
+  color: maroon;
+}
+
+.botnote {
+  text-indent: 0;
+  font-style: italic;
+  font-size: 11pt;
+  border-top: 2px dashed maroon;
+  margin-top: 18px;
+  padding-top: 1em;
+}

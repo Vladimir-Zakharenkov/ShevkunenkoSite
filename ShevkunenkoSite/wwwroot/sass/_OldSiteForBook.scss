@@ -1,46 +1,110 @@
 ﻿/* страницы книги */
-.raised { position: relative; width: 620px; height: auto; min-height: 800px; padding: 2em 3em 2em 4em; margin: .5em auto; background-color: hsla(0,0%,100%,1); box-shadow: 0 1px 4px rgba(0,0,0,.3), 0 0 40px rgba(0,0,0,.1) inset; box-shadow: 0 15px 10px -10px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,.3), 0 0 40px rgba(0,0,0,.1) inset
+.raised {
+    position: relative;
+    width: 620px;
+    height: auto;
+    min-height: 800px;
+    padding: 2em 3em 2em 4em;
+    margin: .5em auto;
+    background-color: hsla(0,0%,100%,1);
+    box-shadow: 0 1px 4px rgba(0,0,0,.3), 0 0 40px rgba(0,0,0,.1) inset;
+    box-shadow: 0 15px 10px -10px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,.3), 0 0 40px rgba(0,0,0,.1) inset
 }
 
-.raised h2 { margin-top: 20px; margin-bottom: 20px;
+.raised h2 {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 /* подвал страницы книги: значок принтера, соц. сети, номер страницы */
-.bookfooter { display: block; width: auto; height: auto; margin: 40px auto 0; padding: 1rem .5rem; border-top: 1px solid hsla(330,60%,45%,1); text-align: center;
+.bookfooter {
+    display: block;
+    width: auto;
+    height: auto;
+    margin: 40px auto 0;
+    padding: 1rem .5rem;
+    border-top: 1px solid hsla(330,60%,45%,1);
+    text-align: center;
 }
 
 /* кнопка печати страницы */
-#pechat { display: block; width: 2rem; height: 2rem; padding: .2rem; float: left; margin-right: .5rem; background-image: url("https://shevkunenko.site/images/admin/pechat-100.webp"); background-repeat: no-repeat; background-size: contain; border: 2px ridge transparent; transition: all .6s ease
+#pechat {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    padding: .2rem;
+    float: left;
+    margin-right: .5rem;
+    background-image: url("https://shevkunenko.site/images/admin/pechat-100.webp");
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 2px ridge transparent;
+    transition: all .6s ease
 }
 
-#pechat:hover { border-color: red;
+#pechat:hover {
+    border-color: red;
 }
 
-.nvbk { width: 620px; height: auto; margin: 0.7em auto; font-weight: bold; padding: 0.5em 0; text-align: center;
+.nvbk {
+    width: 620px;
+    height: auto;
+    margin: 0.7em auto;
+    font-weight: bold;
+    padding: 0.5em 0;
+    text-align: center;
 }
 
-.nvbk a { position: relative; display: inline-block; min-width: 8em; width: max-content; font-size: 1rem; padding: 0.3em 0.5em; background: hsla(339,60%,100%,1); border: 1px solid hsla(339,60%,100%,1); box-shadow: 0 1px 4px hsla(339,60%,45%,0.3), 0 0 40px hsla(339,60%,45%,0.1) inset; box-shadow: 0 1px 4px hsla(339,60%,45%,0.3), 0 0 40px hsla(339,60%,45%,0.1) inset; transition: all 0.5s ease;
+.nvbk a {
+    position: relative;
+    display: inline-block;
+    min-width: 8em;
+    width: max-content;
+    font-size: 1rem;
+    padding: 0.3em 0.5em;
+    background: hsla(339,60%,100%,1);
+    border: 1px solid hsla(339,60%,100%,1);
+    box-shadow: 0 1px 4px hsla(339,60%,45%,0.3), 0 0 40px hsla(339,60%,45%,0.1) inset;
+    box-shadow: 0 1px 4px hsla(339,60%,45%,0.3), 0 0 40px hsla(339,60%,45%,0.1) inset;
+    transition: all 0.5s ease;
 }
 
-.nvbk a:first-child { float: left;
+.nvbk a:first-child {
+    float: left;
 }
 
-.nvbk a:last-child { float: right;
+.nvbk a:last-child {
+    float: right;
 }
 
-.cont { margin-right: 90px; margin-left: 90px
+.cont {
+    margin-right: 90px;
+    margin-left: 90px
 }
 
 /* тень */
-.nvbk a:before, .nvbk a:after { content: ""; position: absolute; z-index: -2
+.nvbk a:before, .nvbk a:after {
+    content: "";
+    position: absolute;
+    z-index: -2
 }
 
-.nvbk a:before { top: 10px; bottom: 10px; left: 0; right: 0; -webkit-box-shadow: 0 0 15px hsla(0,0%,0%,0.6); box-shadow: 0 0 15px hsla(0,0%,0%,0.6); border-radius: 10px/20px
+.nvbk a:before {
+    top: 10px;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    -webkit-box-shadow: 0 0 15px hsla(0,0%,0%,0.6);
+    box-shadow: 0 0 15px hsla(0,0%,0%,0.6);
+    border-radius: 10px/20px
 }
 
-.nvbk a:link, .nvbk a:visited { color: hsla(0,0%,0%,1)
+.nvbk a:link, .nvbk a:visited {
+    color: hsla(0,0%,0%,1)
 }
 
 /*свечение*/
-.nvbk a:hover { border: 1px solid hsla(219,60%,45%,1); box-shadow: 0 0 30px hsla(219,60%,45%,0.6), 0 0 100px hsla(339,60%,45%,0.5) inset
+.nvbk a:hover {
+    border: 1px solid hsla(219,60%,45%,1);
+    box-shadow: 0 0 30px hsla(219,60%,45%,0.6), 0 0 100px hsla(339,60%,45%,0.5) inset
 }
