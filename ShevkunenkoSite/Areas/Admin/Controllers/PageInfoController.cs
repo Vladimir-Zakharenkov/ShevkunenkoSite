@@ -36,7 +36,7 @@ public class PageInfoController(
 
         if (!searchString.IsNullOrEmpty())
         {
-            allSitePages = [.. allSitePages.PageSearch(searchString).OrderBy(sitePage => sitePage.PageTitle)];
+            allSitePages = [.. allSitePages.PageSearch(searchString).OrderBy(sitePage => sitePage.SortOfPage)];
         }
 
         ItemsListViewModel itemList = new()
