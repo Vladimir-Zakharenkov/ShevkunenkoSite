@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -41,7 +41,6 @@
     <Folder Include="Pages\Shared\Layouts\" />
     <Folder Include="Temp\" />
     <Folder Include="wwwroot\Archive\Texts\" />
-    <Folder Include="wwwroot\images\test-100\" />
     <Folder Include="wwwroot\js\ckeditor5\sample\img\" />
   </ItemGroup>
 
