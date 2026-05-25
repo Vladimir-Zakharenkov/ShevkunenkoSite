@@ -66,6 +66,18 @@ public record class PageInfoDTOModel
 
     [Required(AllowEmptyStrings = true)]
     [DisplayFormat(ConvertEmptyStringToNull = false)]
+    [Display(Name = "Псевдоним адреса (3) :")]
+    [DataType(DataType.Text)]
+    public string PagePathNickName3 { get; set; } = string.Empty;
+
+    [Required(AllowEmptyStrings = true)]
+    [DisplayFormat(ConvertEmptyStringToNull = false)]
+    [Display(Name = "Псевдоним адреса (4) :")]
+    [DataType(DataType.Text)]
+    public string PagePathNickName4 { get; set; } = string.Empty;
+
+    [Required(AllowEmptyStrings = true)]
+    [DisplayFormat(ConvertEmptyStringToNull = false)]
     [Display(Name = "Псевдоним адреса :")]
     [DataType(DataType.Text)]
     public string PagePathNickNameWithData { get; set; } = string.Empty;

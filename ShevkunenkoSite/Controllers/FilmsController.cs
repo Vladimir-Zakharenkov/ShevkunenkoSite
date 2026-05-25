@@ -98,11 +98,11 @@ namespace ShevkunenkoSite.Controllers
 
                 // Если есть картинки с фильтром == название фильма + #album#
                 if (await imageContext.ImageFiles
-                    .Where(img => img.SearchFilter.Contains(film.FilmCaption + "#album#"))
+                    .Where(img => img.SearchFilter.Contains(film.FilmCaption + "#film-album#"))
                     .AnyAsync())
                 {
                     var listOfPictures = from m in imageContext.ImageFiles
-                       .Where(p => p.SearchFilter.Contains(film.FilmCaption + "#album#"))
+                       .Where(p => p.SearchFilter.Contains(film.FilmCaption + "#film-album#"))
                                          select m;
 
                     List<ImageFileModel> framesAroundFilm = [.. listOfPictures.AsEnumerable().Shuffle()];
@@ -166,9 +166,9 @@ namespace ShevkunenkoSite.Controllers
 
             #region Разделители в фильтре картинки
 
-            string album = "#album#";
+            string album = "#film-album#";
 
-            string note = "#note#";
+            string note = "#film-note#";
 
             #endregion
 

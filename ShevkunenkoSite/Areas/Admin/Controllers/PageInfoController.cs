@@ -530,6 +530,8 @@ public class PageInfoController(
                 "PageLoc," +
                 "PagePathNickName," +
                 "PagePathNickName2," +
+                "PagePathNickName3," +
+                "PagePathNickName4," +
                 "PageTitle," +
                 "PageDescription," +
                 "PageKeyWords," +
@@ -1225,6 +1227,40 @@ public class PageInfoController(
 
             #endregion
 
+            #region Псевдоним страницы (3)
+
+            if (string.IsNullOrWhiteSpace(addPage.PagePathNickName3) || string.IsNullOrEmpty(addPage.PagePathNickName3))
+            {
+                newPage.PagePathNickName3 = string.Empty;
+            }
+            else if (addPage.PagePathNickName3 == "/")
+            {
+                newPage.PagePathNickName3 = "/";
+            }
+            else
+            {
+                newPage.PagePathNickName3 = "/" + addPage.PagePathNickName3.Trim().Trim('/').ToLower();
+            }
+
+            #endregion
+
+            #region Псевдоним страницы (4)
+
+            if (string.IsNullOrWhiteSpace(addPage.PagePathNickName3) || string.IsNullOrEmpty(addPage.PagePathNickName4))
+            {
+                newPage.PagePathNickName4 = string.Empty;
+            }
+            else if (addPage.PagePathNickName4 == "/")
+            {
+                newPage.PagePathNickName4 = "/";
+            }
+            else
+            {
+                newPage.PagePathNickName4 = "/" + addPage.PagePathNickName4.Trim().Trim('/').ToLower();
+            }
+
+            #endregion
+
             #region Проверка существующих страниц
 
             string checkPageFullPathWithData = string.Empty;
@@ -1354,6 +1390,63 @@ public class PageInfoController(
                 return View(newPage);
             }
 
+            if (!string.IsNullOrEmpty(addPage.PagePathNickName3) && await pageInfoContext.PagesInfo.Where(p => p.PagePathNickName3 == addPage.PagePathNickName3).AnyAsync())
+            {
+                ModelState.AddModelError("newPage.PagePathNickName3", $"Страница с псевдонимом «{addPage.PagePathNickName3}» уже существует");
+
+                #region ViewData
+
+                // Список фильмов
+                ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
+                // Список картинок сайта
+                ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
+                // Список картинок для фона (фотопленка)
+                ViewData["BackgroundImages"] = new SelectList(backgroundContext.BackgroundFiles.OrderBy(orderBackgroundImage => orderBackgroundImage.WebLeftBackground), "BackgroundFileModelId", "WebLeftBackground");
+
+                // Список текстовых файлов
+                ViewData["Texts"] = new SelectList(textFileContext.Texts.OrderBy(orderText => orderText.TxtFileName), "TextInfoModelId", "TxtFileName");
+
+                // Список аудиофайлов
+                ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                // Список типов иконок
+                ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
+
+                #endregion
+
+                return View(newPage);
+            }
+
+            if (!string.IsNullOrEmpty(addPage.PagePathNickName4) && await pageInfoContext.PagesInfo.Where(p => p.PagePathNickName4 == addPage.PagePathNickName4).AnyAsync())
+            {
+                ModelState.AddModelError("newPage.PagePathNickName4", $"Страница с псевдонимом «{addPage.PagePathNickName4}» уже существует");
+
+                #region ViewData
+
+                // Список фильмов
+                ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
+                // Список картинок сайта
+                ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
+                // Список картинок для фона (фотопленка)
+                ViewData["BackgroundImages"] = new SelectList(backgroundContext.BackgroundFiles.OrderBy(orderBackgroundImage => orderBackgroundImage.WebLeftBackground), "BackgroundFileModelId", "WebLeftBackground");
+
+                // Список текстовых файлов
+                ViewData["Texts"] = new SelectList(textFileContext.Texts.OrderBy(orderText => orderText.TxtFileName), "TextInfoModelId", "TxtFileName");
+
+                // Список аудиофайлов
+                ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                // Список типов иконок
+                ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
+
+                #endregion
+
+                return View(newPage);
+            }
 
             #endregion
 
@@ -1981,6 +2074,8 @@ public class PageInfoController(
                 "PageLoc," +
                 "PagePathNickName," +
                 "PagePathNickName2," +
+                "PagePathNickName3," +
+                "PagePathNickName4," +
                 "PageTitle," +
                 "PageDescription," +
                 "PageKeyWords," +
@@ -2063,7 +2158,7 @@ public class PageInfoController(
             #endregion
 
             #region Изменить адрес страницы
-
+            
             #region Area
 
             if (string.IsNullOrEmpty(editPage.PageArea.Trim()) || editPage.PageArea == "Root")
@@ -2076,7 +2171,7 @@ public class PageInfoController(
             }
 
             #endregion
-
+            
             #region Controller
 
             if (string.IsNullOrWhiteSpace(editPage.Controller) || string.IsNullOrEmpty(editPage.Controller) || editPage.PageAsRazorPage)
@@ -2089,7 +2184,7 @@ public class PageInfoController(
             }
 
             #endregion
-
+            
             #region Action
 
             if (string.IsNullOrWhiteSpace(editPage.Action) || string.IsNullOrEmpty(editPage.Action) || editPage.PageAsRazorPage)
@@ -2102,7 +2197,7 @@ public class PageInfoController(
             }
 
             #endregion
-
+            
             #region QueryString
 
             if (string.IsNullOrWhiteSpace(editPage.RoutData) || string.IsNullOrEmpty(editPage.RoutData))
@@ -2115,7 +2210,7 @@ public class PageInfoController(
             }
 
             #endregion
-
+            
             #region Адрес (для RazorPage) или Действие (для MVC)
 
             if (editPage.PageAsRazorPage)
@@ -2160,7 +2255,7 @@ public class PageInfoController(
             }
 
             #endregion
-
+            
             #region Псевдоним адреса (1)
 
             if (string.IsNullOrWhiteSpace(editPage.PagePathNickName) || string.IsNullOrEmpty(editPage.PagePathNickName))
@@ -2177,7 +2272,7 @@ public class PageInfoController(
             }
 
             #endregion
-
+            
             #region Псевдоним адреса (2)
 
             if (string.IsNullOrWhiteSpace(editPage.PagePathNickName2) || string.IsNullOrEmpty(editPage.PagePathNickName2))
@@ -2191,6 +2286,40 @@ public class PageInfoController(
             else
             {
                 pageUpdate.PagePathNickName2 = "/" + editPage.PagePathNickName2.Trim().Trim('/').ToLower();
+            }
+
+            #endregion
+
+            #region Псевдоним адреса (3)
+
+            if (string.IsNullOrWhiteSpace(editPage.PagePathNickName3) || string.IsNullOrEmpty(editPage.PagePathNickName3))
+            {
+                pageUpdate.PagePathNickName3 = string.Empty;
+            }
+            else if (editPage.PagePathNickName3 == "/")
+            {
+                pageUpdate.PagePathNickName3 = "/";
+            }
+            else
+            {
+                pageUpdate.PagePathNickName3 = "/" + editPage.PagePathNickName3.Trim().Trim('/').ToLower();
+            }
+
+            #endregion
+
+            #region Псевдоним адреса (4)
+
+            if (string.IsNullOrWhiteSpace(editPage.PagePathNickName4) || string.IsNullOrEmpty(editPage.PagePathNickName4))
+            {
+                pageUpdate.PagePathNickName4 = string.Empty;
+            }
+            else if (editPage.PagePathNickName4 == "/")
+            {
+                pageUpdate.PagePathNickName4 = "/";
+            }
+            else
+            {
+                pageUpdate.PagePathNickName4 = "/" + editPage.PagePathNickName4.Trim().Trim('/').ToLower();
             }
 
             #endregion

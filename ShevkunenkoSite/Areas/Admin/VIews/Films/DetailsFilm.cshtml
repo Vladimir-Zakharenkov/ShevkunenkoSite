@@ -212,13 +212,14 @@
                                        css-class="card-img-top m-2 shadw w-75"
                                        icon-type="webimage" />
 
-                        @if (!string.IsNullOrEmpty(Model.FilmImage.WebImageFileName))
+                        @if (Model.FilmImage != null && !string.IsNullOrEmpty(Model.FilmImage.WebImageFileName))
                         {
                             <p class="fs-5 mb-0 text_shadow">
                                 @Model.FilmImage.ImagePath/@Model.FilmImage.WebImageFileName
                             </p>
                         }
-                        else
+
+                        @if (Model.FilmImage != null && !string.IsNullOrEmpty(Model.FilmImage.ImageFileName))
                         {
                             <p class="fs-5 mb-0 text_shadow">
                                 @Model.FilmImage.ImagePath/@Model.FilmImage.ImageFileName
@@ -1587,7 +1588,7 @@
 
                             <br />
 
-                            @if (Model.FilmContentUrl != null)
+                            @if (Model.FilmKinoTeatrRu != null)
                             {
                                 <span class="text_shadow">
                                     @Model.FilmKinoTeatrRu
@@ -1631,7 +1632,7 @@
 
                             <br />
 
-                            @if (Model.FilmContentUrl != null)
+                            @if (Model.FilmKinoPoisk != null)
                             {
                                 <span class="text_shadow">
                                     @Model.FilmKinoPoisk
@@ -1675,7 +1676,7 @@
 
                             <br />
 
-                            @if (Model.FilmContentUrl != null)
+                            @if (Model.FilmImbd != null)
                             {
                                 <span class="text_shadow">
                                     @Model.FilmImbd

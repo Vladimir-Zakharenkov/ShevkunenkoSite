@@ -69,10 +69,10 @@ public class FilmFileModel
 
     #region Оригинальное название фильма
 
-    [Required(ErrorMessage = "Оригинальное название фильма")]
     [DataType(DataType.Text)]
+    [DisplayFormat(ConvertEmptyStringToNull = false)]
     [Display(Name = "Оригинальное название:")]
-    public string? FilmCaptionOriginal { get; set; }
+    public string FilmCaptionOriginal { get; set; } = string.Empty;
 
     #endregion
 
@@ -93,8 +93,9 @@ public class FilmFileModel
     #region Примечания
 
     [DataType(DataType.Text)]
+    [DisplayFormat(ConvertEmptyStringToNull = false)]
     [Display(Name = "Примечания: ")]
-    public string? FilmNote { get; set; }
+    public string FilmNote { get; set; } = string.Empty;
 
     #endregion
 
@@ -111,13 +112,14 @@ public class FilmFileModel
     [DisplayFormat(ConvertEmptyStringToNull = false)]
     [DataType(DataType.MultilineText)]
     [Display(Name = "Фильтры поиска фильма: ")]
-    public string? SearchFilterForFilm { get; set; }
+    public string SearchFilterForFilm { get; set; } = string.Empty;
 
     #endregion
 
     #region Жанр фильма
 
     [Required(ErrorMessage = "Введите жанр фильма")]
+    [DisplayFormat(ConvertEmptyStringToNull = false)]
     [DataType(DataType.Text)]
     [Display(Name = "Жанр фильма: ")]
     public string FilmGenre { get; set; } = string.Empty;
@@ -303,13 +305,13 @@ public class FilmFileModel
 
     // картинка для карточки фильма
     [Display(Name = "Картинка к фильму (Guid):")]
-    public Guid FilmImageId { get; set; }
-    public ImageFileModel FilmImage { get; set; } = null!;
+    public Guid? FilmImageId { get; set; }
+    public ImageFileModel? FilmImage { get; set; }
 
     // постер для фильм
     [Display(Name = "Постер к фильму (Guid):")]
-    public Guid FilmPosterId { get; set; }
-    public ImageFileModel FilmPoster { get; set; } = null!;
+    public Guid? FilmPosterId { get; set; }
+    public ImageFileModel? FilmPoster { get; set; }
 
     #endregion
 

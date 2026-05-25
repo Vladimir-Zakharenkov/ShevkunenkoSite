@@ -380,6 +380,56 @@
                                     </span>
                                 }
                             </p>
+
+                            <hr class="w-75 mx-auto" />
+
+                            <p class="fs-5 mb-0">
+                                <span class="text-primary fw-bold">
+                                    Псевдоним (3) :
+                                </span>
+                                <br class="d-sm-none" />
+                                @if (string.IsNullOrEmpty(Model.PagePathNickName3))
+                                {
+                                    <span class="fs-6 form-text text-success">
+                                        псевдоним (3) не задан
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text_shadow">
+                                        @Model.PagePathNickName3
+                                    </span>
+                                    <hr class="w-75 mx-auto" />
+                                    <span class="text_shadow">
+                                        @Uri.UnescapeDataString(Model.PagePathNickName3)
+                                    </span>
+                                }
+                            </p>
+
+                            <hr class="w-75 mx-auto" />
+
+                            <p class="fs-5 mb-0">
+                                <span class="text-primary fw-bold">
+                                    Псевдоним (4) :
+                                </span>
+                                <br class="d-sm-none" />
+                                @if (string.IsNullOrEmpty(Model.PagePathNickName4))
+                                {
+                                    <span class="fs-6 form-text text-success">
+                                        псевдоним (3) не задан
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text_shadow">
+                                        @Model.PagePathNickName4
+                                    </span>
+                                    <hr class="w-75 mx-auto" />
+                                    <span class="text_shadow">
+                                        @Uri.UnescapeDataString(Model.PagePathNickName4)
+                                    </span>
+                                }
+                            </p>
                         }
 
                     </div>

@@ -148,6 +148,8 @@ public class FilmsController(
                 "PosterForFilmFormFile," +
                 "FilmPosterId," +
                 "FilmImageId," +
+                "FilmPoster," +
+                "FilmImage," +
                 "ImageForFilmFormFile"
 
 

@@ -59,15 +59,27 @@ public class PageInfoModel
 
     [Required(AllowEmptyStrings = true)]
     [DisplayFormat(ConvertEmptyStringToNull = false)]
+    [Display(Name = "Псевдоним адреса (1) :")]
+    [DataType(DataType.Text)]
+    public string PagePathNickNameWithData { get; set; } = string.Empty;
+
+    [Required(AllowEmptyStrings = true)]
+    [DisplayFormat(ConvertEmptyStringToNull = false)]
     [Display(Name = "Псевдоним адреса (2) :")]
     [DataType(DataType.Text)]
     public string PagePathNickName2 { get; set; } = string.Empty;
 
     [Required(AllowEmptyStrings = true)]
     [DisplayFormat(ConvertEmptyStringToNull = false)]
-    [Display(Name = "Псевдоним адреса :")]
+    [Display(Name = "Псевдоним адреса (3) :")]
     [DataType(DataType.Text)]
-    public string PagePathNickNameWithData { get; set; } = string.Empty;
+    public string PagePathNickName3 { get; set; } = string.Empty;
+
+    [Required(AllowEmptyStrings = true)]
+    [DisplayFormat(ConvertEmptyStringToNull = false)]
+    [Display(Name = "Псевдоним адреса (4) :")]
+    [DataType(DataType.Text)]
+    public string PagePathNickName4 { get; set; } = string.Empty;
 
     [Required(AllowEmptyStrings = true)]
     [DisplayFormat(ConvertEmptyStringToNull = false)]

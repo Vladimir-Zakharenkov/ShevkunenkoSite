@@ -1021,6 +1021,52 @@
 									<span asp-validation-for="PagePathNickName2" class="text-danger"></span>
 								}
 
+								<hr class="w-50 mx-auto" />
+
+							</div>
+
+							@* Псевдоним адреса (3) *@
+							<div>
+
+								<label asp-for="PagePathNickName3" class="@cssForLabel"></label>
+
+								<input asp-for="PagePathNickName3" id="PagePathNickName3Input" class="col-11 text-start" aria-describedby="PagePathNickName3InputHelpBlock" />
+
+								<div id="PagePathNickName3InputHelpBlock" class="form-text">
+
+									<span class="fs-6 text-success">
+										псевдоним страницы (3)
+									</span>
+
+								</div>
+
+								@if (Context.Request.Method == "POST")
+								{
+									<span asp-validation-for="PagePathNickName3" class="text-danger"></span>
+								}
+
+							</div>
+
+							@* Псевдоним адреса (4) *@
+							<div>
+
+								<label asp-for="PagePathNickName4" class="@cssForLabel"></label>
+
+								<input asp-for="PagePathNickName4" id="PagePathNickName4Input" class="col-11 text-start" aria-describedby="PagePathNickName4InputHelpBlock" />
+
+								<div id="PagePathNickName4InputHelpBlock" class="form-text">
+
+									<span class="fs-6 text-success">
+										псевдоним страницы (4)
+									</span>
+
+								</div>
+
+								@if (Context.Request.Method == "POST")
+								{
+									<span asp-validation-for="PagePathNickName4" class="text-danger"></span>
+								}
+
 							</div>
 
 						</div>
