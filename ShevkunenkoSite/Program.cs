@@ -132,14 +132,7 @@ services.AddWebMarkupMin(
 
 services.AddDbContextFactory<SiteDbContext>(options =>
 {
-    if (environment.IsDevelopment())
-    {
-        options.UseSqlServer(configuration["ConnectionStrings:ShevkunenkoSitePAPA"] ?? throw new InvalidOperationException("Connection string 'ShevkunenkoSitePAPA' not found."));
-    }
-    else
-    {
-        options.UseSqlServer(configuration["ConnectionStrings:ShevkunenkoSite"] ?? throw new InvalidOperationException("Connection string 'ShevkunenkoSite' not found."));
-    }
+    options.UseSqlServer(configuration["ConnectionStrings:ShevkunenkoSitePAPA"] ?? throw new InvalidOperationException("Connection string 'ShevkunenkoSitePAPA' not found."));
 
     if (environment.IsDevelopment())
     {

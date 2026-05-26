@@ -70,6 +70,14 @@ public class BooksAndArticlesModel
 
     #endregion
 
+    #region Фильм связанный с книгой (статьёй)
+
+    [Display(Name = "Фильм по книге :")]
+    public Guid? FilmForBookOrArticleId { get; set; }
+    public FilmFileModel? FilmForBookOrArticle { get; set; }
+
+    #endregion
+
     #region Автор книги (статьи)
 
     [Required(ErrorMessage = "Введите автора текста", AllowEmptyStrings = true)]
@@ -209,6 +217,15 @@ public class BooksAndArticlesModel
     [DataType(DataType.Upload)]
     [Display(Name = "Выбрать видео :")]
     public IFormFile? VideoForBookOrArticleFormFile { get; set; }
+
+    #endregion
+
+    #region Выбрать фильм
+
+    [NotMapped]
+    [DataType(DataType.Upload)]
+    [Display(Name = "Выбрать фильм :")]
+    public IFormFile? FilmForBookOrArticleFormFile { get; set; }
 
     #endregion
 

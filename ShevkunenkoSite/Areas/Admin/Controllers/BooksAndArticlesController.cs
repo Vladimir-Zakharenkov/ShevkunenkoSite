@@ -10,7 +10,8 @@ public class BooksAndArticlesController
     IBooksAndArticlesRepository bookContext,
     ITextInfoRepository textContext,
     IImageFileRepository imageContext,
-    IMovieFileRepository movieContext
+    IMovieFileRepository movieContext,
+    IFilmFileRepository filmContext
     ) : Controller
 {
     #region Список книг и статей
@@ -59,6 +60,7 @@ public class BooksAndArticlesController
                 .Include(articleLogo => articleLogo.LogoOfArticle)
                 .Include(articleScan => articleScan.ScanOfArticle)
                 .Include(videoForArticle => videoForArticle.VideoForBookOrArticle)
+                .Include(filmForArticle => filmForArticle.FilmForBookOrArticle)
                 .FirstAsync(b => b.BooksAndArticlesModelId == bookId);
 
             return View(bookItem);
@@ -634,13 +636,20 @@ public class BooksAndArticlesController
                 .Include(articleLogo => articleLogo.LogoOfArticle)
                 .Include(articleScan => articleScan.ScanOfArticle)
                 .Include(videoForArticle => videoForArticle.VideoForBookOrArticle)
+                .Include(filmForArticle => filmForArticle.FilmForBookOrArticle)
                 .FirstAsync(b => b.BooksAndArticlesModelId == bookId);
 
             // Список картинок сайта для обложки
             ViewData["ImageFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
 
+            // Список картинок сайта для логотипа
+            ViewData["LogoFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
             // Список видео на сайте
             ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+            // Список фильмов на сайте
+            ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaption");
 
             return View(editBook);
         }
@@ -663,6 +672,7 @@ public class BooksAndArticlesController
                 "LogoOfArticleId," +
                 "ScanOfArticleId," +
                 "VideoForBookOrArticleId," +
+                "FilmForBookOrArticleId," +
                 "TypeOfText," +
                 "TypesOfText," +
                 "Publisher," +
@@ -681,7 +691,8 @@ public class BooksAndArticlesController
                 "CoverForBookFormFile," +
                 "LogoOfArticleFormFile," +
                 "ScanOfArticleFormFile," +
-                "VideoForBookOrArticleFormFile"
+                "VideoForBookOrArticleFormFile" +
+                "FilmForBookOrArticleFormFile"
         )]
         BooksAndArticlesModel editBook)
     {
@@ -722,6 +733,9 @@ public class BooksAndArticlesController
 
                         // Список видео на сайте
                         ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+                        // Список фильмов на сайте
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaptionCaption");
 
                         return View(editBook);
                     }
@@ -799,8 +813,14 @@ public class BooksAndArticlesController
                             // Список картинок сайта для обложки
                             ViewData["ImageFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
 
+                            // Список картинок сайта для логотипа
+                            ViewData["LogoFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
                             // Список видео на сайте
                             ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+                            // Список фильмов на сайте
+                            ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaptionCaption");
 
                             return View(editBook);
                         }
@@ -837,8 +857,14 @@ public class BooksAndArticlesController
                         // Список картинок сайта для обложки
                         ViewData["ImageFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
 
+                        // Список картинок сайта для логотипа
+                        ViewData["LogoFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
                         // Список видео на сайте
                         ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+                        // Список фильмов на сайте
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaptionCaption");
 
                         return View(editBook);
                     }
@@ -916,8 +942,14 @@ public class BooksAndArticlesController
                             // Список картинок сайта для обложки
                             ViewData["ImageFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
 
+                            // Список картинок сайта для логотипа
+                            ViewData["LogoFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
                             // Список видео на сайте
                             ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+                            // Список фильмов на сайте
+                            ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaptionCaption");
 
                             return View(editBook);
                         }
@@ -948,8 +980,14 @@ public class BooksAndArticlesController
                         // Список картинок сайта для обложки
                         ViewData["ImageFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
 
+                        // Список картинок сайта для логотипа
+                        ViewData["LogoFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
                         // Список видео на сайте
                         ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+                        // Список фильмов на сайте
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaptionCaption");
 
                         return View(editBook);
                     }
@@ -1027,8 +1065,14 @@ public class BooksAndArticlesController
                             // Список картинок сайта для обложки
                             ViewData["ImageFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
 
+                            // Список картинок сайта для логотипа
+                            ViewData["LogoFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
                             // Список видео на сайте
                             ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+                            // Список фильмов на сайте
+                            ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaptionCaption");
 
                             return View(editBook);
                         }
@@ -1059,8 +1103,14 @@ public class BooksAndArticlesController
                         // Список картинок сайта для обложки
                         ViewData["ImageFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
 
+                        // Список картинок сайта для логотипа
+                        ViewData["LogoFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
                         // Список видео на сайте
                         ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+                        // Список фильмов на сайте
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaptionCaption");
 
                         return View(editBook);
                     }
@@ -1078,11 +1128,17 @@ public class BooksAndArticlesController
                     {
                         ModelState.AddModelError("VideoForBookOrArticleFormFile", $"Файл видео «{editBook.VideoForBookOrArticleFormFile.FileName}» не найден в базе данных");
 
-                        // Список картинок сайта
+                        // Список картинок сайта для обложки
                         ViewData["ImageFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
 
-                        // Список картинок сайта
+                        // Список картинок сайта для логотипа
+                        ViewData["LogoFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
+                        // Список видео на сайте
                         ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+                        // Список фильмов на сайте
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaptionCaption");
 
                         return View(editBook);
                     }
@@ -1094,7 +1150,72 @@ public class BooksAndArticlesController
             }
 
             #endregion
-            
+
+            #region Фильм по книге (статье)
+
+            if (editBook.FilmForBookOrArticleId != Guid.Empty & editBook.FilmForBookOrArticleFormFile == null)
+            {
+                bookUpdate.FilmForBookOrArticleId = editBook.FilmForBookOrArticleId;
+            }
+            else
+            {
+                if (editBook.FilmForBookOrArticleFormFile != null)
+                {
+                    if (!editBook.FilmForBookOrArticleFormFile.FileName.EndsWith(".mp4"))
+                    {
+                        ModelState.AddModelError("FilmForBookOrArticleFormFile", $"Выбран некорректный файл «{editBook.FilmForBookOrArticleFormFile.FileName}»");
+
+                        // Список картинок сайта для обложки
+                        ViewData["ImageFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
+                        // Список картинок сайта для логотипа
+                        ViewData["LogoFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
+                        // Список видео на сайте
+                        ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+                        // Список фильмов на сайте
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaptionCaption");
+
+                        return View(editBook);
+                    }
+
+                    if (await filmContext.FilmFiles
+                            .Where(film => film.FilmFileName == editBook.FilmForBookOrArticleFormFile.FileName)
+                            .AnyAsync())
+                    {
+                        var filmForItem = await filmContext.FilmFiles
+                                .FirstAsync(film =>film.FilmFileName == editBook.FilmForBookOrArticleFormFile.FileName);
+
+                        bookUpdate.FilmForBookOrArticleId = filmForItem.FilmFileModelId;
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("FIlmForBookOrArticleFormFile", $"Файл видео «{editBook.FilmForBookOrArticleFormFile.FileName}» не найден в базе данных");
+
+                        // Список картинок сайта для обложки
+                        ViewData["ImageFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
+                        // Список картинок сайта для логотипа
+                        ViewData["LogoFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
+                        // Список видео на сайте
+                        ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+                        // Список фильмов на сайте
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaptionCaption");
+
+                        return View(editBook);
+                    }
+                }
+                else
+                {
+                    bookUpdate.FilmForBookOrArticleId = null;
+                }
+            }
+
+            #endregion
+
             #region Ссылка на статью или издателя
 
             bookUpdate.UrlOfArticle = editBook.UrlOfArticle;
@@ -1125,7 +1246,7 @@ public class BooksAndArticlesController
 
             #endregion
 
-            #region Колличество страниц
+            #region Количество страниц
 
             bookUpdate.NumberOfPages = editBook.NumberOfPages;
 
@@ -1163,11 +1284,17 @@ public class BooksAndArticlesController
         }
         else
         {
-            // Список картинок сайта
+            // Список картинок сайта для обложки
             ViewData["ImageFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
 
-            // Список картинок сайта
+            // Список картинок сайта для логотипа
+            ViewData["LogoFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
+            // Список видео на сайте
             ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+            // Список фильмов на сайте
+            ViewData["VideoFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaptionCaption");
 
             return View(editBook);
         }

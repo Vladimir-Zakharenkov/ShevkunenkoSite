@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShevkunenkoSite.Services;
 
@@ -11,9 +12,11 @@ using ShevkunenkoSite.Services;
 namespace ShevkunenkoSite.Services.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    partial class SiteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260525183057_25-05-2026-21-29")]
+    partial class _250520262129
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1366,7 +1369,7 @@ namespace ShevkunenkoSite.Services.Migrations
 
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.BooksAndArticlesModel", b =>
                 {
-                    b.HasOne("ShevkunenkoSite.Models.DataModels.FilmFileModel", "FilmForBookOrArticle")
+                    b.HasOne("ShevkunenkoSite.Models.DataModels.MovieFileModel", "FilmForBookOrArticle")
                         .WithMany()
                         .HasForeignKey("FilmForBookOrArticleId");
 
