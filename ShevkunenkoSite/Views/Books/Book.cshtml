@@ -134,6 +134,22 @@
 
                     </a>
 
+                    @* иконка фильма *@
+                    <a class="@(Model.BookOrArticle.FilmForBookOrArticle == null ? "d-none" : "")"
+                       asp-area=""
+                       asp-controller="Films"
+                       asp-action="Film"
+                       asp-route-filmCaption="@Model.BookOrArticle.FilmForBookOrArticle?.FilmCaption"
+                       asp-route-host="@Model.BookOrArticle.FilmForBookOrArticle?.FilmContentUrl"
+                       title="видео к тексту">
+
+                        <vc:view-image image-id="b386f45b-fc84-4748-bc75-08dd67cfc8ed"
+                                       css-class="float-start me-2 maxwidth40px shadw imageref"
+                                       icon-type="webicon100" />
+
+                    </a>
+
+
                     @* иконка принтера *@
                     <a class=""
                            href="javascript:window.print(); void 0;"
@@ -189,6 +205,21 @@
                        asp-route-pageOfSeries="true"
                        asp-route-videohosting="@Model.BookOrArticle.VideoForBookOrArticle?.MovieVkVideo"
                        title="видео к тексту">
+
+                    <vc:view-image image-id="b386f45b-fc84-4748-bc75-08dd67cfc8ed"
+                                   css-class="float-start me-2 maxwidth40px shadw imageref"
+                                   icon-type="webicon100" />
+
+                </a>
+
+                @* иконка фильма *@
+                <a class="@(Model.BookOrArticle.FilmForBookOrArticle == null ? "d-none" : "")"
+                   asp-area=""
+                   asp-controller="Films"
+                   asp-action="Film"
+                   asp-route-filmCaption="@Model.BookOrArticle.FilmForBookOrArticle?.FilmCaption"
+                   asp-route-host="@Model.BookOrArticle.FilmForBookOrArticle?.FilmContentUrl"
+                   title="видео к тексту">
 
                     <vc:view-image image-id="b386f45b-fc84-4748-bc75-08dd67cfc8ed"
                                    css-class="float-start me-2 maxwidth40px shadw imageref"

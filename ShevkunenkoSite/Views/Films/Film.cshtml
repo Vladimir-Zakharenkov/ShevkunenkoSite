@@ -23,19 +23,13 @@
 
         @foreach (var item in Model.FramesOnTheLeft)
         {
-            @* Вывод фотографии в отдельное окно *@
-            @* <a href="@item.ImagePath/@(string.IsNullOrEmpty(item.WebImageHDFileName) == false ? item.WebImageHDFileName : item.WebImageFileName)"
-                   class=""
-                   title="@item.ImageAltTitle"
-                   onclick="this.target='_blank'"> *@
-
             <a asp-area=""
-                   asp-controller="Films"
-                   asp-action="FilmPhotoAlbum"
-                   asp-route-imageId="@item.ImageFileModelId"
-                   asp-route-filmCaption="@Model.FilmCaption"
-                   title="@item.ImageAltTitle"
-                   class="">
+               asp-controller="Films"
+               asp-action="FilmPhotoAlbum"
+               asp-route-imageId="@item.ImageFileModelId"
+               asp-route-filmCaption="@Model.FilmCaption"
+               title="@item.ImageAltTitle"
+               class="">
 
                 <vc:view-image image-id="@item.ImageFileModelId"
                                css-class="my-2 w-100 shadw imageref"
@@ -332,10 +326,10 @@
 
                                     @* YouTube *@
                                     <a asp-area=""
-                                           asp-controller="Films"
-                                           asp-action="Film"
-                                           asp-route-filmCaption="@Model.FilmCaption"
-                                           asp-route-host="yt">
+                                       asp-controller="Films"
+                                       asp-action="Film"
+                                       asp-route-filmCaption="@Model.FilmCaption"
+                                       asp-route-host="yt">
 
                                         <vc:view-image image-id="@DataConfig.YoutubeImage"
                                                        css-class="col shadw imageref @(Context.Request.QueryString.ToString().Contains("yt", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
@@ -345,10 +339,10 @@
 
                                     @* vk.com *@
                                     <a asp-area=""
-                                           asp-controller="Films"
-                                           asp-action="Film"
-                                           asp-route-filmCaption="@Model.FilmCaption"
-                                           asp-route-host="vk">
+                                       asp-controller="Films"
+                                       asp-action="Film"
+                                       asp-route-filmCaption="@Model.FilmCaption"
+                                       asp-route-host="vk">
 
                                         <vc:view-image image-id="@DataConfig.VkVideoImage"
                                                        css-class="col shadw imageref @(Context.Request.QueryString.ToString().Contains("vk", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
@@ -358,10 +352,10 @@
 
                                     @*mail.ru *@
                                     <a asp-area=""
-                                           asp-controller="Films"
-                                           asp-action="Film"
-                                           asp-route-filmCaption="@Model.FilmCaption"
-                                           asp-route-host="ml">
+                                       asp-controller="Films"
+                                       asp-action="Film"
+                                       asp-route-filmCaption="@Model.FilmCaption"
+                                       asp-route-host="ml">
 
                                         <vc:view-image image-id="@DataConfig.MailRuVideoImage"
                                                        css-class="col shadw imageref @(Context.Request.QueryString.ToString().Contains("ml", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
@@ -371,10 +365,10 @@
 
                                     @* ok.ru *@
                                     <a asp-area=""
-                                           asp-controller="Films"
-                                           asp-action="Film"
-                                           asp-route-filmCaption="@Model.FilmCaption"
-                                           asp-route-host="ok">
+                                       asp-controller="Films"
+                                       asp-action="Film"
+                                       asp-route-filmCaption="@Model.FilmCaption"
+                                       asp-route-host="ok">
 
                                         <vc:view-image image-id="@DataConfig.OkVideoImage"
                                                        css-class="col shadw imageref @(Context.Request.QueryString.ToString().Contains("ok", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
@@ -384,10 +378,10 @@
 
                                     @* sergeyshef.ru *@
                                     <a asp-area=""
-                                           asp-controller="Films"
-                                           asp-action="Film"
-                                           asp-route-filmCaption="@Model.FilmCaption"
-                                           asp-route-host="ss">
+                                       asp-controller="Films"
+                                       asp-action="Film"
+                                       asp-route-filmCaption="@Model.FilmCaption"
+                                       asp-route-host="ss">
 
                                         <vc:view-image image-id="@DataConfig.AsusVideoImage"
                                                        css-class="col shadw imageref @(Context.Request.QueryString.ToString().Contains("ss", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
@@ -413,80 +407,83 @@
                     </div>
 
                     @* Информация о фильме *@
-                    <div class="accordion-item shadw mt-3">
+                    @if (Model.FilmKinoTeatrRu != null || Model.FilmKinoPoisk != null || Model.FilmImbd != null)
+                    {
+                        <div class="accordion-item shadw mt-3">
 
-                        <h2 id="heading3" class="accordion-header">
+                            <h2 id="heading3" class="accordion-header">
 
-                            <button class="accordion-button collapsed p-1"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapse3"
-                                    aria-expanded="true"
-                                    aria-controls="collapse3">
+                                <button class="accordion-button collapsed p-1"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapse3"
+                                        aria-expanded="true"
+                                        aria-controls="collapse3">
 
-                                <span class="d-none d-sm-block pe-1">
-                                    О фильме :
-                                </span>
-
-                                @* Kino-Teatr.Ru *@
-                                <vc:view-image image-id="@DataConfig.KinoTeatrImage"
-                                               css-class="maxwidth40px me-1"
-                                               icon-type="webicon100" />
-
-                                @* Kinopoisk.Ru *@
-                                <vc:view-image image-id="@DataConfig.KinopoiskImage"
-                                               css-class="maxwidth40px me-1"
-                                               icon-type="webicon100" />
-
-                                @* IMDB.com *@
-                                <vc:view-image image-id="@DataConfig.ImdbImage"
-                                               css-class="maxwidth40px"
-                                               icon-type="webicon100" />
-
-                            </button>
-
-                        </h2>
-
-                        <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#movieDescription">
-
-                            <div class="accordion-body accordion-body-nointend">
-
-                                <div class="row row-cols-3 g-1 g-sm-2 justify-content-center">
+                                    <span class="d-none d-sm-block pe-1">
+                                        О фильме :
+                                    </span>
 
                                     @* Kino-Teatr.Ru *@
-                                    <a onClick="this.target='_blank'" href="@Model.FilmKinoTeatrRu">
-
-                                        <vc:view-image image-id="@DataConfig.KinoTeatrImage"
-                                                       css-class="col-12 shadw imageref"
-                                                       icon-type="webicon300" />
-
-                                    </a>
+                                    <vc:view-image image-id="@DataConfig.KinoTeatrImage"
+                                                   css-class="maxwidth40px me-1"
+                                                   icon-type="webicon100" />
 
                                     @* Kinopoisk.Ru *@
-                                    <a onClick="this.target='_blank'" href="@Model.FilmKinoPoisk">
-
-                                        <vc:view-image image-id="@DataConfig.KinopoiskImage"
-                                                       css-class="col-12 shadw imageref"
-                                                       icon-type="webicon300" />
-
-                                    </a>
+                                    <vc:view-image image-id="@DataConfig.KinopoiskImage"
+                                                   css-class="maxwidth40px me-1"
+                                                   icon-type="webicon100" />
 
                                     @* IMDB.com *@
-                                    <a onClick="this.target='_blank'" href="@Model.FilmImbd">
+                                    <vc:view-image image-id="@DataConfig.ImdbImage"
+                                                   css-class="maxwidth40px"
+                                                   icon-type="webicon100" />
 
-                                        <vc:view-image image-id="@DataConfig.ImdbImage"
-                                                       css-class="col-12 shadw imageref"
-                                                       icon-type="webicon300" />
+                                </button>
 
-                                    </a>
+                            </h2>
+
+                            <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#movieDescription">
+
+                                <div class="accordion-body accordion-body-nointend">
+
+                                    <div class="row row-cols-3 g-1 g-sm-2 justify-content-center">
+
+                                        @* Kino-Teatr.Ru *@
+                                        <a onClick="this.target='_blank'" href="@Model.FilmKinoTeatrRu">
+
+                                            <vc:view-image image-id="@DataConfig.KinoTeatrImage"
+                                                           css-class="col-12 shadw imageref"
+                                                           icon-type="webicon300" />
+
+                                        </a>
+
+                                        @* Kinopoisk.Ru *@
+                                        <a onClick="this.target='_blank'" href="@Model.FilmKinoPoisk">
+
+                                            <vc:view-image image-id="@DataConfig.KinopoiskImage"
+                                                           css-class="col-12 shadw imageref"
+                                                           icon-type="webicon300" />
+
+                                        </a>
+
+                                        @* IMDB.com *@
+                                        <a onClick="this.target='_blank'" href="@Model.FilmImbd">
+
+                                            <vc:view-image image-id="@DataConfig.ImdbImage"
+                                                           css-class="col-12 shadw imageref"
+                                                           icon-type="webicon300" />
+
+                                        </a>
+
+                                    </div>
 
                                 </div>
 
                             </div>
 
                         </div>
-
-                    </div>
+                    }
 
                 </div>
 
@@ -508,12 +505,12 @@
                    onclick="this.target='_blank'"> *@
 
             <a asp-area=""
-                   asp-controller="Films"
-                   asp-action="FilmPhotoAlbum"
-                   asp-route-imageId="@item.ImageFileModelId"
-                   asp-route-filmCaption="@Model.FilmCaption"
-                   title="@item.ImageAltTitle"
-                   class="">
+               asp-controller="Films"
+               asp-action="FilmPhotoAlbum"
+               asp-route-imageId="@item.ImageFileModelId"
+               asp-route-filmCaption="@Model.FilmCaption"
+               title="@item.ImageAltTitle"
+               class="">
 
                 <vc:view-image image-id="@item.ImageFileModelId"
                                css-class="my-2 w-100 shadw imageref"

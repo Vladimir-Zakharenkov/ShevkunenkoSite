@@ -43,6 +43,7 @@ public class BooksController(
                 .Include(logo => logo.LogoOfArticle)
                 .Include(scan => scan.ScanOfArticle)
                 .Include(movie => movie.VideoForBookOrArticle)
+                .Include(film => film.FilmForBookOrArticle)
                 .FirstAsync(article => article.CaptionOfText == bookCaption.Replace('-', ' '));
 
         #endregion
