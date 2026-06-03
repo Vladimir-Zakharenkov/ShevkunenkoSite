@@ -13,8 +13,8 @@
 
         @* Помощь сайту *@
         <a class="navbar-brand donate mb-2 d-inline-block float-start"
-               href="https://www.donationalerts.com/r/sergey1965"
-               onclick="this.target='_blank'">
+           href="https://www.donationalerts.com/r/sergey1965"
+           onclick="this.target='_blank'">
 
             <img src="~/images/admin/coffee.webp"
                  class="border border-2 rounded-1 shadw"
@@ -27,10 +27,10 @@
 
         @* Переход к оглавлению сайта *@
         <a class="navbar-brand donate mb-2"
-               asp-area=""
-               asp-controller="Shevkunenko"
-               asp-action="Index"
-               title="оглавление сайта">
+           asp-area=""
+           asp-controller="Shevkunenko"
+           asp-action="Index"
+           title="оглавление сайта">
 
             <img src="~/images/common/index1-300.gif"
                  class="border border-2 rounded-1 shadw"
@@ -64,13 +64,13 @@
                     itemscope itemtype="http://schema.org/ListItem">
 
                     <a id="Parts"
-                           class="@refNavItemClass"
-                           href="#"
-                           role="button"
-                           data-bs-toggle="dropdown"
-                           aria-expanded="false"
-                           title="разделы сайта"
-                           itemprop="item">
+                       class="@refNavItemClass"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false"
+                       title="разделы сайта"
+                       itemprop="item">
 
                         <span class="px-2" itemprop="name">Разделы</span>
 
@@ -87,10 +87,10 @@
                             itemscope itemtype="https://schema.org/ListItem">
 
                             <a class="@refDropdownClass"
-                                   asp-area=""
-                                   asp-controller="Shevkunenko"
-                                   asp-action="Biography"
-                                   itemprop="item">
+                               asp-area=""
+                               asp-controller="Shevkunenko"
+                               asp-action="Biography"
+                               itemprop="item">
 
                                 <span itemprop="name">Биография</span>
 
@@ -107,11 +107,11 @@
                             itemscope itemtype="https://schema.org/ListItem">
 
                             <a class="@refDropdownClass"
-                                   asp-area=""
-                                   asp-controller="Shevkunenko"
-                                   asp-action="PhotoAlbum"
-                                   asp-route-pagenumber="1"
-                                   itemprop="item">
+                               asp-area=""
+                               asp-controller="Shevkunenko"
+                               asp-action="PhotoAlbum"
+                               asp-route-pagenumber="1"
+                               itemprop="item">
 
                                 <span itemprop="name">Фотоальбом</span>
 
@@ -128,10 +128,10 @@
                             itemscope itemtype="http://schema.org/ListItem">
 
                             <a class="@refDropdownClass"
-                                   asp-area=""
-                                   asp-controller="Shevkunenko"
-                                   asp-action="Navigation"
-                                   itemprop="item">
+                               asp-area=""
+                               asp-controller="Shevkunenko"
+                               asp-action="Navigation"
+                               itemprop="item">
 
                                 <span itemprop="name">Разделы сайта</span>
 
@@ -148,8 +148,8 @@
                             itemscope itemtype="http://schema.org/ListItem">
 
                             <a class="@refDropdownClass"
-                                   href="https://shevkunenko.ru/raznoe.htm"
-                                   itemprop="item">
+                               href="https://shevkunenko.ru/raznoe.htm"
+                               itemprop="item">
 
                                 <span itemprop="name">Разное</span>
 
@@ -169,13 +169,13 @@
                     itemscope itemtype="http://schema.org/ListItem">
 
                     <a id="Pressa"
-                           class="@refNavItemClass"
-                           href="#"
-                           role="button"
-                           data-bs-toggle="dropdown"
-                           aria-expanded="false"
-                           title="статьи и книги"
-                           itemprop="item">
+                       class="@refNavItemClass"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false"
+                       title="статьи и книги"
+                       itemprop="item">
 
                         <span class="px-2" itemprop="name">Пресса</span>
 
@@ -192,10 +192,10 @@
                             itemscope itemtype="http://schema.org/ListItem">
 
                             <a class="@refDropdownClass"
-                                   asp-area=""
-                                   asp-controller="Articles"
-                                   asp-action="Index"
-                                   itemprop="item">
+                               asp-area=""
+                               asp-controller="Articles"
+                               asp-action="Index"
+                               itemprop="item">
 
                                 <span itemprop="name">Статьи</span>
 
@@ -212,10 +212,10 @@
                             itemscope itemtype="http://schema.org/ListItem">
 
                             <a class="@refDropdownClass"
-                                   asp-area=""
-                                   asp-controller="Books"
-                                   asp-action="Index"
-                                   itemprop="item">
+                               asp-area=""
+                               asp-controller="Books"
+                               asp-action="Index"
+                               itemprop="item">
 
                                 <span itemprop="name">Книги</span>
 
@@ -235,15 +235,17 @@
                     itemscope itemtype="http://schema.org/ListItem">
 
                     <a id="Movies"
-                           class="@refNavItemClass"
-                           href="#"
-                           role="button"
-                           data-bs-toggle="dropdown"
-                           aria-expanded="false"
-                           title="фильмы на сайте"
-                           itemprop="item">
+                       class="@refNavItemClass"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false"
+                       title="фильмы на сайте"
+                       itemprop="item">
 
-                        <span class="px-2" itemprop="name">Фильмы</span>
+                        <span class="px-2" itemprop="name">
+                            Фильмы
+                        </span>
 
                     </a>
 
@@ -260,11 +262,11 @@
                             itemscope itemtype="http://schema.org/ListItem">
 
                             <a class="@refDropdownClass"
-                                   asp-area=""
-                                   asp-controller="AllVideo"
-                                   asp-action="Index"
-                                   asp-route-topicId="3b94e8b2-b9fe-419d-1dd0-08dccddadf10"
-                                   itemprop="item">
+                               asp-area=""
+                               asp-controller="AllVideo"
+                               asp-action="Index"
+                               asp-route-topicId="3b94e8b2-b9fe-419d-1dd0-08dccddadf10"
+                               itemprop="item">
 
                                 <span itemprop="name">Знакомые о Сергее</span>
 
@@ -281,10 +283,10 @@
                             itemscope itemtype="http://schema.org/ListItem">
 
                             <a class="@refDropdownClass"
-                                   asp-area=""
-                                   asp-controller="AllVideo"
-                                   asp-action="Programmy-o-Sergee-Shevkunenko"
-                                   itemprop="item">
+                               asp-area=""
+                               asp-controller="AllVideo"
+                               asp-action="Programmy-o-Sergee-Shevkunenko"
+                               itemprop="item">
 
                                 <span itemprop="name">Телепрограммы</span>
 
@@ -301,11 +303,11 @@
                             itemscope itemtype="http://schema.org/ListItem">
 
                             <a class="@refDropdownClass"
-                                   asp-area=""
-                                   asp-controller="AllVideo"
-                                   asp-action="Index"
-                                   asp-route-topicId="59019054-7df0-42b7-7fa5-08dca3df7399"
-                                   itemprop="item">
+                               asp-area=""
+                               asp-controller="AllVideo"
+                               asp-action="Index"
+                               asp-route-topicId="59019054-7df0-42b7-7fa5-08dca3df7399"
+                               itemprop="item">
 
                                 <span itemprop="name">Роли в кино »</span>
 
@@ -322,9 +324,9 @@
                                     itemscope itemtype="http://schema.org/ListItem">
 
                                     <a class="@refDropdownClass"
-                                           onClick="this.target='_blank'"
-                                           href="https://www.kino-teatr.ru/kino/movie/sov/10394/forum/#s4037101"
-                                           itemprop="item">
+                                       onClick="this.target='_blank'"
+                                       href="https://www.kino-teatr.ru/kino/movie/sov/10394/forum/#s4037101"
+                                       itemprop="item">
 
                                         <span itemprop="name">« Сестра музыканта »</span>
 
@@ -341,11 +343,11 @@
                                     itemscope itemtype="http://schema.org/ListItem">
 
                                     <a class="@refDropdownClass"
-                                           asp-area=""
-                                           asp-controller="AllVideo"
-                                           asp-action="Movie"
-                                           asp-route-movieid="8b8085f1-f824-4bae-c2e0-08db17233947"
-                                           itemprop="item">
+                                       asp-area=""
+                                       asp-controller="AllVideo"
+                                       asp-action="Movie"
+                                       asp-route-movieid="8b8085f1-f824-4bae-c2e0-08db17233947"
+                                       itemprop="item">
 
                                         <span itemprop="name">« 50 на 50 »</span>
 
@@ -362,11 +364,11 @@
                                     itemscope itemtype="http://schema.org/ListItem">
 
                                     <a class="@refDropdownClass"
-                                           asp-area=""
-                                           asp-controller="AllVideo"
-                                           asp-action="MoviePage"
-                                           asp-route-moviepageid="6d727655-b263-406d-7865-08db0178b531"
-                                           itemprop="item">
+                                       asp-area=""
+                                       asp-controller="AllVideo"
+                                       asp-action="MoviePage"
+                                       asp-route-moviepageid="6d727655-b263-406d-7865-08db0178b531"
+                                       itemprop="item">
 
                                         <span itemprop="name">« Кортик »</span>
 
@@ -383,11 +385,11 @@
                                             itemscope itemtype="http://schema.org/ListItem">
 
                                             <a class="@refDropdownClass"
-                                                   asp-area=""
-                                                   asp-controller="AllVideo"
-                                                   asp-action="Movie"
-                                                   asp-route-movieid="F6D6A6CF-68A1-412F-B477-08DB06EBE160"
-                                                   itemprop="item">
+                                               asp-area=""
+                                               asp-controller="AllVideo"
+                                               asp-action="Movie"
+                                               asp-route-movieid="F6D6A6CF-68A1-412F-B477-08DB06EBE160"
+                                               itemprop="item">
 
                                                 <span itemprop="name">« 1 серия »</span>
 
@@ -404,11 +406,11 @@
                                             itemscope itemtype="http://schema.org/ListItem">
 
                                             <a class="@refDropdownClass"
-                                                   asp-area=""
-                                                   asp-controller="AllVideo"
-                                                   asp-action="Movie"
-                                                   asp-route-movieid="FEC30DAE-221B-4AEE-AD5B-08DB0F8CC7DA"
-                                                   itemprop="item">
+                                               asp-area=""
+                                               asp-controller="AllVideo"
+                                               asp-action="Movie"
+                                               asp-route-movieid="FEC30DAE-221B-4AEE-AD5B-08DB0F8CC7DA"
+                                               itemprop="item">
 
                                                 <span itemprop="name">« 2 серия »</span>
 
@@ -425,11 +427,11 @@
                                             itemscope itemtype="http://schema.org/ListItem">
 
                                             <a class="@refDropdownClass"
-                                                   asp-area=""
-                                                   asp-controller="AllVideo"
-                                                   asp-action="Movie"
-                                                   asp-route-movieid="76EF1B9F-ECEC-45BB-3990-08DB1107518A"
-                                                   itemprop="item">
+                                               asp-area=""
+                                               asp-controller="AllVideo"
+                                               asp-action="Movie"
+                                               asp-route-movieid="76EF1B9F-ECEC-45BB-3990-08DB1107518A"
+                                               itemprop="item">
 
                                                 <span itemprop="name">« 3 серия »</span>
 
@@ -450,11 +452,11 @@
                                     itemscope itemtype="http://schema.org/ListItem">
 
                                     <a class="@refDropdownClass"
-                                           asp-area=""
-                                           asp-controller="AllVideo"
-                                           asp-action="MoviePage"
-                                           asp-route-moviepageid="164d4f6b-e825-4976-aafd-08db11e703e8"
-                                           itemprop="item">
+                                       asp-area=""
+                                       asp-controller="AllVideo"
+                                       asp-action="MoviePage"
+                                       asp-route-moviepageid="164d4f6b-e825-4976-aafd-08db11e703e8"
+                                       itemprop="item">
 
                                         <span itemprop="name">« Бронзовая птица »</span>
 
@@ -471,11 +473,11 @@
                                             itemscope itemtype="http://schema.org/ListItem">
 
                                             <a class="@refDropdownClass"
-                                                   asp-area=""
-                                                   asp-controller="AllVideo"
-                                                   asp-action="Movie"
-                                                   asp-route-movieid="43244ced-4beb-420a-9333-08db1201ac22"
-                                                   itemprop="item">
+                                               asp-area=""
+                                               asp-controller="AllVideo"
+                                               asp-action="Movie"
+                                               asp-route-movieid="43244ced-4beb-420a-9333-08db1201ac22"
+                                               itemprop="item">
 
                                                 <span itemprop="name">« 1 серия »</span>
 
@@ -492,11 +494,11 @@
                                             itemscope itemtype="http://schema.org/ListItem">
 
                                             <a class="@refDropdownClass"
-                                                   asp-area=""
-                                                   asp-controller="AllVideo"
-                                                   asp-action="Movie"
-                                                   asp-route-movieid="8105c488-8c2c-43ad-5ba2-08db124e22cd"
-                                                   itemprop="item">
+                                               asp-area=""
+                                               asp-controller="AllVideo"
+                                               asp-action="Movie"
+                                               asp-route-movieid="8105c488-8c2c-43ad-5ba2-08db124e22cd"
+                                               itemprop="item">
 
                                                 <span itemprop="name">« 2 серия »</span>
 
@@ -513,11 +515,11 @@
                                             itemscope itemtype="http://schema.org/ListItem">
 
                                             <a class="@refDropdownClass"
-                                                   asp-area=""
-                                                   asp-controller="AllVideo"
-                                                   asp-action="Movie"
-                                                   asp-route-movieid="829549e8-488c-4811-96f5-08db131f68f0"
-                                                   itemprop="item">
+                                               asp-area=""
+                                               asp-controller="AllVideo"
+                                               asp-action="Movie"
+                                               asp-route-movieid="829549e8-488c-4811-96f5-08db131f68f0"
+                                               itemprop="item">
 
                                                 <span itemprop="name">« 3 серия »</span>
 
@@ -538,11 +540,11 @@
                                     itemscope itemtype="http://schema.org/ListItem">
 
                                     <a class="@refDropdownClass"
-                                           asp-area=""
-                                           asp-controller="AllVideo"
-                                           asp-action="MoviePage"
-                                           asp-route-moviepageid="b1297a98-b600-4ef0-c0bb-08db17064631"
-                                           itemprop="item">
+                                       asp-area=""
+                                       asp-controller="AllVideo"
+                                       asp-action="MoviePage"
+                                       asp-route-moviepageid="b1297a98-b600-4ef0-c0bb-08db17064631"
+                                       itemprop="item">
 
                                         <span itemprop="name">« Пропавшая экспедиция »</span>
 
@@ -559,11 +561,11 @@
                                             itemscope itemtype="http://schema.org/ListItem">
 
                                             <a class="@refDropdownClass"
-                                                   asp-area=""
-                                                   asp-controller="AllVideo"
-                                                   asp-action="Movie"
-                                                   asp-route-movieid="93bf150c-139e-458c-53a5-08db16998382"
-                                                   itemprop="item">
+                                               asp-area=""
+                                               asp-controller="AllVideo"
+                                               asp-action="Movie"
+                                               asp-route-movieid="93bf150c-139e-458c-53a5-08db16998382"
+                                               itemprop="item">
 
                                                 <span itemprop="name">« 1 серия »</span>
 
@@ -580,11 +582,11 @@
                                             itemscope itemtype="http://schema.org/ListItem">
 
                                             <a class="@refDropdownClass"
-                                                   asp-area=""
-                                                   asp-controller="AllVideo"
-                                                   asp-action="Movie"
-                                                   asp-route-movieid="5961e512-3fda-49b9-53a6-08db16998382"
-                                                   itemprop="item">
+                                               asp-area=""
+                                               asp-controller="AllVideo"
+                                               asp-action="Movie"
+                                               asp-route-movieid="5961e512-3fda-49b9-53a6-08db16998382"
+                                               itemprop="item">
 
                                                 <span itemprop="name">« 2 серия »</span>
 
@@ -601,11 +603,11 @@
                                             itemscope itemtype="http://schema.org/ListItem">
 
                                             <a class="@refDropdownClass"
-                                                   asp-area=""
-                                                   asp-controller="AllVideo"
-                                                   asp-action="Movie"
-                                                   asp-route-movieid="ed96bdd3-ed97-461a-e0a4-08db1a7f2842"
-                                                   itemprop="item">
+                                               asp-area=""
+                                               asp-controller="AllVideo"
+                                               asp-action="Movie"
+                                               asp-route-movieid="ed96bdd3-ed97-461a-e0a4-08db1a7f2842"
+                                               itemprop="item">
 
                                                 <span itemprop="name">« Золотая речка »</span>
 
@@ -629,12 +631,9 @@
                             itemprop="itemListElement"
                             itemscope itemtype="http://schema.org/ListItem">
 
-                            <a class="@refDropdownClass"
-                                   href="https://shevkunenko.ru/admin/films.htm" itemprop="item">
-
-                                <span itemprop="name">Админ »</span>
-
-                            </a>
+                            <span class="@refDropdownClass" itemprop="item name">
+                                Админ »
+                            </span>
 
                             <meta itemprop="position" content="3">
 
@@ -647,13 +646,15 @@
                                     itemscope itemtype="http://schema.org/ListItem">
 
                                     <a class="@refDropdownClass"
-                                           asp-area=""
-                                           asp-controller="Films"
-                                           asp-action="Index"
-                                           asp-route-pageNumber="1"
-                                           itemprop="item">
+                                       asp-area=""
+                                       asp-controller="Films"
+                                       asp-action="Index"
+                                       asp-route-pageNumber="1"
+                                       itemprop="item">
 
-                                        <span itemprop="name">Фильмы на сайте</span>
+                                        <span itemprop="name">
+                                            Фильмы на сайте
+                                        </span>
 
                                     </a>
 
@@ -662,19 +663,21 @@
                                 </li>
 
                                 @* Экранизации Анатолия Рыбакова *@
-                                <li class="bg-light p-0 mb-1 rounded-1 maxwidthcontent"
+                                <li class="bg-light p-0 mb-2 rounded-1 maxwidthcontent"
                                     title="экранизации Анатолия Рыбакова"
                                     itemprop="itemListElement"
                                     itemscope itemtype="http://schema.org/ListItem">
 
                                     <a class="@refDropdownClass"
-                                           asp-area=""
-                                           asp-controller="AllVideo"
-                                           asp-action="MoviePage"
-                                           asp-route-moviepageid="636173bd-733f-41c4-0d34-08dd2a5f6cbc"
-                                           itemprop="item">
+                                       asp-area=""
+                                       asp-controller="AllVideo"
+                                       asp-action="MoviePage"
+                                       asp-route-moviepageid="636173bd-733f-41c4-0d34-08dd2a5f6cbc"
+                                       itemprop="item">
 
-                                        <span itemprop="name">Экранизации Анатолия Рыбакова</span>
+                                        <span itemprop="name">
+                                            Экранизации Анатолия Рыбакова
+                                        </span>
 
                                     </a>
 
@@ -683,18 +686,20 @@
                                 </li>
 
                                 @* BBC-TOP-100-US-MOVIES *@
-                                <li class="bg-light p-0 mb-1 rounded-1 maxwidthcontent"
+                                <li class="bg-light p-0 mb-2 rounded-1 maxwidthcontent"
                                     title="BBC-TOP-100-US-MOVIES"
                                     itemprop="itemListElement"
                                     itemscope itemtype="http://schema.org/ListItem">
 
                                     <a class="@refDropdownClass"
-                                           asp-area=""
-                                           asp-controller="AllVideo"
-                                           asp-action="bbc-top-100-us-movies"
-                                           itemprop="item">
+                                       asp-area=""
+                                       asp-controller="AllVideo"
+                                       asp-action="bbc-top-100-us-movies"
+                                       itemprop="item">
 
-                                        <span itemprop="name">« BBC-TOP-100-US-MOVIES »</span>
+                                        <span itemprop="name">
+                                            « BBC-TOP-100-US-MOVIES »
+                                        </span>
 
                                     </a>
 
@@ -703,17 +708,19 @@
                                 </li>
 
                                 @* режиссёр Владимир Мотыль *@
-                                <li class="bg-light p-0 mb-1 rounded-1 maxwidthcontent"
+                                <li class="bg-light p-0 mb-2 rounded-1 maxwidthcontent"
                                     title="фильмы режиссера Владимира Мотыля"
                                     itemprop="itemListElement"
                                     itemscope itemtype="http://schema.org/ListItem">
 
                                     <a class="@refDropdownClass"
-                                           asp-area="Movies"
-                                           asp-page="/Vladimir-Motyl"
-                                           itemprop="item">
+                                       asp-area="Movies"
+                                       asp-page="/Vladimir-Motyl"
+                                       itemprop="item">
 
-                                        <span itemprop="name">режиссёр Владимир Мотыль</span>
+                                        <span itemprop="name">
+                                            режиссёр Владимир Мотыль
+                                        </span>
 
                                     </a>
 
@@ -722,19 +729,21 @@
                                 </li>
 
                                 @* Мой серебряный шар*@
-                                <li class="bg-light p-0 mb-1 rounded-1 maxwidthcontent"
+                                <li class="bg-light p-0 mb-2 rounded-1 maxwidthcontent"
                                     title="программа Виталия Вульфа"
                                     itemprop="itemListElement"
                                     itemscope itemtype="http://schema.org/ListItem">
 
                                     <a class="@refDropdownClass"
-                                           asp-area=""
-                                           asp-controller="AllVideo"
-                                           asp-action="Index"
-                                           asp-route-topicId="dc48fa89-0370-4530-84e1-413fa28a3e19"
-                                           itemprop="item">
+                                       asp-area=""
+                                       asp-controller="AllVideo"
+                                       asp-action="Index"
+                                       asp-route-topicId="dc48fa89-0370-4530-84e1-413fa28a3e19"
+                                       itemprop="item">
 
-                                        <span itemprop="name">«Мой серебряный шар»</span>
+                                        <span itemprop="name">
+                                            «Мой серебряный шар»
+                                        </span>
 
                                     </a>
 
@@ -743,19 +752,21 @@
                                 </li>
 
                                 @* Композитор - Эннио Морриконе *@
-                                <li class="bg-light p-0 mb-1 rounded-1 maxwidthcontent"
+                                <li class="bg-light p-0 rounded-1 maxwidthcontent"
                                     title="композитор Эннио Морриконе"
                                     itemprop="itemListElement"
                                     itemscope itemtype="http://schema.org/ListItem">
 
                                     <a class="@refDropdownClass"
-                                           asp-area=""
-                                           asp-controller="Films"
-                                           asp-action="Index"
-                                           asp-route-searchString="Композитор - Эннио Морриконе"
-                                           itemprop="item">
+                                       asp-area=""
+                                       asp-controller="Films"
+                                       asp-action="Index"
+                                       asp-route-searchString="Композитор - Эннио Морриконе"
+                                       itemprop="item">
 
-                                        <span itemprop="name">Композитор - Эннио Морриконе</span>
+                                        <span itemprop="name">
+                                            Композитор - Эннио Морриконе
+                                        </span>
 
                                     </a>
 
@@ -796,12 +807,12 @@
                     itemscope itemtype="http://schema.org/ListItem">
 
                     <a class="nav-link text-black p-0"
-                           asp-area="Admin"
-                           asp-controller="ManageWebsite"
-                           asp-action="Index"
-                           role="button"
-                           title="база данных сайта"
-                           itemprop="item">
+                       asp-area="Admin"
+                       asp-controller="ManageWebsite"
+                       asp-action="Index"
+                       role="button"
+                       title="база данных сайта"
+                       itemprop="item">
 
                         <span class="px-2" itemprop="name">&nbsp;DB</span>
                         <meta itemprop="position" content="4">
@@ -841,7 +852,7 @@
                     </style>
 
                     <script type="text/javascript">
-                        (function (w, d, c) { var s = d.createElement('script'), h = d.getElementsByTagName('script')[0], e = d.documentElement; if ((' ' + e.className + ' ').indexOf(' ya-page_js_yes ') === -1) { e.className += ' ya-page_js_yes'; } s.type = 'text/javascript'; s.async = true; s.charset = 'utf-8'; s.src = (d.location.protocol === 'https:' ? 'https:' : 'http:') + '//site.yandex.net/v2.0/js/all.js'; h.parentNode.insertBefore(s, h); (w[c] || (w[c] = [])).push(function () { Ya.Site.Form.init() }) })(window, document, 'yandex_site_callbacks');
+                                            (function (w, d, c) { var s = d.createElement('script'), h = d.getElementsByTagName('script')[0], e = d.documentElement; if ((' ' + e.className + ' ').indexOf(' ya-page_js_yes ') === -1) { e.className += ' ya-page_js_yes'; } s.type = 'text/javascript'; s.async = true; s.charset = 'utf-8'; s.src = (d.location.protocol === 'https:' ? 'https:' : 'http:') + '//site.yandex.net/v2.0/js/all.js'; h.parentNode.insertBefore(s, h); (w[c] || (w[c] = [])).push(function () { Ya.Site.Form.init() }) })(window, document, 'yandex_site_callbacks');
                     </script>
 
                 </li>
