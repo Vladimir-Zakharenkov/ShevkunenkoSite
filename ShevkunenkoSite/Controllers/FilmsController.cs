@@ -107,6 +107,8 @@ namespace ShevkunenkoSite.Controllers
 
                     List<ImageFileModel> framesAroundFilm = [.. listOfPictures.AsEnumerable().Shuffle()];
 
+                    film.ListOfPictures = [.. listOfPictures.AsEnumerable()];
+
                     if (framesAroundFilm.Count > 1 && framesAroundFilm.Count < DataConfig.NumberOfPicturesAround * 2)
                     {
                         film.FramesOnTheLeft = [.. framesAroundFilm.Take(framesAroundFilm.Count / 2)];

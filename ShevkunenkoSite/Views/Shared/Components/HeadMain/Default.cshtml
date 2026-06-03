@@ -20,7 +20,7 @@
 
 
     @*---------------------------------- Верификация поисковых систем ----------------------------------*@
-    @if (Context.Request.Path.ToString().Contains("sergeyshef.ru", StringComparison.OrdinalIgnoreCase)) 
+    @if (Context.Request.Path.ToString().Contains("sergeyshef.ru", StringComparison.OrdinalIgnoreCase))
     {
         <meta name="yandex-verification" content="800b6b429689169b" />
     }
@@ -318,8 +318,7 @@
 
 
     @*------------------------- Включаем скрипты если рабочий сервер ---------------------------------------*@
-    @if (!Context.Request.Host.ToString().Contains("localhost", StringComparison.InvariantCultureIgnoreCase))
-    {
+    <environment exclude="Development">
         @* Global site tag (gtag.js) - Google Analytics*@
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-3WELF8XC9E"></script>
         <script>
@@ -330,10 +329,13 @@
             gtag('config', 'G-3WELF8XC9E');
         </script>
 
+        <!-- Yandex Autoplacement 1648952 -->
+        <script src="https://yandex.ru/ads/system/context.js" async></script>
+        <script data-page-id="1648952" src="https://yandex.ru/ads/system/ap-loader.js" async></script>
+
         @* Yandex.RTB *@
         <script>window.yaContextCb = window.yaContextCb || []</script>
-        <script async src="https://yandex.ru/ads/system/context.js"></script>
-    }
+    </environment>
     @*-------------------------------------------------------------------------------------------------------------*@
 
 </head>

@@ -112,14 +112,18 @@
             {
                 if (listOfFilms.Count > 0)
                 {
-                    <h2 class="text_shadow mt-4">@caption</h2>
+                    <h2 class="text_shadow my-4">
+                        @caption
+                    </h2>
 
-                    <hr class="liniya w-75" />
+                    @* <hr class="w-50" /> *@
 
-                    <div class="row g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-1
-                        @(listOfFilms.Count < 4 ? "row-cols-3" : "")
+                    @* <div class="row g-sm-1 g-md-2 g-lg-3 gy-2 justify-content-center mt-1
+                        @(listOfFilms.Count < 4 ? "row-cols-3 row-cols-xl-6" : "")
                         @((listOfFilms.Count % 4 == 0 || listOfFilms.Count == 7) ? "row-cols-4" : "")
-                        @((listOfFilms.Count > 4 & listOfFilms.Count % 4 != 0 & listOfFilms.Count != 7) ? "row-cols-3 row-cols-lg-4 row-cols-xxl-5" : "")">
+                        @((listOfFilms.Count > 4 & listOfFilms.Count % 4 != 0 & listOfFilms.Count != 7) ? "row-cols-3 row-cols-lg-4 row-cols-xxl-5" : "")"> *@
+
+                    <div class="row row-cols-3 row-cols-lg-4 row-cols-xxl-5 g-2 justify-content-center">
 
                         @foreach (var item in listOfFilms)
                         {

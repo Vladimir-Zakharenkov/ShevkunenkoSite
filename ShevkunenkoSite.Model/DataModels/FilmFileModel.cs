@@ -371,5 +371,12 @@ public class FilmFileModel
 
     #endregion
 
+    #region Кадры фильма
+
+    [NotMapped]
+    public List<ImageFileModel> ListOfPictures { get; set; } = [];
+
+    #endregion
+
     #endregion
 }

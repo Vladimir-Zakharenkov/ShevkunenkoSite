@@ -94,11 +94,11 @@
     @foreach (var film in Model.AllFilmFiles ?? Enumerable.Empty<FilmFileModel>())
     {
         <a asp-area=""
-               asp-controller="Films"
-               asp-action="Film"
-               asp-route-filmCaption="@film.FilmCaption"
-               class="d-flex col"
-               title="смотреть">
+           asp-controller="Films"
+           asp-action="Film"
+           asp-route-filmCaption="@film.FilmCaption"
+           class="d-flex col"
+           title="смотреть">
 
             <div class="card h-100 me-1 mb-1 p-1 shadw borderforitem" title="@film.FilmCaption">
 
@@ -110,11 +110,15 @@
 
                     @if (!string.IsNullOrEmpty(film.FilmCaption))
                     {
-                        <p class="card-title lh-1 fontadaptive my-1 mt-2">@film.FilmCaption.Replace("--", " ")</p>
+                        <p class="card-title lh-1 fontadaptive my-1 mt-2">
+                            @film.FilmCaption.Replace("--", " ")
+                        </p>
                     }
                     else
                     {
-                        <p class="card-title lh-1 text-danger fontadaptive my-1 mt-2">текст не задан</p>
+                        <p class="card-title lh-1 text-danger fontadaptive my-1 mt-2">
+                            текст не задан
+                        </p>
                     }
 
                 </div>

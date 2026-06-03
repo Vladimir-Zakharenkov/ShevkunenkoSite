@@ -20,6 +20,8 @@ public class RefPages(
 
         #endregion
 
+        #region Если фильтры не указаны
+
         if (pageInfoModel.PageLinks == false
             & pageInfoModel.PageLinks2 == false
             & pageInfoModel.PageLinksByFilters == false
@@ -36,14 +38,17 @@ public class RefPages(
         {
             return View("Empty");
         }
+
+        #endregion
+
+        #region Если указаны фильтры
+
         else
         {
             #region Словарь страниц по текстовому фильтрам
 
-            if (pageInfoModel.PageFilterOut != null && pageInfoModel.PageFilterOut != string.Empty && pageInfoModel.PageLinksByFilters == true)
+            if (!string.IsNullOrEmpty(pageInfoModel.PageFilterOut) && pageInfoModel.PageLinksByFilters == true)
             {
-                refsUnderPage.DictionaryOfPages = [];
-
                 string[] pageFilterOut = pageInfoModel.PageFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
                 if (pageFilterOut.Length > 0)
@@ -70,8 +75,6 @@ public class RefPages(
 
             if (pageInfoModel.PhotoFilterOut != null && pageInfoModel.PhotoFilterOut != string.Empty && pageInfoModel.PhotoLinks == true)
             {
-                refsUnderPage.DictionaryOfPictures = [];
-
                 string[] photoFilterOut = pageInfoModel.PhotoFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
                 if (photoFilterOut.Length > 0)
@@ -122,8 +125,6 @@ public class RefPages(
 
             if (pageInfoModel.VideoFilterOut != null && pageInfoModel.VideoFilterOut != string.Empty && pageInfoModel.VideoLinks == true)
             {
-                refsUnderPage.ListOfVideoLinksViewModel = [];
-
                 string[] videoFilterOut = pageInfoModel.VideoFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
                 if (videoFilterOut.Length > 0)
@@ -155,8 +156,6 @@ public class RefPages(
 
             if (pageInfoModel.RefPages != null && pageInfoModel.RefPages != string.Empty && pageInfoModel.PageLinks == true)
             {
-                refsUnderPage.LinksToPagesByGuid = [];
-
                 string[] pageIdOut = pageInfoModel.RefPages.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
                 if (pageIdOut.Length > 0)
@@ -182,8 +181,6 @@ public class RefPages(
 
             if (pageInfoModel.RefPages2 != null && pageInfoModel.RefPages2 != string.Empty && pageInfoModel.PageLinks2 == true)
             {
-                refsUnderPage.LinksToPagesByGuid2 = [];
-
                 string[] pageIdOut2 = pageInfoModel.RefPages2.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
                 if (pageIdOut2.Length > 0)
@@ -205,6 +202,8 @@ public class RefPages(
 
             #endregion
         }
+
+        #endregion
 
         if (refsUnderPage.DictionaryOfPages.Count < 1
             & refsUnderPage.DictionaryOfPictures.Count < 1

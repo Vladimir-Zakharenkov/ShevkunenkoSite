@@ -12211,12 +12211,6 @@ body {
     z-index: auto;
   }
 }
-.stranicy:hover {
-  color: hsl(1, 60%, 100%) !important;
-  background-color: hsl(240, 60%, 50%) !important;
-  transition: all 0.5s ease;
-}
-
 .adp90_img {
   width: 90%;
   border-radius: 1rem;
@@ -12493,10 +12487,20 @@ a:active, .dropdown:active {
   text-shadow: rgba(194, 10, 41, 0.6) 1px 2px 2px;
 }
 
+.stranicy:hover {
+  color: hsl(1, 60%, 100%) !important;
+  background-color: hsl(240, 60%, 50%) !important;
+  transition: all 0.5s ease;
+}
+
 #descr {
   font-size: 1rem;
-  color: darkblue;
+  color: blue;
   text-shadow: rgba(194, 10, 41, 0.6) 0px 0px 0px;
+}
+
+.stranicy:hover #descr {
+  color: white;
 }
 
 .accordion-body {

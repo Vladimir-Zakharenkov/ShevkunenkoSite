@@ -2997,7 +2997,7 @@ public class ImageInfoController(
 
             await imageContext.AddNewImageAsync(imageItem.EditImage);
 
-            return RedirectToAction(nameof(DetailsImage), new { imageId = imageItem.EditImage.ImageFileModelId });
+            return RedirectToAction(nameof(DetailsImage), new { imageId = imageItem.EditImage.ImageFileModelId, Area = "Admin" });
         }
         else
         {
