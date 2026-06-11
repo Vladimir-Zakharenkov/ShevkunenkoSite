@@ -58,9 +58,9 @@ public class FilmPictureCarousel(
         {
             return View(new PictureCarouselForFilmViewModel
             {
-                FirstCarousel = [.. pictures.Take(12)],
-                SecondCarousel = [.. pictures.Skip(12).Take(12)],
-                ThirdCarousel = [.. pictures.Skip(24)],
+                FirstCarousel = [.. pictures.Take(12).Shuffle2()],
+                SecondCarousel = [.. pictures.Skip(12).Take(12).Shuffle2()],
+                ThirdCarousel = [.. pictures.Skip(24).Take(12).Shuffle2()],
                 FilmFile = filmForPictureCarousel
             });
         }
@@ -68,9 +68,9 @@ public class FilmPictureCarousel(
         {
             return View(new PictureCarouselForFilmViewModel
             {
-                FirstCarousel = [.. pictures.Take(numbeOfImages)],
-                SecondCarousel = [.. pictures.Skip(numbeOfImages).Take(numbeOfImages)],
-                ThirdCarousel = [.. pictures.Skip(numbeOfImages * 2)],
+                FirstCarousel = [.. pictures.Take(numbeOfImages).Shuffle2()],
+                SecondCarousel = [.. pictures.Skip(numbeOfImages).Take(numbeOfImages).Shuffle2()],
+                ThirdCarousel = [.. pictures.Skip(numbeOfImages * 2).Take(numbeOfImages).Shuffle2()],
                 FilmFile = filmForPictureCarousel
             });
         }
