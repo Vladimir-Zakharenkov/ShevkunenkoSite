@@ -148,11 +148,21 @@ namespace ShevkunenkoSite.Controllers
         [HttpGet]
         public async Task<IActionResult> FilmPhotoAlbum(Guid? imageId, string? filmCaption, int pageNumber = 1)
         {
+            #region Инициализация PhotoAlbumViewModel
+            
+            PhotoAlbumViewModel photoAlbumView = new();
+            
+            #endregion
+
             #region Если не задан или не найден фильм по filmCaption
 
             if (string.IsNullOrEmpty(filmCaption) || await filmContext.FilmFiles.Where(film => film.FilmCaption == filmCaption.Trim()).AnyAsync() == false)
             {
                 return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                photoAlbumView.FilmFile = await filmContext.FilmFiles.FirstAsync(film => film.FilmCaption == filmCaption.Trim());
             }
 
             #endregion
@@ -180,12 +190,6 @@ namespace ShevkunenkoSite.Controllers
             {
                 return RedirectToAction(nameof(Film), new { filmCaption });
             }
-
-            #endregion
-
-            #region Инициализация PhotoAlbumViewModel
-
-            PhotoAlbumViewModel photoAlbumView = new();
 
             #endregion
 

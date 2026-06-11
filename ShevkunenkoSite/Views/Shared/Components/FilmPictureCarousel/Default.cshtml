@@ -1,0 +1,196 @@
+﻿@model PictureCarouselForFilmViewModel
+
+@{
+    int i = 1;
+    int j = 1;
+    int k = 1;
+}
+
+<hr class="liniya" />
+
+<div class="row gx-1">
+
+    @* карусель 1*@
+    <div class="col-4">
+
+        <div id="multipleItemCarousel1" class="carousel slide carousel-fade rounded-3 shadw" data-bs-ride="carousel">
+
+            <div class="carousel-inner">
+
+                @foreach (var picture in Model.FirstCarousel ?? Enumerable.Empty<ImageFileModel>())
+                {
+                    @if (i == 1)
+                    {
+                        <div class="carousel-item active p-0 p-sm-1 rounded-3 shadw borderforitem">
+
+                            <a asp-area=""
+                               asp-controller="Films"
+                               asp-action="FilmPhotoAlbum"
+                               asp-route-imageId="@picture.ImageFileModelId"
+                               asp-route-filmCaption="@Model.FilmFile.FilmCaption"
+                               asp-route-pageNumber=@null
+                               title="@picture.ImageAltTitle"
+                               class="">
+
+                                <vc:view-image image-id=@picture.ImageFileModelId
+                                               css-class="d-block w-100 shadw"
+                                               icon-type="webicon300" />
+
+                            </a>
+
+                        </div>
+
+                        i++;
+                    }
+                    else
+                    {
+                        <div class="carousel-item p-0 p-sm-1 rounded-3 shadw borderforitem">
+
+                            <a asp-area=""
+                               asp-controller="Films"
+                               asp-action="FilmPhotoAlbum"
+                               asp-route-imageId="@picture.ImageFileModelId"
+                               asp-route-filmCaption="@Model.FilmFile.FilmCaption"
+                               asp-route-pageNumber=@null
+                               title="@picture.ImageAltTitle"
+                               class="">
+
+                                <vc:view-image image-id=@picture.ImageFileModelId
+                                               css-class="d-block w-100 shadw"
+                                               icon-type="webicon300" />
+
+                            </a>
+
+                        </div>
+                    }
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+    @* карусель 2*@
+    <div class="col-4">
+
+        <div id="multipleItemCarousel2" class="carousel slide carousel-fade rounded-3 shadw" data-bs-ride="carousel">
+
+            <div class="carousel-inner">
+
+                @foreach (var picture in Model.SecondCarousel ?? Enumerable.Empty<ImageFileModel>())
+                {
+                    @if (j == 1)
+                    {
+                        <div class="carousel-item active p-0 p-sm-1 rounded-3 shadw borderforitem">
+
+                            <a asp-area=""
+                               asp-controller="Films"
+                               asp-action="FilmPhotoAlbum"
+                               asp-route-imageId="@picture.ImageFileModelId"
+                               asp-route-filmCaption="@Model.FilmFile.FilmCaption"
+                               asp-route-pageNumber=@null
+                               title="@picture.ImageAltTitle"
+                               class="">
+
+                                <vc:view-image image-id=@picture.ImageFileModelId
+                                               css-class="d-block w-100 shadw"
+                                               icon-type="webicon300" />
+
+                            </a>
+
+                        </div>
+
+                        j++;
+                    }
+                    else
+                    {
+                        <div class="carousel-item p-0 p-sm-1 rounded-3 shadw borderforitem">
+
+                            <a asp-area=""
+                               asp-controller="Films"
+                               asp-action="FilmPhotoAlbum"
+                               asp-route-imageId="@picture.ImageFileModelId"
+                               asp-route-filmCaption="@Model.FilmFile.FilmCaption"
+                               asp-route-pageNumber=@null
+                               title="@picture.ImageAltTitle"
+                               class="">
+
+                                <vc:view-image image-id=@picture.ImageFileModelId
+                                               css-class="d-block w-100 shadw"
+                                               icon-type="webicon300" />
+
+                            </a>
+
+                        </div>
+                    }
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+    @* карусель 3*@
+    <div class="col-4">
+
+        <div id="multipleItemCarousel3" class="carousel slide carousel-fade rounded-3 shadw" data-bs-ride="carousel">
+
+            <div class="carousel-inner">
+
+                @foreach (var picture in Model.ThirdCarousel ?? Enumerable.Empty<ImageFileModel>())
+                {
+                    @if (k == 1)
+                    {
+                        <div class="carousel-item active p-0 p-sm-1 rounded-3 shadw borderforitem">
+
+                            <a asp-area=""
+                               asp-controller="Films"
+                               asp-action="FilmPhotoAlbum"
+                               asp-route-imageId="@picture.ImageFileModelId"
+                               asp-route-filmCaption="@Model.FilmFile.FilmCaption"
+                               asp-route-pageNumber=@null
+                               title="@picture.ImageAltTitle"
+                               class="">
+
+                                <vc:view-image image-id=@picture.ImageFileModelId
+                                               css-class="d-block w-100 shadw"
+                                               icon-type="webicon300" />
+
+                            </a>
+
+                        </div>
+
+                        k++;
+                    }
+                    else
+                    {
+                        <div class="carousel-item p-0 p-sm-1 rounded-3 shadw borderforitem">
+
+                            <a asp-area=""
+                               asp-controller="Films"
+                               asp-action="FilmPhotoAlbum"
+                               asp-route-imageId="@picture.ImageFileModelId"
+                               asp-route-filmCaption="@Model.FilmFile.FilmCaption"
+                               asp-route-pageNumber=@null
+                               title="@picture.ImageAltTitle"
+                               class="">
+
+                                <vc:view-image image-id=@picture.ImageFileModelId
+                                               css-class="d-block w-100 shadw"
+                                               icon-type="webicon300" />
+
+                            </a>
+
+                        </div>
+                    }
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

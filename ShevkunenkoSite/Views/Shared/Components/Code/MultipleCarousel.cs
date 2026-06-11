@@ -6,18 +6,23 @@ public class MultipleCarousel(
     IMovieFileRepository movieContext
     ) : ViewComponent
 {
+    // Три группы картинок
     public ImageFileModel[] firstGroup = [];
     public ImageFileModel[] secondGroup = [];
     public ImageFileModel[] thirdGroup = [];
 
     public async Task<IViewComponentResult> InvokeAsync(MovieFileModel movieCarousel)
     {
+        // Экземпляр текущей страницы
         PageInfoModel pageInfoModel = await pageInfoContext.GetPageInfoByPathAsync(HttpContext);
 
+        // Массив картинок
         ImageFileModel[] pictures = [];
 
+        // Экземпляр полной версии фильма
         MovieFileModel? fullMovie = null;
 
+        // Создаем экземпляр полной версии фильма если она существует
         if (await movieContext.MovieFiles.Where(m => m.MovieFileModelId == movieCarousel.FullMovieID).AnyAsync())
         {
             fullMovie = await movieContext.MovieFiles.FirstAsync(m => m.MovieFileModelId == movieCarousel.FullMovieID);
