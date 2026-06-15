@@ -8,5 +8,5 @@ public class PictureCarouselForFilmViewModel
 
     public ImageFileModel[]? ThirdCarousel { get; set; }
 
-    public FilmFileModel FilmFile { get; set; } = new();
+    public string FilmCaption { get; set; } = string.Empty;
 }

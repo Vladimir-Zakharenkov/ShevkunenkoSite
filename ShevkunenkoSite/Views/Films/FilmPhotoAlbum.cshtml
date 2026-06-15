@@ -1,13 +1,12 @@
-﻿@using Microsoft.AspNetCore.Http
-@model PhotoAlbumViewModel
+﻿@model PhotoAlbumViewModel
 
 @{
     int i = 0;
 }
 
-<h1 class="text_shadow">
+<h1 class="h2 text_shadow">
 
-    @Model.CaptionOfAlbum.Replace("--", " ")
+    @Model.CaptionOfAlbum.Replace("--", " ").ToUpper()
 
     @if (Model.NoteForCaptionOfAlbum != null)
     {
@@ -154,6 +153,6 @@ else
 
 </div>
 
-<vc:film-picture-carousel film-for-picture-carousel="@Model.FilmFile" />
+<vc:film-picture-carousel caption-for-picture-carousel="@Model.CaptionOfAlbum" />
 
 <hr class="liniya" />

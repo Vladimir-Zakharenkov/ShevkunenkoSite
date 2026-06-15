@@ -631,6 +631,33 @@ public class PageInfoController(
             }
             else
             {
+                // Исключаем дублирование заголовков страниц
+                if (await pageInfoContext.PagesInfo.Where(page => page.PageTitle == addPage.PageTitle.Trim()).AnyAsync())
+                {
+                    ModelState.AddModelError("PageTitle", $"Заголовок страницы «{addPage.PageTitle}» уже существует.");
+
+                    #region ViewData
+
+                    // Список картинок сайта
+                    ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
+                    // Список картинок для фона (фотопленка)
+                    ViewData["BackgroundImages"] = new SelectList(backgroundContext.BackgroundFiles.OrderBy(orderBackgroundImage => orderBackgroundImage.WebLeftBackground), "BackgroundFileModelId", "WebLeftBackground");
+
+                    // Список текстовых файлов
+                    ViewData["Texts"] = new SelectList(textFileContext.Texts.OrderBy(orderText => orderText.TxtFileName), "TextInfoModelId", "TxtFileName");
+
+                    // Список аудиофайлов
+                    ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                    // Список типов иконок
+                    ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
+
+                    #endregion
+
+                    return View(newPage);
+                }
+
                 newPage.PageTitle = addPage.PageTitle.Trim();
                 newPage.PageDescription = addPage.PageDescription.Trim();
                 newPage.PageKeyWords = addPage.PageKeyWords.Trim();

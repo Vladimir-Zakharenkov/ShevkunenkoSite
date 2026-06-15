@@ -34,7 +34,7 @@ public class PhotoAlbumViewModel : ItemsListViewModel
 
     #region Экземпляр FilmFileModel
 
-    public FilmFileModel? FilmFile { get; set; }
+    //public FilmFileModel? FilmFile { get; set; }
 
     #endregion
 }

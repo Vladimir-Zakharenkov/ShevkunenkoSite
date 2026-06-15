@@ -149,30 +149,8 @@ namespace ShevkunenkoSite.Controllers
         public async Task<IActionResult> FilmPhotoAlbum(Guid? imageId, string? filmCaption, int pageNumber = 1)
         {
             #region Инициализация PhotoAlbumViewModel
-            
+
             PhotoAlbumViewModel photoAlbumView = new();
-            
-            #endregion
-
-            #region Если не задан или не найден фильм по filmCaption
-
-            if (string.IsNullOrEmpty(filmCaption) || await filmContext.FilmFiles.Where(film => film.FilmCaption == filmCaption.Trim()).AnyAsync() == false)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            else
-            {
-                photoAlbumView.FilmFile = await filmContext.FilmFiles.FirstAsync(film => film.FilmCaption == filmCaption.Trim());
-            }
-
-            #endregion
-
-            #region Если картинка не найдена
-
-            if (imageId != null && await imageContext.ImageFiles.Where(img => img.ImageFileModelId == imageId).AnyAsync() == false)
-            {
-                return RedirectToAction(nameof(Film), new { filmCaption });
-            }
 
             #endregion
 
@@ -186,7 +164,29 @@ namespace ShevkunenkoSite.Controllers
 
             #region Если нельзя найти картинки по filmCaption
 
-            if (await imageContext.ImageFiles.Where(img => img.SearchFilter.Contains(filmCaption + album)).AnyAsync() == false)
+            if (!string.IsNullOrEmpty(filmCaption) && await imageContext.ImageFiles.Where(img => img.SearchFilter.Contains(filmCaption + album)).AnyAsync() == false)
+            {
+                return RedirectToAction(nameof(Film), new { filmCaption = filmCaption, host = "ok" });
+            }
+
+            #endregion
+
+            #region Если не задан или не найден в фильтрах картинок filmCaption
+
+            if (string.IsNullOrEmpty(filmCaption) || await imageContext.ImageFiles.Where(img => img.SearchFilter.Contains(filmCaption + album)).AnyAsync() == false)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                photoAlbumView.CaptionOfAlbum = filmCaption;
+            }
+
+            #endregion
+
+            #region Если картинка не найдена
+
+            if (imageId != null && await imageContext.ImageFiles.Where(img => img.ImageFileModelId == imageId).AnyAsync() == false)
             {
                 return RedirectToAction(nameof(Film), new { filmCaption });
             }
@@ -211,16 +211,18 @@ namespace ShevkunenkoSite.Controllers
 
                 #endregion
 
-                if (imageItem.SearchFilter.Contains(album))
+                if (imageItem.SearchFilter.Contains((filmCaption + album), StringComparison.OrdinalIgnoreCase))
                 {
                     #region Определение заголовка и подзаголовка альбома
 
                     string[] filters = imageItem.SearchFilter.Split(',', StringSplitOptions.TrimEntries);
 
-                    string? filterForCaption = Array.Find(filters, p => p.Contains(album));
+                    string? filterForCaption = Array.Find(filters, p => p.Contains((filmCaption + album), StringComparison.OrdinalIgnoreCase));
 
                     if (filterForCaption != null)
                     {
+                        filterForCaption = filterForCaption.ToLower();
+
                         int foundForCaption = filterForCaption.IndexOf(album);
 
                         photoAlbumView.CaptionOfAlbum = filterForCaption[..foundForCaption];
@@ -344,10 +346,12 @@ namespace ShevkunenkoSite.Controllers
 
                 string[] filters = itemsOnPage[0].SearchFilter.Split(',', StringSplitOptions.TrimEntries);
 
-                string? filterForCaption = Array.Find(filters, p => p.Contains(album));
+                string? filterForCaption = Array.Find(filters, p => p.Contains((filmCaption + album), StringComparison.OrdinalIgnoreCase));
 
                 if (filterForCaption != null)
                 {
+                    filterForCaption = filterForCaption.ToLower();
+
                     int foundForCaption = filterForCaption.IndexOf(album);
 
                     photoAlbumView.CaptionOfAlbum = filterForCaption[..foundForCaption];

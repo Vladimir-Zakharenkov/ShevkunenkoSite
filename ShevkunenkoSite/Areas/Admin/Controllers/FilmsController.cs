@@ -151,9 +151,6 @@ public class FilmsController(
                 "FilmPoster," +
                 "FilmImage," +
                 "ImageForFilmFormFile"
-
-
-
         )]
         FilmFileModel filmItem)
     {
@@ -388,7 +385,7 @@ public class FilmsController(
 
             #region Оригинальное название фильма
 
-            if (filmItem.FilmCaptionOriginal != null && string.IsNullOrWhiteSpace(filmItem.FilmCaptionOriginal))
+            if (!string.IsNullOrEmpty(filmItem.FilmCaptionOriginal.Trim()))
             {
                 if (await filmContext.FilmFiles.Where(film => film.FilmCaptionOriginal == filmItem.FilmCaptionOriginal).AnyAsync())
                 {

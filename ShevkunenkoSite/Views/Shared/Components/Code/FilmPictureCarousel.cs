@@ -1,55 +1,35 @@
 ﻿namespace ShevkunenkoSite.Views.Shared.Components.Code;
 
 public class FilmPictureCarousel(
-    IImageFileRepository imageContext,
-    IFilmFileRepository filmContext
+    IImageFileRepository imageContext
     ) : ViewComponent
 {
-    public async Task<IViewComponentResult> InvokeAsync(FilmFileModel filmForPictureCarousel)
+    public async Task<IViewComponentResult> InvokeAsync(string captionForPictureCarousel)
     {
         // Массив картинок
         ImageFileModel[] pictures = [];
 
-        // Экземпляр полной версии фильма
-        FilmFileModel? fullFilm = null;
+        #region Разделители в фильтре картинки
 
-        // Создаем экземпляр полной версии фильма если она существует
-        if (await filmContext.FilmFiles.Where(film => film.FilmFileModelId == filmForPictureCarousel.FullFilmId).AnyAsync())
-        {
-            fullFilm = await filmContext.FilmFiles.FirstAsync(film => film.FilmFileModelId == filmForPictureCarousel.FullFilmId);
-        }
+        string album = "#film-album#";
 
-        if (fullFilm != null)
+        #endregion
+
+        if (await imageContext.ImageFiles.Where(pict => pict.SearchFilter.ToLower().Contains(captionForPictureCarousel + album)).AnyAsync())
         {
-            if (await imageContext.ImageFiles.Where(pict => pict.SearchFilter.Contains($"{fullFilm.FilmCaption}#film-album#,")).AnyAsync())
-            {
-                pictures = await imageContext.ImageFiles
-                    .Where(pict => pict.SearchFilter.Contains($"{fullFilm.FilmCaption}#film-album#,"))
-                    .ToArrayAsync();
-            }
-            else
-            {
-                return View("Empty");
-            }
+            pictures = await imageContext.ImageFiles
+                .Where(pict => pict.SearchFilter.ToLower().Contains(captionForPictureCarousel + album))
+                .ToArrayAsync();
         }
         else
         {
-            if (await imageContext.ImageFiles.Where(pict => pict.SearchFilter.Contains($"{filmForPictureCarousel.FilmCaption}#film-album#,")).AnyAsync())
-            {
-                pictures = await imageContext.ImageFiles
-                    .Where(pict => pict.SearchFilter.Contains($"{filmForPictureCarousel.FilmCaption}#film-album#,"))
-                    .ToArrayAsync();
-            }
-            else
-            {
-                return View("Empty");
-            }
+            return View("Empty");
         }
 
         int numbeOfImages = pictures.Length / 3;
 
         // Если картинок меньше 9 - карусель не показываем
-        if (numbeOfImages < 9)
+        if (numbeOfImages < 3)
         {
             return View("Empty");
         }
@@ -61,7 +41,7 @@ public class FilmPictureCarousel(
                 FirstCarousel = [.. pictures.Take(12).Shuffle2()],
                 SecondCarousel = [.. pictures.Skip(12).Take(12).Shuffle2()],
                 ThirdCarousel = [.. pictures.Skip(24).Take(12).Shuffle2()],
-                FilmFile = filmForPictureCarousel
+                FilmCaption = captionForPictureCarousel
             });
         }
         else
@@ -71,7 +51,7 @@ public class FilmPictureCarousel(
                 FirstCarousel = [.. pictures.Take(numbeOfImages).Shuffle2()],
                 SecondCarousel = [.. pictures.Skip(numbeOfImages).Take(numbeOfImages).Shuffle2()],
                 ThirdCarousel = [.. pictures.Skip(numbeOfImages * 2).Take(numbeOfImages).Shuffle2()],
-                FilmFile = filmForPictureCarousel
+                FilmCaption = captionForPictureCarousel
             });
         }
     }
