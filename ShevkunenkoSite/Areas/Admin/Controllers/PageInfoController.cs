@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Azure;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ShevkunenkoSite.Areas.Admin.Controllers;
@@ -32,6 +33,7 @@ public class PageInfoController(
         bool pageCard = false
         )
     {
+        // Список всех страниц сайта
         var allSitePages = await pageInfoContext.PagesInfo.ToListAsync();
 
         if (!searchString.IsNullOrEmpty())
@@ -565,7 +567,7 @@ public class PageInfoController(
             PageInfoModel newPage = new();
 
             #endregion
-            
+
             #region Добавить видео для страницы
 
             if (addPage.FilmFileFormFile != null)
@@ -579,7 +581,7 @@ public class PageInfoController(
                 else
                 {
                     ModelState.AddModelError("FilmFileFormFile", $"Файла «{addPage.FilmFileFormFile.FileName}» нет в базе данных");
-                    
+
                     #region ViewData
 
                     // Список фильмов
@@ -2185,7 +2187,7 @@ public class PageInfoController(
             #endregion
 
             #region Изменить адрес страницы
-            
+
             #region Area
 
             if (string.IsNullOrEmpty(editPage.PageArea.Trim()) || editPage.PageArea == "Root")
@@ -2198,7 +2200,7 @@ public class PageInfoController(
             }
 
             #endregion
-            
+
             #region Controller
 
             if (string.IsNullOrWhiteSpace(editPage.Controller) || string.IsNullOrEmpty(editPage.Controller) || editPage.PageAsRazorPage)
@@ -2211,7 +2213,7 @@ public class PageInfoController(
             }
 
             #endregion
-            
+
             #region Action
 
             if (string.IsNullOrWhiteSpace(editPage.Action) || string.IsNullOrEmpty(editPage.Action) || editPage.PageAsRazorPage)
@@ -2224,7 +2226,7 @@ public class PageInfoController(
             }
 
             #endregion
-            
+
             #region QueryString
 
             if (string.IsNullOrWhiteSpace(editPage.RoutData) || string.IsNullOrEmpty(editPage.RoutData))
@@ -2237,7 +2239,7 @@ public class PageInfoController(
             }
 
             #endregion
-            
+
             #region Адрес (для RazorPage) или Действие (для MVC)
 
             if (editPage.PageAsRazorPage)
@@ -2282,7 +2284,7 @@ public class PageInfoController(
             }
 
             #endregion
-            
+
             #region Псевдоним адреса (1)
 
             if (string.IsNullOrWhiteSpace(editPage.PagePathNickName) || string.IsNullOrEmpty(editPage.PagePathNickName))
@@ -2299,7 +2301,7 @@ public class PageInfoController(
             }
 
             #endregion
-            
+
             #region Псевдоним адреса (2)
 
             if (string.IsNullOrWhiteSpace(editPage.PagePathNickName2) || string.IsNullOrEmpty(editPage.PagePathNickName2))
@@ -2845,20 +2847,18 @@ public class PageInfoController(
 
     public async Task<IActionResult> DeletePage(Guid? pageId)
     {
-        PageInfoModel deletePage = new();
-
         if (pageId.HasValue)
         {
-            if (await pageInfoContext.PagesInfo.Where(i => i.PageInfoModelId == pageId).AnyAsync())
+            if (await pageInfoContext.PagesInfo.Where(page => page.PageInfoModelId == pageId).AnyAsync())
             {
-                deletePage = await pageInfoContext.PagesInfo.FirstAsync(i => i.PageInfoModelId == pageId);
+                PageInfoModel deletePage = await pageInfoContext.PagesInfo.FirstAsync(page => page.PageInfoModelId == pageId);
+
+                return View(deletePage);
             }
             else
             {
                 return RedirectToAction(nameof(Index));
             }
-
-            return View(deletePage);
         }
         else
         {
@@ -2868,8 +2868,63 @@ public class PageInfoController(
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeletePage(PageInfoModel deletePage)
+    public async Task<IActionResult> DeletePage
+        ([Bind(
+                "PageInfoModelId," +
+                "PageAsRazorPage," +
+                "PageArea," +
+                "Controller," +
+                "Action," +
+                "RoutData," +
+                "PageFullPath," +
+                "PagePathNickName," +
+                "PagePathNickNameWithData," +
+                "PagePathNickName2," +
+                "PagePathNickName3," +
+                "PagePathNickName4," +
+                "PageLoc," +
+                "PageTitle," +
+                "PageDescription," +
+                "PageKeyWords," +
+                "PageLastmod," +
+                "Changefreq," +
+                "Priority," +
+                "OgType," +
+                "BackgroundFileModelId," +
+                "ImageFileModelId," +
+                "PageCardText," +
+                "TextInfoId," +
+                " AudioInfoId," +
+                "PageHeading," +
+                "ImagePageHeadingId," +
+                "TextOfPage," +
+                "PageFilter," +
+                "SortOfPage," +
+                "PageLinksByFilters," +
+                "PageFilterOut," +
+                "PhotoLinks," +
+                "PhotoFilterOut," +
+                "VideoLinks," +
+                "VideoFilterOut," +
+                "PageLinks," +
+                "RefPages," +
+                "PageLinks2," +
+                "RefPages2," +
+                "FilmFileModelId," +
+                "IconTypeModelId"
+        )]
+        PageInfoModel deletePage)
     {
+        // Проверяем наличие ссылок на страницу в MovieInfoModel
+        if (await movieContext.MovieFiles.Where(movie => movie.PageInfoModelId == deletePage.PageInfoModelId).AnyAsync())
+        {
+            MovieFileModel refMovie = await movieContext.MovieFiles.FirstAsync(movie => movie.PageInfoModelId == deletePage.PageInfoModelId);
+
+            ModelState.AddModelError("PageTitle", $"На страницу ссылается фильм «{refMovie.MovieCaption}».");
+
+            return View(deletePage);
+        }
+
         if (deletePage != null)
         {
             await pageInfoContext.DeletePageAsync(deletePage.PageInfoModelId);

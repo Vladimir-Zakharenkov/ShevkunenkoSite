@@ -12115,32 +12115,32 @@ p {
 }
 @media only screen and (max-width: 576px) {
   .fontadaptive {
-    font-size: 8px;
+    font-size: 12px;
   }
 }
 @media only screen and (min-width: 577px) and (max-width: 768px) {
   .fontadaptive {
-    font-size: 9px;
+    font-size: 13px;
   }
 }
 @media only screen and (min-width: 769px) and (max-width: 992px) {
   .fontadaptive {
-    font-size: 10px;
+    font-size: 14px;
   }
 }
 @media only screen and (min-width: 993px) and (max-width: 1200px) {
   .fontadaptive {
-    font-size: 11px;
+    font-size: 15px;
   }
 }
 @media only screen and (min-width: 1201px) and (max-width: 1400px) {
   .fontadaptive {
-    font-size: 12px;
+    font-size: 15px;
   }
 }
 @media only screen and (min-width: 1401px) {
   .fontadaptive {
-    font-size: 17px;
+    font-size: 15px;
   }
 }
 .clear-left {

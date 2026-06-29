@@ -1,28 +1,55 @@
 ﻿@import "../lib/bootstrap/scss/mixins";
 
-.bookpages { display: block; clear: both; background-color: hsla(0,40%,96%,0.8); margin: 1rem auto; padding: 1rem;
+.bookpages {
+    display: block;
+    clear: both;
+    background-color: hsla(0,40%,96%,0.8);
+    margin: 1rem auto;
+    padding: 1rem;
 }
 
-.descr { font-size: 13pt; line-height: 18pt; padding: 3rem 2rem;
+.descr {
+    font-size: 13pt;
+    line-height: 18pt;
+    padding: 3rem 2rem;
 }
 
-.descr p { text-align: justify; text-indent: 1.5rem;
+.descr p {
+    text-align: justify;
+    text-indent: 1.5rem;
 }
 
-@media screen { .article_page {     padding: 1rem 2rem 2rem 2rem;     max-width: 700px; }
+@media screen {
+    .article_page {
+        padding: 1rem 2rem 2rem 2rem;
+        max-width: 700px;
+    }
 }
 
-@media print { .article_page {     padding: 0; }
+@media print {
+    .article_page {
+        padding: 0;
+    }
 }
 
-.top_page { min-height: 3rem; padding-bottom: 1rem; border-bottom: 1px solid hsla(0,60%,45%,1);
+.top_page {
+    min-height: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid hsla(0,60%,45%,1);
 }
 
-.footer_page { min-height: 3rem; padding-top: .3rem; border-top: 1px solid hsla(0,60%,45%,1);
+.footer_page {
+    min-height: 3rem;
+    padding-top: .3rem;
+    border-top: 1px solid hsla(0,60%,45%,1);
 }
 
-.nomstr::before { margin-right: 4px; content: "страница ";
+.nomstr::before {
+    margin-right: 4px;
+    content: "страница ";
 }
 
-.charst::before { margin-right: 4px; content: "часть ";
+.charst::before {
+    margin-right: 4px;
+    content: "часть ";
 }

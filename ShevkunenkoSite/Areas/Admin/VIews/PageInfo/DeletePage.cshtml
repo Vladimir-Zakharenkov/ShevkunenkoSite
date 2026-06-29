@@ -8,38 +8,59 @@
 
         <h1 class="fs-3 text_shadow">Удалить страницу</h1>
 
+        <div class="mx-auto maxwidth300px">
+
+            <vc:card-of-page page="@Model" />
+
+        </div>
+
         <hr class="liniya" />
 
         <div class="card p-2">
 
             @if (!string.IsNullOrEmpty(Model.RoutData))
             {
-                <p class="fs-5 text-danger mb-0">(<span class="text-black">«@Model.PageFullPathWithData»</span>)</p>
+                <p class="fs-5 text-danger mb-0">
+                    (<span class="text-black">«@Model.PageFullPathWithData»</span>)
+                </p>
             }
             else
             {
-                <p class="fs-5 text-danger mb-0">(<span class="text-black">«@Model.PageFullPath»</span>)</p>
+                <p class="fs-5 text-danger mb-0">
+                    (<span class="text-black">«@Model.PageFullPath»</span>)
+                </p>
             }
-
-            <vc:view-image image-id="@Model.ImageFileModelId" css-class="card-img-top m-2 width50percent shadw" icon-type="webicon300" />
-
-            <hr class="liniya" />
 
             <div class="card-body mx-0 p-0">
 
                 <form method="post" class="mt-2">
 
+                    @* все ошибки ввода данных *@
+                    @if (Context.Request.Method == "POST")
+                    {
+                        <div asp-validation-summary="All" class="text-danger border border-top-0 border-danger mb-3"></div>
+                    }
+
                     <input asp-for="PageInfoModelId" type="hidden" value="@Model.PageInfoModelId" />
 
                     <div class="card-footer p-2">
 
-                        <button type="submit" class="btn btn-outline-danger me-2 shadw" title="удалить страницу">Delete</button>
+                        <button type="submit"
+                                class="btn btn-outline-danger me-2 shadw"
+                                title="удалить страницу">
 
-                        <a class="btn btn-outline-success shadw"
-                           asp-area="Admin"
+                            Delete
+
+                        </button>
+
+                        <a asp-area="Admin"
                            asp-controller="PageInfo"
-                           asp-action="Index" title="не удалять">
+                           asp-action="Index"
+                           class="btn btn-outline-success shadw"
+                           title="не удалять">
+
                             Cancel
+
                         </a>
 
                     </div>

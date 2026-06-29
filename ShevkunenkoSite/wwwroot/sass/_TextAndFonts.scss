@@ -1,76 +1,136 @@
-﻿@media print { .h1_print {     color: #000 !important;     font-size: 20pt !important; }
- .text_shadow {     text-shadow: #000 0 0 0 0 !important; }
- p {     color: #000; /* Черный цвет текста */ }
+﻿@media print {
+    .h1_print {
+        color: #000 !important;
+        font-size: 20pt !important;
+    }
+
+    .text_shadow {
+        text-shadow: #000 0 0 0 0 !important;
+    }
+
+    p {
+        color: #000; /* Черный цвет текста */
+    }
 }
 
-@media screen { .text_shadow {     text-shadow: hsla(350,90%,40%,.6) 1px 2px 2px !important; }
+@media screen {
+    .text_shadow {
+        text-shadow: hsla(350,90%,40%,.6) 1px 2px 2px !important;
+    }
 }
 
-.text-justify, .justify { text-align: justify;
+.text-justify, .justify {
+    text-align: justify;
 }
 
-.text-indent-0 { text-indent: 0 !important;
+.text-indent-0 {
+    text-indent: 0 !important;
 }
 
-.text-indent-2em { text-indent: 2em !important;
+.text-indent-2em {
+    text-indent: 2em !important;
 }
 
-.fordetails { text-align: justify; margin-bottom: 0; font: 12.6pt/17pt "Times New Roman", Times, serif;
+.fordetails {
+    text-align: justify;
+    margin-bottom: 0;
+    font: 12.6pt/17pt "Times New Roman", Times, serif;
 }
 
-p { margin-bottom: 0;
+p {
+    margin-bottom: 0;
 }
 
-.times-new-roman { font-family: "Times New Roman", Times, serif;
+.times-new-roman {
+    font-family: "Times New Roman", Times, serif;
 }
 
-.arial { font-family: Arial, Helvetica, sans-serif;
+.arial {
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-.paragraph { text-align: justify; text-indent: 1.5rem;
+.paragraph {
+    text-align: justify;
+    text-indent: 1.5rem;
 }
 
-@media (max-width: 1199px) { .fontr {     font-size: 1.1rem; }
+@media (max-width: 1199px) {
+    .fontr {
+        font-size: 1.1rem;
+    }
 }
 
-@media (min-width: 1200px) { .fontr {     font-size: 1.3rem; }
+@media (min-width: 1200px) {
+    .fontr {
+        font-size: 1.3rem;
+    }
 }
 
-@function calcFluidFontSize($f-min, $f-max, $v-min, $v-max) { $k: ($f-max - $f-min)/($v-max - $v-min); $b: $f-min - $k * $v-min; $b: $b * 1px; @return calc( #{$k} * 100vw + #{$b} );
+@function calcFluidFontSize($f-min, $f-max, $v-min, $v-max) {
+    $k: ($f-max - $f-min)/($v-max - $v-min);
+    $b: $f-min - $k * $v-min;
+    $b: $b * 1px;
+    @return calc( #{$k} * 100vw + #{$b} );
 }
 
-@media screen { .fluid-font-size {     font-size: calcFluidFontSize(16, 18, 480, 1280) !important; }
+@media screen {
+    .fluid-font-size {
+        font-size: calcFluidFontSize(16, 18, 480, 1280) !important;
+    }
 }
 
-@media print { .fluid-font-size {     font-size: 12pt !important; }
+@media print {
+    .fluid-font-size {
+        font-size: 12pt !important;
+    }
 }
 
 // SM
-@media only screen and (max-width: 576px) { .fontadaptive {     font-size: 8px; }
+@media only screen and (max-width: 576px) {
+    .fontadaptive {
+        font-size: 12px;
+    }
 }
 
 // MD
-@media only screen and (min-width: 577px) and (max-width: 768px) { .fontadaptive {     font-size: 9px; }
+@media only screen and (min-width: 577px) and (max-width: 768px) {
+    .fontadaptive {
+        font-size: 13px;
+    }
 }
 
 // LG
-@media only screen and (min-width: 769px) and (max-width: 992px) { .fontadaptive {     font-size: 10px; }
+@media only screen and (min-width: 769px) and (max-width: 992px) {
+    .fontadaptive {
+        font-size: 14px;
+    }
 }
 
 // XL
-@media only screen and (min-width: 993px) and (max-width: 1200px) { .fontadaptive {     font-size: 11px; }
+@media only screen and (min-width: 993px) and (max-width: 1200px) {
+    .fontadaptive {
+        font-size: 15px;
+    }
 }
 
 // XXL
-@media only screen and (min-width: 1201px) and (max-width: 1400px) { .fontadaptive {     font-size: 12px; }
+@media only screen and (min-width: 1201px) and (max-width: 1400px) {
+    .fontadaptive {
+        font-size: 15px;
+    }
 }
 
 // HD
-@media only screen and (min-width: 1401px) { .fontadaptive {     font-size: 17px; }
+@media only screen and (min-width: 1401px) {
+    .fontadaptive {
+        font-size: 15px;
+    }
 }
 
-.clear-left { clear: left;
+.clear-left {
+    clear: left;
 }
 
-.preline { white-space: pre-line;
+.preline {
+    white-space: pre-line;
 }
