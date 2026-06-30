@@ -123,22 +123,22 @@ public class PageInfoImplementation(SiteDbContext siteContext) : IPageInfoReposi
 
             if (string.IsNullOrEmpty(pagePath))
             {
-                return await PagesInfo.FirstAsync(p => p.PageFullPath == "/shevkunenko/index");
+                return await PagesInfo.FirstAsync(page => page.PageFullPath == "/shevkunenko/index");
             }
 
             #endregion
 
             #region Совпадение пути
 
-            else if (await PagesInfo.Where(p => p.PageFullPath == pagePath).AnyAsync())
+            else if (await PagesInfo.Where(page => page.PageFullPath == pagePath).AnyAsync())
             {
-                var pageInfo = await PagesInfo.FirstAsync(p => p.PageFullPath == pagePath);
+                var pageInfo = await PagesInfo.FirstAsync(page => page.PageFullPath == pagePath);
 
-                #region Если совпал путь и не совпали данные (кроме пути с index)
+                #region Если совпал путь и не совпали данные (кроме пути с index )
                 
                 if (!string.IsNullOrEmpty(pageInfo.RoutData) & !pagePath.EndsWith("index"))
                 {
-                    return await PagesInfo.FirstAsync(p => p.PageFullPath == "/shevkunenko/error404");
+                    return await PagesInfo.FirstAsync(page => page.PageFullPath == "/shevkunenko/error404");
                 }
 
                 #endregion

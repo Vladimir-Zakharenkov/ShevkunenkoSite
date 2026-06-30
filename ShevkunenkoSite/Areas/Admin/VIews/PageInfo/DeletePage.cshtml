@@ -41,7 +41,12 @@
                         <div asp-validation-summary="All" class="text-danger border border-top-0 border-danger mb-3"></div>
                     }
 
-                    <input asp-for="PageInfoModelId" type="hidden" value="@Model.PageInfoModelId" />
+                    @* скрытые  поля *@
+                    <div>
+
+                        <input asp-for="PageInfoModelId" type="hidden" value="@Model.PageInfoModelId" />
+
+                    </div>
 
                     <div class="card-footer p-2">
 

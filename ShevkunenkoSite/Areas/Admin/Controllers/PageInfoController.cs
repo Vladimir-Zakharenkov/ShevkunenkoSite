@@ -1,5 +1,4 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ShevkunenkoSite.Areas.Admin.Controllers;
@@ -2845,13 +2844,16 @@ public class PageInfoController(
 
     #region Удалить страницу из базы данных
 
+    [HttpGet]
     public async Task<IActionResult> DeletePage(Guid? pageId)
     {
         if (pageId.HasValue)
         {
             if (await pageInfoContext.PagesInfo.Where(page => page.PageInfoModelId == pageId).AnyAsync())
             {
-                PageInfoModel deletePage = await pageInfoContext.PagesInfo.FirstAsync(page => page.PageInfoModelId == pageId);
+                PageInfoModel deletePage = await pageInfoContext.PagesInfo
+                    .Include(icon => icon.IconType)
+                    .FirstAsync(page => page.PageInfoModelId == pageId);
 
                 return View(deletePage);
             }
@@ -2913,7 +2915,7 @@ public class PageInfoController(
                 "FilmFileModelId," +
                 "IconTypeModelId"
         )]
-        PageInfoModel deletePage)
+        PageInfoDTOModel deletePage)
     {
         // Проверяем наличие ссылок на страницу в MovieInfoModel
         if (await movieContext.MovieFiles.Where(movie => movie.PageInfoModelId == deletePage.PageInfoModelId).AnyAsync())
@@ -2922,7 +2924,7 @@ public class PageInfoController(
 
             ModelState.AddModelError("PageTitle", $"На страницу ссылается фильм «{refMovie.MovieCaption}».");
 
-            return View(deletePage);
+            return View(await pageInfoContext.PagesInfo.Include(icon => icon.IconType).FirstAsync(page => page.PageInfoModelId == deletePage.PageInfoModelId));
         }
 
         if (deletePage != null)
