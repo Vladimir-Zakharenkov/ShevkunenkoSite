@@ -15,9 +15,9 @@
     }
 }
 
-<div class="col p-1">
+<div class="col maxwidth300px mx-auto rounded-3 cardborder">
 
-    <div class="card shadw rounded-3 cardborder" title="@Model.PageTitle">
+    <div class="card shadw rounded-3" title="@Model.PageTitle">
 
         @if (Model.OgType == "movie" && Model.MovieFile != null && Model.MovieFile.ImageFileModel != null)
         {
@@ -217,7 +217,7 @@
                asp-action="Book"
                asp-route-bookCaption="@Model.TextInfo.BooksAndArticlesModel.CaptionOfText.Replace(' ', '-')"
                asp-route-pageNumber=0
-               class="rounded-3 p-0">
+               class="rounded-3">
 
                 @if (Model.ImageFileModel != null)
                 {
@@ -236,7 +236,11 @@
                 {
                     <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 shadw cardBodyBg">
 
-                        <p class="card-title p-0 mb-0 fw-medium fontadaptive">@Model.PageCardText</p>
+                        <p class="card-title p-0 mb-0 fw-medium fontadaptive">
+
+                            @Model.PageCardText
+
+                        </p>
 
                     </div>
                 }
@@ -265,7 +269,7 @@
 
                 @if (!string.IsNullOrEmpty(Model.PageCardText))
                 {
-                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-2 shadw cardBodyBg">
+                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mb-1 shadw cardBodyBg">
 
                         <p class="card-title p-0 py-1 mb-0 fw-medium fontadaptive">
 

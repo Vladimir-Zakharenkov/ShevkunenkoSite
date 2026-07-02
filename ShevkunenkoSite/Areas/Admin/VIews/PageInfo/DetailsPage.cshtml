@@ -8,7 +8,7 @@
 
 <h1 class="fs-3 text_shadow">Информация о странице</h1>
 
-<hr class="liniya" />
+<hr class="liniya w-50" />
 
 @* Id страницы *@
 <div>
@@ -16,16 +16,20 @@
     <label asp-for="PageInfoModelId" class="@cssForLabel"></label>
 
     <p>
+
         <span class="fs-5 text_shadow fluid-font-size">
             @Model.PageInfoModelId
         </span>
+
         <br />
+
         <span class="fs-6 form-text text-success">
             идентификатор в базе данных (GUID)
         </span>
+
     </p>
 
-    <hr class="w-75 mx-auto" />
+    <hr class=" w-50 mx-auto" />
 
 </div>
 
@@ -35,16 +39,19 @@
     <label asp-for="PageTitle" class="@cssForLabel"></label>
 
     <p>
+
         <span class="fs-5 text_shadow">
             @Model.PageTitle
         </span>
+
         <br />
+
         <span class="fs-6 form-text text-success">
             тег « title »
         </span>
     </p>
 
-    <hr class="w-75 mx-auto" />
+    <hr class="w-50 mx-auto" />
 
 </div>
 
@@ -57,9 +64,9 @@
         </span>
     </p>
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 justify-content-center">
+    <div class="text-center">
 
-        <vc:card-of-page page=Model />
+        <vc:card-of-page page=@Model />
 
     </div>
 
