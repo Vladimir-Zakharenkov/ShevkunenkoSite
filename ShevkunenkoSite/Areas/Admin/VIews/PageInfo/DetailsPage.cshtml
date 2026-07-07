@@ -58,13 +58,15 @@
 @* Карточка страницы и индекс сортировки *@
 <div>
 
-    <p>
+    <p class="mb-3">
+
         <span class="fs-5 text-primary">
             Карточка страницы
         </span>
+
     </p>
 
-    <div class="text-center">
+    <div class="row justify-content-center">
 
         <vc:card-of-page page=@Model />
 
@@ -92,9 +94,9 @@
             @foreach (var item in Model.FramesAroundMainContent.FramesOnTheLeft)
             {
                 <a href="@item.ImagePath/@(string.IsNullOrEmpty(item.WebImageHDFileName) == false ? item.WebImageHDFileName : item.WebImageFileName)"
-                       class=""
-                       title="@item.ImageAltTitle"
-                       onclick="this.target='_blank'">
+                   class=""
+                   title="@item.ImageAltTitle"
+                   onclick="this.target='_blank'">
 
                     <vc:view-image image-id="@item.ImageFileModelId"
                                    css-class="my-2 w-100 shadw imageref"
@@ -116,30 +118,30 @@
         <div class="card-footer border p-0 my-2">
 
             <a asp-area="Admin"
-                   asp-controller="PageInfo"
-                   asp-action="EditPage"
-                   asp-route-pageid="@Model.PageInfoModelId"
-                   class="btn btn-outline-dark py-1 m-2 shadw minwidth100px"
-                   title="редактировать данные">
+               asp-controller="PageInfo"
+               asp-action="EditPage"
+               asp-route-pageid="@Model.PageInfoModelId"
+               class="btn btn-outline-dark py-1 m-2 shadw minwidth100px"
+               title="редактировать данные">
 
                 Изменить
 
             </a>
 
             <a asp-area="Admin"
-                   asp-controller="PageInfo"
-                   asp-action="DeletePage"
-                   asp-route-pageid="@Model.PageInfoModelId"
-                   class="btn btn-outline-danger py-1 m-2 shadw minwidth100px"
-                   title="удалить страницу">
+               asp-controller="PageInfo"
+               asp-action="DeletePage"
+               asp-route-pageid="@Model.PageInfoModelId"
+               class="btn btn-outline-danger py-1 m-2 shadw minwidth100px"
+               title="удалить страницу">
 
                 Удалить
 
             </a>
 
             <a href="@Url.Content(Model.PageFullPathWithData)"
-                   class="btn btn-outline-primary py-1 m-2 shadw minwidth100px"
-                   title="просмотр">
+               class="btn btn-outline-primary py-1 m-2 shadw minwidth100px"
+               title="просмотр">
 
                 Просмотр
 
@@ -148,8 +150,8 @@
             @if (!string.IsNullOrEmpty(Model.PagePathNickName))
             {
                 <a href="@Url.Content(Model.PagePathNickName)"
-                       class="btn btn-outline-primary py-1 m-2 shadw minwidth100px"
-                       title="просмотр">
+                   class="btn btn-outline-primary py-1 m-2 shadw minwidth100px"
+                   title="просмотр">
 
                     Псевдоним
 
@@ -157,10 +159,10 @@
             }
 
             <a asp-area="Admin"
-                   asp-controller="PageInfo"
-                   asp-action="Index"
-                   class="btn btn-outline-success py-1 m-2 shadw minwidth100px"
-                   title="список страниц">
+               asp-controller="PageInfo"
+               asp-action="Index"
+               class="btn btn-outline-success py-1 m-2 shadw minwidth100px"
+               title="список страниц">
 
                 Список
 
@@ -169,11 +171,11 @@
             @if (Model.MovieFile != null)
             {
                 <a asp-area="Admin"
-                       asp-controller="MovieInfo"
-                       asp-action="DetailsMovie"
-                       asp-route-movieid="@Model.MovieFile.MovieFileModelId"
-                       class="btn btn-outline-info py-1 m-2 shadw minwidth100px"
-                       title="данные фильма">
+                   asp-controller="MovieInfo"
+                   asp-action="DetailsMovie"
+                   asp-route-movieid="@Model.MovieFile.MovieFileModelId"
+                   class="btn btn-outline-info py-1 m-2 shadw minwidth100px"
+                   title="данные фильма">
 
                     Фильм
 
@@ -473,12 +475,12 @@
                         @if (Model.ImageFileModel != null)
                         {
                             <a asp-area="Admin"
-                                   asp-controller="ImageInfo"
-                                   asp-action="DetailsImage"
-                                   asp-route-imageid="@Model.ImageFileModelId"
-                                   class="d-block mx-auto mb-3 maxwidth300px shadw imageref"
-                                   title="информация о картинке"
-                                   onclick="this.target='_blank'">
+                               asp-controller="ImageInfo"
+                               asp-action="DetailsImage"
+                               asp-route-imageid="@Model.ImageFileModelId"
+                               class="d-block mx-auto mb-3 maxwidth300px shadw imageref"
+                               title="информация о картинке"
+                               onclick="this.target='_blank'">
 
                                 <vc:view-image image-id="@Model.ImageFileModelId"
                                                css-class="w-100"
@@ -489,16 +491,16 @@
                             @if (!string.IsNullOrEmpty(Model.ImageFileModel.WebImageFileName))
                             {
                                 <a class="fs-5 text_shadow"
-                                       href="@Url.Content($" {Model.ImageFileModel.ImagePath}\\ /{Model.ImageFileModel.WebImageFileName}")"
-                                       onclick="this.target='_blank'">
+                                   href="@Url.Content($" {Model.ImageFileModel.ImagePath}\\ /{Model.ImageFileModel.WebImageFileName}")"
+                                   onclick="this.target='_blank'">
                                     @Model.ImageFileModel.ImagePath/@Model.ImageFileModel.WebImageFileName
                                 </a>
                             }
                             else
                             {
                                 <a class="fs-5 text_shadow"
-                                       href="@Url.Content($" {Model.ImageFileModel.ImagePath}\\ /{Model.ImageFileModel.WebImageFileName}")"
-                                       onclick="this.target='_blank'">
+                                   href="@Url.Content($" {Model.ImageFileModel.ImagePath}\\ /{Model.ImageFileModel.WebImageFileName}")"
+                                   onclick="this.target='_blank'">
                                     @Model.ImageFileModel.ImagePath/@Model.ImageFileModel.ImageFileName
                                 </a>
                             }
@@ -571,12 +573,12 @@
                             <div id="accordionForTextFile" class="accordion">
 
                                 <a asp-area="Admin"
-                                       asp-controller="TextInfo"
-                                       asp-action="DetailsText"
-                                       asp-route-textId="@Model.TextInfoId"
-                                       class="d-block mx-auto maxwidth300px shadw imageref"
-                                       title="информация о файле текста"
-                                       onclick="this.target='_blank'">
+                                   asp-controller="TextInfo"
+                                   asp-action="DetailsText"
+                                   asp-route-textId="@Model.TextInfoId"
+                                   class="d-block mx-auto maxwidth300px shadw imageref"
+                                   title="информация о файле текста"
+                                   onclick="this.target='_blank'">
 
                                     <label asp-for="@Model.TextInfo.FolderForText" class="@cssForLabel"></label>
 
@@ -735,12 +737,12 @@
                     <div class="accordion-body accordion-body-nointend text-center">
 
                         <a asp-area="Admin"
-                               asp-controller="Icon"
-                               asp-action="Index"
-                               asp-route-iconId="@Model.IconType.IconList.First(icon => icon.IconFileName == "ms-tile-558.webp").IconModelId"
-                               class="d-inline-block maxwidth300px mx-auto shadw imageref"
-                               title="информация об иконке"
-                               onclick="this.target='_blank'">
+                           asp-controller="Icon"
+                           asp-action="Index"
+                           asp-route-iconId="@Model.IconType.IconList.First(icon => icon.IconFileName == "ms-tile-558.webp").IconModelId"
+                           class="d-inline-block maxwidth300px mx-auto shadw imageref"
+                           title="информация об иконке"
+                           onclick="this.target='_blank'">
 
                             <img itemprop="image"
                                  class="p-1 w-100"
@@ -909,29 +911,37 @@
                         @if (Model.ImagePageHeadingId != null)
                         {
                             <a asp-area="Admin"
-                                   asp-controller="ImageInfo"
-                                   asp-action="DetailsImage"
-                                   asp-route-imageid="@Model.ImagePageHeadingId"
-                                   class="d-block mx-auto mb-3 maxwidth600px shadw imageref"
-                                   title="информация о картинке"
-                                   onclick="this.target='_blank'">
-                                <vc:view-image image-id="@Model.ImagePageHeadingId" css-class="" icon-type="" />
+                               asp-controller="ImageInfo"
+                               asp-action="DetailsImage"
+                               asp-route-imageid="@Model.ImagePageHeadingId"
+                               class="d-block mx-auto mb-3 maxwidth600px shadw imageref"
+                               title="информация о картинке"
+                               onclick="this.target='_blank'">
+
+                                <vc:view-image image-id="@Model.ImagePageHeadingId"
+                                               css-class=""
+                                               icon-type="" />
+
                             </a>
 
-                            @if (!string.IsNullOrEmpty(Model.ImagePageHeading!.WebImageFileName))
+                            @if (Model.ImagePageHeading != null && Model.ImagePageHeading.WebImageFileName != null)
                             {
                                 <a class="fs-5 text_shadow d-block text-lg-center"
-                                       href="@Url.Content($" {Model.ImagePageHeading.ImagePath}\\ /{Model.ImagePageHeading.WebImageFileName}")"
-                                       onclick="this.target='_blank'">
+                                   href="@Url.Content($" {Model.ImagePageHeading.ImagePath}\\ /{Model.ImagePageHeading.WebImageFileName}")"
+                                   onclick="this.target='_blank'">
+
                                     @Model.ImagePageHeading.ImagePath/@Model.ImagePageHeading.WebImageFileName
+
                                 </a>
                             }
-                            else
+                            else if (Model.ImagePageHeading != null)
                             {
                                 <a class="fs-5 text_shadow d-block text-lg-center"
-                                       href="@Url.Content($" {Model.ImagePageHeading.ImagePath}\\ /{Model.ImagePageHeading.ImageFileName}")"
-                                       onclick="this.target='_blank'">
+                                   href="@Url.Content($" {Model.ImagePageHeading.ImagePath}\\ /{Model.ImagePageHeading.ImageFileName}")"
+                                   onclick="this.target='_blank'">
+
                                     @Model.ImagePageHeading.ImagePath/@Model.ImagePageHeading.ImageFileName
+
                                 </a>
                             }
                         }
@@ -1152,12 +1162,12 @@
                                         <div class="card shadw rounded-3 cardborder" title="@item.PageTitle">
 
                                             <a asp-area="Admin"
-                                                   asp-controller="PageInfo"
-                                                   asp-action="DetailsPage"
-                                                   asp-route-pageid="@item.PageInfoModelId"
-                                                   class="rounded-3 p-0 p-md-1 shadw"
-                                                   onclick="this.target='_blank'"
-                                                   title="данные о странице">
+                                               asp-controller="PageInfo"
+                                               asp-action="DetailsPage"
+                                               asp-route-pageid="@item.PageInfoModelId"
+                                               class="rounded-3 p-0 p-md-1 shadw"
+                                               onclick="this.target='_blank'"
+                                               title="данные о странице">
 
                                                 <vc:view-image image-id="@item.ImageFileModelId"
                                                                css-class="card-img-top shadw rounded-3"
@@ -1263,12 +1273,12 @@
                                         <div class="card shadw rounded-3 cardborder" title="@item.PageTitle">
 
                                             <a asp-area="Admin"
-                                                   asp-controller="PageInfo"
-                                                   asp-action="DetailsPage"
-                                                   asp-route-pageid="@item.PageInfoModelId"
-                                                   class="rounded-3 p-0 p-md-1 shadw"
-                                                   onclick="this.target='_blank'"
-                                                   title="данные о странице">
+                                               asp-controller="PageInfo"
+                                               asp-action="DetailsPage"
+                                               asp-route-pageid="@item.PageInfoModelId"
+                                               class="rounded-3 p-0 p-md-1 shadw"
+                                               onclick="this.target='_blank'"
+                                               title="данные о странице">
 
                                                 <vc:view-image image-id="@item.ImageFileModelId"
                                                                css-class="card-img-top shadw rounded-3"
@@ -1406,12 +1416,12 @@
                                                                 <div class="col">
 
                                                                     <a asp-area="Admin"
-                                                                           asp-controller="PageInfo"
-                                                                           asp-action="DetailsPage"
-                                                                           asp-route-pageid="@item.PageInfoModelId"
-                                                                           class="d-block rounded-3 p-1 imageref"
-                                                                           onclick="this.target='_blank'"
-                                                                           title="данные о странице">
+                                                                       asp-controller="PageInfo"
+                                                                       asp-action="DetailsPage"
+                                                                       asp-route-pageid="@item.PageInfoModelId"
+                                                                       class="d-block rounded-3 p-1 imageref"
+                                                                       onclick="this.target='_blank'"
+                                                                       title="данные о странице">
 
                                                                         <div class="card p-0 rounded-3 shadw" title="@item.PageTitle">
 
@@ -1632,12 +1642,12 @@
                                                                             <div class="col">
 
                                                                                 <a asp-area="Admin"
-                                                                                       asp-controller="PageInfo"
-                                                                                       asp-action="DetailsPage"
-                                                                                       asp-route-pageid="@item.PageInfoModelId"
-                                                                                       class="d-block rounded-3 p-1 imageref"
-                                                                                       onclick="this.target='_blank'"
-                                                                                       title="данные о странице">
+                                                                                   asp-controller="PageInfo"
+                                                                                   asp-action="DetailsPage"
+                                                                                   asp-route-pageid="@item.PageInfoModelId"
+                                                                                   class="d-block rounded-3 p-1 imageref"
+                                                                                   onclick="this.target='_blank'"
+                                                                                   title="данные о странице">
 
                                                                                     <div class="card p-0 rounded-3 shadw" title="@item.PageTitle">
 
@@ -1964,12 +1974,12 @@
                                                         <div class="card shadw rounded-3 cardborder" title="@item.PageTitle">
 
                                                             <a asp-area="Admin"
-                                                                   asp-controller="PageInfo"
-                                                                   asp-action="DetailsPage"
-                                                                   asp-route-pageid="@item.PageInfoModelId"
-                                                                   class="rounded-3 p-0 p-md-1 shadw"
-                                                                   onclick="this.target='_blank'"
-                                                                   title="данные о странице">
+                                                               asp-controller="PageInfo"
+                                                               asp-action="DetailsPage"
+                                                               asp-route-pageid="@item.PageInfoModelId"
+                                                               class="rounded-3 p-0 p-md-1 shadw"
+                                                               onclick="this.target='_blank'"
+                                                               title="данные о странице">
 
                                                                 <vc:view-image image-id="@item.ImageFileModelId"
                                                                                css-class="card-img-top shadw rounded-3"
@@ -2124,12 +2134,12 @@
                                                         <div class="card shadw rounded-3 cardborder" title="@item.PageTitle">
 
                                                             <a asp-area="Admin"
-                                                                   asp-controller="PageInfo"
-                                                                   asp-action="DetailsPage"
-                                                                   asp-route-pageid="@item.PageInfoModelId"
-                                                                   class="rounded-3 p-0 p-md-1 shadw"
-                                                                   onclick="this.target='_blank'"
-                                                                   title="данные о странице">
+                                                               asp-controller="PageInfo"
+                                                               asp-action="DetailsPage"
+                                                               asp-route-pageid="@item.PageInfoModelId"
+                                                               class="rounded-3 p-0 p-md-1 shadw"
+                                                               onclick="this.target='_blank'"
+                                                               title="данные о странице">
 
                                                                 <vc:view-image image-id="@item.ImageFileModelId"
                                                                                css-class="card-img-top shadw rounded-3"
@@ -2291,30 +2301,30 @@
         <div class="card-footer border p-0 my-2">
 
             <a asp-area="Admin"
-                   asp-controller="PageInfo"
-                   asp-action="EditPage"
-                   asp-route-pageid="@Model.PageInfoModelId"
-                   class="btn btn-outline-dark py-1 m-2 shadw minwidth100px"
-                   title="редактировать данные">
+               asp-controller="PageInfo"
+               asp-action="EditPage"
+               asp-route-pageid="@Model.PageInfoModelId"
+               class="btn btn-outline-dark py-1 m-2 shadw minwidth100px"
+               title="редактировать данные">
 
                 Изменить
 
             </a>
 
             <a asp-area="Admin"
-                   asp-controller="PageInfo"
-                   asp-action="DeletePage"
-                   asp-route-pageid="@Model.PageInfoModelId"
-                   class="btn btn-outline-danger py-1 m-2 shadw minwidth100px"
-                   title="удалить страницу">
+               asp-controller="PageInfo"
+               asp-action="DeletePage"
+               asp-route-pageid="@Model.PageInfoModelId"
+               class="btn btn-outline-danger py-1 m-2 shadw minwidth100px"
+               title="удалить страницу">
 
                 Удалить
 
             </a>
 
             <a href="@Url.Content(Model.PageFullPathWithData)"
-                   class="btn btn-outline-primary py-1 m-2 shadw minwidth100px"
-                   title="просмотр">
+               class="btn btn-outline-primary py-1 m-2 shadw minwidth100px"
+               title="просмотр">
 
                 Просмотр
 
@@ -2323,8 +2333,8 @@
             @if (!string.IsNullOrEmpty(Model.PagePathNickName))
             {
                 <a href="@Url.Content(Model.PagePathNickName)"
-                       class="btn btn-outline-primary py-1 m-2 shadw minwidth100px"
-                       title="просмотр">
+                   class="btn btn-outline-primary py-1 m-2 shadw minwidth100px"
+                   title="просмотр">
 
                     Псевдоним
 
@@ -2332,10 +2342,10 @@
             }
 
             <a asp-area="Admin"
-                   asp-controller="PageInfo"
-                   asp-action="Index"
-                   class="btn btn-outline-success py-1 m-2 shadw minwidth100px"
-                   title="список страниц">
+               asp-controller="PageInfo"
+               asp-action="Index"
+               class="btn btn-outline-success py-1 m-2 shadw minwidth100px"
+               title="список страниц">
 
                 Список
 
@@ -2344,11 +2354,11 @@
             @if (Model.MovieFile != null)
             {
                 <a asp-area="Admin"
-                       asp-controller="MovieInfo"
-                       asp-action="DetailsMovie"
-                       asp-route-movieid="@Model.MovieFile.MovieFileModelId"
-                       class="btn btn-outline-info py-1 m-2 shadw minwidth100px"
-                       title="данные фильма">
+                   asp-controller="MovieInfo"
+                   asp-action="DetailsMovie"
+                   asp-route-movieid="@Model.MovieFile.MovieFileModelId"
+                   class="btn btn-outline-info py-1 m-2 shadw minwidth100px"
+                   title="данные фильма">
 
                     Фильм
 
@@ -2367,9 +2377,9 @@
             @foreach (var item in Model.FramesAroundMainContent.FramesOnTheRight)
             {
                 <a href="@item.ImagePath/@(string.IsNullOrEmpty(item.WebImageHDFileName) == false ? item.WebImageHDFileName : item.WebImageFileName)"
-                       class=""
-                       title="@item.ImageAltTitle"
-                       onclick="this.target='_blank'">
+                   class=""
+                   title="@item.ImageAltTitle"
+                   onclick="this.target='_blank'">
 
                     <vc:view-image image-id="@item.ImageFileModelId"
                                    css-class="my-2 w-100 shadw imageref"

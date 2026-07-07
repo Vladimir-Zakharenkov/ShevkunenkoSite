@@ -224,9 +224,6 @@ app.MapAreaControllerRoute(
 app.MapControllerRoute("pagination", "Video-na-saite/Stranica{pageNumber}",
     new { Controller = "AllVideo", Action = "Index" });
 
-app.MapControllerRoute("PhotoAlbum", "Shevkunenko/PhotoAlbum/Page{pageNumber}/Photo-{imageId}",
-        new { Controller = "Shevkunenko", Action = "PhotoAlbum" });
-
 #region Книги о Сергее Шевкуненко
 
 app.MapControllerRoute(
