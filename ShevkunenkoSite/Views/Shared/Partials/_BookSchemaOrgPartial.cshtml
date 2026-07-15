@@ -1,0 +1,16 @@
+﻿@model BooksAndArticlesModel
+
+@{
+    string sitePath = "https://" + Context.Request.Host + Context.Request.Path.ToString().TrimEnd('/');
+}
+
+<div itemscope itemtype="https://schema.org/Book">
+
+    <meta itemprop="author" content="@Model.AuthorOfText">
+    <meta itemprop="name" content="@Model.CaptionOfText">
+    <meta itemprop="publisher" content="@Model.Publisher">
+    <meta itemprop="datePublished" content="@Model.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")">
+    <meta itemprop="numberOfPages" content="@Model.NumberOfPages">
+    <meta itemprop="description" content="@Model.BookDescription">
+
+</div>

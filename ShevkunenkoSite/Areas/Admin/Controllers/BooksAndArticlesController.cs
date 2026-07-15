@@ -80,11 +80,14 @@ public class BooksAndArticlesController
     {
         BooksAndArticlesModel newBook = new();
 
-        // Список картинок сайта для обложки
+        // Список картинок сайта (для выбора обложки)
         ViewData["ImageFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
 
-        // Список видео на сайте
+        // Список видео (movie) на сайте
         ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+        // Список видео (film) на сайте
+        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaption");
 
         return View(newBook);
     }
@@ -119,7 +122,8 @@ public class BooksAndArticlesController
                 "CoverForBookFormFile," +
                 "LogoOfArticleFormFile," +
                 "ScanOfArticleFormFile," +
-                "VideoForBookOrArticleFormFile"
+                "VideoForBookOrArticleFormFile," +
+                "FilmForBookOrArticleFormFile"
         )]
         BooksAndArticlesModel addBook)
     {
@@ -158,6 +162,9 @@ public class BooksAndArticlesController
                         // Список видео на сайте
                         ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
 
+                        // Список видео (film) на сайте
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                         return View(addBook);
                     }
 
@@ -167,63 +174,63 @@ public class BooksAndArticlesController
                     }
                     else
                     {
-                        if (await imageContext.ImageFiles.Where(i => i.WebImageFileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
+                        if (await imageContext.ImageFiles.Where(image => image.WebImageFileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
                         {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.WebImageFileName == addBook.CoverForBookFormFile.FileName);
+                            var imageFile = await imageContext.ImageFiles.FirstAsync(image => image.WebImageFileName == addBook.CoverForBookFormFile.FileName);
 
                             addBook.ImageFileModelId = imageFile.ImageFileModelId;
                         }
-                        else if (await imageContext.ImageFiles.Where(i => i.WebImageHDFileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
+                        else if (await imageContext.ImageFiles.Where(image => image.WebImageHDFileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
                         {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.WebImageHDFileName == addBook.CoverForBookFormFile.FileName);
+                            var imageFile = await imageContext.ImageFiles.FirstAsync(image => image.WebImageHDFileName == addBook.CoverForBookFormFile.FileName);
 
                             addBook.ImageFileModelId = imageFile.ImageFileModelId;
                         }
-                        else if (await imageContext.ImageFiles.Where(i => i.WebIconFileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
+                        else if (await imageContext.ImageFiles.Where(image => image.WebIconFileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
                         {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.WebIconFileName == addBook.CoverForBookFormFile.FileName);
+                            var imageFile = await imageContext.ImageFiles.FirstAsync(image => image.WebIconFileName == addBook.CoverForBookFormFile.FileName);
 
                             addBook.ImageFileModelId = imageFile.ImageFileModelId;
                         }
-                        else if (await imageContext.ImageFiles.Where(i => i.WebIcon200FileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
+                        else if (await imageContext.ImageFiles.Where(image => image.WebIcon200FileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
                         {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.WebIcon200FileName == addBook.CoverForBookFormFile.FileName);
+                            var imageFile = await imageContext.ImageFiles.FirstAsync(image => image.WebIcon200FileName == addBook.CoverForBookFormFile.FileName);
 
                             addBook.ImageFileModelId = imageFile.ImageFileModelId;
                         }
-                        else if (await imageContext.ImageFiles.Where(i => i.WebIcon100FileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
+                        else if (await imageContext.ImageFiles.Where(image => image.WebIcon100FileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
                         {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.WebIcon100FileName == addBook.CoverForBookFormFile.FileName);
+                            var imageFile = await imageContext.ImageFiles.FirstAsync(image => image.WebIcon100FileName == addBook.CoverForBookFormFile.FileName);
 
                             addBook.ImageFileModelId = imageFile.ImageFileModelId;
                         }
-                        else if (await imageContext.ImageFiles.Where(i => i.ImageFileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
+                        else if (await imageContext.ImageFiles.Where(image => image.ImageFileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
                         {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.ImageFileName == addBook.CoverForBookFormFile.FileName);
+                            var imageFile = await imageContext.ImageFiles.FirstAsync(image => image.ImageFileName == addBook.CoverForBookFormFile.FileName);
 
                             addBook.ImageFileModelId = imageFile.ImageFileModelId;
                         }
-                        else if (await imageContext.ImageFiles.Where(i => i.ImageHDFileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
+                        else if (await imageContext.ImageFiles.Where(image => image.ImageHDFileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
                         {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.ImageHDFileName == addBook.CoverForBookFormFile.FileName);
+                            var imageFile = await imageContext.ImageFiles.FirstAsync(image => image.ImageHDFileName == addBook.CoverForBookFormFile.FileName);
 
                             addBook.ImageFileModelId = imageFile.ImageFileModelId;
                         }
-                        else if (await imageContext.ImageFiles.Where(i => i.IconFileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
+                        else if (await imageContext.ImageFiles.Where(image => image.IconFileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
                         {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.IconFileName == addBook.CoverForBookFormFile.FileName);
+                            var imageFile = await imageContext.ImageFiles.FirstAsync(image => image.IconFileName == addBook.CoverForBookFormFile.FileName);
 
                             addBook.ImageFileModelId = imageFile.ImageFileModelId;
                         }
-                        else if (await imageContext.ImageFiles.Where(i => i.Icon200FileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
+                        else if (await imageContext.ImageFiles.Where(image => image.Icon200FileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
                         {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.Icon200FileName == addBook.CoverForBookFormFile.FileName);
+                            var imageFile = await imageContext.ImageFiles.FirstAsync(image => image.Icon200FileName == addBook.CoverForBookFormFile.FileName);
 
                             addBook.ImageFileModelId = imageFile.ImageFileModelId;
                         }
-                        else if (await imageContext.ImageFiles.Where(i => i.Icon100FileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
+                        else if (await imageContext.ImageFiles.Where(image => image.Icon100FileName == addBook.CoverForBookFormFile.FileName).AnyAsync())
                         {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.Icon100FileName == addBook.CoverForBookFormFile.FileName);
+                            var imageFile = await imageContext.ImageFiles.FirstAsync(image => image.Icon100FileName == addBook.CoverForBookFormFile.FileName);
 
                             addBook.ImageFileModelId = imageFile.ImageFileModelId;
                         }
@@ -236,6 +243,9 @@ public class BooksAndArticlesController
 
                             // Список видео на сайте
                             ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+                            // Список видео (film) на сайте
+                            ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                             return View(addBook);
                         }
@@ -274,6 +284,9 @@ public class BooksAndArticlesController
 
                         // Список видео на сайте
                         ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+                        // Список видео (film) на сайте
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                         return View(addBook);
                     }
@@ -354,6 +367,9 @@ public class BooksAndArticlesController
                             // Список видео на сайте
                             ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
 
+                            // Список видео (film) на сайте
+                            ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                             return View(addBook);
                         }
                     }
@@ -385,6 +401,9 @@ public class BooksAndArticlesController
 
                         // Список видео на сайте
                         ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+                        // Список видео (film) на сайте
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                         return View(addBook);
                     }
@@ -465,6 +484,9 @@ public class BooksAndArticlesController
                             // Список видео на сайте
                             ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
 
+                            // Список видео (film) на сайте
+                            ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                             return View(addBook);
                         }
                     }
@@ -477,7 +499,7 @@ public class BooksAndArticlesController
 
             #endregion
 
-            #region Видео связанное с книгой (статьёй)
+            #region Видео (movie) связанное с книгой (статьёй)
 
             if (addBook.VideoForBookOrArticleId != Guid.Empty & addBook.VideoForBookOrArticleFormFile == null)
             {
@@ -496,6 +518,9 @@ public class BooksAndArticlesController
 
                         // Список видео на сайте
                         ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+                        // Список видео (film) на сайте
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                         return View(addBook);
                     }
@@ -519,12 +544,76 @@ public class BooksAndArticlesController
                         // Список картинок сайта
                         ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
 
+                        // Список видео (film) на сайте
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                         return View(addBook);
                     }
                 }
                 else
                 {
                     addBook.VideoForBookOrArticleId = null;
+                }
+            }
+
+            #endregion
+
+            #region Фильм (film) связанный с книгой (статьёй)
+
+            if (addBook.FilmForBookOrArticleId != Guid.Empty & addBook.FilmForBookOrArticleFormFile == null)
+            {
+                addBook.VideoForBookOrArticleId = null;
+
+                _ = addBook.FilmForBookOrArticleId;
+            }
+            else
+            {
+                if (addBook.FilmForBookOrArticleFormFile != null)
+                {
+                    if (!addBook.FilmForBookOrArticleFormFile.FileName.EndsWith(".mp4"))
+                    {
+                        ModelState.AddModelError("FilmForBookOrArticleFormFile", $"Выбран некорректный файл «{addBook.FilmForBookOrArticleFormFile.FileName}»");
+
+                        // Список картинок сайта для обложки
+                        ViewData["ImageFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
+                        // Список видео на сайте
+                        ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+                        // Список видео (film) на сайте
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaption");
+
+                        return View(addBook);
+                    }
+
+                    if (await filmContext.FilmFiles
+                            .Where(film => film.FilmFileName == addBook.FilmForBookOrArticleFormFile.FileName)
+                            .AnyAsync())
+                    {
+                        var filmForItem = await filmContext.FilmFiles
+                                .FirstAsync(film => film.FilmFileName == addBook.FilmForBookOrArticleFormFile.FileName);
+
+                        addBook.FilmForBookOrArticleId = filmForItem.FilmFileModelId;
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("FilmForBookOrArticleFormFile", $"Файл видео «{addBook.FilmForBookOrArticleFormFile.FileName}» не найден в базе данных");
+
+                        // Список картинок сайта
+                        ViewData["ImageFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
+                        // Список картинок сайта
+                        ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+                        // Список видео (film) на сайте
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaption");
+
+                        return View(addBook);
+                    }
+                }
+                else
+                {
+                    addBook.FilmForBookOrArticleId = null;
                 }
             }
 
@@ -567,7 +656,7 @@ public class BooksAndArticlesController
 
             #endregion
 
-            #region Колличество страниц
+            #region Количество страниц
 
             _ = addBook.NumberOfPages;
 
@@ -617,6 +706,9 @@ public class BooksAndArticlesController
 
             // Список видео на сайте
             ViewData["VideoFiles"] = new SelectList(movieContext.MovieFiles.OrderBy(orderVideo => orderVideo.MovieCaption), "MovieFileModelId", "MovieCaption");
+
+            // Список видео (film) на сайте
+            ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaption");
 
             return View(addBook);
         }
@@ -839,7 +931,7 @@ public class BooksAndArticlesController
             bookUpdate.Publisher = editBook.Publisher.Trim();
 
             #endregion
-            
+
             #region Логотип статьи
 
             if (editBook.LogoOfArticleId != Guid.Empty & editBook.LogoOfArticleFormFile == null)
@@ -962,7 +1054,7 @@ public class BooksAndArticlesController
             }
 
             #endregion
-            
+
             #region Скан статьи
 
             if (editBook.ScanOfArticleId != Guid.Empty & editBook.ScanOfArticleFormFile == null)
@@ -1085,7 +1177,7 @@ public class BooksAndArticlesController
             }
 
             #endregion
-            
+
             #region Видео связанное с книгой (статьёй)
 
             if (editBook.VideoForBookOrArticleId != Guid.Empty & editBook.VideoForBookOrArticleFormFile == null)
@@ -1185,7 +1277,7 @@ public class BooksAndArticlesController
                             .AnyAsync())
                     {
                         var filmForItem = await filmContext.FilmFiles
-                                .FirstAsync(film =>film.FilmFileName == editBook.FilmForBookOrArticleFormFile.FileName);
+                                .FirstAsync(film => film.FilmFileName == editBook.FilmForBookOrArticleFormFile.FileName);
 
                         bookUpdate.FilmForBookOrArticleId = filmForItem.FilmFileModelId;
                     }

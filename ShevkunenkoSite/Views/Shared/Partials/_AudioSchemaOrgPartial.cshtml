@@ -1,0 +1,24 @@
+﻿@model AudioInfoModel
+
+@{
+    // размер аудиофайла в мегабайтах
+    string contentSize = ((double)Model.AudioFileSize / (double)1048576).ToString("0.00", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+
+    // дата загрузки аудиофайла
+    string uploadDate = Model.AudioFileUploadDate.ToString("yyyy-MM-dd");
+}
+
+<div itemscope itemtype="http://schema.org/AudioObject">
+
+    <meta itemprop="author" content="@Model.AuthorOfText">
+    <meta itemprop="name" content="@Model.CaptionOfTextInAudioFile">
+    <meta itemprop="duration" content="@Model.AudioFileDuration.ToString(@"\Thh\Mmm\Sss")">
+    <meta itemprop="bitrate" content="@Model.AudioFileBitRate kbps">
+    <meta itemprop="contentSize" content="@contentSize MB">
+    <meta itemprop="encodingFormat" content="@Model.AudioFileType">
+    <meta itemprop="encodingFormat" content="@Model.AudioFileMimeType" />
+    <meta itemprop="uploadDate" content="@uploadDate">
+    <meta itemprop="description" content="@Model.AudioFileDescription">
+    <link itemprop="contentUrl" href="@Model.InternetRefToAudioFile">
+
+</div>

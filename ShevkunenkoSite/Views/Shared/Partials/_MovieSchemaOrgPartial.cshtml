@@ -1,0 +1,137 @@
+﻿@model MovieFileModel
+
+@{
+    string sitePath = "https://" + Context.Request.Host + Context.Request.Path.ToString().TrimEnd('/');
+}
+
+<span itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+
+    <meta itemprop="name" content="@Model.MovieCaption" />
+    <meta itemprop="caption" content="@Model.MovieCaptionForOnline" />
+    <link itemprop="url" href="@Model.MovieContentUrl" />
+    <link itemprop="contentUrl" href="@Model.MovieContentUrl" />
+    <meta itemprop="description" content="@Model.MovieDescriptionForSchemaOrg" />
+    <meta itemprop="duration" content="@Model.MovieDuration.ToString("'T'hh'H'mm'M'ss'S'")" />
+    <meta itemprop="isFamilyFriendly" content="@Model.MovieIsFamilyFriendly.ToString()" />
+    <meta itemprop="uploadDate" content="@Model.MovieUploadDate.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
+    <meta itemprop="height" content="@Model.MovieHeight" />
+    <meta itemprop="width" content="@Model.MovieWidth" />
+
+    @if (Model.ImageFileModel != null)
+    {
+        <link itemprop="thumbnail" href="@sitePath@Model.ImageFileModel.ImagePath/@Model.ImageFileModel.ImageFileName" />
+        <link itemprop="thumbnailUrl" href="@sitePath@Model.ImageFileModel.ImagePath/@Model.ImageFileModel.ImageFileName" />
+        <meta itemprop="image" content="@sitePath@Model.ImageFileModel.ImagePath/@Model.ImageFileModel.ImageFileName" />
+    }
+
+    @if (Model.MovieHeight <= 360)
+    {
+        <meta itemprop="videoQuality" content="low" />
+    }
+
+    @if (Model.MovieHeight > 360 & Model.MovieHeight <= 720)
+    {
+        <meta itemprop="videoQuality" content="medium" />
+    }
+
+    @if (Model.MovieHeight > 720 & Model.MovieHeight < 1080)
+    {
+        <meta itemprop="videoQuality" content="HD" />
+    }
+
+    @if (Model.MovieHeight >= 1080)
+    {
+        <meta itemprop="videoQuality" content="full HD" />
+    }
+    <meta itemprop="contentSize" content="@Model.MovieFileSize.ToString().Substring(0, Model.MovieFileSize.ToString().Length - 3)" />
+    <meta itemprop="dateReleased" content="@Model.MovieDatePublished.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
+    <meta itemprop="dateCreated" content="@Model.MovieDateCreated.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
+    <meta itemprop="inLanguage" content="@Model.MovieInLanguage1" />
+    @if (!string.IsNullOrEmpty(Model.MovieInLanguage2))
+    {
+        <meta itemprop="inLanguage" content="@Model.MovieInLanguage2" />
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MovieSubtitles1))
+    {
+        <meta itemprop="subtitleLanguage" content="@Model.MovieSubtitles1" />
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MovieSubtitles2))
+    {
+        <meta itemprop="subtitleLanguage" content="@Model.MovieSubtitles2" />
+    }
+    <meta itemprop="part" content="@Model.MoviePart" />
+    <meta itemprop="genre" content="@Model.MovieGenre" />
+    <meta itemprop="content_id" content="@Model.MovieFileModelId" />
+    <meta itemprop="productionCompany" content="@Model.MovieРroductionCompany" />
+    @if (!string.IsNullOrEmpty(Model.MovieDirector1))
+    {
+        <meta itemprop="director" content="@Model.MovieDirector1" />
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MovieDirector2))
+    {
+        <meta itemprop="director" content="@Model.MovieDirector2" />
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MovieMusicBy))
+    {
+        <meta itemprop="musicBy" content="@Model.MovieMusicBy" />
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MovieActor01))
+    {
+        <meta itemprop="actor" content="@Model.MovieActor01" />
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MovieActor02))
+    {
+        <meta itemprop="actor" content="@Model.MovieActor02" />
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MovieActor03))
+    {
+        <meta itemprop="actor" content="@Model.MovieActor03" />
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MovieActor04))
+    {
+        <meta itemprop="actor" content="@Model.MovieActor04" />
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MovieActor05))
+    {
+        <meta itemprop="actor" content="@Model.MovieActor05" />
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MovieActor06))
+    {
+        <meta itemprop="actor" content="@Model.MovieActor06" />
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MovieActor07))
+    {
+        <meta itemprop="actor" content="@Model.MovieActor07" />
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MovieActor08))
+    {
+        <meta itemprop="actor" content="@Model.MovieActor08" />
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MovieActor09))
+    {
+        <meta itemprop="actor" content="@Model.MovieActor09" />
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MovieActor10))
+    {
+        <meta itemprop="actor" content="@Model.MovieActor10" />
+    }
+
+    <meta itemprop="playerType" content="@Model.MovieMimeType" />
+    <meta itemprop="availablePlatform" content="Desktop" />
+    <meta itemprop="availablePlatform" content="Mobile" />
+
+</span>

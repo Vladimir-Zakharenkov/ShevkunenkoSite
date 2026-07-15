@@ -282,7 +282,7 @@
 
         @if (Model.PageNumber > 1 && Model.Scan != true)
         {
-            <a class="btn btn-outline-primary py-1 float-start shadw"
+            <a class="btn btn-outline-primary py-0 float-start shadw"
                asp-area=""
                asp-controller="Articles"
                asp-action="Article"
@@ -292,7 +292,10 @@
                title="предыдущая странице"
                itemprop="url">
 
-                <span class="nomstr fluid-font-size">@(Model.PageNumber - 1)</span>
+                &lt;&lt;
+                <span class="nomstr fluid-font-size">
+                    @(Model.PageNumber - 1)
+                </span>
 
             </a>
         }
@@ -316,7 +319,7 @@
 
         @if (Model.PageNumber < Model.BookOrArticle.NumberOfPages && Model.Scan != true)
         {
-            <a class="btn btn-outline-primary py-1 float-end shadw d-print-none"
+            <a class="btn btn-outline-primary py-0 float-end shadw d-print-none"
                asp-area=""
                asp-controller="Articles"
                asp-action="Article"
@@ -326,7 +329,9 @@
                title="следующая странице"
                itemprop="url">
 
-                <span class="nomstr fluid-font-size">@(Model.PageNumber + 1)</span>
+                <span class="nomstr fluid-font-size">
+                    @(Model.PageNumber + 1)  &gt;&gt;
+                </span>
 
             </a>
         }

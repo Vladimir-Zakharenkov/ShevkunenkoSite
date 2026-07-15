@@ -1,214 +1,28 @@
 ﻿@model PageInfoModel
 
-@{
-    string sitePath = "https://" + Context.Request.Host + Context.Request.Path.ToString().TrimEnd('/');
-
-    string contentSize = string.Empty; // размер аудиофайла в мегабайтах
-
-    string uploadDate = string.Empty; // дата загрузки аудиофайла
-
-    if (Model.AudioInfo != null)
-    {
-        contentSize = ((double)Model.AudioInfo.AudioFileSize / (double)1048576).ToString("0.00", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
-
-        uploadDate = Model.AudioInfo.AudioFileUploadDate.ToString("yyyy-MM-dd");
-    }
-}
-
 <div class="col maxwidth300px rounded-3 cardborder">
 
     <div class="card shadw rounded-3" title="@Model.PageTitle">
 
-        @if (Model.OgType == "movie" && Model.MovieFile != null && Model.MovieFile.ImageFileModel != null)
+        @if (Model.OgType == "movie" && Model.MovieFile != null)
         {
-            <span itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-
-                <meta itemprop="name" content="@Model.MovieFile.MovieCaption" />
-                <meta itemprop="caption" content="@Model.MovieFile.MovieCaptionForOnline" />
-                <link itemprop="url" href="@Model.MovieFile.MovieContentUrl" />
-                <link itemprop="contentUrl" href="@Model.MovieFile.MovieContentUrl" />
-                <meta itemprop="description" content="@Model.MovieFile.MovieDescriptionForSchemaOrg" />
-                <meta itemprop="duration" content="@Model.MovieFile.MovieDuration.ToString("'T'hh'H'mm'M'ss'S'")" />
-                <meta itemprop="isFamilyFriendly" content="@Model.MovieFile.MovieIsFamilyFriendly.ToString()" />
-                <link itemprop="thumbnail" href="@sitePath@Model.MovieFile.ImageFileModel.ImagePath/@Model.MovieFile.ImageFileModel.ImageFileName" />
-                <link itemprop="thumbnailUrl" href="@sitePath@Model.MovieFile.ImageFileModel.ImagePath/@Model.MovieFile.ImageFileModel.ImageFileName" />
-                <meta itemprop="uploadDate" content="@Model.MovieFile.MovieUploadDate.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
-                <meta itemprop="height" content="@Model.MovieFile.MovieHeight" />
-                <meta itemprop="width" content="@Model.MovieFile.MovieWidth" />
-
-                @if (Model.MovieFile.MovieHeight <= 360)
-                {
-                    <meta itemprop="videoQuality" content="low" />
-                }
-
-                @if (Model.MovieFile.MovieHeight > 360 & Model.MovieFile.MovieHeight <= 720)
-                {
-                    <meta itemprop="videoQuality" content="medium" />
-                }
-
-                @if (Model.MovieFile.MovieHeight > 720 & Model.MovieFile.MovieHeight < 1080)
-                {
-                    <meta itemprop="videoQuality" content="HD" />
-                }
-
-                @if (Model.MovieFile.MovieHeight >= 1080)
-                {
-                    <meta itemprop="videoQuality" content="full HD" />
-                }
-                <meta itemprop="contentSize" content="@Model.MovieFile.MovieFileSize.ToString().Substring(0, Model.MovieFile.MovieFileSize.ToString().Length - 3)" />
-                <meta itemprop="dateReleased" content="@Model.MovieFile.MovieDatePublished.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
-                <meta itemprop="dateCreated" content="@Model.MovieFile.MovieDateCreated.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
-                <meta itemprop="inLanguage" content="@Model.MovieFile.MovieInLanguage1" />
-                @if (!string.IsNullOrEmpty(Model.MovieFile.MovieInLanguage2))
-                {
-                    <meta itemprop="inLanguage" content="@Model.MovieFile.MovieInLanguage2" />
-                }
-
-                @if (!string.IsNullOrEmpty(Model.MovieFile.MovieSubtitles1))
-                {
-                    <meta itemprop="subtitleLanguage" content="@Model.MovieFile.MovieSubtitles1" />
-                }
-
-                @if (!string.IsNullOrEmpty(Model.MovieFile.MovieSubtitles2))
-                {
-                    <meta itemprop="subtitleLanguage" content="@Model.MovieFile.MovieSubtitles2" />
-                }
-                <meta itemprop="part" content="@Model.MovieFile.MoviePart" />
-                <meta itemprop="genre" content="@Model.MovieFile.MovieGenre" />
-                <meta itemprop="content_id" content="@Model.MovieFile.MovieFileModelId" />
-                <meta itemprop="productionCompany" content="@Model.MovieFile.MovieРroductionCompany" />
-                @if (!string.IsNullOrEmpty(Model.MovieFile.MovieDirector1))
-                {
-                    <meta itemprop="director" content="@Model.MovieFile.MovieDirector1" />
-                }
-
-                @if (!string.IsNullOrEmpty(Model.MovieFile.MovieDirector2))
-                {
-                    <meta itemprop="director" content="@Model.MovieFile.MovieDirector2" />
-                }
-
-                @if (!string.IsNullOrEmpty(Model.MovieFile.MovieMusicBy))
-                {
-                    <meta itemprop="musicBy" content="@Model.MovieFile.MovieMusicBy" />
-                }
-
-                @if (!string.IsNullOrEmpty(Model.MovieFile.MovieActor01))
-                {
-                    <meta itemprop="actor" content="@Model.MovieFile.MovieActor01" />
-                }
-
-                @if (!string.IsNullOrEmpty(Model.MovieFile.MovieActor02))
-                {
-                    <meta itemprop="actor" content="@Model.MovieFile.MovieActor02" />
-                }
-
-                @if (!string.IsNullOrEmpty(Model.MovieFile.MovieActor03))
-                {
-                    <meta itemprop="actor" content="@Model.MovieFile.MovieActor03" />
-                }
-
-                @if (!string.IsNullOrEmpty(Model.MovieFile.MovieActor04))
-                {
-                    <meta itemprop="actor" content="@Model.MovieFile.MovieActor04" />
-                }
-
-                @if (!string.IsNullOrEmpty(Model.MovieFile.MovieActor05))
-                {
-                    <meta itemprop="actor" content="@Model.MovieFile.MovieActor05" />
-                }
-
-                @if (!string.IsNullOrEmpty(Model.MovieFile.MovieActor06))
-                {
-                    <meta itemprop="actor" content="@Model.MovieFile.MovieActor06" />
-                }
-
-                @if (!string.IsNullOrEmpty(Model.MovieFile.MovieActor07))
-                {
-                    <meta itemprop="actor" content="@Model.MovieFile.MovieActor07" />
-                }
-
-                @if (!string.IsNullOrEmpty(Model.MovieFile.MovieActor08))
-                {
-                    <meta itemprop="actor" content="@Model.MovieFile.MovieActor08" />
-                }
-
-                @if (!string.IsNullOrEmpty(Model.MovieFile.MovieActor09))
-                {
-                    <meta itemprop="actor" content="@Model.MovieFile.MovieActor09" />
-                }
-
-                @if (!string.IsNullOrEmpty(Model.MovieFile.MovieActor10))
-                {
-                    <meta itemprop="actor" content="@Model.MovieFile.MovieActor10" />
-                }
-
-                <meta itemprop="image" content="@sitePath@Model.MovieFile.ImageFileModel.ImagePath/@Model.MovieFile.ImageFileModel.ImageFileName" />
-                <meta itemprop="playerType" content="@Model.MovieFile.MovieMimeType" />
-                <meta itemprop="availablePlatform" content="Desktop" />
-                <meta itemprop="availablePlatform" content="Mobile" />
-
-            </span>
+            <partial name="_MovieSchemaOrgPartial" model="Model.MovieFile" />
         }
-
 
         @if (Model.OgType == "article" && Model.TextInfo != null && Model.TextInfo.BooksAndArticlesModel != null)
         {
-            <span itemscope itemtype="https://schema.org/Article">
-
-                <meta itemprop="author" content="@Model.TextInfo.BooksAndArticlesModel.AuthorOfText" />
-                <meta itemprop="name" content="@Model.TextInfo.BooksAndArticlesModel.CaptionOfText" />
-                <meta itemprop="publisher" content="@Model.TextInfo.BooksAndArticlesModel.Publisher" />
-                <meta itemprop="datePublished dateModified" content="@Model.TextInfo.BooksAndArticlesModel.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
-                <meta itemprop="description" content="@Model.TextInfo.BooksAndArticlesModel.BookDescription" />
-
-                @if (Model.TextInfo.BooksAndArticlesModel.LogoOfArticle != null)
-                {
-                    <span itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-                        <meta itemprop="caption" content="@Model.TextInfo.BooksAndArticlesModel.LogoOfArticle.ImageCaption" />
-                        <link itemprop="contentUrl thumbnailUrl url" href="href=@sitePath@Model.TextInfo.BooksAndArticlesModel.LogoOfArticle.ImagePath/@Model.TextInfo.BooksAndArticlesModel.LogoOfArticle.WebImageFileName" />
-                        <meta itemprop="width" content="@Model.TextInfo.BooksAndArticlesModel.LogoOfArticle.WebImageWidth" />
-                        <meta itemprop="height" content="@Model.TextInfo.BooksAndArticlesModel.LogoOfArticle.WebImageHeight" />
-                    </span>
-                }
-
-            </span>
+            <partial name="_ArticleSchemaOrgPartial" model="Model.TextInfo.BooksAndArticlesModel" />
         }
-
 
         @if (Model.OgType == "book" && Model.TextInfo != null && Model.TextInfo.BooksAndArticlesModel != null)
         {
-            <span itemscope itemtype="http://schema.org/Book">
-
-                <meta itemprop="author" content="@Model.TextInfo.BooksAndArticlesModel.AuthorOfText">
-                <meta itemprop="name" content="@Model.TextInfo.BooksAndArticlesModel.CaptionOfText">
-                <meta itemprop="publisher" content="@Model.TextInfo.BooksAndArticlesModel.Publisher">
-                <meta itemprop="datePublished" content="@Model.TextInfo.BooksAndArticlesModel.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")">
-                <meta itemprop="numberOfPages" content="@Model.TextInfo.BooksAndArticlesModel.NumberOfPages">
-                <meta itemprop="description" content="@Model.TextInfo.BooksAndArticlesModel.BookDescription">
-
-            </span>
+            <partial name="_BookSchemaOrgPartial" model="Model.TextInfo.BooksAndArticlesModel" />
         }
 
-
-        @if (Model.OgType == "audiobook")
+        @if (Model.OgType == "audiobook" && Model.AudioInfo != null)
         {
-            @if (Model.AudioInfo != null)
-            {
-                <span itemscope itemtype="http://schema.org/AudioObject">
-                    <meta itemprop="author" content="@Model.AudioInfo.AuthorOfText">
-                    <meta itemprop="name" content="@Model.AudioInfo.CaptionOfTextInAudioFile">
-                    <meta itemprop="duration" content="@Model.AudioInfo.AudioFileDuration.ToString(@"\Thh\Mmm\Sss")">
-                    <meta itemprop="bitrate" content="@Model.AudioInfo.AudioFileBitRate kbps">
-                    <meta itemprop="contentSize" content="@contentSize MB">
-                    <meta itemprop="encodingFormat" content="@Model.AudioInfo.AudioFileType">
-                    <meta itemprop="encodingFormat" content="@Model.AudioInfo.AudioFileMimeType" />
-                    <meta itemprop="uploadDate" content="@uploadDate">
-                    <meta itemprop="description" content="@Model.AudioInfo.AudioFileDescription">
-                    <link itemprop="contentUrl" href="@Model.AudioInfo.InternetRefToAudioFile">
-                </span>
-            }
+            <partial name="_AudioSchemaOrgPartial" model="Model.AudioInfo" />
         }
-
 
         @if (Model.OgType == "book" && Model.TextInfo != null && Model.TextInfo.BooksAndArticlesModel != null)
         {

@@ -1,0 +1,27 @@
+﻿@model BooksAndArticlesModel
+
+@{
+    string sitePath = "https://" + Context.Request.Host + Context.Request.Path.ToString().TrimEnd('/');
+}
+
+<div itemscope itemtype="https://schema.org/Article">
+
+    <meta itemprop="author" content="@Model.AuthorOfText" />
+    <meta itemprop="name" content="@Model.CaptionOfText" />
+    <meta itemprop="publisher" content="@Model.Publisher" />
+    <meta itemprop="datePublished dateModified" content="@Model.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")" />
+    <meta itemprop="description" content="@Model.BookDescription" />
+
+    @if (Model.LogoOfArticle != null)
+    {
+        <div itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+
+            <meta itemprop="caption" content="@Model.LogoOfArticle.ImageCaption" />
+            <link itemprop="contentUrl thumbnailUrl url" href="href=@sitePath@Model.LogoOfArticle.ImagePath/@Model.LogoOfArticle.WebImageFileName" />
+            <meta itemprop="width" content="@Model.LogoOfArticle.WebImageWidth" />
+            <meta itemprop="height" content="@Model.LogoOfArticle.WebImageHeight" />
+
+        </div>
+    }
+
+</div>

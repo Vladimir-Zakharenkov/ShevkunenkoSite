@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace ShevkunenkoSite.Controllers;
+﻿namespace ShevkunenkoSite.Controllers;
 
 public class ArticlesController(
     IBooksAndArticlesRepository articleContext,

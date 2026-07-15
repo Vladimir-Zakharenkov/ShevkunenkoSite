@@ -1,18 +1,18 @@
 ﻿@model FilmFileModel
 
 <a asp-area=""
-       asp-controller="Films"
-       asp-action="Film"
-       asp-route-filmCaption="@Model.FilmCaption"
-       class="d-flex col justify-content-center"
-       title="смотреть">
+   asp-controller="Films"
+   asp-action="Film"
+   asp-route-filmCaption="@Model.FilmCaption"
+   class="d-flex col justify-content-center"
+   title="смотреть">
 
     <div class="card pb-1 shadw borderforitem" title="@Model.FilmCaption.Replace("--", " ")">
 
         @* http://schema.org/VideoObject *@
         <span itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
 
-            <meta itemprop="name" content="@Model.FilmCaption.Replace("--", " ")"  />
+            <meta itemprop="name" content="@Model.FilmCaption.Replace("--", " ")" />
             <meta itemprop="caption" content="@Model.FilmCaption.Replace("--", " ")" />
 
             @if (!string.IsNullOrEmpty(Model.FilmFileName))
@@ -29,8 +29,18 @@
             }
 
             <meta itemprop="isFamilyFriendly" content="@Model.FilmIsFamilyFriendly.ToString()" />
-            <link itemprop="thumbnail" href="@Model.FilmPoster.ImagePath/@Model.FilmPoster.WebImageFileName" />
-            <link itemprop="thumbnailUrl" href="@Model.FilmImage.ImagePath/@Model.FilmImage.WebImageFileName" />
+
+            @if (Model.FilmPoster != null)
+            {
+                <link itemprop="thumbnail" href="@Model.FilmPoster.ImagePath/@Model.FilmPoster.WebImageFileName" />
+            }
+
+            @if (Model.FilmImage != null)
+            {
+                <link itemprop="thumbnailUrl" href="@Model.FilmImage.ImagePath/@Model.FilmImage.WebImageFileName" />
+                <meta itemprop="image" content="@Model.FilmImage.ImagePath/@Model.FilmImage.WebImageFileName" />
+            }
+
             <meta itemprop="uploadDate" content="@Model.FilmUploadDate.ToString("yyyy-MM-dd")" />
 
             @if (Model.FilmHeight > 0)
@@ -68,6 +78,7 @@
             <meta itemprop="dateReleased" content="@Model.FilmDatePublished.ToString("yyyy-MM-dd")" />
             <meta itemprop="dateCreated" content="@Model.FilmDateCreated.ToString("yyyy-MM-dd")" />
             <meta itemprop="inLanguage" content="@Model.FilmInLanguage1" />
+
             @if (!string.IsNullOrEmpty(Model.FilmInLanguage2))
             {
                 <meta itemprop="inLanguage" content="@Model.FilmInLanguage2" />
@@ -82,10 +93,12 @@
             {
                 <meta itemprop="subtitleLanguage" content="@Model.FilmSubtitles2" />
             }
+
             <meta itemprop="part" content="@Model.FilmPart" />
             <meta itemprop="genre" content="@Model.FilmGenre" />
             <meta itemprop="content_id" content="@Model.FilmFileModelId" />
             <meta itemprop="productionCompany" content="@Model.FilmРroductionCompany" />
+
             @if (!string.IsNullOrEmpty(Model.FilmDirector1))
             {
                 <meta itemprop="director" content="@Model.FilmDirector1" />
@@ -151,7 +164,6 @@
                 <meta itemprop="actor" content="@Model.FilmActor10" />
             }
 
-            <meta itemprop="image" content="@Model.FilmImage.ImagePath/@Model.FilmImage.WebImageFileName"  />
             <meta itemprop="playerType" content="@Model.FilmMimeType" />
             <meta itemprop="availablePlatform" content="Desktop" />
             <meta itemprop="availablePlatform" content="Mobile" />
@@ -160,7 +172,7 @@
 
         <vc:view-image image-id="@Model.FilmPosterId"
                        css-class="card-img-top shadw rounded-3"
-                       icon-type="webicon200" />
+                       icon-type="webicon300" />
 
     </div>
 
