@@ -7,7 +7,7 @@ public class BooksAndArticlesModel
     #region Guid книги или статьи
 
     [Key]
-    [Display(Name = "Идентификатор издания :")]
+    [Display(Name = "Идентификатор :")]
     [Column("BooksArticlesId")]
     public Guid BooksAndArticlesModelId { get; set; } = Guid.Empty;
 
@@ -15,6 +15,7 @@ public class BooksAndArticlesModel
 
     #region Обложка книги
 
+    [Display(Name = "Обложка книги :")]
     public Guid? ImageFileModelId { get; set; }
     public ImageFileModel? ImageFileModel { get; set; }
 

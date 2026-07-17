@@ -5,11 +5,15 @@
 }
 
 <h1 class="@(Model.TypeOfText == "book" ? "fs-3 text_shadow" : "d-none")">
+
     Изменить данные книги
+
 </h1>
 
 <h1 class="@(Model.TypeOfText == "article" ? "fs-3 text_shadow" : "d-none")">
+
     Изменить данные статьи
+
 </h1>
 
 <hr class="w-25 mx-auto" />
@@ -17,9 +21,7 @@
 @* Id статьи или книги *@
 <p class="fs-5 mb-3">
 
-    <span class="text-primary">
-        BooksAndArticlesModelId:
-    </span>
+    <label asp-for="BooksAndArticlesModelId" class="@cssForLabel"></label>
 
     <br />
 
@@ -35,7 +37,7 @@
 
 </p>
 
-<hr class="liniya" />
+<hr class="w-50 liniya" />
 
 <div class="row">
 
@@ -43,7 +45,7 @@
 
         <form asp-area="Admin"
               asp-controller="BooksAndArticles"
-              asp-action="EditBook" л
+              asp-action="EditBook"
               method="post"
               enctype="multipart/form-data">
 
@@ -54,7 +56,7 @@
 
             </div>
 
-            @* все ошибки ввода данных *@
+            @* Все ошибки ввода данных *@
             <div>
 
                 @if (Context.Request.Method == "POST")
@@ -64,10 +66,10 @@
 
             </div>
 
-            @* данные по группам *@
+            @* Данные по группам *@
             <div id="accordionEditArticle" class="accordion">
 
-                @* тип текста *@
+                @* Тип текста *@
                 <div class="accordion-item mt-2 shadw">
 
                     @* заголовок группы «тип текста» *@
@@ -80,7 +82,9 @@
                                 aria-expanded="true"
                                 aria-controls="TextType">
 
-                            <span class="form-label fs-5">Тип текста :</span>
+                            <span class="form-label fs-5">
+                                Тип текста :
+                            </span>
 
                         </button>
 
@@ -97,27 +101,39 @@
                             <div class="row g-2 justify-content-center">
 
                                 <div class="col-auto">
+
                                     <label asp-for="TypeOfText" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-auto" aria-describedby="TypesOfTextInputHelpBlock">
 
                                     <select id="TypesOfText" asp-for="TypeOfText" class="form-select">
+
                                         @{
                                             for (int i = 0; i < Model.TypesOfText.Count(); i++)
                                             {
-                                                <option value="@Model.TypesOfText[i]">@Model.TypesOfText[i]</option>
+                                                <option value="@Model.TypesOfText[i]">
+
+                                                    @Model.TypesOfText[i]
+
+                                                </option>
                                             }
                                         }
+
                                     </select>
 
                                 </div>
 
                                 <div id="TypesOfTextInputHelpBlock" class="col-12 justify-content-center">
 
-                                    <span class="fs-6 text-success">тип текста</span>
+                                    <span class="fs-6 text-success">
+                                        тип текста
+                                    </span>
                                     <br class="d-md-none" />
-                                    <span class="fs-6 text-danger"> - обязательное поле</span>
+                                    <span class="fs-6 text-danger">
+                                        - обязательное поле
+                                    </span>
 
                                 </div>
 
@@ -134,7 +150,7 @@
 
                 </div>
 
-                @* обложка для книги *@
+                @* Обложка для книги *@
                 <div class="accordion-item mt-2 shadw">
 
                     @* заголовок группы «Обложка для книги» *@
@@ -147,7 +163,9 @@
                                 aria-expanded="true"
                                 aria-controls="CoverForBook">
 
-                            <span class="form-label fs-5">Обложка для книги :</span>
+                            <span class="form-label fs-5">
+                                Обложка для книги :
+                            </span>
 
                         </button>
 
@@ -177,27 +195,35 @@
                                            title="информация о картинке"
                                            onclick="this.target='_blank'">
 
-                                            <vc:view-image image-id="@Model.ImageFileModelId" css-class="w-100" icon-type="webimage" />
+                                            <vc:view-image image-id="@Model.ImageFileModelId"
+                                                           css-class="w-100"
+                                                           icon-type="webimage" />
 
                                         </a>
 
                                         @if (!string.IsNullOrEmpty(Model.ImageFileModel.WebImageFileName))
                                         {
                                             <p class="text_shadow my-2 fluid-font-size">
+
                                                 @Model.ImageFileModel.ImagePath/@Model.ImageFileModel.WebImageFileName
+
                                             </p>
                                         }
                                         else
                                         {
                                             <p class="text_shadow my-2 fluid-font-size">
+
                                                 @Model.ImageFileModel.ImagePath/@Model.ImageFileModel.ImageFileName
+
                                             </p>
                                         }
                                     }
                                     else
                                     {
                                         <p class="text-center fluid-font-size text-bg-danger">
+
                                             обложка для книги не выбрана
+
                                         </p>
                                     }
                                 }
@@ -228,7 +254,11 @@
                                         asp-items="ViewBag.ImageFiles"
                                         class="d-flex col-12 col-sm-7 col-lg-6 mx-auto my-3">
 
-                                    <option value="@Guid.Empty">Обложка не выбрана</option>
+                                    <option value="@Guid.Empty">
+
+                                        Обложка не выбрана
+
+                                    </option>
 
                                 </select>
 
@@ -254,7 +284,7 @@
 
                 </div>
 
-                @* издатель книги (статьи) *@
+                @* Издатель книги (статьи) *@
                 <div class="accordion-item mt-2 shadw">
 
                     @* Заголовок группы «Издатель книги (статьи)» *@
@@ -267,7 +297,9 @@
                                 aria-expanded="true"
                                 aria-controls="Publisher">
 
-                            <span class="form-label fs-5">Издатель текста :</span>
+                            <span class="form-label fs-5">
+                                Издатель текста :
+                            </span>
 
                         </button>
 
@@ -289,7 +321,9 @@
 
                             <div id="PublisherInputHelpBlock" class="form-text">
 
-                                <span class="fs-6 text-success">издатель книги (статьи)</span>
+                                <span class="fs-6 text-success">
+                                    издатель книги (статьи)
+                                </span>
 
                             </div>
 
@@ -304,11 +338,11 @@
 
                 </div>
 
-                @*  логотип книги (статьи) *@
+                @*  Логотип книги (статьи) *@
                 <div class="accordion-item mt-2 shadw">
 
                     @* Заголовок группы «логотип книги (статьи)» *@
-                    <h2 class="accordion-header" id="headingLogo">
+                    <h2 id="headingLogo" class="accordion-header">
 
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
@@ -317,7 +351,9 @@
                                 aria-expanded="true"
                                 aria-controls="Logo">
 
-                            <span class="form-label fs-5">Логотип текста :</span>
+                            <span class="form-label fs-5">
+                                Логотип текста :
+                            </span>
 
                         </button>
 
@@ -352,20 +388,26 @@
                                 @if (!string.IsNullOrEmpty(Model.LogoOfArticle.WebImageFileName))
                                 {
                                     <p class="text_shadow my-2 fluid-font-size">
+
                                         @Model.LogoOfArticle.ImagePath/@Model.LogoOfArticle.WebImageFileName
+
                                     </p>
                                 }
                                 else
                                 {
                                     <p class="text_shadow mt-2 fluid-font-size">
+
                                         @Model.LogoOfArticle.ImagePath/@Model.LogoOfArticle.ImageFileName
+
                                     </p>
                                 }
                             }
                             else
                             {
                                 <p class="text-center fluid-font-size text-bg-danger">
+
                                     логотип для статьи не задан
+
                                 </p>
                             }
 
@@ -395,7 +437,11 @@
                                     asp-items="ViewBag.ImageFiles"
                                     class="d-flex col-12 col-sm-7 col-lg-6 mx-auto my-3">
 
-                                <option value="@Guid.Empty">Логотип не выбран</option>
+                                <option value="@Guid.Empty">
+
+                                    Логотип не выбран
+
+                                </option>
 
                             </select>
 
@@ -418,11 +464,11 @@
 
                 </div>
 
-                @*  скан книги (статьи) *@
+                @*  Скан книги (статьи) *@
                 <div class="accordion-item mt-2 shadw">
 
                     @* Заголовок группы «скан книги (статьи)» *@
-                    <h2 class="accordion-header" id="headingScan">
+                    <h2 id="headingScan" class="accordion-header">
 
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button" data-bs-toggle="collapse"
@@ -430,7 +476,9 @@
                                 aria-expanded="true"
                                 aria-controls="Scan">
 
-                            <span class="form-label fs-5">Скан текста :</span>
+                            <span class="form-label fs-5">
+                                Скан текста :
+                            </span>
 
                         </button>
 
@@ -466,27 +514,35 @@
                                     @if (!string.IsNullOrEmpty(Model.ScanOfArticle.WebImageFileName))
                                     {
                                         <p class="text_shadow my-2 fluid-font-size">
+
                                             @Model..ScanOfArticle.ImagePath/@Model.ScanOfArticle.WebImageFileName
+
                                         </p>
                                     }
                                     else
                                     {
                                         <p class="text_shadow mt-2 fluid-font-size">
+
                                             @Model.ScanOfArticle.ImagePath/@Model.ScanOfArticle.ImageFileName
+
                                         </p>
                                     }
                                 }
                                 else
                                 {
                                     <p class="text-center fluid-font-size text-bg-danger">
+
                                         скан для статьи не задан
+
                                     </p>
                                 }
                             }
                             else
                             {
                                 <p class="text-center fluid-font-size text-bg-danger">
+
                                     скан для статьи не задан
+
                                 </p>
                             }
 
@@ -516,7 +572,11 @@
                                     asp-items="ViewBag.ImageFiles"
                                     class="d-flex col-12 col-sm-7 col-lg-6 mx-auto my-3">
 
-                                <option value="@Guid.Empty">Скан не выбран</option>
+                                <option value="@Guid.Empty">
+
+                                    Скан не выбран
+
+                                </option>
 
                             </select>
 
@@ -539,7 +599,7 @@
 
                 </div>
 
-                @*  видео связанное с книгой (статьёй) *@
+                @*  Видео связанное с книгой (статьёй) *@
                 <div class="accordion-item mt-2 shadw">
 
                     @* Заголовок группы «видео связанное с книгой (статьёй)» *@
@@ -552,7 +612,9 @@
                                 aria-expanded="true"
                                 aria-controls="VideoForBookOrArticle">
 
-                            <span class="form-label fs-5">Видео для текста :</span>
+                            <span class="form-label fs-5">
+                                Видео для текста :
+                            </span>
 
                         </button>
 
@@ -586,7 +648,9 @@
                             else
                             {
                                 <p class="text-center fluid-font-size text-bg-danger">
+
                                     видео не задано
+
                                 </p>
                             }
 
@@ -616,7 +680,11 @@
                                     asp-items="ViewBag.VideoFiles"
                                     class="d-flex col-12 col-sm-7 col-lg-6 mx-auto my-3">
 
-                                <option value="@Guid.Empty">Видео не выбрано</option>
+                                <option value="@Guid.Empty">
+
+                                    Видео не выбрано
+
+                                </option>
 
                             </select>
 
@@ -639,7 +707,7 @@
 
                 </div>
 
-                @*  фильм по книге (статье) *@
+                @*  Фильм по книге (статье) *@
                 <div class="accordion-item mt-2 shadw">
 
                     @* Заголовок группы «фильм по книге (статье)» *@
@@ -652,7 +720,9 @@
                                 aria-expanded="true"
                                 aria-controls="FilmForBookOrArticle">
 
-                            <span class="form-label fs-5">Фильм по книге :</span>
+                            <span class="form-label fs-5">
+                                Фильм для текста :
+                            </span>
 
                         </button>
 
@@ -686,7 +756,9 @@
                             else
                             {
                                 <p class="text-center fluid-font-size text-bg-danger">
+
                                     видео не задано
+
                                 </p>
                             }
 
@@ -716,7 +788,11 @@
                                     asp-items="ViewBag.FilmFiles"
                                     class="d-flex col-12 col-sm-7 col-lg-6 mx-auto my-3">
 
-                                <option value="@Guid.Empty">Видео не выбрано</option>
+                                <option value="@Guid.Empty">
+
+                                    Видео не выбрано
+
+                                </option>
 
                             </select>
 
@@ -739,7 +815,7 @@
 
                 </div>
 
-                @*  ссылка на статью (издателя) *@
+                @*  Ссылка на статью (издателя) *@
                 <div class="accordion-item mt-2 shadw">
 
                     @* Заголовок группы «ссылка на статью (издателя)» *@
@@ -752,7 +828,9 @@
                                 aria-expanded="true"
                                 aria-controls="UrlOfArticle">
 
-                            <span class="form-label fs-5">Ссылка на текст :</span>
+                            <span class="form-label fs-5">
+                                Ссылка на текст :
+                            </span>
 
                         </button>
 
@@ -784,7 +862,9 @@
                             else
                             {
                                 <p class="text-center fluid-font-size text-bg-danger">
+
                                     ссылка на статью не задана
+
                                 </p>
                             }
 
@@ -794,8 +874,14 @@
                                    aria-describedby="UrlOfArticleInputHelpBlock" />
 
                             <div id="UrlOfArticleInputHelpBlock" class="form-text">
-                                <span class="d-none d-sm-inline-block fs-6 text-success">тег «UrlOfArticle» - </span>
-                                <span class="fs-6 text-success">ссылка на статью или издателя</span>
+
+                                <span class="d-none d-sm-inline-block fs-6 text-success">
+                                    тег «UrlOfArticle» -
+                                </span>
+                                <span class="fs-6 text-success">
+                                    ссылка на статью или издателя
+                                </span>
+
                             </div>
 
                             @if (Context.Request.Method == "POST")
@@ -809,11 +895,11 @@
 
                 </div>
 
-                @* автор книги (статьи) *@
+                @* Автор книги (статьи) *@
                 <div class="accordion-item mt-2 shadw">
 
                     @* заголовок группы «Автор книги (статьи)» *@
-                    <h2 class="accordion-header" id="headingAuthor">
+                    <h2 id="headingAuthor" class="accordion-header">
 
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
@@ -821,7 +907,9 @@
                                 data-bs-target="#Author"
                                 aria-expanded="true" aria-controls="Author">
 
-                            <span class="form-label fs-5">Автор текста :</span>
+                            <span class="form-label fs-5">
+                                Автор текста :
+                            </span>
 
                         </button>
 
@@ -843,9 +931,13 @@
 
                             <div id="AuthorOfTextInputHelpBlock" class="form-text">
 
-                                <span class="fs-6 text-success">автор книги (статьи) - </span>
+                                <span class="fs-6 text-success">
+                                    автор книги (статьи) -
+                                </span>
                                 <br class="d-md-none" />
-                                <span class="fs-6 text-danger">обязательное поле</span>
+                                <span class="fs-6 text-danger">
+                                    обязательное поле
+                                </span>
 
                             </div>
 
@@ -860,7 +952,7 @@
 
                 </div>
 
-                @* заголовок книги (статьи) *@
+                @* Заголовок книги (статьи) *@
                 <div class="accordion-item mt-2 shadw">
 
                     @* заголовок группы «Заголовок книги (статьи)» *@
@@ -873,7 +965,9 @@
                                 aria-expanded="true"
                                 aria-controls="CaptionOfText">
 
-                            <span class="form-label fs-5">Заголовок текста :</span>
+                            <span class="form-label fs-5">
+                                Заголовок текста :
+                            </span>
 
                         </button>
 
@@ -895,9 +989,13 @@
 
                             <div id="CaptionOfTextInputHelpBlock" class="form-text">
 
-                                <span class="fs-6 text-success">заголовок книги (статьи) - </span>
+                                <span class="fs-6 text-success">
+                                    заголовок книги (статьи) -
+                                </span>
                                 <br class="d-md-none" />
-                                <span class="fs-6 text-danger">обязательное поле</span>
+                                <span class="fs-6 text-danger">
+                                    обязательное поле
+                                </span>
 
                             </div>
 
@@ -912,7 +1010,7 @@
 
                 </div>
 
-                @* подзаголовок книги (статьи) *@
+                @* Подзаголовок книги (статьи) *@
                 <div class="accordion-item mt-2 shadw">
 
                     @* заголовок группы «Подзаголовок книги (статьи)» *@
@@ -925,7 +1023,9 @@
                                 aria-expanded="true"
                                 aria-controls="TheSubtitle">
 
-                            <span class="form-label fs-5">Подзаголовок текста :</span>
+                            <span class="form-label fs-5">
+                                Подзаголовок текста :
+                            </span>
 
                         </button>
 
@@ -947,7 +1047,9 @@
 
                             <div id="TheSubtitleInputHelpBlock" class="form-text">
 
-                                <span class="fs-6 text-success">подзаголовок книги (статьи)</span>
+                                <span class="fs-6 text-success">
+                                    подзаголовок книги (статьи)
+                                </span>
 
                             </div>
 
@@ -962,11 +1064,11 @@
 
                 </div>
 
-                @* описание текста *@
+                @* Описание текста *@
                 <div class="accordion-item mt-2 shadw">
 
                     @* заголовок группы «Описание текста» *@
-                    <h2 class="accordion-header" id="headingBookDescription">
+                    <h2 id="headingBookDescription" class="accordion-header">
 
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
@@ -975,7 +1077,9 @@
                                 aria-expanded="true"
                                 aria-controls="BookDescription">
 
-                            <span class="form-label fs-5">Описание текста :</span>
+                            <span class="form-label fs-5">
+                                Описание текста :
+                            </span>
 
                         </button>
 
@@ -998,9 +1102,13 @@
 
                             <div id="BookDescriptionInputHelpBlock" class="form-text">
 
-                                <span class="fs-6 text-success">описание текста - </span>
+                                <span class="fs-6 text-success">
+                                    описание текста -
+                                </span>
                                 <br class="d-md-none" />
-                                <span class="fs-6 text-danger">обязательное поле</span>
+                                <span class="fs-6 text-danger">
+                                    обязательное поле
+                                </span>
 
                             </div>
 
@@ -1015,11 +1123,11 @@
 
                 </div>
 
-                @* количество страниц *@
+                @* Количество страниц *@
                 <div class="accordion-item mt-2 shadw">
 
                     @* заголовок группы «Количество страниц» *@
-                    <h2 class="accordion-header" id="headingNumberOfPages">
+                    <h2 id="headingNumberOfPages" class="accordion-header">
 
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
@@ -1028,7 +1136,9 @@
                                 aria-expanded="true"
                                 aria-controls="NumberOfPages">
 
-                            <span class="form-label fs-5">Количество страниц :</span>
+                            <span class="form-label fs-5">
+                                Количество страниц :
+                            </span>
 
                         </button>
 
@@ -1050,9 +1160,13 @@
 
                             <div id="NumberOfPagesInputHelpBlock" class="form-text">
 
-                                <span class="fs-6 text-success">количество страниц - </span>
+                                <span class="fs-6 text-success">
+                                    количество страниц -
+                                </span>
                                 <br class="d-md-none" />
-                                <span class="fs-6 text-danger">обязательное поле</span>
+                                <span class="fs-6 text-danger">
+                                    обязательное поле
+                                </span>
 
                             </div>
 
@@ -1067,11 +1181,11 @@
 
                 </div>
 
-                @* дата публикации книги (статьи) *@
+                @* Дата публикации книги (статьи) *@
                 <div class="accordion-item mt-2 shadw">
 
                     @* заголовок группы «Дата публикации книги (статьи)» *@
-                    <h2 class="accordion-header" id="headingDateOfPublication">
+                    <h2 id="headingDateOfPublication" class="accordion-header">
 
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
@@ -1080,7 +1194,9 @@
                                 aria-expanded="true"
                                 aria-controls="DateOfPublication">
 
-                            <span class="form-label fs-5">Дата публикации :</span>
+                            <span class="form-label fs-5">
+                                Дата публикации :
+                            </span>
 
                         </button>
 
@@ -1096,21 +1212,29 @@
                             <div class="row g-2 justify-content-center">
 
                                 <div class="col-auto">
+
                                     <label asp-for="DateOfPublication" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-auto text-start">
+
                                     <input asp-for="DateOfPublication"
                                            id="DateOfPublicationInput"
                                            class="form-control"
                                            aria-describedby="DateOfPublicationInputHelpBlock" />
+
                                 </div>
 
                                 <div id="DateOfPublicationInputHelpBlock" class="form-text">
 
-                                    <span class="fs-6 text-success">дата публикации текста - </span>
+                                    <span class="fs-6 text-success">
+                                        дата публикации текста -
+                                    </span>
                                     <br class="d-md-none" />
-                                    <span class="fs-6 text-danger">обязательное поле</span>
+                                    <span class="fs-6 text-danger">
+                                        обязательное поле
+                                    </span>
 
                                 </div>
 
@@ -1131,7 +1255,7 @@
                 <div class="accordion-item mt-2 shadw">
 
                     @* Заголовок группы «теги по содержанию текста» *@
-                    <h2 class="accordion-header" id="headingTagsForBook">
+                    <h2 id="headingTagsForBook" class="accordion-header">
 
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
@@ -1140,7 +1264,9 @@
                                 aria-expanded="true"
                                 aria-controls="BookDescription">
 
-                            <span class="form-label fs-5">Теги по тексту :</span>
+                            <span class="form-label fs-5">
+                                Теги по тексту :
+                            </span>
 
                         </button>
 
@@ -1159,7 +1285,11 @@
 
                                 @foreach (var tag in Model.TagsForBook.Split(',', StringSplitOptions.RemoveEmptyEntries))
                                 {
-                                    <p class="fs-5 text-start text_shadow"># @tag</p>
+                                    <p class="fs-5 text-start text_shadow">
+
+                                        # @tag
+
+                                    </p>
                                 }
 
                             </div>
@@ -1173,9 +1303,13 @@
 
                             <div id="TagsForBookInputHelpBlock" class="form-text">
 
-                                <span class="fs-6 text-success">теги по тексту - </span>
+                                <span class="fs-6 text-success">
+                                    теги по тексту -
+                                </span>
                                 <br class="d-md-none" />
-                                <span class="fs-6 text-danger">вводить через запятую</span>
+                                <span class="fs-6 text-danger">
+                                    вводить через запятую
+                                </span>
 
                             </div>
 
@@ -1190,7 +1324,7 @@
 
                 </div>
 
-                @*  ссылка на скачивания текста *@
+                @*  Ссылка на скачивания текста *@
                 <div class="accordion-item mt-2 shadw">
 
                     @* заголовок группы «Ссылки на скачивание текста» *@
@@ -1203,7 +1337,9 @@
                                 aria-expanded="true"
                                 aria-controls="LoadText">
 
-                            <span class="form-label fs-5">Скачать текст :</span>
+                            <span class="form-label fs-5">
+                                Скачать текст :
+                            </span>
 
                         </button>
 
@@ -1236,7 +1372,9 @@
                             else
                             {
                                 <p class="text-center fluid-font-size text-bg-danger">
+
                                     ссылка не задана
+
                                 </p>
                             }
 
@@ -1246,8 +1384,14 @@
                                    aria-describedby="RefToWordDocInputHelpBlock" />
 
                             <div id="RefToWordDocInputHelpBlock" class="form-text">
-                                <span class="d-none d-sm-inline-block fs-6 text-success">тег «RefToWordDoc» - </span>
-                                <span class="fs-6 text-success">ссылка на текст в формате word</span>
+
+                                <span class="d-none d-sm-inline-block fs-6 text-success">
+                                    тег «RefToWordDoc» -
+                                </span>
+                                <span class="fs-6 text-success">
+                                    ссылка на текст в формате word
+                                </span>
+
                             </div>
 
                             @if (Context.Request.Method == "POST")
@@ -1275,7 +1419,9 @@
                             else
                             {
                                 <p class="text-center fluid-font-size text-bg-danger">
+
                                     ссылка не задана
+
                                 </p>
                             }
 
@@ -1285,8 +1431,14 @@
                                    aria-describedby="RefToPdfInputHelpBlock" />
 
                             <div id="RefToPdfInputHelpBlock" class="form-text">
-                                <span class="d-none d-sm-inline-block fs-6 text-success">тег «RefToPdf» - </span>
-                                <span class="fs-6 text-success">ссылка на текст в формате pdf</span>
+
+                                <span class="d-none d-sm-inline-block fs-6 text-success">
+                                    тег «RefToPdf» -
+                                </span>
+                                <span class="fs-6 text-success">
+                                    ссылка на текст в формате pdf
+                                </span>
+
                             </div>
 
                             @if (Context.Request.Method == "POST")
@@ -1314,7 +1466,9 @@
                             else
                             {
                                 <p class="text-center fluid-font-size text-bg-danger">
+
                                     ссылка не задана
+
                                 </p>
                             }
 
@@ -1324,8 +1478,14 @@
                                    aria-describedby="RefToAudioInputHelpBlock" />
 
                             <div id="RefToPdfInputHelpBlock" class="form-text">
-                                <span class="d-none d-sm-inline-block fs-6 text-success">тег «RefToAudio» - </span>
-                                <span class="fs-6 text-success">ссылка аудиокнигу</span>
+
+                                <span class="d-none d-sm-inline-block fs-6 text-success">
+                                    тег «RefToAudio» -
+                                </span>
+                                <span class="fs-6 text-success">
+                                    ссылка аудиокнигу
+                                </span>
+
                             </div>
 
                             @if (Context.Request.Method == "POST")

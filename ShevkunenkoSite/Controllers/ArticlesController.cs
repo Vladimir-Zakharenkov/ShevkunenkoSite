@@ -67,6 +67,7 @@ public class ArticlesController(
                         .Include(logo => logo.LogoOfArticle)
                         .Include(scan => scan.ScanOfArticle)
                         .Include(movie => movie.VideoForBookOrArticle)
+                        .Include(film => film.FilmForBookOrArticle)
                         .FirstAsync(article => article.BooksAndArticlesModelId == articleId);
 
             #endregion

@@ -150,6 +150,22 @@
                     </a>
                 }
 
+                @if (Model.BookOrArticle.FilmForBookOrArticle != null && Model.Scan != true)
+                {
+                    <a class="d-print-none"
+                       asp-area=""
+                       asp-controller="Films"
+                       asp-action="Film"
+                       asp-route-filmCaption="@Model.BookOrArticle.FilmForBookOrArticle.FilmCaption"
+                       title="видео к статье">
+
+                        <vc:view-image image-id="b386f45b-fc84-4748-bc75-08dd67cfc8ed"
+                                       css-class="float-start me-2 maxwidth40px shadw imageref d-print-none"
+                                       icon-type="webicon100" />
+
+                    </a>
+                }
+
                 @if (Model.Scan != true)
                 {
                     <a class=" d-print-none"
@@ -229,6 +245,22 @@
                     </a>
                 }
 
+                @if (Model.BookOrArticle.FilmForBookOrArticle != null && Model.Scan != true)
+                {
+                    <a class="d-print-none"
+                       asp-area=""
+                       asp-controller="Films"
+                       asp-action="Film"
+                       asp-route-filmCaption="@Model.BookOrArticle.FilmForBookOrArticle.FilmCaption"
+                       title="видео к статье">
+
+                        <vc:view-image image-id="b386f45b-fc84-4748-bc75-08dd67cfc8ed"
+                                       css-class="float-start me-2 maxwidth40px shadw imageref d-print-none"
+                                       icon-type="webicon100" />
+
+                    </a>
+                }
+
                 @if (Model.Scan != true)
                 {
                     <a class="d-print-none"
@@ -241,7 +273,11 @@
 
                     </a>
 
-                    <p class="float-end text-primary mt-2 mt-lg-1 nomstr fluid-font-size">@Model.PageNumber</p>
+                    <p class="float-end text-primary mt-2 mt-lg-1 nomstr fluid-font-size">
+
+                        @Model.PageNumber
+
+                    </p>
                 }
 
             </footer>

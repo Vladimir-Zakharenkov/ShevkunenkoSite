@@ -2,19 +2,27 @@
 
 @{
     string cssForLabel = "col-form-label text-primary fs-5 me-2";
+    string cssButton = "btn minwidth100px m-2 shadw";
 }
 
-<h1 class="@(Model.TypeOfText.Contains("book") ? "fs-3 text_shadow" : "d-none")">Информация о книге</h1>
-<h1 class="@(Model.TypeOfText.Contains("article") ? "fs-3 text_shadow" : "d-none")">Информация о статье</h1>
+<h1 class="@(Model.TypeOfText =="book" ? "fs-3 text_shadow" : "d-none")">
+
+    Информация о книге
+
+</h1>
+
+<h1 class="@(Model.TypeOfText == "article" ? "fs-3 text_shadow" : "d-none")">
+
+    Информация о статье
+
+</h1>
 
 <hr class="w-25 mx-auto" />
 
 @* Id статьи или книги *@
 <p class="fs-5 mb-3">
 
-    <span class="text-primary">
-        BooksAndArticlesModelId:
-    </span>
+    <label asp-for="BooksAndArticlesModelId" class="@cssForLabel"></label>
 
     <br />
 
@@ -38,7 +46,7 @@
     <div class="col-12 col-lg-8 mx-auto p-2">
 
         @* Данные по группам *@
-        <div class="accordion" id="accordionEditArticle">
+        <div class="accordion" id="accordionDetailsArticle">
 
             @* Тип текста *@
             <div class="accordion-item mt-2 shadw">
@@ -53,7 +61,9 @@
                             aria-expanded="true"
                             aria-controls="TextType">
 
-                        <span class="form-label fs-5">Тип текста :</span>
+                        <span class="form-label fs-5">
+                            Тип текста :
+                        </span>
 
                     </button>
 
@@ -62,7 +72,7 @@
                 <div id="TextType"
                      class="accordion-collapse collapse"
                      aria-labelledby="headingTextType"
-                     data-bs-parent="#accordionEditArticle">
+                     data-bs-parent="#accordionDetailsArticle">
 
                     <div class="accordion-body accordion-body-nointend text-center">
 
@@ -71,8 +81,14 @@
                         <p class="fs-4 text-center text_shadow">@Model.TypeOfText</p>
 
                         <div class="form-text">
-                            <span class="d-none d-sm-inline-block fs-6 text-success">тег «TypeOfText» - </span>
-                            <span class="fs-6 text-success">тип текста</span>
+
+                            <span class="d-none d-sm-inline-block fs-6 text-success">
+                                тег «TypeOfText» -
+                            </span>
+                            <span class="fs-6 text-success">
+                                тип текста
+                            </span>
+
                         </div>
 
                     </div>
@@ -81,80 +97,91 @@
 
             </div>
 
-            @* обложка для книги *@
-            <div class="accordion-item mt-2 shadw">
+            @* Обложка для книги *@
+            @if (Model.TypeOfText == "book")
+            {
+                <div class="accordion-item mt-2 shadw">
 
-                @* заголовок группы «Обложка для книги» *@
-                <h2 id="headingCoverForBook" class="accordion-header">
+                    @* заголовок группы «Обложка для книги» *@
+                    <h2 id="headingCoverForBook" class="accordion-header">
 
-                    <button class="accordion-button collapsed py-0 stranicy"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#CoverForBook"
-                            aria-expanded="true"
-                            aria-controls="CoverForBook">
+                        <button class="accordion-button collapsed py-0 stranicy"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#CoverForBook"
+                                aria-expanded="true"
+                                aria-controls="CoverForBook">
 
-                        <span class="form-label fs-5">Обложка для книги :</span>
+                            <span class="form-label fs-5">
+                                Обложка книги :
+                            </span>
 
-                    </button>
+                        </button>
 
-                </h2>
+                    </h2>
 
-                @* обложка для книги *@
-                <div id="CoverForBook"
-                     class="accordion-collapse collapse"
-                     aria-labelledby="headingCoverForBook"
-                     data-bs-parent="#accordionEditArticle">
+                    @* обложка для книги *@
+                    <div id="CoverForBook"
+                         class="accordion-collapse collapse"
+                         aria-labelledby="headingCoverForBook"
+                         data-bs-parent="#accordionDetailsArticle">
 
-                    <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body accordion-body-nointend text-center">
 
-                        <div>
+                            <div>
 
-                            <label asp-for="CoverForBookFormFile" class="@cssForLabel"></label>
+                                <label asp-for="ImageFileModelId" class="@cssForLabel"></label>
 
-                            @if (Model.ImageFileModel != null)
-                            {
-                                <a asp-area="Admin"
-                                   asp-controller="ImageInfo"
-                                   asp-action="DetailsImage"
-                                   asp-route-imageid="@Model.ImageFileModelId"
-                                   class="d-block mx-auto maxwidth300px shadw imageref"
-                                   title="информация о картинке"
-                                   onclick="this.target='_blank'">
-
-                                    <vc:view-image image-id="@Model.ImageFileModelId"
-                                                   css-class="w-100"
-                                                   icon-type="webimage" />
-
-                                </a>
-
-                                @if (!string.IsNullOrEmpty(Model.ImageFileModel.WebImageFileName))
+                                @if (Model.ImageFileModel != null)
                                 {
-                                    <p class="text_shadow my-2 fluid-font-size">
-                                        @Model.ImageFileModel.ImagePath/@Model.ImageFileModel.WebImageFileName
-                                    </p>
+                                    <a asp-area="Admin"
+                                       asp-controller="ImageInfo"
+                                       asp-action="DetailsImage"
+                                       asp-route-imageid="@Model.ImageFileModelId"
+                                       class="d-block mx-auto maxwidth300px shadw imageref"
+                                       title="информация о картинке"
+                                       onclick="this.target='_blank'">
+
+                                        <vc:view-image image-id="@Model.ImageFileModelId"
+                                                       css-class="w-100"
+                                                       icon-type="webimage" />
+
+                                    </a>
+
+                                    @if (!string.IsNullOrEmpty(Model.ImageFileModel.WebImageFileName))
+                                    {
+                                        <p class="text_shadow my-2 fluid-font-size">
+
+                                            @Model.ImageFileModel.ImagePath/@Model.ImageFileModel.WebImageFileName
+
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="text_shadow my-2 fluid-font-size">
+
+                                            @Model.ImageFileModel.ImagePath/@Model.ImageFileModel.ImageFileName
+
+                                        </p>
+                                    }
                                 }
                                 else
                                 {
-                                    <p class="text_shadow my-2 fluid-font-size">
-                                        @Model.ImageFileModel.ImagePath/@Model.ImageFileModel.ImageFileName
+                                    <p class="text-center fluid-font-size text-bg-danger">
+
+                                        обложка для книги не выбрана
+
                                     </p>
                                 }
-                            }
-                            else
-                            {
-                                <p class="text-center fluid-font-size text-bg-danger">
-                                    обложка для книги не выбрана
-                                </p>
-                            }
+
+                            </div>
 
                         </div>
 
                     </div>
 
                 </div>
-
-            </div>
+            }
 
             @* Издатель книги (статьи) *@
             <div class="accordion-item mt-2 shadw">
@@ -169,7 +196,9 @@
                             aria-expanded="true"
                             aria-controls="Publisher">
 
-                        <span class="form-label fs-5">Издатель текста :</span>
+                        <span class="form-label fs-5">
+                            Издатель текста :
+                        </span>
 
                     </button>
 
@@ -178,17 +207,27 @@
                 <div id="Publisher"
                      class="accordion-collapse collapse"
                      aria-labelledby="headingPublisher"
-                     data-bs-parent="#accordionEditArticle">
+                     data-bs-parent="#accordionDetailsArticle">
 
                     <div class="accordion-body accordion-body-nointend text-center">
 
                         <label asp-for="Publisher" class="@cssForLabel"></label>
 
-                        <p class="fs-4 text-center text_shadow">@Model.Publisher</p>
+                        <p class="fs-4 text-center text_shadow">
+
+                            @Model.Publisher
+
+                        </p>
 
                         <div class="form-text">
-                            <span class="d-none d-sm-inline-block fs-6 text-success">тег «Publisher» - </span>
-                            <span class="fs-6 text-success">издатель текста</span>
+
+                            <span class="d-none d-sm-inline-block fs-6 text-success">
+                                тег «Publisher» -
+                            </span>
+                            <span class="fs-6 text-success">
+                                издатель текста
+                            </span>
+
                         </div>
 
                     </div>
@@ -210,13 +249,18 @@
                             aria-expanded="true"
                             aria-controls="Logo">
 
-                        <span class="form-label fs-5">Логотип текста :</span>
+                        <span class="form-label fs-5">
+                            Логотип текста :
+                        </span>
 
                     </button>
 
                 </h2>
 
-                <div id="Logo" class="accordion-collapse collapse" aria-labelledby="headingLogo" data-bs-parent="#accordionEditArticle">
+                <div id="Logo"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="headingLogo"
+                     data-bs-parent="#accordionDetailsArticle">
 
                     @* Логотип книги (статьи) *@
                     <div class="accordion-body accordion-body-nointend text-center">
@@ -242,20 +286,26 @@
                             @if (!string.IsNullOrEmpty(Model.LogoOfArticle?.WebImageFileName))
                             {
                                 <p class="text_shadow my-2 fluid-font-size">
+
                                     @Model.LogoOfArticle.ImagePath/@Model.LogoOfArticle.WebImageFileName
+
                                 </p>
                             }
                             else
                             {
                                 <p class="text_shadow mt-2 fluid-font-size">
+
                                     @Model.LogoOfArticle?.ImagePath/@Model.LogoOfArticle?.ImageFileName
+
                                 </p>
                             }
                         }
                         else
                         {
                             <p class="text-center fluid-font-size text-bg-danger">
+
                                 логотип для статьи не задан
+
                             </p>
                         }
 
@@ -278,7 +328,9 @@
                             aria-expanded="true"
                             aria-controls="Scan">
 
-                        <span class="form-label fs-5">Скан текста :</span>
+                        <span class="form-label fs-5">
+                            Скан текста :
+                        </span>
 
                     </button>
 
@@ -287,7 +339,7 @@
                 <div id="Scan"
                      class="accordion-collapse collapse"
                      aria-labelledby="headingScan"
-                     data-bs-parent="#accordionEditArticle">
+                     data-bs-parent="#accordionDetailsArticle">
 
                     <div class="accordion-body accordion-body-nointend text-center">
 
@@ -314,27 +366,35 @@
                                 @if (!string.IsNullOrEmpty(Model.ScanOfArticle.WebImageFileName))
                                 {
                                     <p class="text_shadow my-2 fluid-font-size">
+
                                         @Model.ScanOfArticle.ImagePath/@Model.ScanOfArticle.WebImageFileName
+
                                     </p>
                                 }
                                 else
                                 {
                                     <p class="text_shadow mt-2 fluid-font-size">
+
                                         @Model.ScanOfArticle.ImagePath/@Model.ScanOfArticle.ImageFileName
+
                                     </p>
                                 }
                             }
                             else
                             {
                                 <p class="text-center fluid-font-size text-bg-danger">
+
                                     скан для статьи не задан
+
                                 </p>
                             }
                         }
                         else
                         {
                             <p class="text-center fluid-font-size text-bg-danger">
+
                                 скан для статьи не задан
+
                             </p>
                         }
 
@@ -357,7 +417,9 @@
                             aria-expanded="true"
                             aria-controls="UrlOfArticle">
 
-                        <span class="form-label fs-5">Ссылка на текст :</span>
+                        <span class="form-label fs-5">
+                            Ссылка на текст :
+                        </span>
 
                     </button>
 
@@ -366,7 +428,7 @@
                 <div id="UrlOfArticle"
                      class="accordion-collapse collapse"
                      aria-labelledby="headingUrlOfArticle"
-                     data-bs-parent="#accordionEditArticle">
+                     data-bs-parent="#accordionDetailsArticle">
 
                     <div class="accordion-body accordion-body-nointend text-center">
 
@@ -375,20 +437,38 @@
                         @if (Model.UrlOfArticle != null)
                         {
                             <p class="fs-4 text-center">
-                                <a class="text-black text_shadow" href="@Model.UrlOfArticle" onClick="this.target='_blank'">@Model.UrlOfArticle</a>
+
+                                <a class="text-black text_shadow"
+                                   href="@Model.UrlOfArticle"
+                                   onClick="this.target='_blank'">
+
+                                    @Model.UrlOfArticle
+
+                                </a>
+
                             </p>
 
                             <div class="form-text">
-                                <span class="d-none d-sm-inline-block fs-6 text-success">тег «UrlOfArticle» - </span>
-                                <span class="fs-6 text-success">ссылка на статью </span>
+
+                                <span class="d-none d-sm-inline-block fs-6 text-success">
+                                    тег «UrlOfArticle» -
+                                </span>
+                                <span class="fs-6 text-success">
+                                    ссылка на статью
+                                </span>
                                 <br class="d-sm-none" />
-                                <span class="fs-6 text-success">или издателя</span>
+                                <span class="fs-6 text-success">
+                                    или издателя
+                                </span>
+
                             </div>
                         }
                         else
                         {
                             <p class="text-center fluid-font-size text-bg-danger">
+
                                 ссылка для статьи не задана
+
                             </p>
                         }
 
@@ -411,7 +491,9 @@
                             aria-expanded="true"
                             aria-controls="VideoForBookOrArticle">
 
-                        <span class="form-label fs-5">Видео для текста :</span>
+                        <span class="form-label fs-5">
+                            Видео для текста :
+                        </span>
 
                     </button>
 
@@ -420,7 +502,7 @@
                 <div id="VideoForBookOrArticle"
                      class="accordion-collapse collapse"
                      aria-labelledby="headingVideoForBookOrArticle"
-                     data-bs-parent="#accordionEditArticle">
+                     data-bs-parent="#accordionDetailsArticle">
 
                     <div class="accordion-body accordion-body-nointend text-center">
 
@@ -443,13 +525,19 @@
                             </a>
 
                             <div class="form-text">
-                                <span class="fs-6 text-success">видео к статье</span>
+
+                                <span class="fs-6 text-success">
+                                    видео по тексту
+                                </span>
+
                             </div>
                         }
                         else
                         {
                             <p class="text-center fluid-font-size text-bg-danger">
+
                                 видео не задано
+
                             </p>
                         }
 
@@ -472,7 +560,9 @@
                             aria-expanded="true"
                             aria-controls="FilmForBookOrArticle">
 
-                        <span class="form-label fs-5">Фильм по книге :</span>
+                        <span class="form-label fs-5">
+                            Фильм для текста :
+                        </span>
 
                     </button>
 
@@ -481,7 +571,7 @@
                 <div id="FilmForBookOrArticle"
                      class="accordion-collapse collapse"
                      aria-labelledby="headingFilmForBookOrArticle"
-                     data-bs-parent="#accordionEditArticle">
+                     data-bs-parent="#accordionDetailsArticle">
 
                     <div class="accordion-body accordion-body-nointend text-center">
 
@@ -504,7 +594,11 @@
                             </a>
 
                             <div class="form-text">
-                                <span class="fs-6 text-success">фильм по книге</span>
+
+                                <span class="fs-6 text-success">
+                                    фильм для текста
+                                </span>
+
                             </div>
                         }
                         else
@@ -533,7 +627,9 @@
                             aria-expanded="true"
                             aria-controls="Author">
 
-                        <span class="form-label fs-5">Автор текста :</span>
+                        <span class="form-label fs-5">
+                            Автор текста :
+                        </span>
 
                     </button>
 
@@ -542,19 +638,27 @@
                 <div id="Author"
                      class="accordion-collapse collapse"
                      aria-labelledby="headingAuthor"
-                     data-bs-parent="#accordionEditArticle">
+                     data-bs-parent="#accordionDetailsArticle">
 
                     <div class="accordion-body accordion-body-nointend text-center">
 
                         <label asp-for="AuthorOfText" class="@cssForLabel"></label>
 
                         <p class="fs-4 text-center text_shadow">
+
                             @Model.AuthorOfText
+
                         </p>
 
                         <div class="form-text">
-                            <span class="d-none d-sm-inline-block fs-6 text-success">тег «AuthorOfText» - </span>
-                            <span class="fs-6 text-success">автор текста</span>
+
+                            <span class="d-none d-sm-inline-block fs-6 text-success">
+                                тег «AuthorOfText» -
+                            </span>
+                            <span class="fs-6 text-success">
+                                автор текста
+                            </span>
+
                         </div>
 
                     </div>
@@ -576,7 +680,9 @@
                             aria-expanded="true"
                             aria-controls="CaptionOfText">
 
-                        <span class="form-label fs-5">Заголовок текста :</span>
+                        <span class="form-label fs-5">
+                            Заголовок текста :
+                        </span>
 
                     </button>
 
@@ -585,19 +691,27 @@
                 <div id="CaptionOfText"
                      class="accordion-collapse collapse"
                      aria-labelledby="headingCaptionOfText"
-                     data-bs-parent="#accordionEditArticle">
+                     data-bs-parent="#accordionDetailsArticle">
 
                     <div class="accordion-body accordion-body-nointend text-center">
 
                         <label asp-for="CaptionOfText" class="@cssForLabel"></label>
 
                         <p class="fs-4 text-center text_shadow">
+
                             @Model.CaptionOfText
+
                         </p>
 
                         <div class="form-text">
-                            <span class="d-none d-sm-inline-block fs-6 text-success">тег «CaptionOfText» - </span>
-                            <span class="fs-6 text-success">название книги (статьи)</span>
+
+                            <span class="d-none d-sm-inline-block fs-6 text-success">
+                                тег «CaptionOfText» -
+                            </span>
+                            <span class="fs-6 text-success">
+                                название книги (статьи)
+                            </span>
+
                         </div>
 
                     </div>
@@ -619,7 +733,9 @@
                             aria-expanded="true"
                             aria-controls="TheSubtitle">
 
-                        <span class="form-label fs-5">Подзаголовок текста :</span>
+                        <span class="form-label fs-5">
+                            Подзаголовок текста :
+                        </span>
 
                     </button>
 
@@ -628,7 +744,7 @@
                 <div id="TheSubtitle"
                      class="accordion-collapse collapse"
                      aria-labelledby="headingTheSubtitle"
-                     data-bs-parent="#accordionEditArticle">
+                     data-bs-parent="#accordionDetailsArticle">
 
                     <div class="accordion-body accordion-body-nointend text-center">
 
@@ -637,18 +753,28 @@
                         @if (!string.IsNullOrEmpty(Model.TheSubtitle))
                         {
                             <p class="fs-4 text-center text_shadow">
+
                                 @Model.TheSubtitle
+
                             </p>
 
                             <div class="form-text">
-                                <span class="d-none d-sm-inline-block fs-6 text-success">тег «TheSubtitle» - </span>
-                                <span class="fs-6 text-success">подзаголовок книги (статьи)</span>
+
+                                <span class="d-none d-sm-inline-block fs-6 text-success">
+                                    тег «TheSubtitle» -
+                                </span>
+                                <span class="fs-6 text-success">
+                                    подзаголовок книги (статьи)
+                                </span>
+
                             </div>
                         }
                         else
                         {
                             <p class="text-center fluid-font-size text-bg-danger">
+
                                 подзаголовок не задан
+
                             </p>
                         }
 
@@ -671,7 +797,9 @@
                             aria-expanded="true"
                             aria-controls="BookDescription">
 
-                        <span class="form-label fs-5">Описание текста :</span>
+                        <span class="form-label fs-5">
+                            Описание текста :
+                        </span>
 
                     </button>
 
@@ -680,7 +808,7 @@
                 <div id="BookDescription"
                      class="accordion-collapse collapse"
                      aria-labelledby="headingBookDescription"
-                     data-bs-parent="#accordionEditArticle">
+                     data-bs-parent="#accordionDetailsArticle">
 
                     <div class="accordion-body accordion-body-nointend text-center">
 
@@ -694,8 +822,14 @@
                          </textarea>
 
                         <div class="form-text">
-                            <span class="d-none d-sm-inline-block fs-6 text-success">тег «BookDescription» - </span>
-                            <span class="fs-6 text-success">описание книги (статьи)</span>
+
+                            <span class="d-none d-sm-inline-block fs-6 text-success">
+                                тег «BookDescription» -
+                            </span>
+                            <span class="fs-6 text-success">
+                                описание книги (статьи)
+                            </span>
+
                         </div>
 
                     </div>
@@ -717,7 +851,9 @@
                             aria-expanded="true"
                             aria-controls="NumberOfPages">
 
-                        <span class="form-label fs-5">Кол-во страниц :</span>
+                        <span class="form-label fs-5">
+                            Кол-во страниц :
+                        </span>
 
                     </button>
 
@@ -726,19 +862,27 @@
                 <div id="NumberOfPages"
                      class="accordion-collapse collapse"
                      aria-labelledby="headingNumberOfPages"
-                     data-bs-parent="#accordionEditArticle">
+                     data-bs-parent="#accordionDetailsArticle">
 
                     <div class="accordion-body accordion-body-nointend text-center">
 
                         <label asp-for="NumberOfPages" class="@cssForLabel"></label>
 
                         <p class="fs-4 text-center text_shadow">
+
                             @Model.NumberOfPages
+
                         </p>
 
                         <div class="form-text">
-                            <span class="d-none d-sm-inline-block fs-6 text-success">тег «NumberOfPages» - </span>
-                            <span class="fs-6 text-success">количество страниц</span>
+
+                            <span class="d-none d-sm-inline-block fs-6 text-success">
+                                тег «NumberOfPages» -
+                            </span>
+                            <span class="fs-6 text-success">
+                                количество страниц
+                            </span>
+
                         </div>
 
                     </div>
@@ -760,7 +904,9 @@
                             aria-expanded="true"
                             aria-controls="DateOfPublication">
 
-                        <span class="form-label fs-5">Дата публикации :</span>
+                        <span class="form-label fs-5">
+                            Дата публикации :
+                        </span>
 
                     </button>
 
@@ -769,19 +915,27 @@
                 <div id="DateOfPublication"
                      class="accordion-collapse collapse"
                      aria-labelledby="headingDateOfPublication"
-                     data-bs-parent="#accordionEditArticle">
+                     data-bs-parent="#accordionDetailsArticle">
 
                     <div class="accordion-body accordion-body-nointend text-center">
 
                         <label asp-for="DateOfPublication" class="@cssForLabel"></label>
 
                         <p class="fs-4 text-center text_shadow">
+
                             @String.Format("{0:D}", Model.DateOfPublication);
+
                         </p>
 
                         <div class="form-text">
-                            <span class="d-none d-sm-inline-block fs-6 text-success">тег «DateOfPublication» - </span>
-                            <span class="fs-6 text-success">дата издания книги (статьи)</span>
+
+                            <span class="d-none d-sm-inline-block fs-6 text-success">
+                                тег «DateOfPublication» -
+                            </span>
+                            <span class="fs-6 text-success">
+                                дата издания книги (статьи)
+                            </span>
+
                         </div>
 
                     </div>
@@ -803,7 +957,9 @@
                             aria-expanded="true"
                             aria-controls="BookDescription">
 
-                        <span class="form-label fs-5">Теги по тексту :</span>
+                        <span class="form-label fs-5">
+                            Теги по тексту :
+                        </span>
 
                     </button>
 
@@ -812,7 +968,7 @@
                 <div id="TagsForBook"
                      class="accordion-collapse collapse"
                      aria-labelledby="headingTagsForBook"
-                     data-bs-parent="#accordionEditArticle">
+                     data-bs-parent="#accordionDetailsArticle">
 
                     <div class="accordion-body accordion-body-nointend text-center">
 
@@ -823,15 +979,23 @@
                             @foreach (var tag in Model.TagsForBook.Split(',', StringSplitOptions.RemoveEmptyEntries))
                             {
                                 <p class="fs-5 text-start text_shadow">
+
                                     # @tag
+
                                 </p>
                             }
 
                         </div>
 
                         <div class="form-text">
-                            <span class="d-none d-sm-inline-block fs-6 text-success">тег «TagsForBook» - </span>
-                            <span class="fs-6 text-success">теги по тексту</span>
+
+                            <span class="d-none d-sm-inline-block fs-6 text-success">
+                                тег «TagsForBook» -
+                            </span>
+                            <span class="fs-6 text-success">
+                                теги по тексту
+                            </span>
+
                         </div>
 
                     </div>
@@ -845,12 +1009,26 @@
 
                 @* заголовок группы «Ссылки для скачивания текстов» *@
                 <h2 class="accordion-header" id="headingLoadText">
-                    <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#LoadText" aria-expanded="true" aria-controls="LoadText">
-                        <span class="form-label fs-5">Скачать текст :</span>
+
+                    <button class="accordion-button collapsed py-0 stranicy"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#LoadText"
+                            aria-expanded="true"
+                            aria-controls="LoadText">
+
+                        <span class="form-label fs-5">
+                            Скачать текст :
+                        </span>
+
                     </button>
+
                 </h2>
 
-                <div id="LoadText" class="accordion-collapse collapse" aria-labelledby="headingLoadText" data-bs-parent="#accordionEditArticle">
+                <div id="LoadText"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="headingLoadText"
+                     data-bs-parent="#accordionDetailsArticle">
 
                     <div class="accordion-body accordion-body-nointend text-center">
 
@@ -859,6 +1037,7 @@
                         @if (Model.RefToWordDoc != null)
                         {
                             <p class="fs-5 text-center text_shadow">
+
                                 <a class="text-black text_shadow"
                                    href="@Model.RefToWordDoc"
                                    title="скачать в формате word"
@@ -867,17 +1046,26 @@
                                     @Model.RefToWordDoc
 
                                 </a>
+
                             </p>
 
                             <div class="form-text">
-                                <span class="d-none d-sm-inline-block fs-6 text-success">тег «RefToWordDoc» - </span>
-                                <span class="fs-6 text-success">скачать в формате word</span>
+
+                                <span class="d-none d-sm-inline-block fs-6 text-success">
+                                    тег «RefToWordDoc» -
+                                </span>
+                                <span class="fs-6 text-success">
+                                    скачать в формате word
+                                </span>
+
                             </div>
                         }
                         else
                         {
                             <p class="text-center fluid-font-size text-bg-danger">
+
                                 ссылка не задана
+
                             </p>
                         }
 
@@ -888,6 +1076,7 @@
                         @if (Model.RefToPdf != null)
                         {
                             <p class="fs-5 text-center text_shadow">
+
                                 <a class="text-black text_shadow"
                                    href="@Model.RefToPdf"
                                    title="скачать в формате pdf"
@@ -896,17 +1085,26 @@
                                     @Model.RefToPdf
 
                                 </a>
+
                             </p>
 
                             <div class="form-text">
-                                <span class="d-none d-sm-inline-block fs-6 text-success">тег «RefToPdf» - </span>
-                                <span class="fs-6 text-success">скачать в формате pdf</span>
+
+                                <span class="d-none d-sm-inline-block fs-6 text-success">
+                                    тег «RefToPdf» -
+                                </span>
+                                <span class="fs-6 text-success">
+                                    скачать в формате pdf
+                                </span>
+
                             </div>
                         }
                         else
                         {
                             <p class="text-center fluid-font-size text-bg-danger">
+
                                 ссылка не задана
+
                             </p>
                         }
 
@@ -917,6 +1115,7 @@
                         @if (Model.RefToAudio != null)
                         {
                             <p class="fs-5 text-center text_shadow">
+
                                 <a class="text-black text_shadow"
                                    href="@Model.RefToAudio"
                                    title="скачать аудиокнига"
@@ -925,17 +1124,26 @@
                                     @Model.RefToAudio
 
                                 </a>
+
                             </p>
 
                             <div class="form-text">
-                                <span class="d-none d-sm-inline-block fs-6 text-success">тег «RefToAudio» - </span>
-                                <span class="fs-6 text-success">скачать аудиокнигу</span>
+
+                                <span class="d-none d-sm-inline-block fs-6 text-success">
+                                    тег «RefToAudio» -
+                                </span>
+                                <span class="fs-6 text-success">
+                                    скачать аудиокнигу
+                                </span>
+
                             </div>
                         }
                         else
                         {
                             <p class="text-center fluid-font-size text-bg-danger">
+
                                 ссылка не задана
+
                             </p>
                         }
 
@@ -948,10 +1156,10 @@
         </div>
 
         @* Кнопки «список», «изменить», «удалить» *@
-        <div class="card-footer">
+        <div class="card-footer mt-3">
 
             @* Список текстов сайта *@
-            <a class="btn btn-outline-primary minwidth100px m-2 shadw"
+            <a class="@cssButton btn-outline-primary"
                asp-area="Admin"
                asp-controller="BooksAndArticles"
                asp-action="Index"
@@ -962,7 +1170,7 @@
             </a>
 
             @* Изменить текст *@
-            <a class="btn btn-outline-success minwidth100px m-2 shadw"
+            <a class="@cssButton btn-outline-success"
                asp-area="Admin"
                asp-controller="BooksAndArticles"
                asp-action="EditBook"
@@ -974,7 +1182,7 @@
             </a>
 
             @* Удалить текст *@
-            <a class="btn btn-outline-danger minwidth100px m-2 shadw"
+            <a class="@cssButton btn-outline-danger"
                asp-area="Admin"
                asp-controller="BooksAndArticles"
                asp-action="DeleteBook"

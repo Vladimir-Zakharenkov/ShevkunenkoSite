@@ -783,7 +783,7 @@ public class BooksAndArticlesController
                 "CoverForBookFormFile," +
                 "LogoOfArticleFormFile," +
                 "ScanOfArticleFormFile," +
-                "VideoForBookOrArticleFormFile" +
+                "VideoForBookOrArticleFormFile," +
                 "FilmForBookOrArticleFormFile"
         )]
         BooksAndArticlesModel editBook)
@@ -1248,6 +1248,11 @@ public class BooksAndArticlesController
             if (editBook.FilmForBookOrArticleId != Guid.Empty & editBook.FilmForBookOrArticleFormFile == null)
             {
                 bookUpdate.FilmForBookOrArticleId = editBook.FilmForBookOrArticleId;
+
+                if (bookUpdate.FilmForBookOrArticleId != null)
+                {
+                    bookUpdate.VideoForBookOrArticleId = null;
+                }
             }
             else
             {
@@ -1280,6 +1285,8 @@ public class BooksAndArticlesController
                                 .FirstAsync(film => film.FilmFileName == editBook.FilmForBookOrArticleFormFile.FileName);
 
                         bookUpdate.FilmForBookOrArticleId = filmForItem.FilmFileModelId;
+
+                        bookUpdate.VideoForBookOrArticleId = null;
                     }
                     else
                     {
