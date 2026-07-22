@@ -125,21 +125,7 @@ public class AllVideoController(
 
     [Route("video-na-saite/programmy-o-sergee-shevkunenko")]
     [ActionName("Programmy-o-Sergee-Shevkunenko")]
-    public async Task<ViewResult> Programmy() =>
-        View("Index", new MoviesListViewModel
-        {
-            Movies = await movieContext.MovieFiles
-                .AsNoTracking()
-                .Where(p => p.SearchFilter.Contains("Программа,"))
-                .OrderBy(p => p.MovieDatePublished)
-                .ToArrayAsync(),
-
-            IsImage = true,
-
-            IsPartsMoreOne = false,
-
-            PageHeadTitle = "ФИЛЬМЫ И ПРОГРАММЫ О СЕРГЕЕ ШЕВКУНЕНКО"
-        });
+    public async Task<ViewResult> Programmy() => View();
 
     [Route("video-na-saite/lihie-90-e")]
     [ActionName("lihie-90-e")]
