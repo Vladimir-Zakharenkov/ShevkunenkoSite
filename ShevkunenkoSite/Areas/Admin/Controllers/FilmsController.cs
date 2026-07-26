@@ -13,7 +13,7 @@ public class FilmsController(
 {
     private readonly string rootPath = hostEnvironment.WebRootPath;
 
-    readonly FilmFileModel filmItem = new();
+    readonly FilmFileAddDTOModel filmItem = new();
 
     #region Список фильмов
 
@@ -102,7 +102,6 @@ public class FilmsController(
     [RequestFormLimits(MultipartBodyLengthLimit = 5268435456)]
     public async Task<IActionResult?> AddFilm(
                 [Bind(
-                "FilmFileModelId," +
                 "FileForFilmFormFile," +
                 "FullFilmFormFile," +
                 "FilmCaption," +
@@ -146,16 +145,14 @@ public class FilmsController(
                 "FilmTotalParts," +
                 "FilmPart," +
                 "PosterForFilmFormFile," +
-                "FilmPosterId," +
-                "FilmImageId," +
-                "FilmPoster," +
-                "FilmImage," +
                 "ImageForFilmFormFile"
         )]
-        FilmFileModel filmItem)
+        FilmFileAddDTOModel filmItem)
     {
         if (ModelState.IsValid)
         {
+            FilmFileModel addFilm = new();
+
             #region Добавить файл фильма
 
             #region Проверка расширения выбранного файла
@@ -212,7 +209,7 @@ public class FilmsController(
                         }
                         else
                         {
-                            filmItem.FilmDuration = TimeSpan.Parse(tag.Description);
+                            addFilm.FilmDuration = TimeSpan.Parse(tag.Description);
                         }
                     }
 
@@ -222,7 +219,7 @@ public class FilmsController(
 
                     if (movieDirectory.Name == "QuickTime Track Header" && tag.Name == "Width" && Convert.ToInt32(tag.Description) > 0)
                     {
-                        filmItem.FilmWidth = Convert.ToInt32(tag.Description);
+                        addFilm.FilmWidth = Convert.ToInt32(tag.Description);
                     }
 
                     #endregion
@@ -231,7 +228,7 @@ public class FilmsController(
 
                     if (movieDirectory.Name == "QuickTime Track Header" && tag.Name == "Height" && Convert.ToInt32(tag.Description) > 0)
                     {
-                        filmItem.FilmHeight = Convert.ToInt32(tag.Description);
+                        addFilm.FilmHeight = Convert.ToInt32(tag.Description);
                     }
 
                     #endregion
@@ -248,7 +245,7 @@ public class FilmsController(
                         }
                         else
                         {
-                            filmItem.FilmFileName = tag.Description;
+                            addFilm.FilmFileName = tag.Description;
                         }
                     }
 
@@ -266,7 +263,7 @@ public class FilmsController(
                         }
                         else
                         {
-                            filmItem.FilmFileExtension = tag.Description;
+                            addFilm.FilmFileExtension = tag.Description;
                         }
                     }
 
@@ -284,7 +281,7 @@ public class FilmsController(
                         }
                         else
                         {
-                            filmItem.FilmMimeType = tag.Description;
+                            addFilm.FilmMimeType = tag.Description;
                         }
                     }
 
@@ -302,7 +299,7 @@ public class FilmsController(
                         }
                         else
                         {
-                            filmItem.FilmFileSize = Convert.ToUInt64(tag.Description[..tag.Description.IndexOf(' ')]);
+                            addFilm.FilmFileSize = Convert.ToUInt64(tag.Description[..tag.Description.IndexOf(' ')]);
                         }
                     }
 
@@ -312,14 +309,14 @@ public class FilmsController(
 
             #region Проверка ширины и высоты кадра
 
-            if (filmItem.FilmWidth < 1)
+            if (addFilm.FilmWidth < 1)
             {
                 ModelState.AddModelError("filmItem.FilmWidth", "Ширина кадра равна 0");
 
                 return View(filmItem);
             }
 
-            if (filmItem.FilmHeight < 1)
+            if (addFilm.FilmHeight < 1)
             {
                 ModelState.AddModelError("filmItem.FilmHeight", "Высота кадра равна 0");
 
@@ -349,7 +346,7 @@ public class FilmsController(
                     {
                         var fullFilm = await filmContext.FilmFiles.FirstAsync(film => film.FilmFileName == filmItem.FullFilmFormFile.FileName);
 
-                        filmItem.FullFilmId = fullFilm.FilmFileModelId;
+                        addFilm.FullFilmId = fullFilm.FilmFileModelId;
                     }
                     else
                     {
@@ -378,7 +375,7 @@ public class FilmsController(
             }
             else
             {
-                filmItem.FilmCaption = filmItem.FilmCaption.Trim();
+                addFilm.FilmCaption = filmItem.FilmCaption.Trim();
             }
 
             #endregion
@@ -395,7 +392,7 @@ public class FilmsController(
                 }
                 else
                 {
-                    filmItem.FilmCaptionOriginal = filmItem.FilmCaptionOriginal.Trim();
+                    addFilm.FilmCaptionOriginal = filmItem.FilmCaptionOriginal.Trim();
                 }
             }
 
@@ -403,151 +400,151 @@ public class FilmsController(
 
             #region Краткое содержание, примечания админа
 
-            filmItem.FilmDescriptionForSchemaOrg = filmItem.FilmDescriptionForSchemaOrg.Trim();
+            addFilm.FilmDescriptionForSchemaOrg = filmItem.FilmDescriptionForSchemaOrg.Trim();
 
-            filmItem.FilmDescriptionHtml = filmItem.FilmDescriptionHtml.Trim();
+            addFilm.FilmDescriptionHtml = filmItem.FilmDescriptionHtml.Trim();
 
             if (!string.IsNullOrEmpty(filmItem.FilmNote))
             {
-                filmItem.FilmNote = filmItem.FilmNote.Trim();
+                addFilm.FilmNote = filmItem.FilmNote.Trim();
             }
 
             #endregion
 
             #region Критерии поиска
 
-            filmItem.FilmInMainList = filmItem.FilmInMainList;
+            addFilm.FilmInMainList = filmItem.FilmInMainList;
 
             if (filmItem.SearchFilterForFilm != null)
             {
-                filmItem.SearchFilterForFilm = filmItem.SearchFilterForFilm.Trim();
+                addFilm.SearchFilterForFilm = filmItem.SearchFilterForFilm.Trim();
             }
 
-            filmItem.FilmGenre = filmItem.FilmGenre.Trim();
+            addFilm.FilmGenre = filmItem.FilmGenre.Trim();
 
-            filmItem.FilmAdult = filmItem.FilmAdult;
+            addFilm.FilmAdult = filmItem.FilmAdult;
 
             #endregion
 
             #region Язык и субтитры
 
-            filmItem.FilmInLanguage1 = filmItem.FilmInLanguage1.Trim();
+            addFilm.FilmInLanguage1 = filmItem.FilmInLanguage1.Trim();
 
             if (filmItem.FilmInLanguage2 != null)
             {
-                filmItem.FilmInLanguage2 = filmItem.FilmInLanguage2.Trim();
+                addFilm.FilmInLanguage2 = filmItem.FilmInLanguage2.Trim();
             }
 
             if (filmItem.FilmSubtitles1 != null)
             {
-                filmItem.FilmSubtitles1 = filmItem.FilmSubtitles1.Trim();
+                addFilm.FilmSubtitles1 = filmItem.FilmSubtitles1.Trim();
             }
 
             if (filmItem.FilmSubtitles2 != null)
             {
-                filmItem.FilmSubtitles2 = filmItem.FilmSubtitles2.Trim();
+                addFilm.FilmSubtitles2 = filmItem.FilmSubtitles2.Trim();
             }
 
             #endregion
 
             #region Съёмочная группа
 
-            filmItem.FilmРroductionCompany = filmItem.FilmРroductionCompany.Trim();
+            addFilm.FilmРroductionCompany = filmItem.FilmРroductionCompany.Trim();
 
-            filmItem.FilmDirector1 = filmItem.FilmDirector1.Trim();
+            addFilm.FilmDirector1 = filmItem.FilmDirector1.Trim();
 
             if (filmItem.FilmDirector2 != null)
             {
-                filmItem.FilmDirector2 = filmItem.FilmDirector2.Trim();
+                addFilm.FilmDirector2 = filmItem.FilmDirector2.Trim();
             }
 
             if (filmItem.FilmMusicBy != null)
             {
-                filmItem.FilmMusicBy = filmItem.FilmMusicBy.Trim();
+                addFilm.FilmMusicBy = filmItem.FilmMusicBy.Trim();
             }
 
             if (filmItem.FilmActor01 != null)
             {
-                filmItem.FilmActor01 = filmItem.FilmActor01.Trim();
+                addFilm.FilmActor01 = filmItem.FilmActor01.Trim();
             }
 
             if (filmItem.FilmActor02 != null)
             {
-                filmItem.FilmActor02 = filmItem.FilmActor02.Trim();
+                addFilm.FilmActor02 = filmItem.FilmActor02.Trim();
             }
 
             if (filmItem.FilmActor03 != null)
             {
-                filmItem.FilmActor03 = filmItem.FilmActor03.Trim();
+                addFilm.FilmActor03 = filmItem.FilmActor03.Trim();
             }
 
             if (filmItem.FilmActor04 != null)
             {
-                filmItem.FilmActor04 = filmItem.FilmActor04.Trim();
+                addFilm.FilmActor04 = filmItem.FilmActor04.Trim();
             }
 
             if (filmItem.FilmActor05 != null)
             {
-                filmItem.FilmActor05 = filmItem.FilmActor05.Trim();
+                addFilm.FilmActor05 = filmItem.FilmActor05.Trim();
             }
 
             if (filmItem.FilmActor06 != null)
             {
-                filmItem.FilmActor06 = filmItem.FilmActor06.Trim();
+                addFilm.FilmActor06 = filmItem.FilmActor06.Trim();
             }
 
             if (filmItem.FilmActor07 != null)
             {
-                filmItem.FilmActor07 = filmItem.FilmActor07.Trim();
+                addFilm.FilmActor07 = filmItem.FilmActor07.Trim();
             }
 
             if (filmItem.FilmActor08 != null)
             {
-                filmItem.FilmActor08 = filmItem.FilmActor08.Trim();
+                addFilm.FilmActor08 = filmItem.FilmActor08.Trim();
             }
 
             if (filmItem.FilmActor09 != null)
             {
-                filmItem.FilmActor09 = filmItem.FilmActor09.Trim();
+                addFilm.FilmActor09 = filmItem.FilmActor09.Trim();
             }
 
             if (filmItem.FilmActor10 != null)
             {
-                filmItem.FilmActor10 = filmItem.FilmActor10.Trim();
+                addFilm.FilmActor10 = filmItem.FilmActor10.Trim();
             }
 
             #endregion
 
             #region Ссылки на видеохостинги
 
-            if (!string.IsNullOrEmpty(filmItem.FilmFileName))
+            if (!string.IsNullOrEmpty(addFilm.FilmFileName))
             {
-                filmItem.FilmContentUrl = new Uri("https://sergeyshef.ru/video/" + filmItem.FilmFileName);
+                addFilm.FilmContentUrl = new Uri("https://sergeyshef.ru/video/" + addFilm.FilmFileName);
             }
 
             if (filmItem.FilmYouTube != null)
             {
-                filmItem.FilmYouTube = filmItem.FilmYouTube;
+                addFilm.FilmYouTube = filmItem.FilmYouTube;
             }
 
             if (filmItem.FilmVkVideo != null)
             {
-                filmItem.FilmVkVideo = filmItem.FilmVkVideo;
+                addFilm.FilmVkVideo = filmItem.FilmVkVideo;
             }
 
             if (filmItem.FilmMailRuVideo != null)
             {
-                filmItem.FilmMailRuVideo = filmItem.FilmMailRuVideo;
+                addFilm.FilmMailRuVideo = filmItem.FilmMailRuVideo;
             }
 
             if (filmItem.FilmOkVideo != null)
             {
-                filmItem.FilmOkVideo = filmItem.FilmOkVideo;
+                addFilm.FilmOkVideo = filmItem.FilmOkVideo;
             }
 
             if (filmItem.FilmYandexDiskVideo != null)
             {
-                filmItem.FilmYandexDiskVideo = filmItem.FilmYandexDiskVideo;
+                addFilm.FilmYandexDiskVideo = filmItem.FilmYandexDiskVideo;
             }
 
             #endregion
@@ -556,17 +553,17 @@ public class FilmsController(
 
             if (filmItem.FilmKinoTeatrRu != null)
             {
-                filmItem.FilmKinoTeatrRu = filmItem.FilmKinoTeatrRu;
+                addFilm.FilmKinoTeatrRu = filmItem.FilmKinoTeatrRu;
             }
 
             if (filmItem.FilmKinoPoisk != null)
             {
-                filmItem.FilmKinoPoisk = filmItem.FilmKinoPoisk;
+                addFilm.FilmKinoPoisk = filmItem.FilmKinoPoisk;
             }
 
             if (filmItem.FilmImbd != null)
             {
-                filmItem.FilmImbd = filmItem.FilmMailRuVideo;
+                addFilm.FilmImbd = filmItem.FilmMailRuVideo;
             }
 
             #endregion
@@ -575,12 +572,12 @@ public class FilmsController(
 
             if (filmItem.SeriesSearchFilter != null)
             {
-                filmItem.SeriesSearchFilter = filmItem.SeriesSearchFilter.Trim();
+                addFilm.SeriesSearchFilter = filmItem.SeriesSearchFilter.Trim();
             }
 
-            filmItem.FilmTotalParts = filmItem.SeriesSearchFilter != null && filmItem.FilmTotalParts != null ? filmItem.FilmTotalParts : null;
+            addFilm.FilmTotalParts = filmItem.SeriesSearchFilter != null && filmItem.FilmTotalParts != null ? filmItem.FilmTotalParts : null;
 
-            filmItem.FilmPart = filmItem.SeriesSearchFilter != null && filmItem.FilmTotalParts != null && filmItem.FilmPart != null ? filmItem.FilmPart : null;
+            addFilm.FilmPart = filmItem.SeriesSearchFilter != null && filmItem.FilmTotalParts != null && filmItem.FilmPart != null ? filmItem.FilmPart : null;
 
             #endregion
 
@@ -592,7 +589,7 @@ public class FilmsController(
 
                 if (posterGuid != Guid.Empty)
                 {
-                    filmItem.FilmPosterId = posterGuid;
+                    addFilm.FilmPosterId = posterGuid;
                 }
                 else
                 {
@@ -613,7 +610,7 @@ public class FilmsController(
 
                 if (imageGuid != Guid.Empty)
                 {
-                    filmItem.FilmImageId = imageGuid;
+                    addFilm.FilmImageId = imageGuid;
                 }
                 else
                 {
@@ -631,9 +628,9 @@ public class FilmsController(
 
             #region Сохранить данные
 
-            await filmContext.AddNewFilmAsync(filmItem);
+            await filmContext.AddNewFilmAsync(addFilm);
 
-            var newFilm = await filmContext.FilmFiles.FirstAsync(film => film.FilmCaption == filmItem.FilmCaption);
+            var newFilm = await filmContext.FilmFiles.FirstAsync(film => film.FilmCaption == addFilm.FilmCaption);
 
             return RedirectToAction("DetailsFilm", new { filmId = newFilm.FilmFileModelId, Area = "Admin" });
 
@@ -642,6 +639,31 @@ public class FilmsController(
         else
         {
             return View(filmItem);
+        }
+    }
+
+    #endregion
+
+    #region Изменить информацию о фильме
+
+    [HttpGet]
+    public async Task<IActionResult> EditFilm(Guid? filmId)
+    {
+        if (filmId.HasValue && await filmContext.FilmFiles.Where(film => film.FilmFileModelId == filmId).AnyAsync())
+        {
+            FilmFileModel editFilm = await filmContext.FilmFiles
+                .Include(film => film.FilmImage)
+                .Include(film => film.FilmPoster)
+                .Include(film => film.PageInfoModel)
+                .Include(film => film.FullFilm)
+                .AsNoTracking()
+                .FirstAsync(film => film.FilmFileModelId == filmId);
+
+            return View(editFilm);
+        }
+        else
+        {
+            return RedirectToAction(nameof(Index));
         }
     }
 

@@ -1,63 +1,10 @@
 ﻿// Ignore Spelling: Org Рroduction Imbd Poisk Online Teatr Vk Yandex
 
-using ShevkunenkoSite.Models.ViewModels;
-
 namespace ShevkunenkoSite.Models.DataModels;
 
-public class FilmFileModel
+[NotMapped]
+public record class FilmFileAddDTOModel
 {
-    #region Guid фильма
-
-    [Key]
-    [Display(Name = "Идентификатор фильма :")]
-    [Column("FilmFileId")]
-    public Guid FilmFileModelId { get; set; } = Guid.Empty;
-
-    #endregion
-
-    #region Автозаполнение параметров файла фильма
-
-    [Display(Name = "Продолжительность фильма:")]
-    [DataType(DataType.Duration)]
-    public TimeSpan FilmDuration { get; set; }
-
-    [Display(Name = "Ширина кадра (px):")]
-    [DataType(DataType.Text)]
-    public int FilmWidth { get; set; }
-
-    [Display(Name = "Высота кадра (px):")]
-    [DataType(DataType.Text)]
-    public int FilmHeight { get; set; }
-
-    [Display(Name = "Файл фильма:")]
-    [DisplayFormat(ConvertEmptyStringToNull = false)]
-    [DataType(DataType.Text)]
-    public string FilmFileName { get; set; } = string.Empty;
-
-    [Display(Name = "Расширение файл фильма:")]
-    [DisplayFormat(ConvertEmptyStringToNull = false)]
-    [DataType(DataType.Text)]
-    public string FilmFileExtension { get; set; } = string.Empty;
-
-    [Display(Name = "MIME Type файла фильма:")]
-    [DisplayFormat(ConvertEmptyStringToNull = false)]
-    [DataType(DataType.Text)]
-    public string FilmMimeType { get; set; } = string.Empty;
-
-    [Display(Name = "Размер файла фильма:")]
-    [DataType(DataType.Text)]
-    public ulong FilmFileSize { get; set; }
-
-    #endregion
-
-    #region Полная версия фильма
-
-    [Display(Name = "Полная версия фильма:")]
-    public Guid? FullFilmId { get; set; }
-    public FilmFileModel? FullFilm { get; set; }
-
-    #endregion
-
     #region Название фильма в базе данных
 
     [Required(ErrorMessage = "Введите название фильма")]
@@ -301,37 +248,13 @@ public class FilmFileModel
 
     #endregion
 
-    #region Картинка и постер фильма
-
-    // картинка для карточки фильма
-    [Display(Name = "Картинка к фильму (Guid):")]
-    public Guid FilmImageId { get; set; }
-    public ImageFileModel FilmImage { get; set; } = new();
-
-    // постер для фильм
-    [Display(Name = "Постер к фильму (Guid):")]
-    public Guid? FilmPosterId { get; set; }
-    public ImageFileModel? FilmPoster { get; set; }
-
-    #endregion
-
-    #region One-to-One with PageInfoModel as parent
-
-    public PageInfoModel? PageInfoModel { get; set; }
-
-    #endregion
-
-    #region Свойства NotMapped
-
     #region Выбрать фильм и его полную версию
 
-    [NotMapped]
     [Required(ErrorMessage = "Выберите файл фильма")]
     [DataType(DataType.Upload)]
     [Display(Name = "Фильм:")]
     public IFormFile FileForFilmFormFile { get; set; } = null!;
 
-    [NotMapped]
     [DataType(DataType.Upload)]
     [Display(Name = "Полная версия:")]
     public IFormFile? FullFilmFormFile { get; set; }
@@ -340,43 +263,15 @@ public class FilmFileModel
 
     #region Выбор постера и картинки фильма
 
-    [NotMapped]
     [Required(ErrorMessage = "Выберите постер для фильма")]
     [DataType(DataType.Upload)]
     [Display(Name = "Постер фильма:")]
     public IFormFile? PosterForFilmFormFile { get; set; }
 
-    [NotMapped]
     [Required(ErrorMessage = "Выберите картинку для фильма")]
     [DataType(DataType.Upload)]
     [Display(Name = "Картинка фильма:")]
     public IFormFile? ImageForFilmFormFile { get; set; }
-
-    #endregion
-
-    #region Кадры слева и справа от видео
-
-    [NotMapped]
-    public IEnumerable<ImageFileModel> FramesOnTheLeft { get; set; } = [];
-
-    [NotMapped]
-    public IEnumerable<ImageFileModel> FramesOnTheRight { get; set; } = [];
-
-    #endregion
-
-    #region Текущий видеохостинг
-
-    [NotMapped]
-    public Uri? CurrentVideoHost { get; set; }
-
-    #endregion
-
-    #region Кадры фильма
-
-    [NotMapped]
-    public List<ImageFileModel> ListOfPictures { get; set; } = [];
-
-    #endregion
 
     #endregion
 }

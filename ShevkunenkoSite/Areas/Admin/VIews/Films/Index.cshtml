@@ -163,45 +163,45 @@
                     <td scope="col" class="text-center">
 
                         <a asp-area="Admin"
-                               asp-controller="Films"
-                               asp-action="DetailsFilm"
-                               asp-route-filmId="@film.FilmFileModelId"
-                               class="@btn btn-outline-info"
-                               title="подробно">
+                           asp-controller="Films"
+                           asp-action="DetailsFilm"
+                           asp-route-filmId="@film.FilmFileModelId"
+                           class="@btn btn-outline-info"
+                           title="подробно">
 
                             Info
 
                         </a>
 
                         <a asp-area="Admin"
-                               asp-controller="Films"
-                               asp-action="EditFilm"
-                               asp-route-pageId="@film.FilmFileModelId"
-                               class="@btn btn-outline-dark"
-                               title="редактировать">
+                           asp-controller="Films"
+                           asp-action="EditFilm"
+                           asp-route-filmId="@film.FilmFileModelId"
+                           class="@btn btn-outline-dark"
+                           title="редактировать">
 
                             Edit
 
                         </a>
 
                         <a asp-area="Admin"
-                               asp-controller="Films"
-                               asp-action="DeleteFilm"
-                               asp-route-pageId="@film.FilmFileModelId"
-                               class="@btn btn-outline-danger"
-                               title="удалить">
+                           asp-controller="Films"
+                           asp-action="DeleteFilm"
+                           asp-route-filmId="@film.FilmFileModelId"
+                           class="@btn btn-outline-danger"
+                           title="удалить">
 
                             Del
 
                         </a>
 
                         <a asp-area=""
-                               asp-controller="Films"
-                               asp-action="Film"
-                               asp-route-filmCaption="@film.FilmCaption"
-                               asp-route-videoHosting="ss"
-                               class="@btn btn-outline-primary"
-                               title="смотреть">
+                           asp-controller="Films"
+                           asp-action="Film"
+                           asp-route-filmCaption="@film.FilmCaption"
+                           asp-route-videoHosting="ss"
+                           class="@btn btn-outline-primary"
+                           title="смотреть">
 
                             Go
 
@@ -210,12 +210,12 @@
                         @if (film.PageInfoModel != null)
                         {
                             <a asp-area=""
-                                   asp-controller="Films"
-                                   asp-action="Film"
-                                   asp-route-filmCaption="@film.FilmCaption"
-                                   asp-route-videoHosting="@film.FilmContentUrl"
-                                   class="@btn btn-outline-primary"
-                                   title="смотреть">
+                               asp-controller="Films"
+                               asp-action="Film"
+                               asp-route-filmCaption="@film.FilmCaption"
+                               asp-route-videoHosting="@film.FilmContentUrl"
+                               class="@btn btn-outline-primary"
+                               title="смотреть">
 
                                 Go
 
