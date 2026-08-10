@@ -60,11 +60,29 @@
 <div class="row">
 
     @* кадры слева *@
-    <div class="col-2 mx-auto d-none d-lg-block overflow-y-auto overflow-x-hidden height850">
+    <div class="d-none d-md-block col-md-2 mx-auto overflow-y-auto overflow-x-hidden foto-around">
+
+        @foreach (var item in Model.FramesOnTheLeft)
+        {
+            <a asp-area=""
+               asp-controller="Films"
+               asp-action="FilmPhotoAlbum"
+               asp-route-imageId="@item.ImageFileModelId"
+               asp-route-filmCaption="@Model.FilmCaption"
+               title="@item.ImageAltTitle"
+               class="">
+
+                <vc:view-image image-id="@item.ImageFileModelId"
+                               css-class="my-2 w-100 shadw imageref"
+                               icon-type="webicon200" />
+
+            </a>
+        }
+
     </div>
 
     @* Информация по разделам *@
-    <div class="col-12 col-lg-8 mx-auto px-1">
+    <div class="col-12 col-md-8 mb-3">
 
         @* Изменить, удалить, смотреть, список *@
         <div class="card-footer p-0 my-2">
@@ -73,7 +91,7 @@
             <a asp-area="Admin"
                asp-controller="Films"
                asp-action="EditFilm"
-               asp-route-movieId="@Model.FilmFileModelId"
+               asp-route-filmId="@Model.FilmFileModelId"
                class="btn btn-outline-success py-1 px-0 m-2 shadw width80px"
                title="изменить данные">
 
@@ -85,7 +103,7 @@
             <a asp-area="Admin"
                asp-controller="Films"
                asp-action="DeleteFilm"
-               asp-route-movieId="@Model.FilmFileModelId"
+               asp-route-filmId="@Model.FilmFileModelId"
                class="btn btn-outline-danger py-1 px-0 m-2 shadw width80px"
                title="удалить фильм">
 
@@ -1735,7 +1753,7 @@
             <a asp-area="Admin"
                asp-controller="Films"
                asp-action="EditFilm"
-               asp-route-movieId="@Model.FilmFileModelId"
+               asp-route-filmId="@Model.FilmFileModelId"
                class="btn btn-outline-success py-1 px-0 m-2 shadw width80px"
                title="изменить данные">
 
@@ -1747,7 +1765,7 @@
             <a asp-area="Admin"
                asp-controller="Films"
                asp-action="DeleteFilm"
-               asp-route-movieId="@Model.FilmFileModelId"
+               asp-route-filmId="@Model.FilmFileModelId"
                class="btn btn-outline-danger py-1 px-0 m-2 shadw width80px"
                title="удалить фильм">
 
@@ -1783,7 +1801,25 @@
     </div>
 
     @* кадры справа *@
-    <div class="col-2 mx-auto d-none d-lg-block overflow-y-auto overflow-x-hidden height850">
+    <div class="d-none d-md-block col-md-2 mx-auto overflow-y-auto overflow-x-hidden foto-around">
+
+        @foreach (var item in Model.FramesOnTheRight)
+        {
+            <a asp-area=""
+               asp-controller="Films"
+               asp-action="FilmPhotoAlbum"
+               asp-route-imageId="@item.ImageFileModelId"
+               asp-route-filmCaption="@Model.FilmCaption"
+               title="@item.ImageAltTitle"
+               class="">
+
+                <vc:view-image image-id="@item.ImageFileModelId"
+                               css-class="my-2 w-100 shadw imageref"
+                               icon-type="webicon200" />
+
+            </a>
+        }
+
     </div>
 
 </div>

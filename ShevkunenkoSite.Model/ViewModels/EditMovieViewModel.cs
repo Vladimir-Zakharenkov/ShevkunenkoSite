@@ -57,5 +57,4 @@ public class EditMovieViewModel : DetailsMovieViewModel
     [DataType(DataType.Text)]
     [Display(Name = "Тип картинки для ссылок (3) :")]
     public string ImageTypeForRef3 { get; set; } = string.Empty;
-
 }

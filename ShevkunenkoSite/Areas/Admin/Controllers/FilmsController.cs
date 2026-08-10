@@ -1,5 +1,6 @@
 ﻿//Ignore Spelling: Org
 using Microsoft.IdentityModel.Tokens;
+using static System.Net.WebRequestMethods;
 
 namespace ShevkunenkoSite.Areas.Admin.Controllers;
 
@@ -70,12 +71,59 @@ public class FilmsController(
     {
         if (filmId.HasValue && await filmContext.FilmFiles.Where(film => film.FilmFileModelId == filmId).AnyAsync())
         {
+            #region Инициализация фильма
+
             FilmFileModel filmItem = await filmContext.FilmFiles
                 .Include(img => img.FilmImage)
                 .Include(img => img.FilmPoster)
                 .Include(film => film.FullFilm)
                 .AsNoTracking()
                 .FirstAsync(film => film.FilmFileModelId == filmId);
+
+            #endregion
+
+            #region Кадры слева и справа от фильма
+
+            // Если есть картинки с фильтром == название фильма + #album#
+            if (await imageContext.ImageFiles
+                .Where(img => img.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
+                .AnyAsync())
+            {
+                var listOfPictures = from m in imageContext.ImageFiles
+                   .Where(p => p.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
+                                     select m;
+
+                List<ImageFileModel> framesAroundFilm = [.. listOfPictures.AsEnumerable().Shuffle()];
+
+                filmItem.ListOfPictures = [.. listOfPictures.AsEnumerable()];
+
+                if (framesAroundFilm.Count > 1 && framesAroundFilm.Count < DataConfig.NumberOfPicturesAround * 2)
+                {
+                    filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(framesAroundFilm.Count / 2)];
+
+                    filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(framesAroundFilm.Count / 2)];
+                }
+                else if (framesAroundFilm.Count >= DataConfig.NumberOfPicturesAround * 2)
+                {
+                    filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(DataConfig.NumberOfPicturesAround)];
+
+                    filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(DataConfig.NumberOfPicturesAround).Take(DataConfig.NumberOfPicturesAround)];
+                }
+                else
+                {
+                    filmItem.FramesOnTheLeft = framesAroundFilm;
+
+                    filmItem.FramesOnTheRight = framesAroundFilm;
+                }
+            }
+            else
+            {
+                filmItem.FramesOnTheLeft = [];
+
+                filmItem.FramesOnTheRight = [];
+            }
+
+            #endregion
 
             return View(filmItem);
         }
@@ -665,6 +713,559 @@ public class FilmsController(
         {
             return RedirectToAction(nameof(Index));
         }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [DisableRequestSizeLimit]
+    [RequestSizeLimit(5_268_435_456)]
+    [RequestFormLimits(MultipartBodyLengthLimit = 5268435456)]
+    public async Task<IActionResult?> EditFilm(
+            [Bind(
+                "EditFilmFormFile," +
+                "FullFilmFormFile," +
+                "FullFilmId," +
+                "FullFilm," +
+                "FilmCaption," +
+                "FilmCaptionOriginal," +
+                "FilmDescriptionForSchemaOrg," +
+                "FilmDescriptionHtml," +
+                "FilmNote," +
+                "FilmInMainList," +
+                "SearchFilterForFilm," +
+                "FilmGenre," +
+                "FilmDateCreated," +
+                "FilmDatePublished," +
+                "FilmUploadDate," +
+                "FilmInLanguage1," +
+                "FilmInLanguage2," +
+                "FilmSubtitles1," +
+                "FilmSubtitles2," +
+                "FilmРroductionCompany," +
+                "FilmDirector1," +
+                "FilmDirector2," +
+                "FilmMusicBy," +
+                "FilmActor01," +
+                "FilmActor02," +
+                "FilmActor03," +
+                "FilmActor04," +
+                "FilmActor05," +
+                "FilmActor06," +
+                "FilmActor07," +
+                "FilmActor08," +
+                "FilmActor09," +
+                "FilmActor10," +
+                "FilmYouTube," +
+                "FilmVkVideo," +
+                "FilmMailRuVideo," +
+                "FilmOkVideo," +
+                "FilmYandexDiskVideo," +
+                "FilmKinoTeatrRu," +
+                "FilmKinoPoisk," +
+                "FilmImbd," +
+                "SeriesSearchFilter," +
+                "FilmTotalParts," +
+                "FilmPart," +
+                "PosterForFilmFormFile," +
+                "FilmPosterId," +
+                "FilmImage," +
+                "FilmPoster," +
+                "FilmImageId," +
+                "FilmImage,"        )]
+        FilmFileModel editFilm)
+    {
+        if (ModelState.IsValid)
+        {
+            #region Инициализация filmUpdate
+
+            FilmFileModel filmUpdate = await filmContext.FilmFiles.FirstAsync(film => film.FilmFileModelId == editFilm.FilmFileModelId);
+
+            #endregion
+
+            #region Если выбран новый файл фильма
+
+            if (editFilm.EditFilmFormFile != null)
+            {
+                #region Проверка расширения выбранного файла
+
+                if (!editFilm.EditFilmFormFile.FileName.EndsWith(".mp4"))
+                {
+                    ModelState.AddModelError("EditFilmFormFile", $"Вы выбрали файл {editFilm.EditFilmFormFile.FileName}" + Environment.NewLine + "Формат фильмов на сайте  должен быть «mp4»");
+
+                    return View(filmItem);
+                }
+
+                #endregion
+
+                #region Поиск имени файла в базе данных
+
+                if (await filmContext.FilmFiles.Where(film => film.FilmFileName == editFilm.EditFilmFormFile.FileName).AnyAsync())
+                {
+                    ModelState.AddModelError("EditFilmFormFile", $"Вы выбрали файл «{editFilm.EditFilmFormFile.FileName}»" + Environment.NewLine + "Это файл редактируемого фильма");
+
+                    return View(filmItem);
+                }
+
+                #endregion
+
+                #region Изменить файл фильма
+
+                #region Копируем выбранный файл в папку DataConfig.MovieFoldersPath
+
+                string path = Path.Combine(DataConfig.MovieFoldersPath, editFilm.EditFilmFormFile.FileName);
+
+                if (!System.IO.File.Exists(path))
+                {
+                    using var stream = new FileStream(path, FileMode.Create);
+                    await filmItem.FileForFilmFormFile.CopyToAsync(stream);
+                }
+
+                #endregion
+
+                #region Определение параметров файла
+
+                IReadOnlyList<MetadataExtractor.Directory> filmDirectories = ImageMetadataReader.ReadMetadata(path);
+
+                foreach (var movieDirectory in filmDirectories)
+                {
+                    foreach (var tag in movieDirectory.Tags)
+                    {
+                        #region Продолжительность фильма FilmDuration
+
+                        if (movieDirectory.Name == "QuickTime Movie Header" && tag.Name == "Duration")
+                        {
+                            if (string.IsNullOrEmpty(tag.Description))
+                            {
+                                ModelState.AddModelError("editFilm.FilmDuration", "Продолжительность фильма равна 0");
+
+                                return View(editFilm);
+                            }
+                            else
+                            {
+                                filmUpdate.FilmDuration = TimeSpan.Parse(tag.Description);
+                            }
+                        }
+
+                        #endregion
+
+                        #region Ширина кадра FilmWidth
+
+                        if (movieDirectory.Name == "QuickTime Track Header" && tag.Name == "Width" && Convert.ToInt32(tag.Description) > 0)
+                        {
+                            filmUpdate.FilmWidth = Convert.ToInt32(tag.Description);
+                        }
+
+                        #endregion
+
+                        #region Высота кадра FilmHeight
+
+                        if (movieDirectory.Name == "QuickTime Track Header" && tag.Name == "Height" && Convert.ToInt32(tag.Description) > 0)
+                        {
+                            filmUpdate.FilmHeight = Convert.ToInt32(tag.Description);
+                        }
+
+                        #endregion
+
+                        #region Имя файла
+
+                        if (movieDirectory.Name == "File" && tag.Name == "File Name")
+                        {
+                            if (string.IsNullOrEmpty(tag.Description))
+                            {
+                                ModelState.AddModelError("editFilm.FilmFileName", "Название файла не определено");
+
+                                return View(editFilm);
+                            }
+                            else
+                            {
+                                filmUpdate.FilmFileName = tag.Description;
+                            }
+                        }
+
+                        #endregion
+
+                        #region Расширение файла
+
+                        if (movieDirectory.Name == "File Type" && tag.Name == "Expected File Name Extension")
+                        {
+                            if (string.IsNullOrEmpty(tag.Description))
+                            {
+                                ModelState.AddModelError("editFilm.FilmFileExtension", "Расширение файла не определено");
+
+                                return View(editFilm);
+                            }
+                            else
+                            {
+                                filmUpdate.FilmFileExtension = tag.Description;
+                            }
+                        }
+
+                        #endregion
+
+                        #region Определение MIME Type
+
+                        if (movieDirectory.Name == "File Type" && tag.Name == "Detected MIME Type")
+                        {
+                            if (string.IsNullOrEmpty(tag.Description))
+                            {
+                                ModelState.AddModelError("filmItem.FilmMimeType", "MIME/TYPE файла не определен");
+
+                                return View(editFilm);
+                            }
+                            else
+                            {
+                                editFilm.FilmMimeType = tag.Description;
+                            }
+                        }
+
+                        #endregion
+
+                        #region Размер файла
+
+                        if (movieDirectory.Name == "File" && tag.Name == "File Size")
+                        {
+                            if (string.IsNullOrEmpty(tag.Description))
+                            {
+                                ModelState.AddModelError("filmItem.FilmFileSize", "Размер файла равен 0");
+
+                                return View(editFilm);
+                            }
+                            else
+                            {
+                                filmUpdate.FilmFileSize = Convert.ToUInt64(tag.Description[..tag.Description.IndexOf(' ')]);
+                            }
+                        }
+
+                        #endregion
+                    }
+                }
+
+                #region Проверка ширины и высоты кадра
+
+                if (editFilm.FilmWidth < 1)
+                {
+                    ModelState.AddModelError("editFilm.FilmWidth", "Ширина кадра равна 0");
+
+                    return View(editFilm);
+                }
+
+                if (editFilm.FilmHeight < 1)
+                {
+                    ModelState.AddModelError("editFilm.FilmHeight", "Высота кадра равна 0");
+
+                    return View(editFilm);
+                }
+
+                #endregion
+
+                #endregion
+
+                #endregion
+            }
+
+            #endregion
+
+            #region Ссылка на полную версию фильма
+
+            if (editFilm.FullFilmFormFile != null)
+            {
+                if (filmUpdate.FilmFileName == editFilm.FullFilmFormFile.FileName)
+                {
+                    ModelState.AddModelError("FullFilmFormFile", $"Выбран файл «{editFilm.FullFilmFormFile.FileName}» для полной и неполной версии."); ;
+
+                    return View(editFilm);
+                }
+
+                if (await filmContext.FilmFiles.Where(film => film.FilmFileName == editFilm.FullFilmFormFile.FileName).AnyAsync())
+                {
+                    var fullFilm = await filmContext.FilmFiles.FirstAsync(film => film.FilmFileName == editFilm.FullFilmFormFile.FileName);
+
+                    filmUpdate.FullFilmId = fullFilm.FilmFileModelId;
+                }
+                else
+                {
+                    ModelState.AddModelError("FullFilmFormFile", $"Файл «{editFilm.FullFilmFormFile.FileName}» не найден в базе данных."); ;
+
+                    return View(editFilm);
+                }
+            }
+
+            #endregion
+
+            #region Название фильма в базе данных
+
+            if (filmUpdate.FilmCaption != editFilm.FilmCaption & await filmContext.FilmFiles.Where(film => film.FilmCaption == editFilm.FilmCaption).AnyAsync())
+            {
+                ModelState.AddModelError("editFilm.FilmCaption", $"Фильм с названием «{editFilm.FilmCaption}» уже существует.");
+
+                return View(editFilm);
+            }
+            else
+            {
+                filmUpdate.FilmCaption = editFilm.FilmCaption.Trim();
+            }
+
+            #endregion
+
+            #region Оригинальное название фильма
+
+            if (filmUpdate.FilmCaptionOriginal != editFilm.FilmCaptionOriginal & await filmContext.FilmFiles.Where(film => film.FilmCaptionOriginal == editFilm.FilmCaptionOriginal).AnyAsync())
+            {
+                ModelState.AddModelError("editFilm.FilmCaptionOriginal", $"Фильм с оригинальным названием «{editFilm.FilmCaptionOriginal}» уже существует.");
+
+                return View(editFilm);
+            }
+            else
+            {
+                filmUpdate.FilmCaptionOriginal = editFilm.FilmCaptionOriginal.Trim();
+            }
+
+            #endregion
+
+            #region Краткое содержание, примечания админа
+
+            filmUpdate.FilmDescriptionForSchemaOrg = editFilm.FilmDescriptionForSchemaOrg.Trim();
+
+            filmUpdate.FilmDescriptionHtml = editFilm.FilmDescriptionHtml.Trim();
+
+            if (!string.IsNullOrEmpty(editFilm.FilmNote))
+            {
+                filmUpdate.FilmNote = editFilm.FilmNote.Trim();
+            }
+
+            #endregion
+
+            #region Фильм в основном списке. Критерии поиска. Фильм 18+
+
+            filmUpdate.FilmInMainList = editFilm.FilmInMainList;
+
+            if (editFilm.SearchFilterForFilm != null)
+            {
+                filmUpdate.SearchFilterForFilm = editFilm.SearchFilterForFilm.Trim();
+            }
+
+            filmUpdate.FilmGenre = editFilm.FilmGenre.Trim();
+
+            filmUpdate.FilmAdult = editFilm.FilmAdult;
+
+            #endregion
+
+            #region Язык и субтитры
+
+            filmUpdate.FilmInLanguage1 = editFilm.FilmInLanguage1.Trim();
+
+            if (editFilm.FilmInLanguage2 != null)
+            {
+                filmUpdate.FilmInLanguage2 = editFilm.FilmInLanguage2.Trim();
+            }
+
+            if (editFilm.FilmSubtitles1 != null)
+            {
+                filmUpdate.FilmSubtitles1 = editFilm.FilmSubtitles1.Trim();
+            }
+
+            if (editFilm.FilmSubtitles2 != null)
+            {
+                filmUpdate.FilmSubtitles2 = editFilm.FilmSubtitles2.Trim();
+            }
+
+            #endregion
+
+            #region Съёмочная группа
+
+            filmUpdate.FilmРroductionCompany = editFilm.FilmРroductionCompany.Trim();
+
+            filmUpdate.FilmDirector1 = editFilm.FilmDirector1.Trim();
+
+            if (editFilm.FilmDirector2 != null)
+            {
+                filmUpdate.FilmDirector2 = editFilm.FilmDirector2.Trim();
+            }
+
+            if (editFilm.FilmMusicBy != null)
+            {
+                filmUpdate.FilmMusicBy = editFilm.FilmMusicBy.Trim();
+            }
+
+            if (editFilm.FilmActor01 != null)
+            {
+                filmUpdate.FilmActor01 = editFilm.FilmActor01.Trim();
+            }
+
+            if (editFilm.FilmActor02 != null)
+            {
+                filmUpdate.FilmActor02 = editFilm.FilmActor02.Trim();
+            }
+
+            if (editFilm.FilmActor03 != null)
+            {
+                filmUpdate.FilmActor03 = editFilm.FilmActor03.Trim();
+            }
+
+            if (editFilm.FilmActor04 != null)
+            {
+                filmUpdate.FilmActor04 = editFilm.FilmActor04.Trim();
+            }
+
+            if (editFilm.FilmActor05 != null)
+            {
+                filmUpdate.FilmActor05 = editFilm.FilmActor05.Trim();
+            }
+
+            if (editFilm.FilmActor06 != null)
+            {
+                filmUpdate.FilmActor06 = editFilm.FilmActor06.Trim();
+            }
+
+            if (editFilm.FilmActor07 != null)
+            {
+                filmUpdate.FilmActor07 = editFilm.FilmActor07.Trim();
+            }
+
+            if (editFilm.FilmActor08 != null)
+            {
+                filmUpdate.FilmActor08 = editFilm.FilmActor08.Trim();
+            }
+
+            if (editFilm.FilmActor09 != null)
+            {
+                filmUpdate.FilmActor09 = editFilm.FilmActor09.Trim();
+            }
+
+            if (editFilm.FilmActor10 != null)
+            {
+                filmUpdate.FilmActor10 = editFilm.FilmActor10.Trim();
+            }
+
+            #endregion
+
+            #region Ссылки на видеохостинги
+
+            if (!string.IsNullOrEmpty(filmUpdate.FilmFileName))
+            {
+                filmUpdate.FilmContentUrl = new Uri("https://sergeyshef.ru/video/" + filmUpdate.FilmFileName);
+            }
+
+            if (editFilm.FilmYouTube != null)
+            {
+                filmUpdate.FilmYouTube = editFilm.FilmYouTube;
+            }
+
+            if (editFilm.FilmVkVideo != null)
+            {
+                filmUpdate.FilmVkVideo = editFilm.FilmVkVideo;
+            }
+
+            if (editFilm.FilmMailRuVideo != null)
+            {
+                filmUpdate.FilmMailRuVideo = editFilm.FilmMailRuVideo;
+            }
+
+            if (editFilm.FilmOkVideo != null)
+            {
+                filmUpdate.FilmOkVideo = editFilm.FilmOkVideo;
+            }
+
+            if (editFilm.FilmYandexDiskVideo != null)
+            {
+                filmUpdate.FilmYandexDiskVideo = editFilm.FilmYandexDiskVideo;
+            }
+
+            #endregion
+
+            #region Ссылки на информацию о фильме
+
+            if (editFilm.FilmKinoTeatrRu != null)
+            {
+                filmUpdate.FilmKinoTeatrRu = editFilm.FilmKinoTeatrRu;
+            }
+
+            if (editFilm.FilmKinoPoisk != null)
+            {
+                filmUpdate.FilmKinoPoisk = editFilm.FilmKinoPoisk;
+            }
+
+            if (editFilm.FilmImbd != null)
+            {
+                filmUpdate.FilmImbd = editFilm.FilmMailRuVideo;
+            }
+
+            #endregion
+
+            #region Многосерийный фильм
+
+            if (editFilm.SeriesSearchFilter != null)
+            {
+                filmUpdate.SeriesSearchFilter = editFilm.SeriesSearchFilter.Trim();
+            }
+
+            filmUpdate.FilmTotalParts = editFilm.SeriesSearchFilter != null && editFilm.FilmTotalParts != null ? editFilm.FilmTotalParts : null;
+
+            filmUpdate.FilmPart = editFilm.SeriesSearchFilter != null && editFilm.FilmTotalParts != null && editFilm.FilmPart != null ? editFilm.FilmPart : null;
+
+            #endregion
+
+            #region Постер и картинка фильма
+
+            if (editFilm.PosterForFilmFormFile != null)
+            {
+                var posterGuid = await imageContext.GetImageGuidByFileNameAsync(editFilm.PosterForFilmFormFile.FileName);
+
+                if (posterGuid != Guid.Empty)
+                {
+                    filmUpdate.FilmPosterId = posterGuid;
+                }
+                else
+                {
+                    ModelState.AddModelError("PosterForFilmFormFile", $"Вы выбрали файл «{editFilm.PosterForFilmFormFile.FileName}»" + Environment.NewLine + "Файла с таким именем нет в базе данных");
+
+                    return View(editFilm);
+
+                }
+            }
+            else
+            {
+                filmUpdate.FilmPosterId = editFilm.FilmPosterId;
+            }
+
+            if (editFilm.ImageForFilmFormFile != null)
+            {
+                var imageGuid = await imageContext.GetImageGuidByFileNameAsync(editFilm.ImageForFilmFormFile.FileName);
+
+                if (imageGuid != Guid.Empty)
+                {
+                    filmUpdate.FilmImageId = imageGuid;
+                }
+                else
+                {
+                    ModelState.AddModelError("ImageForFilmFormFile", $"Вы выбрали файл «{editFilm.ImageForFilmFormFile.FileName}»" + Environment.NewLine + "Файла с таким именем нет в базе данных");
+
+                    return View(editFilm);
+                }
+            }
+            else
+            {
+                filmUpdate.FilmImageId = editFilm.FilmImageId;
+            }
+
+            #endregion
+
+            #region Сохранить данные
+
+            await filmContext.SaveChangesInFilmAsync();
+
+            var newFilm = await filmContext.FilmFiles.FirstAsync(film => film.FilmCaption == filmUpdate.FilmCaption);
+
+            return RedirectToAction("DetailsFilm", new { filmId = newFilm.FilmFileModelId, Area = "Admin" });
+
+            #endregion
+
+        }
+        else
+        {
+            return View(editFilm);
+        }
+
     }
 
     #endregion

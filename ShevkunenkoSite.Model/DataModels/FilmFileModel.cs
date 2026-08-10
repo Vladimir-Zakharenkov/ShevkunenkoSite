@@ -315,6 +315,15 @@ public class FilmFileModel
 
     #endregion
 
+    #region Фильм для альбома кадров
+
+    [Display(Name = "Альбом картинок к фильму :")]
+    public Guid? FilmForPictureId { get; set; }
+
+    public FilmFileModel? FilmForPicture { get; set; }
+
+    #endregion
+
     #region One-to-One with PageInfoModel as parent
 
     public PageInfoModel? PageInfoModel { get; set; }
@@ -330,6 +339,11 @@ public class FilmFileModel
     [DataType(DataType.Upload)]
     [Display(Name = "Фильм:")]
     public IFormFile FileForFilmFormFile { get; set; } = null!;
+
+    [NotMapped]
+    [DataType(DataType.Upload)]
+    [Display(Name = "Новый файл фильма:")]
+    public IFormFile? EditFilmFormFile { get; set; }
 
     [NotMapped]
     [DataType(DataType.Upload)]

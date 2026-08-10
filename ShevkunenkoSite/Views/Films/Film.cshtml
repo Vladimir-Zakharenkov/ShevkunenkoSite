@@ -570,12 +570,6 @@
 
         @foreach (var item in Model.FramesOnTheRight)
         {
-            @* Вывод фотографии в отдельное окно *@
-            @* <a href="@item.ImagePath/@(string.IsNullOrEmpty(item.WebImageHDFileName) == false ? item.WebImageHDFileName : item.WebImageFileName)"
-                   class=""
-                   title="@item.ImageAltTitle"
-                   onclick="this.target='_blank'"> *@
-
             <a asp-area=""
                asp-controller="Films"
                asp-action="FilmPhotoAlbum"
