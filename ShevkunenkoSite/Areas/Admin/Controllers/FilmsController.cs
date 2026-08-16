@@ -84,43 +84,96 @@ public class FilmsController(
 
             #region Кадры слева и справа от фильма
 
-            // Если есть картинки с фильтром == название фильма + #album#
-            if (await imageContext.ImageFiles
-                .Where(img => img.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
-                .AnyAsync())
+            // Если задан GUID фильма для кадров
+            if (filmItem.FilmForPictureId != null && await filmContext.FilmFiles.Where(film => film.FilmFileModelId == filmItem.FilmForPictureId).AnyAsync())
             {
-                var listOfPictures = from m in imageContext.ImageFiles
-                   .Where(p => p.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
-                                     select m;
+                #region Инициализация фильма для кадров
 
-                List<ImageFileModel> framesAroundFilm = [.. listOfPictures.AsEnumerable().Shuffle()];
+                filmItem.FilmForPictureAround = await filmContext.FilmFiles
+                    .AsNoTracking()
+                    .FirstAsync(film => film.FilmFileModelId == filmItem.FilmForPictureId);
 
-                filmItem.ListOfPictures = [.. listOfPictures.AsEnumerable()];
+                #endregion
 
-                if (framesAroundFilm.Count > 1 && framesAroundFilm.Count < DataConfig.NumberOfPicturesAround * 2)
+                // Если есть картинки с фильтром == название фильма + #album#
+                if (await imageContext.ImageFiles
+                    .Where(img => img.SearchFilter.Contains(filmItem.FilmForPictureAround.FilmCaption + "#film-album#"))
+                    .AnyAsync())
                 {
-                    filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(framesAroundFilm.Count / 2)];
+                    var listOfPictures = from m in imageContext.ImageFiles
+                       .Where(p => p.SearchFilter.Contains(filmItem.FilmForPictureAround.FilmCaption + "#film-album#"))
+                                         select m;
 
-                    filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(framesAroundFilm.Count / 2)];
-                }
-                else if (framesAroundFilm.Count >= DataConfig.NumberOfPicturesAround * 2)
-                {
-                    filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(DataConfig.NumberOfPicturesAround)];
+                    List<ImageFileModel> framesAroundFilm = [.. listOfPictures.AsEnumerable().Shuffle()];
 
-                    filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(DataConfig.NumberOfPicturesAround).Take(DataConfig.NumberOfPicturesAround)];
+                    filmItem.ListOfPictures = [.. listOfPictures.AsEnumerable()];
+
+                    if (framesAroundFilm.Count > 1 && framesAroundFilm.Count < DataConfig.NumberOfPicturesAround * 2)
+                    {
+                        filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(framesAroundFilm.Count / 2)];
+
+                        filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(framesAroundFilm.Count / 2)];
+                    }
+                    else if (framesAroundFilm.Count >= DataConfig.NumberOfPicturesAround * 2)
+                    {
+                        filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(DataConfig.NumberOfPicturesAround)];
+
+                        filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(DataConfig.NumberOfPicturesAround).Take(DataConfig.NumberOfPicturesAround)];
+                    }
+                    else
+                    {
+                        filmItem.FramesOnTheLeft = framesAroundFilm;
+
+                        filmItem.FramesOnTheRight = framesAroundFilm;
+                    }
                 }
                 else
                 {
-                    filmItem.FramesOnTheLeft = framesAroundFilm;
+                    filmItem.FramesOnTheLeft = [];
 
-                    filmItem.FramesOnTheRight = framesAroundFilm;
+                    filmItem.FramesOnTheRight = [];
                 }
             }
             else
             {
-                filmItem.FramesOnTheLeft = [];
+                // Если есть картинки с фильтром == название фильма + #album#
+                if (await imageContext.ImageFiles
+                    .Where(img => img.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
+                    .AnyAsync())
+                {
+                    var listOfPictures = from m in imageContext.ImageFiles
+                       .Where(p => p.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
+                                         select m;
 
-                filmItem.FramesOnTheRight = [];
+                    List<ImageFileModel> framesAroundFilm = [.. listOfPictures.AsEnumerable().Shuffle()];
+
+                    filmItem.ListOfPictures = [.. listOfPictures.AsEnumerable()];
+
+                    if (framesAroundFilm.Count > 1 && framesAroundFilm.Count < DataConfig.NumberOfPicturesAround * 2)
+                    {
+                        filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(framesAroundFilm.Count / 2)];
+
+                        filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(framesAroundFilm.Count / 2)];
+                    }
+                    else if (framesAroundFilm.Count >= DataConfig.NumberOfPicturesAround * 2)
+                    {
+                        filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(DataConfig.NumberOfPicturesAround)];
+
+                        filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(DataConfig.NumberOfPicturesAround).Take(DataConfig.NumberOfPicturesAround)];
+                    }
+                    else
+                    {
+                        filmItem.FramesOnTheLeft = framesAroundFilm;
+
+                        filmItem.FramesOnTheRight = framesAroundFilm;
+                    }
+                }
+                else
+                {
+                    filmItem.FramesOnTheLeft = [];
+
+                    filmItem.FramesOnTheRight = [];
+                }
             }
 
             #endregion

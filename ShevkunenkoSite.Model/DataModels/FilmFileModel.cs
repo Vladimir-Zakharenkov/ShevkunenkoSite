@@ -320,8 +320,6 @@ public class FilmFileModel
     [Display(Name = "Альбом картинок к фильму :")]
     public Guid? FilmForPictureId { get; set; }
 
-    public FilmFileModel? FilmForPicture { get; set; }
-
     #endregion
 
     #region One-to-One with PageInfoModel as parent
@@ -368,6 +366,20 @@ public class FilmFileModel
 
     #endregion
 
+    #region Название фильма для кадров
+
+    [NotMapped]
+    public FilmFileModel? FilmForPictureAround { get; set; }
+
+    #endregion
+
+    #region Кадры фильма
+
+    [NotMapped]
+    public List<ImageFileModel> ListOfPictures { get; set; } = [];
+
+    #endregion
+
     #region Кадры слева и справа от видео
 
     [NotMapped]
@@ -382,13 +394,6 @@ public class FilmFileModel
 
     [NotMapped]
     public Uri? CurrentVideoHost { get; set; }
-
-    #endregion
-
-    #region Кадры фильма
-
-    [NotMapped]
-    public List<ImageFileModel> ListOfPictures { get; set; } = [];
 
     #endregion
 

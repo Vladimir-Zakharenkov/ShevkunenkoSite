@@ -68,7 +68,7 @@
                asp-controller="Films"
                asp-action="FilmPhotoAlbum"
                asp-route-imageId="@item.ImageFileModelId"
-               asp-route-filmCaption="@Model.FilmCaption"
+               asp-route-filmCaption="@(Model.FilmForPictureAround != null ? Model.FilmForPictureAround.FilmCaption : Model.FilmCaption)"
                title="@item.ImageAltTitle"
                class="">
 
@@ -1809,7 +1809,7 @@
                asp-controller="Films"
                asp-action="FilmPhotoAlbum"
                asp-route-imageId="@item.ImageFileModelId"
-               asp-route-filmCaption="@Model.FilmCaption"
+               asp-route-filmCaption="@(Model.FilmForPictureAround != null ? Model.FilmForPictureAround.FilmCaption : Model.FilmCaption)"
                title="@item.ImageAltTitle"
                class="">
 
