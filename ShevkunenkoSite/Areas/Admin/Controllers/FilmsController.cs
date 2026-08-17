@@ -84,8 +84,16 @@ public class FilmsController(
 
             #region Кадры слева и справа от фильма
 
+            // Картинки с фильтром == название фильма + #film-album#
+            var listOfPictures = from m in imageContext.ImageFiles
+               .Where(p => p.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
+                                 select m;
+
             // Если задан GUID фильма для кадров
-            if (filmItem.FilmForPictureId != null && await filmContext.FilmFiles.Where(film => film.FilmFileModelId == filmItem.FilmForPictureId).AnyAsync())
+            if (filmItem.FilmForPictureId != null
+                && await filmContext.FilmFiles
+                    .Where(film => film.FilmFileModelId == filmItem.FilmForPictureId)
+                    .AnyAsync())
             {
                 #region Инициализация фильма для кадров
 
@@ -95,85 +103,45 @@ public class FilmsController(
 
                 #endregion
 
-                // Если есть картинки с фильтром == название фильма + #album#
+                // Картинки с фильтром == название фильма + #film-album#
                 if (await imageContext.ImageFiles
                     .Where(img => img.SearchFilter.Contains(filmItem.FilmForPictureAround.FilmCaption + "#film-album#"))
                     .AnyAsync())
                 {
-                    var listOfPictures = from m in imageContext.ImageFiles
+                    listOfPictures = from m in imageContext.ImageFiles
                        .Where(p => p.SearchFilter.Contains(filmItem.FilmForPictureAround.FilmCaption + "#film-album#"))
-                                         select m;
+                                     select m;
+                }
+            }
 
-                    List<ImageFileModel> framesAroundFilm = [.. listOfPictures.AsEnumerable().Shuffle()];
+            if (listOfPictures.Any())
+            {
+                List<ImageFileModel> framesAroundFilm = [.. listOfPictures.AsEnumerable().Shuffle()];
 
-                    filmItem.ListOfPictures = [.. listOfPictures.AsEnumerable()];
+                if (framesAroundFilm.Count > 1 && framesAroundFilm.Count < DataConfig.NumberOfPicturesAround * 2)
+                {
+                    filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(framesAroundFilm.Count / 2)];
 
-                    if (framesAroundFilm.Count > 1 && framesAroundFilm.Count < DataConfig.NumberOfPicturesAround * 2)
-                    {
-                        filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(framesAroundFilm.Count / 2)];
+                    filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(framesAroundFilm.Count / 2)];
+                }
+                else if (framesAroundFilm.Count >= DataConfig.NumberOfPicturesAround * 2)
+                {
+                    filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(DataConfig.NumberOfPicturesAround)];
 
-                        filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(framesAroundFilm.Count / 2)];
-                    }
-                    else if (framesAroundFilm.Count >= DataConfig.NumberOfPicturesAround * 2)
-                    {
-                        filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(DataConfig.NumberOfPicturesAround)];
-
-                        filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(DataConfig.NumberOfPicturesAround).Take(DataConfig.NumberOfPicturesAround)];
-                    }
-                    else
-                    {
-                        filmItem.FramesOnTheLeft = framesAroundFilm;
-
-                        filmItem.FramesOnTheRight = framesAroundFilm;
-                    }
+                    filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(DataConfig.NumberOfPicturesAround).Take(DataConfig.NumberOfPicturesAround)];
                 }
                 else
                 {
-                    filmItem.FramesOnTheLeft = [];
+                    filmItem.FramesOnTheLeft = framesAroundFilm;
 
-                    filmItem.FramesOnTheRight = [];
+                    filmItem.FramesOnTheRight = framesAroundFilm;
                 }
             }
             else
             {
-                // Если есть картинки с фильтром == название фильма + #album#
-                if (await imageContext.ImageFiles
-                    .Where(img => img.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
-                    .AnyAsync())
-                {
-                    var listOfPictures = from m in imageContext.ImageFiles
-                       .Where(p => p.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
-                                         select m;
+                filmItem.FramesOnTheLeft = [];
 
-                    List<ImageFileModel> framesAroundFilm = [.. listOfPictures.AsEnumerable().Shuffle()];
-
-                    filmItem.ListOfPictures = [.. listOfPictures.AsEnumerable()];
-
-                    if (framesAroundFilm.Count > 1 && framesAroundFilm.Count < DataConfig.NumberOfPicturesAround * 2)
-                    {
-                        filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(framesAroundFilm.Count / 2)];
-
-                        filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(framesAroundFilm.Count / 2)];
-                    }
-                    else if (framesAroundFilm.Count >= DataConfig.NumberOfPicturesAround * 2)
-                    {
-                        filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(DataConfig.NumberOfPicturesAround)];
-
-                        filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(DataConfig.NumberOfPicturesAround).Take(DataConfig.NumberOfPicturesAround)];
-                    }
-                    else
-                    {
-                        filmItem.FramesOnTheLeft = framesAroundFilm;
-
-                        filmItem.FramesOnTheRight = framesAroundFilm;
-                    }
-                }
-                else
-                {
-                    filmItem.FramesOnTheLeft = [];
-
-                    filmItem.FramesOnTheRight = [];
-                }
+                filmItem.FramesOnTheRight = [];
             }
 
             #endregion

@@ -357,6 +357,43 @@
 
             </div>
 
+            @* Фильм для картинок слева и справа *@
+            <div class="@(Model.FilmForPictureId == null ? "d-none" : "accordion-item mb-3 shadw")">
+
+                @* заголовок группы «фильм для картинок слева и справа» *@
+                <h2 class="accordion-header" id="headingFilmForPicture">
+                    <button class="accordion-button collapsed py-0 stranicy"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#FilmForPicture"
+                            aria-expanded="true"
+                            aria-controls="FilmForPicture">
+
+                        <span class="form-label fs-5">
+                            Фильм для картинок :
+                        </span>
+
+                    </button>
+                </h2>
+
+                <div id="FilmForPicture"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="headingFilmForPicture"
+                     data-bs-parent="#accordionDetailsFilm">
+
+                    <div class="accordion-body accordion-body-nointend  text-center">
+
+                        @if (Model.FilmForPictureAround != null)
+                        {
+                            <partial name="_LinkToFilmPartial" model="@Model.FilmForPictureAround" />
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
             @* Многосерийный фильм *@
             <div class="@(string.IsNullOrEmpty(Model.SeriesSearchFilter) ? "d-none" : "accordion-item mb-3 shadw")">
 
