@@ -52,6 +52,12 @@ public class DataConfig
 
     #endregion
 
+    #region Папка-архив для фильмов
+
+    public static string ArchiveFilmsFolderPath { get; set; } = null!;
+
+    #endregion
+
     #region Картинка YouTube
 
     public static Guid YoutubeImage {  get; set; }
@@ -78,6 +84,7 @@ public class DataConfig
 
     #region Картинка AsusVideo
 
+#pragma warning disable VSSpell001 // Spell Check
     public static Guid AsusVideoImage { get; set; }
 
     #endregion
@@ -103,6 +110,7 @@ public class DataConfig
     #region Картинка IMDB.com
 
     public static Guid ImdbImage { get; set; }
+#pragma warning restore VSSpell001 // Spell Check
 
     #endregion
 

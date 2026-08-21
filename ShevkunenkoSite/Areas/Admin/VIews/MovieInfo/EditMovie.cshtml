@@ -79,6 +79,7 @@
 
                                 @* название файла фильма *@
                                 <div class="accordion-body accordion-body-nointend text-center">
+
                                     @if (Context.Request.Method == "GET")
                                     {
                                         @if (string.IsNullOrEmpty(Model.MovieItem.MovieFileName))
@@ -93,6 +94,7 @@
                                             </p>
                                         }
                                     }
+
                                 </div>
 
                                 @* выбрать файл фильма *@

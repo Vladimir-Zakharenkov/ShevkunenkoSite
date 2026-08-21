@@ -8,35 +8,126 @@
     Изменить данные фильма
 </h1>
 
-<hr class="liniya" />
+<hr class="liniya w-50" />
+
+@* Название фильма *@
+<div>
+
+    <h1 class="fs-5 lh-base">
+
+        <span class="fs-3 text_shadow">
+            @Model.FilmCaption
+        </span>
+
+        <br />
+
+        <span class="fs-6 form-text text-success px-2">
+            название фильма
+        </span>
+
+    </h1>
+
+    @if (!string.IsNullOrEmpty(Model.FilmCaptionOriginal))
+    {
+        <h2 class="fs-5 lh-base">
+
+            <span class="fs-3 text_shadow">
+                @Model.FilmCaptionOriginal
+            </span>
+
+            <br />
+
+            <span class="fs-6 form-text text-success px-2">
+                оригинальное название фильма
+            </span>
+
+        </h2>
+    }
+
+</div>
+
+@* Идентификатор в базе данных *@
+<h2 class="fs-5 lh-base">
+    <span class="text_shadow">
+        @Model.FilmFileModelId
+    </span>
+
+    <br />
+
+    <span class="fs-6 form-text text-success">
+        идентификатор в базе данных (GUID)
+    </span>
+</h2>
+
+<hr class="liniya w-50" />
 
 <div class="row">
 
-    <div class="col d-block mx-auto px-2">
+    @* кадры слева *@
+    <div class="d-none d-md-block col-md-2 mx-auto overflow-y-auto overflow-x-hidden foto-around">
+
+        @foreach (var item in Model.FramesOnTheLeft)
+        {
+            <a asp-area=""
+               asp-controller="Films"
+               asp-action="FilmPhotoAlbum"
+               asp-route-imageId="@item.ImageFileModelId"
+               asp-route-filmCaption="@(Model.FilmForPictureAround != null ? Model.FilmForPictureAround.FilmCaption : Model.FilmCaption)"
+               title="@item.ImageAltTitle"
+               class="">
+
+                <vc:view-image image-id="@item.ImageFileModelId"
+                               css-class="my-2 w-100 shadw imageref"
+                               icon-type="webicon200" />
+
+            </a>
+        }
+
+    </div>
+
+    <div class="col-12 col-md-8 mb-3">
 
         <form asp-area="Admin"
               asp-controller="Films"
-              asp-action="AddFilm"
+              asp-action="EditFilm"
               method="post"
               enctype="multipart/form-data">
+
+            @* Сохранить - Отменить*@
+            <div class="card-footer p-0 my-2">
+
+                <button type="submit"
+                        class="btn btn-outline-primary m-3 text-center shadw"
+                        title="Сохранить">
+
+                    Сохранить
+
+                </button>
+
+                <a asp-area="Admin"
+                   asp-controller="Films"
+                   asp-action="Index"
+                   class="btn btn-outline-danger m-3 shadw"
+                   title="отменить">
+
+                    Отменить
+
+                </a>
+
+            </div>
 
             @* все ошибки ввода данных *@
             @if (Context.Request.Method == "POST")
             {
-                <div asp-validation-summary="All" class="text-danger border border-top-0 border-danger mb-3"></div>
+                <div asp-validation-summary="All" class="text-danger border border-top-0 border-danger m-3"></div>
             }
 
-            @* название фильма *@
-            @if (Context.Request.Method == "GET")
-            {
-                <h2 class="fs-3 mb-2 text_shadow">
+            @* скрытые поля *@
+            <div>
 
-                    <span class="text-black">
-                        @Model.FilmCaption
-                    </span>
+                <input asp-for="FilmFileModelId" type="hidden" />
 
-                </h2>
-            }
+            </div>
 
             @* данные по группам*@
             <div class="accordion" id="accordionAddFilm">
@@ -66,6 +157,52 @@
                          data-bs-parent="#accordionAddFilm">
 
                         <div class="accordion-body accordion-body-nointend text-center">
+
+                            @* адрес файла на сайте *@
+                            <div class="accordion-body accordion-body-nointend text-center fontadaptive">
+
+                                @if (Model.FilmContentUrl != null)
+                                {
+                                    <p class="fs-5 mb-0">
+
+                                        <span class="text_shadow">
+                                            @Model.FilmContentUrl
+                                        </span>
+
+                                        <br />
+
+                                        <a class="btn btn-outline-info py-1 px-2 m-3 text-center shadw"
+                                           href="@Model.FilmContentUrl"
+                                           onclick="this.target='_blank'"
+                                           title="sergeyshef.ru"
+                                           itemprop="relatedLink">
+
+                                            Смотреть
+
+                                        </a>
+
+                                        <br />
+
+                                        <span class="fs-6 form-text text-success px-2">
+                                            адрес файла на сайте
+                                        </span>
+
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="fs-5 mb-0">
+
+                                        <span class="text_shadow">
+                                            файл фильма отсутствует
+                                        </span>
+
+                                    </p>
+                                }
+
+                                <hr class="w-50 mx-auto" />
+
+                            </div>
 
                             @* выбрать файл фильма и полную версию фильма *@
                             <div class="row g-2 justify-content-center">
@@ -98,7 +235,9 @@
 
                                 @if (Context.Request.Method == "POST")
                                 {
-                                    <span class="text-danger preline">@Html.ValidationMessageFor(model => model.FileForFilmFormFile)</span>
+                                    <span class="text-danger preline">
+                                        @Html.ValidationMessageFor(model => model.FileForFilmFormFile)
+                                    </span>
                                 }
 
                                 <hr class="w-50 mx-auto" />
@@ -109,14 +248,18 @@
                             <div class="row g-2 justify-content-center">
 
                                 <div class="col-auto">
+
                                     <label asp-for="FullFilmFormFile" for="FullFilmFormFileInput" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-auto text-start">
+
                                     <input asp-for="FullFilmFormFile"
                                            id="FullFilmFormFile"
                                            class="form-control"
                                            aria-describedby="FullFilmFormFileInputHelpBlock" />
+
                                 </div>
 
                                 <div id="FullFilmFormFileInputHelpBlock" class="form-text">
@@ -1694,20 +1837,20 @@
             </div>
 
             @* Сохранить - Отменить*@
-            <div class="card-footer p-0 pb-2 mt-4 mx-auto maxwidth700px">
+            <div class="card-footer p-0 my-2">
 
                 <button type="submit"
-                        class="btn btn-outline-success m-2 me-3 text-center shadw"
+                        class="btn btn-outline-primary m-3 text-center shadw"
                         title="Сохранить">
 
                     Сохранить
 
                 </button>
 
-                <a class="btn btn-outline-danger m-2 shadw"
-                   asp-area="Admin"
-                   asp-controller="MovieInfo"
+                <a asp-area="Admin"
+                   asp-controller="Films"
                    asp-action="Index"
+                   class="btn btn-outline-danger m-3 shadw"
                    title="отменить">
 
                     Отменить
@@ -1717,6 +1860,28 @@
             </div>
 
         </form>
+
+    </div>
+
+    @* кадры справа *@
+    <div class="d-none d-md-block col-md-2 mx-auto overflow-y-auto overflow-x-hidden foto-around">
+
+        @foreach (var item in Model.FramesOnTheRight)
+        {
+            <a asp-area=""
+               asp-controller="Films"
+               asp-action="FilmPhotoAlbum"
+               asp-route-imageId="@item.ImageFileModelId"
+               asp-route-filmCaption="@(Model.FilmForPictureAround != null ? Model.FilmForPictureAround.FilmCaption : Model.FilmCaption)"
+               title="@item.ImageAltTitle"
+               class="">
+
+                <vc:view-image image-id="@item.ImageFileModelId"
+                               css-class="my-2 w-100 shadw imageref"
+                               icon-type="webicon200" />
+
+            </a>
+        }
 
     </div>
 

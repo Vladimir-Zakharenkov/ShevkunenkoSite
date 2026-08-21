@@ -1,6 +1,5 @@
 ﻿//Ignore Spelling: Org
 using Microsoft.IdentityModel.Tokens;
-using static System.Net.WebRequestMethods;
 
 namespace ShevkunenkoSite.Areas.Admin.Controllers;
 
@@ -220,181 +219,192 @@ public class FilmsController(
     {
         if (ModelState.IsValid)
         {
+            #region Инициализация addFilm
+
             FilmFileModel addFilm = new();
 
-            #region Добавить файл фильма
-
-            #region Проверка расширения выбранного файла
-
-            if (!filmItem.FileForFilmFormFile.FileName.EndsWith(".mp4"))
-            {
-                ModelState.AddModelError("FileForFilmFormFile", $"Вы выбрали файл {filmItem.FileForFilmFormFile.FileName}" + Environment.NewLine + "Формат фильмов на сайте  должен быть «mp4»");
-
-                return View(filmItem);
-            }
-
             #endregion
 
-            #region Поиск имени файла в базе данных
+            #region Проверка выбран ли файл фильма
 
-            if (await filmContext.FilmFiles.Where(film => film.FilmFileName == filmItem.FileForFilmFormFile.FileName).AnyAsync())
+            if (filmItem.FileForFilmFormFile == null)
             {
-                ModelState.AddModelError("FileForFilmFormFile", $"Вы выбрали файл «{filmItem.FileForFilmFormFile.FileName}»" + Environment.NewLine + "Файл с таким именем уже есть в базе данных");
-
-                return View(filmItem);
+                ModelState.AddModelError("FileForFilmFormFile", "Выберите файл фильма");
             }
-
-            #endregion
-
-            #region Копируем выбранный файл в папку DataConfig.MovieFoldersPath
-
-            string path = Path.Combine(DataConfig.MovieFoldersPath, filmItem.FileForFilmFormFile.FileName);
-
-            if (!System.IO.File.Exists(path))
+            else
             {
-                using var stream = new FileStream(path, FileMode.Create);
-                await filmItem.FileForFilmFormFile.CopyToAsync(stream);
-            }
+                #region Проверка расширения выбранного файла
 
-            #endregion
-
-            #region Определение параметров файла
-
-            IReadOnlyList<MetadataExtractor.Directory> filmDirectories = ImageMetadataReader.ReadMetadata(path);
-
-            foreach (var movieDirectory in filmDirectories)
-            {
-                foreach (var tag in movieDirectory.Tags)
+                if (!filmItem.FileForFilmFormFile.FileName.EndsWith(".mp4"))
                 {
-                    #region Продолжительность фильма FilmDuration
+                    ModelState.AddModelError("FileForFilmFormFile", $"Вы выбрали файл {filmItem.FileForFilmFormFile.FileName}" + Environment.NewLine + "Формат фильмов на сайте должен быть «mp4»");
 
-                    if (movieDirectory.Name == "QuickTime Movie Header" && tag.Name == "Duration")
-                    {
-                        if (string.IsNullOrEmpty(tag.Description))
-                        {
-                            ModelState.AddModelError("filmItem.FilmDuration", "Продолжительность фильма равна 0");
-
-                            return View(filmItem);
-                        }
-                        else
-                        {
-                            addFilm.FilmDuration = TimeSpan.Parse(tag.Description);
-                        }
-                    }
-
-                    #endregion
-
-                    #region Ширина кадра FilmWidth
-
-                    if (movieDirectory.Name == "QuickTime Track Header" && tag.Name == "Width" && Convert.ToInt32(tag.Description) > 0)
-                    {
-                        addFilm.FilmWidth = Convert.ToInt32(tag.Description);
-                    }
-
-                    #endregion
-
-                    #region Высота кадра FilmHeight
-
-                    if (movieDirectory.Name == "QuickTime Track Header" && tag.Name == "Height" && Convert.ToInt32(tag.Description) > 0)
-                    {
-                        addFilm.FilmHeight = Convert.ToInt32(tag.Description);
-                    }
-
-                    #endregion
-
-                    #region Имя файла
-
-                    if (movieDirectory.Name == "File" && tag.Name == "File Name")
-                    {
-                        if (string.IsNullOrEmpty(tag.Description))
-                        {
-                            ModelState.AddModelError("filmItem.FilmFileName", "Название файла не определено");
-
-                            return View(filmItem);
-                        }
-                        else
-                        {
-                            addFilm.FilmFileName = tag.Description;
-                        }
-                    }
-
-                    #endregion
-
-                    #region Расширение файла
-
-                    if (movieDirectory.Name == "File Type" && tag.Name == "Expected File Name Extension")
-                    {
-                        if (string.IsNullOrEmpty(tag.Description))
-                        {
-                            ModelState.AddModelError("filmItem.FilmFileExtension", "Расширение файла не определено");
-
-                            return View(filmItem);
-                        }
-                        else
-                        {
-                            addFilm.FilmFileExtension = tag.Description;
-                        }
-                    }
-
-                    #endregion
-
-                    #region Определение MIME Type
-
-                    if (movieDirectory.Name == "File Type" && tag.Name == "Detected MIME Type")
-                    {
-                        if (string.IsNullOrEmpty(tag.Description))
-                        {
-                            ModelState.AddModelError("filmItem.FilmMimeType", "MIME/TYPE файла не определен");
-
-                            return View(filmItem);
-                        }
-                        else
-                        {
-                            addFilm.FilmMimeType = tag.Description;
-                        }
-                    }
-
-                    #endregion
-
-                    #region Размер файла
-
-                    if (movieDirectory.Name == "File" && tag.Name == "File Size")
-                    {
-                        if (string.IsNullOrEmpty(tag.Description))
-                        {
-                            ModelState.AddModelError("filmItem.FilmFileSize", "Размер файла равен 0");
-
-                            return View(filmItem);
-                        }
-                        else
-                        {
-                            addFilm.FilmFileSize = Convert.ToUInt64(tag.Description[..tag.Description.IndexOf(' ')]);
-                        }
-                    }
-
-                    #endregion
+                    return View(filmItem);
                 }
+
+                #endregion
+
+                #region Поиск имени файла в базе данных
+
+                if (await filmContext.FilmFiles.Where(film => film.FilmFileName == filmItem.FileForFilmFormFile.FileName).AnyAsync())
+                {
+                    ModelState.AddModelError("FileForFilmFormFile", $"Вы выбрали файл «{filmItem.FileForFilmFormFile.FileName}»" + Environment.NewLine + "Файл с таким именем уже есть в базе данных");
+
+                    return View(filmItem);
+                }
+
+                #endregion
+
+                #region Копируем выбранный файл в папку DataConfig.MovieFoldersPath
+
+                string path = Path.Combine(DataConfig.MovieFoldersPath, filmItem.FileForFilmFormFile.FileName);
+
+                if (!System.IO.File.Exists(path))
+                {
+                    using var stream = new FileStream(path, FileMode.Create);
+                    await filmItem.FileForFilmFormFile.CopyToAsync(stream);
+                }
+
+                #endregion
+
+                #region Определение параметров файла
+
+                IReadOnlyList<MetadataExtractor.Directory> filmDirectories = ImageMetadataReader.ReadMetadata(path);
+
+                foreach (var movieDirectory in filmDirectories)
+                {
+                    foreach (var tag in movieDirectory.Tags)
+                    {
+                        #region Продолжительность фильма FilmDuration
+
+                        if (movieDirectory.Name == "QuickTime Movie Header" && tag.Name == "Duration")
+                        {
+                            if (string.IsNullOrEmpty(tag.Description))
+                            {
+                                ModelState.AddModelError("filmItem.FilmDuration", "Продолжительность фильма равна 0");
+
+                                return View(filmItem);
+                            }
+                            else
+                            {
+                                addFilm.FilmDuration = TimeSpan.Parse(tag.Description);
+                            }
+                        }
+
+                        #endregion
+
+                        #region Ширина кадра FilmWidth
+
+                        if (movieDirectory.Name == "QuickTime Track Header" && tag.Name == "Width" && Convert.ToInt32(tag.Description) > 0)
+                        {
+                            addFilm.FilmWidth = Convert.ToInt32(tag.Description);
+                        }
+
+                        #endregion
+
+                        #region Высота кадра FilmHeight
+
+                        if (movieDirectory.Name == "QuickTime Track Header" && tag.Name == "Height" && Convert.ToInt32(tag.Description) > 0)
+                        {
+                            addFilm.FilmHeight = Convert.ToInt32(tag.Description);
+                        }
+
+                        #endregion
+
+                        #region Имя файла
+
+                        if (movieDirectory.Name == "File" && tag.Name == "File Name")
+                        {
+                            if (string.IsNullOrEmpty(tag.Description))
+                            {
+                                ModelState.AddModelError("filmItem.FilmFileName", "Название файла не определено");
+
+                                return View(filmItem);
+                            }
+                            else
+                            {
+                                addFilm.FilmFileName = tag.Description;
+                            }
+                        }
+
+                        #endregion
+
+                        #region Расширение файла
+
+                        if (movieDirectory.Name == "File Type" && tag.Name == "Expected File Name Extension")
+                        {
+                            if (string.IsNullOrEmpty(tag.Description))
+                            {
+                                ModelState.AddModelError("filmItem.FilmFileExtension", "Расширение файла не определено");
+
+                                return View(filmItem);
+                            }
+                            else
+                            {
+                                addFilm.FilmFileExtension = tag.Description;
+                            }
+                        }
+
+                        #endregion
+
+                        #region Определение MIME Type
+
+                        if (movieDirectory.Name == "File Type" && tag.Name == "Detected MIME Type")
+                        {
+                            if (string.IsNullOrEmpty(tag.Description))
+                            {
+                                ModelState.AddModelError("filmItem.FilmMimeType", "MIME/TYPE файла не определен");
+
+                                return View(filmItem);
+                            }
+                            else
+                            {
+                                addFilm.FilmMimeType = tag.Description;
+                            }
+                        }
+
+                        #endregion
+
+                        #region Размер файла
+
+                        if (movieDirectory.Name == "File" && tag.Name == "File Size")
+                        {
+                            if (string.IsNullOrEmpty(tag.Description))
+                            {
+                                ModelState.AddModelError("filmItem.FilmFileSize", "Размер файла равен 0");
+
+                                return View(filmItem);
+                            }
+                            else
+                            {
+                                addFilm.FilmFileSize = Convert.ToUInt64(tag.Description[..tag.Description.IndexOf(' ')]);
+                            }
+                        }
+
+                        #endregion
+                    }
+                }
+
+                #region Проверка ширины и высоты кадра
+
+                if (addFilm.FilmWidth < 1)
+                {
+                    ModelState.AddModelError("filmItem.FilmWidth", "Ширина кадра равна 0");
+
+                    return View(filmItem);
+                }
+
+                if (addFilm.FilmHeight < 1)
+                {
+                    ModelState.AddModelError("filmItem.FilmHeight", "Высота кадра равна 0");
+
+                    return View(filmItem);
+                }
+
+                #endregion
+
+                #endregion
             }
-
-            #region Проверка ширины и высоты кадра
-
-            if (addFilm.FilmWidth < 1)
-            {
-                ModelState.AddModelError("filmItem.FilmWidth", "Ширина кадра равна 0");
-
-                return View(filmItem);
-            }
-
-            if (addFilm.FilmHeight < 1)
-            {
-                ModelState.AddModelError("filmItem.FilmHeight", "Высота кадра равна 0");
-
-                return View(filmItem);
-            }
-
-            #endregion
-
-            #endregion
 
             #endregion
 
@@ -720,6 +730,8 @@ public class FilmsController(
     {
         if (filmId.HasValue && await filmContext.FilmFiles.Where(film => film.FilmFileModelId == filmId).AnyAsync())
         {
+            #region Инициализация editFilm
+
             FilmFileModel editFilm = await filmContext.FilmFiles
                 .Include(film => film.FilmImage)
                 .Include(film => film.FilmPoster)
@@ -727,6 +739,72 @@ public class FilmsController(
                 .Include(film => film.FullFilm)
                 .AsNoTracking()
                 .FirstAsync(film => film.FilmFileModelId == filmId);
+
+            #endregion
+
+            #region Кадры слева и справа от фильма
+
+            // Картинки с фильтром == название фильма + #film-album#
+            var listOfPictures = from m in imageContext.ImageFiles
+               .Where(p => p.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
+                                 select m;
+
+            // Если задан GUID фильма для кадров
+            if (editFilm.FilmForPictureId != null
+                && await filmContext.FilmFiles
+                    .Where(film => film.FilmFileModelId == editFilm.FilmForPictureId)
+                    .AnyAsync())
+            {
+                #region Инициализация фильма для кадров
+
+                editFilm.FilmForPictureAround = await filmContext.FilmFiles
+                    .AsNoTracking()
+                    .FirstAsync(film => film.FilmFileModelId == editFilm.FilmForPictureId);
+
+                #endregion
+
+                // Картинки с фильтром == название фильма + #film-album#
+                if (await imageContext.ImageFiles
+                    .Where(img => img.SearchFilter.Contains(editFilm.FilmForPictureAround.FilmCaption + "#film-album#"))
+                    .AnyAsync())
+                {
+                    listOfPictures = from m in imageContext.ImageFiles
+                       .Where(p => p.SearchFilter.Contains(editFilm.FilmForPictureAround.FilmCaption + "#film-album#"))
+                                     select m;
+                }
+            }
+
+            if (listOfPictures.Any())
+            {
+                List<ImageFileModel> framesAroundFilm = [.. listOfPictures.AsEnumerable().Shuffle()];
+
+                if (framesAroundFilm.Count > 1 && framesAroundFilm.Count < DataConfig.NumberOfPicturesAround * 2)
+                {
+                    editFilm.FramesOnTheLeft = [.. framesAroundFilm.Take(framesAroundFilm.Count / 2)];
+
+                    editFilm.FramesOnTheRight = [.. framesAroundFilm.Skip(framesAroundFilm.Count / 2)];
+                }
+                else if (framesAroundFilm.Count >= DataConfig.NumberOfPicturesAround * 2)
+                {
+                    editFilm.FramesOnTheLeft = [.. framesAroundFilm.Take(DataConfig.NumberOfPicturesAround)];
+
+                    editFilm.FramesOnTheRight = [.. framesAroundFilm.Skip(DataConfig.NumberOfPicturesAround).Take(DataConfig.NumberOfPicturesAround)];
+                }
+                else
+                {
+                    editFilm.FramesOnTheLeft = framesAroundFilm;
+
+                    editFilm.FramesOnTheRight = framesAroundFilm;
+                }
+            }
+            else
+            {
+                editFilm.FramesOnTheLeft = [];
+
+                editFilm.FramesOnTheRight = [];
+            }
+
+            #endregion
 
             return View(editFilm);
         }
@@ -743,7 +821,8 @@ public class FilmsController(
     [RequestFormLimits(MultipartBodyLengthLimit = 5268435456)]
     public async Task<IActionResult?> EditFilm(
             [Bind(
-                "EditFilmFormFile," +
+                "FileForFilmFormFile," +
+                "FilmFileModelId," +
                 "FullFilmFormFile," +
                 "FullFilmId," +
                 "FullFilm," +
@@ -789,10 +868,10 @@ public class FilmsController(
                 "FilmPart," +
                 "PosterForFilmFormFile," +
                 "FilmPosterId," +
-                "FilmImage," +
                 "FilmPoster," +
                 "FilmImageId," +
-                "FilmImage,"        )]
+                "FilmImage"
+        )]
         FilmFileModel editFilm)
     {
         if (ModelState.IsValid)
@@ -805,181 +884,211 @@ public class FilmsController(
 
             #region Если выбран новый файл фильма
 
-            if (editFilm.EditFilmFormFile != null)
+            if (editFilm.FileForFilmFormFile != null)
             {
                 #region Проверка расширения выбранного файла
 
-                if (!editFilm.EditFilmFormFile.FileName.EndsWith(".mp4"))
+                if (!editFilm.FileForFilmFormFile.FileName.EndsWith(".mp4"))
                 {
-                    ModelState.AddModelError("EditFilmFormFile", $"Вы выбрали файл {editFilm.EditFilmFormFile.FileName}" + Environment.NewLine + "Формат фильмов на сайте  должен быть «mp4»");
+                    ModelState.AddModelError("FileForFilmFormFile", $"Вы выбрали файл «{editFilm.FileForFilmFormFile.FileName}»" + Environment.NewLine + "Формат фильмов на сайте должен быть «.mp4»");
 
-                    return View(filmItem);
+                    return View(editFilm);
                 }
 
                 #endregion
 
                 #region Поиск имени файла в базе данных
 
-                if (await filmContext.FilmFiles.Where(film => film.FilmFileName == editFilm.EditFilmFormFile.FileName).AnyAsync())
+                if (await filmContext.FilmFiles.Where(film => film.FilmFileName == editFilm.FileForFilmFormFile.FileName).AnyAsync())
                 {
-                    ModelState.AddModelError("EditFilmFormFile", $"Вы выбрали файл «{editFilm.EditFilmFormFile.FileName}»" + Environment.NewLine + "Это файл редактируемого фильма");
+                    if (filmUpdate.FilmFileName == editFilm.FileForFilmFormFile.FileName)
+                    {
+                        ModelState.AddModelError("FileForFilmFormFile", $"Вы выбрали файл «{editFilm.FileForFilmFormFile.FileName}»." + Environment.NewLine + "Это файл редактируемого фильма.");
 
-                    return View(filmItem);
+                        return View(editFilm);
+                    }
+                    else
+                    {
+                        var filmInDB = await filmContext.FilmFiles.FirstAsync(film => film.FilmFileName == editFilm.FileForFilmFormFile.FileName);
+
+                        ModelState.AddModelError("FileForFilmFormFile", $"Вы выбрали файл «{editFilm.FileForFilmFormFile.FileName}»." + Environment.NewLine + $"Это файл фильма «{filmInDB.FilmCaption}».");
+
+                        return View(editFilm);
+                    }
                 }
 
                 #endregion
 
                 #region Изменить файл фильма
 
-                #region Копируем выбранный файл в папку DataConfig.MovieFoldersPath
-
-                string path = Path.Combine(DataConfig.MovieFoldersPath, editFilm.EditFilmFormFile.FileName);
-
-                if (!System.IO.File.Exists(path))
+                else
                 {
-                    using var stream = new FileStream(path, FileMode.Create);
-                    await filmItem.FileForFilmFormFile.CopyToAsync(stream);
-                }
+                    #region Копируем выбранный файл в папку DataConfig.MovieFoldersPath
 
-                #endregion
+                    string path = Path.Combine(DataConfig.MovieFoldersPath, editFilm.FileForFilmFormFile.FileName);
 
-                #region Определение параметров файла
-
-                IReadOnlyList<MetadataExtractor.Directory> filmDirectories = ImageMetadataReader.ReadMetadata(path);
-
-                foreach (var movieDirectory in filmDirectories)
-                {
-                    foreach (var tag in movieDirectory.Tags)
+                    if (!System.IO.File.Exists(path))
                     {
-                        #region Продолжительность фильма FilmDuration
+                        using var stream = new FileStream(path, FileMode.Create);
 
-                        if (movieDirectory.Name == "QuickTime Movie Header" && tag.Name == "Duration")
-                        {
-                            if (string.IsNullOrEmpty(tag.Description))
-                            {
-                                ModelState.AddModelError("editFilm.FilmDuration", "Продолжительность фильма равна 0");
-
-                                return View(editFilm);
-                            }
-                            else
-                            {
-                                filmUpdate.FilmDuration = TimeSpan.Parse(tag.Description);
-                            }
-                        }
-
-                        #endregion
-
-                        #region Ширина кадра FilmWidth
-
-                        if (movieDirectory.Name == "QuickTime Track Header" && tag.Name == "Width" && Convert.ToInt32(tag.Description) > 0)
-                        {
-                            filmUpdate.FilmWidth = Convert.ToInt32(tag.Description);
-                        }
-
-                        #endregion
-
-                        #region Высота кадра FilmHeight
-
-                        if (movieDirectory.Name == "QuickTime Track Header" && tag.Name == "Height" && Convert.ToInt32(tag.Description) > 0)
-                        {
-                            filmUpdate.FilmHeight = Convert.ToInt32(tag.Description);
-                        }
-
-                        #endregion
-
-                        #region Имя файла
-
-                        if (movieDirectory.Name == "File" && tag.Name == "File Name")
-                        {
-                            if (string.IsNullOrEmpty(tag.Description))
-                            {
-                                ModelState.AddModelError("editFilm.FilmFileName", "Название файла не определено");
-
-                                return View(editFilm);
-                            }
-                            else
-                            {
-                                filmUpdate.FilmFileName = tag.Description;
-                            }
-                        }
-
-                        #endregion
-
-                        #region Расширение файла
-
-                        if (movieDirectory.Name == "File Type" && tag.Name == "Expected File Name Extension")
-                        {
-                            if (string.IsNullOrEmpty(tag.Description))
-                            {
-                                ModelState.AddModelError("editFilm.FilmFileExtension", "Расширение файла не определено");
-
-                                return View(editFilm);
-                            }
-                            else
-                            {
-                                filmUpdate.FilmFileExtension = tag.Description;
-                            }
-                        }
-
-                        #endregion
-
-                        #region Определение MIME Type
-
-                        if (movieDirectory.Name == "File Type" && tag.Name == "Detected MIME Type")
-                        {
-                            if (string.IsNullOrEmpty(tag.Description))
-                            {
-                                ModelState.AddModelError("filmItem.FilmMimeType", "MIME/TYPE файла не определен");
-
-                                return View(editFilm);
-                            }
-                            else
-                            {
-                                editFilm.FilmMimeType = tag.Description;
-                            }
-                        }
-
-                        #endregion
-
-                        #region Размер файла
-
-                        if (movieDirectory.Name == "File" && tag.Name == "File Size")
-                        {
-                            if (string.IsNullOrEmpty(tag.Description))
-                            {
-                                ModelState.AddModelError("filmItem.FilmFileSize", "Размер файла равен 0");
-
-                                return View(editFilm);
-                            }
-                            else
-                            {
-                                filmUpdate.FilmFileSize = Convert.ToUInt64(tag.Description[..tag.Description.IndexOf(' ')]);
-                            }
-                        }
-
-                        #endregion
+                        await editFilm.FileForFilmFormFile.CopyToAsync(stream);
                     }
+
+                    #endregion
+
+                    #region Перемещаем старый файл в папку DataConfig.ArchiveFilmsFolderPath
+
+                    string oldFilePath = Path.Combine(DataConfig.MovieFoldersPath, filmUpdate.FilmFileName);
+                    string newFilePath = rootPath + Path.Combine(DataConfig.ArchiveFilmsFolderPath, Path.GetFileName(oldFilePath));
+
+                    using (FileStream sourceStream = System.IO.File.OpenRead(oldFilePath))
+                    using (FileStream destStream = System.IO.File.Create(newFilePath))
+                    {
+                        await sourceStream.CopyToAsync(destStream);
+                    }
+
+                    System.IO.File.Delete(oldFilePath);
+
+                    #endregion
+
+                    #region Определение параметров файла
+
+                    IReadOnlyList<MetadataExtractor.Directory> filmDirectories = ImageMetadataReader.ReadMetadata(path);
+
+                    foreach (var movieDirectory in filmDirectories)
+                    {
+                        foreach (var tag in movieDirectory.Tags)
+                        {
+                            #region Продолжительность фильма FilmDuration
+
+                            if (movieDirectory.Name == "QuickTime Movie Header" && tag.Name == "Duration")
+                            {
+                                if (string.IsNullOrEmpty(tag.Description))
+                                {
+                                    ModelState.AddModelError("editFilm.FilmDuration", "Продолжительность фильма равна 0");
+
+                                    return View(editFilm);
+                                }
+                                else
+                                {
+                                    filmUpdate.FilmDuration = TimeSpan.Parse(tag.Description);
+                                }
+                            }
+
+                            #endregion
+
+                            #region Ширина кадра FilmWidth
+
+                            if (movieDirectory.Name == "QuickTime Track Header" && tag.Name == "Width" && Convert.ToInt32(tag.Description) > 0)
+                            {
+                                filmUpdate.FilmWidth = Convert.ToInt32(tag.Description);
+                            }
+
+                            #endregion
+
+                            #region Высота кадра FilmHeight
+
+                            if (movieDirectory.Name == "QuickTime Track Header" && tag.Name == "Height" && Convert.ToInt32(tag.Description) > 0)
+                            {
+                                filmUpdate.FilmHeight = Convert.ToInt32(tag.Description);
+                            }
+
+                            #endregion
+
+                            #region Имя файла
+
+                            if (movieDirectory.Name == "File" && tag.Name == "File Name")
+                            {
+                                if (string.IsNullOrEmpty(tag.Description))
+                                {
+                                    ModelState.AddModelError("editFilm.FilmFileName", "Название файла не определено");
+
+                                    return View(editFilm);
+                                }
+                                else
+                                {
+                                    filmUpdate.FilmFileName = tag.Description;
+                                }
+                            }
+
+                            #endregion
+
+                            #region Расширение файла
+
+                            if (movieDirectory.Name == "File Type" && tag.Name == "Expected File Name Extension")
+                            {
+                                if (string.IsNullOrEmpty(tag.Description))
+                                {
+                                    ModelState.AddModelError("editFilm.FilmFileExtension", "Расширение файла не определено");
+
+                                    return View(editFilm);
+                                }
+                                else
+                                {
+                                    filmUpdate.FilmFileExtension = tag.Description;
+                                }
+                            }
+
+                            #endregion
+
+                            #region Определение MIME Type
+
+                            if (movieDirectory.Name == "File Type" && tag.Name == "Detected MIME Type")
+                            {
+                                if (string.IsNullOrEmpty(tag.Description))
+                                {
+                                    ModelState.AddModelError("filmItem.FilmMimeType", "MIME/TYPE файла не определен");
+
+                                    return View(editFilm);
+                                }
+                                else
+                                {
+                                    editFilm.FilmMimeType = tag.Description;
+                                }
+                            }
+
+                            #endregion
+
+                            #region Размер файла
+
+                            if (movieDirectory.Name == "File" && tag.Name == "File Size")
+                            {
+                                if (string.IsNullOrEmpty(tag.Description))
+                                {
+                                    ModelState.AddModelError("filmItem.FilmFileSize", "Размер файла равен 0");
+
+                                    return View(editFilm);
+                                }
+                                else
+                                {
+                                    filmUpdate.FilmFileSize = Convert.ToUInt64(tag.Description[..tag.Description.IndexOf(' ')]);
+                                }
+                            }
+
+                            #endregion
+                        }
+                    }
+
+                    #region Проверка ширины и высоты кадра
+
+                    if (filmUpdate.FilmWidth < 1)
+                    {
+                        ModelState.AddModelError("editFilm.FilmWidth", "Ширина кадра равна 0");
+
+                        return View(editFilm);
+                    }
+
+                    if (filmUpdate.FilmHeight < 1)
+                    {
+                        ModelState.AddModelError("editFilm.FilmHeight", "Высота кадра равна 0");
+
+                        return View(editFilm);
+                    }
+
+                    #endregion
+
+                    #endregion
                 }
-
-                #region Проверка ширины и высоты кадра
-
-                if (editFilm.FilmWidth < 1)
-                {
-                    ModelState.AddModelError("editFilm.FilmWidth", "Ширина кадра равна 0");
-
-                    return View(editFilm);
-                }
-
-                if (editFilm.FilmHeight < 1)
-                {
-                    ModelState.AddModelError("editFilm.FilmHeight", "Высота кадра равна 0");
-
-                    return View(editFilm);
-                }
-
-                #endregion
-
-                #endregion
 
                 #endregion
             }
@@ -1286,7 +1395,6 @@ public class FilmsController(
         {
             return View(editFilm);
         }
-
     }
 
     #endregion

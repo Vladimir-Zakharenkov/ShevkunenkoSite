@@ -383,7 +383,7 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Property<int>("FilmHeight")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("FilmImageId")
+                    b.Property<Guid?>("FilmImageId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FilmImbd")
@@ -1404,9 +1404,7 @@ namespace ShevkunenkoSite.Services.Migrations
                 {
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "FilmImage")
                         .WithMany()
-                        .HasForeignKey("FilmImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FilmImageId");
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "FilmPoster")
                         .WithMany()

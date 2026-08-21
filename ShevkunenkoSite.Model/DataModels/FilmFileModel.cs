@@ -305,8 +305,8 @@ public class FilmFileModel
 
     // картинка для карточки фильма
     [Display(Name = "Картинка к фильму (Guid):")]
-    public Guid FilmImageId { get; set; }
-    public ImageFileModel FilmImage { get; set; } = new();
+    public Guid? FilmImageId { get; set; }
+    public ImageFileModel? FilmImage { get; set; }
 
     // постер для фильм
     [Display(Name = "Постер к фильму (Guid):")]
@@ -333,10 +333,9 @@ public class FilmFileModel
     #region Выбрать фильм и его полную версию
 
     [NotMapped]
-    [Required(ErrorMessage = "Выберите файл фильма")]
     [DataType(DataType.Upload)]
     [Display(Name = "Фильм:")]
-    public IFormFile FileForFilmFormFile { get; set; } = null!;
+    public IFormFile? FileForFilmFormFile { get; set; }
 
     [NotMapped]
     [DataType(DataType.Upload)]
@@ -353,13 +352,11 @@ public class FilmFileModel
     #region Выбор постера и картинки фильма
 
     [NotMapped]
-    [Required(ErrorMessage = "Выберите постер для фильма")]
     [DataType(DataType.Upload)]
     [Display(Name = "Постер фильма:")]
     public IFormFile? PosterForFilmFormFile { get; set; }
 
     [NotMapped]
-    [Required(ErrorMessage = "Выберите картинку для фильма")]
     [DataType(DataType.Upload)]
     [Display(Name = "Картинка фильма:")]
     public IFormFile? ImageForFilmFormFile { get; set; }
