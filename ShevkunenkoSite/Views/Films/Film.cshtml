@@ -20,12 +20,12 @@
 </div>
 
 @* Основной блок ВИДЕО *@
-<div class="row">
+<div class="row bg-secondary-subtle bg-gradient">
 
     <hr class="liniya mb-4" />
 
     @* кадры слева *@
-    <div class="d-none d-md-block col-md-2 mx-auto overflow-y-auto overflow-x-hidden foto-around">
+    <div id="leftPictures" class="d-none d-md-block col-md-2 mx-auto overflow-y-auto overflow-x-hidden foto-around">
 
         @foreach (var item in Model.FramesOnTheLeft)
         {
@@ -568,7 +568,7 @@
     </div>
 
     @* кадры справа *@
-    <div class="d-none d-md-block col-md-2 mx-auto overflow-y-auto overflow-x-hidden foto-around">
+    <div id="rightPictures" class="d-none d-md-block col-md-2 mx-auto overflow-y-auto overflow-x-hidden foto-around">
 
         @foreach (var item in Model.FramesOnTheRight)
         {
