@@ -9,10 +9,12 @@
 }
 
 @* Заголовок страницы *@
-<div class="row-col-1">
+<div id="filmCaption" class="">
 
-    <h1 class="h2 text_shadow">
+    <h1 class="g-col-1 h2 text_shadow">
+
         @Model.FilmCaption.Replace("--", " ")
+
     </h1>
 
 </div>
