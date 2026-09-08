@@ -12,8 +12,8 @@ using ShevkunenkoSite.Services;
 namespace ShevkunenkoSite.Services.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    [Migration("20260724205820_24-07-2026-23-56")]
-    partial class _240720262356
+    [Migration("20260908192234_08-09-2026-21-39")]
+    partial class _080920262139
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -376,6 +376,9 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Property<decimal>("FilmFileSize")
                         .HasColumnType("decimal(20,0)");
 
+                    b.Property<Guid?>("FilmForPictureId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("FilmGenre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -429,7 +432,7 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Property<int?>("FilmPart")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("FilmPosterId")
+                    b.Property<Guid>("FilmPosterId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FilmSubtitles1")
@@ -1344,7 +1347,8 @@ namespace ShevkunenkoSite.Services.Migrations
                 {
                     b.HasOne("ShevkunenkoSite.Models.DataModels.BooksAndArticlesModel", "BookForAudioBook")
                         .WithMany()
-                        .HasForeignKey("BookForAudioBookId");
+                        .HasForeignKey("BookForAudioBookId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("BookForAudioBook");
                 });
@@ -1353,7 +1357,8 @@ namespace ShevkunenkoSite.Services.Migrations
                 {
                     b.HasOne("ShevkunenkoSite.Models.DataModels.AudioBookModel", "AudioBookModel")
                         .WithMany()
-                        .HasForeignKey("AudioBookModelId");
+                        .HasForeignKey("AudioBookModelId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("AudioBookModel");
                 });
@@ -1363,7 +1368,7 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.HasOne("ShevkunenkoSite.Models.DataModels.BooksAndArticlesModel", null)
                         .WithOne("CaptionForURL")
                         .HasForeignKey("ShevkunenkoSite.Models.DataModels.BookCaptionForURLModel", "BooksAndArticlesModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -1371,23 +1376,28 @@ namespace ShevkunenkoSite.Services.Migrations
                 {
                     b.HasOne("ShevkunenkoSite.Models.DataModels.FilmFileModel", "FilmForBookOrArticle")
                         .WithMany()
-                        .HasForeignKey("FilmForBookOrArticleId");
+                        .HasForeignKey("FilmForBookOrArticleId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "ImageFileModel")
                         .WithMany()
-                        .HasForeignKey("ImageFileModelId");
+                        .HasForeignKey("ImageFileModelId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "LogoOfArticle")
                         .WithMany()
-                        .HasForeignKey("LogoOfArticleId");
+                        .HasForeignKey("LogoOfArticleId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "ScanOfArticle")
                         .WithMany()
-                        .HasForeignKey("ScanOfArticleId");
+                        .HasForeignKey("ScanOfArticleId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.MovieFileModel", "VideoForBookOrArticle")
                         .WithMany()
-                        .HasForeignKey("VideoForBookOrArticleId");
+                        .HasForeignKey("VideoForBookOrArticleId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("FilmForBookOrArticle");
 
@@ -1405,16 +1415,19 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "FilmImage")
                         .WithMany()
                         .HasForeignKey("FilmImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "FilmPoster")
                         .WithMany()
-                        .HasForeignKey("FilmPosterId");
+                        .HasForeignKey("FilmPosterId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.FilmFileModel", "FullFilm")
                         .WithMany()
-                        .HasForeignKey("FullFilmId");
+                        .HasForeignKey("FullFilmId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("FilmImage");
 
@@ -1428,7 +1441,7 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.HasOne("ShevkunenkoSite.Models.DataModels.IconTypeModel", "IconType")
                         .WithMany("IconList")
                         .HasForeignKey("IconTypeModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("IconType");
@@ -1438,19 +1451,23 @@ namespace ShevkunenkoSite.Services.Migrations
                 {
                     b.HasOne("ShevkunenkoSite.Models.DataModels.MovieFileModel", "FullMovie")
                         .WithMany()
-                        .HasForeignKey("FullMovieID");
+                        .HasForeignKey("FullMovieID")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "ImageFileModel")
                         .WithMany()
-                        .HasForeignKey("ImageFileModelId");
+                        .HasForeignKey("ImageFileModelId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "ImageForHeadSeries")
                         .WithMany()
-                        .HasForeignKey("ImageForHeadSeriesId");
+                        .HasForeignKey("ImageForHeadSeriesId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "MoviePoster")
                         .WithMany()
-                        .HasForeignKey("MoviePosterId");
+                        .HasForeignKey("MoviePosterId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.PageInfoModel", "PageForMovieSeries")
                         .WithMany()
@@ -1462,7 +1479,8 @@ namespace ShevkunenkoSite.Services.Migrations
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.TextInfoModel", "TextInfoModel")
                         .WithMany()
-                        .HasForeignKey("TextInfoModelId");
+                        .HasForeignKey("TextInfoModelId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("FullMovie");
 
@@ -1483,37 +1501,41 @@ namespace ShevkunenkoSite.Services.Migrations
                 {
                     b.HasOne("ShevkunenkoSite.Models.DataModels.AudioInfoModel", "AudioInfo")
                         .WithMany()
-                        .HasForeignKey("AudioInfoId");
+                        .HasForeignKey("AudioInfoId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.BackgroundFileModel", "BackgroundFileModel")
                         .WithMany()
                         .HasForeignKey("BackgroundFileModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.FilmFileModel", "FilmFileModel")
                         .WithOne("PageInfoModel")
-                        .HasForeignKey("ShevkunenkoSite.Models.DataModels.PageInfoModel", "FilmFileModelId");
+                        .HasForeignKey("ShevkunenkoSite.Models.DataModels.PageInfoModel", "FilmFileModelId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.IconTypeModel", "IconType")
                         .WithMany("PageList")
                         .HasForeignKey("IconTypeModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "ImageFileModel")
                         .WithMany()
                         .HasForeignKey("ImageFileModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.ImageFileModel", "ImagePageHeading")
                         .WithMany()
-                        .HasForeignKey("ImagePageHeadingId");
+                        .HasForeignKey("ImagePageHeadingId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.TextInfoModel", "TextInfo")
                         .WithMany()
-                        .HasForeignKey("TextInfoId");
+                        .HasForeignKey("TextInfoId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("AudioInfo");
 
@@ -1534,11 +1556,13 @@ namespace ShevkunenkoSite.Services.Migrations
                 {
                     b.HasOne("ShevkunenkoSite.Models.DataModels.AudioInfoModel", "AudioInfoModel")
                         .WithMany()
-                        .HasForeignKey("AudioInfoModelId");
+                        .HasForeignKey("AudioInfoModelId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.BooksAndArticlesModel", "BooksAndArticlesModel")
                         .WithMany()
-                        .HasForeignKey("BooksAndArticlesModelId");
+                        .HasForeignKey("BooksAndArticlesModelId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("AudioInfoModel");
 

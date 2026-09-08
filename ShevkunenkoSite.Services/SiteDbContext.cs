@@ -52,6 +52,16 @@ public class SiteDbContext(DbContextOptions<SiteDbContext> options) : DbContext(
 
         #endregion
 
+        #region Отменить каскадное удаление во всех индексах
+
+        foreach (var relationship in modelBuilder.Model.GetEntityTypes()
+        .SelectMany(e => e.GetForeignKeys()))
+        {
+            relationship.DeleteBehavior = DeleteBehavior.NoAction;
+        }
+
+        #endregion
+
         modelBuilder.Entity<MovieFileModel>()
             .HasOne(o => o.PageForMovieSeries)
             .WithMany()
