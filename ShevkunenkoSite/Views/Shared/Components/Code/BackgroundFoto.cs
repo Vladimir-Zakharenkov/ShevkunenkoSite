@@ -19,12 +19,14 @@ public class BackgroundFoto(
             || HttpContext.Request.Path.ToString().Contains("editmovie")
             || HttpContext.Request.Path.ToString().Contains("detailsmovie"))
         {
-            if (Guid.TryParse(HttpContext.Request.Query["pageId"].ToString(), out pageIdGuid) & await pageInfoContext.PagesInfo.Where(g => g.PageInfoModelId == pageIdGuid).AnyAsync())
+            if (Guid.TryParse(HttpContext.Request.Query["pageId"].ToString(), out pageIdGuid) 
+                & await pageInfoContext.PagesInfo.Where(g => g.PageInfoModelId == pageIdGuid).AnyAsync())
             {
                 pageInfoModel = await pageInfoContext.PagesInfo.AsNoTracking().FirstAsync(p => p.PageInfoModelId == pageIdGuid);
             }
 
-            if (Guid.TryParse(HttpContext.Request.Query["movieId"].ToString(), out movieIdGuid) & await movieFileContext.MovieFiles.Where(m => m.MovieFileModelId == movieIdGuid).AnyAsync())
+            if (Guid.TryParse(HttpContext.Request.Query["movieId"].ToString(), out movieIdGuid) 
+                & await movieFileContext.MovieFiles.Where(m => m.MovieFileModelId == movieIdGuid).AnyAsync())
             {
                 var movie = await movieFileContext.MovieFiles.AsNoTracking().FirstAsync(m => m.MovieFileModelId == movieIdGuid);
 

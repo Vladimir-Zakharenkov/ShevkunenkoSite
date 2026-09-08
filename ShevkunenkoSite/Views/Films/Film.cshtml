@@ -9,9 +9,9 @@
 }
 
 @* Заголовок страницы *@
-<div id="filmCaption" class="">
+<div id="filmCaption" class="row mb-3 bg-secondary-subtle shadw">
 
-    <h1 class="g-col-1 h2 text_shadow">
+    <h1 class="col h2 text_shadow">
 
         @Model.FilmCaption.Replace("--", " ")
 
@@ -19,13 +19,11 @@
 
 </div>
 
-@* Основной блок ВИДЕО *@
-<div class="row bg-secondary-subtle bg-gradient">
-
-    <hr class="liniya mb-4" />
+@* Кадры слева справа и видео *@
+<div class="row bg-secondary-subtle">
 
     @* кадры слева *@
-    <div id="leftPictures" class="d-none d-md-block col-md-2 mx-auto overflow-y-auto overflow-x-hidden foto-around">
+    <div id="leftPictures" class="d-none d-md-block col-md-2 overflow-y-auto overflow-x-hidden foto-around">
 
         @foreach (var item in Model.FramesOnTheLeft)
         {
@@ -33,9 +31,9 @@
                asp-controller="Films"
                asp-action="FilmPhotoAlbum"
                asp-route-imageId="@item.ImageFileModelId"
-               asp-route-filmCaption="@Model.FilmCaption"
-               title="@item.ImageAltTitle"
-               class="">
+               asp-route-filmCaption="@(Model.FilmForPictureAround == null ? Model.FilmCaption : Model.FilmForPictureAround.FilmCaption)"
+               class=""
+               title="@item.ImageAltTitle">
 
                 <vc:view-image image-id="@item.ImageFileModelId"
                                css-class="my-2 w-100 shadw imageref"
@@ -46,7 +44,7 @@
 
     </div>
 
-    @* Видео *@
+    @* видео *@
     <div class="col-12 col-md-8 mb-3">
 
         <div class="row">
@@ -576,9 +574,9 @@
                asp-controller="Films"
                asp-action="FilmPhotoAlbum"
                asp-route-imageId="@item.ImageFileModelId"
-               asp-route-filmCaption="@Model.FilmCaption"
-               title="@item.ImageAltTitle"
-               class="">
+               asp-route-filmCaption="@(Model.FilmForPictureAround == null ? Model.FilmCaption : Model.FilmForPictureAround.FilmCaption)"
+               class=""
+               title="@item.ImageAltTitle">
 
                 <vc:view-image image-id="@item.ImageFileModelId"
                                css-class="my-2 w-100 shadw imageref"
@@ -588,7 +586,5 @@
         }
 
     </div>
-
-    <hr class="liniya" />
 
 </div>

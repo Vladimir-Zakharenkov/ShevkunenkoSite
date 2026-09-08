@@ -1,0 +1,14 @@
+@media screen {
+    .fotoplenka {
+        background-size: 100% auto;
+        background-repeat: repeat-y;
+        background-position: center;
+        background-position: top;
+    }
+}
+
+@media print {
+    .fotoplenka {
+        display: none;
+    }
+}
