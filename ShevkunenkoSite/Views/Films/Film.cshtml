@@ -1,17 +1,19 @@
 ﻿@model FilmFileModel
 
 @{
+    // Адаптивный экран Video-JS
     string screenFormat = ((int)(((double)Model.FilmHeight / (double)Model.FilmWidth) * 100)).ToString() + "%";
 
     string posterForVideo = string.Empty;
 
-    int n = 0; // количество миниатюр кадров фильма
+    // количество миниатюр кадров фильма
+    int n = 0; 
 }
 
 @* Заголовок страницы *@
 <div id="filmCaption" class="row mb-3 bg-secondary-subtle shadw">
 
-    <h1 class="col h2 text_shadow">
+    <h1 id="filmCaptionTegH1" class="col h2 text_shadow">
 
         @Model.FilmCaption.Replace("--", " ")
 
@@ -20,7 +22,7 @@
 </div>
 
 @* Кадры слева справа и видео *@
-<div class="row bg-secondary-subtle">
+<div id="filmView" class="row bg-secondary-subtle">
 
     @* кадры слева *@
     <div id="leftPictures" class="d-none d-md-block col-md-2 overflow-y-auto overflow-x-hidden foto-around">
@@ -45,143 +47,17 @@
     </div>
 
     @* видео *@
-    <div class="col-12 col-md-8 mb-3">
+    <div id="videoBlock" class="col-12 col-md-8 mb-3">
 
-        <div class="row">
+        <div id="videoBlockRow" class="row">
 
-            <div class="col-12 p-0 p-sm-1 p-xl-2 mb-3 shadw">
+            <div id="videoBlockCols" class="col-12 p-0 p-sm-1 p-xl-2 mb-3 shadw">
 
                 @* Данные http://schema.org/VideoObject  *@
-                <span itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-
-                    <meta itemprop="name" content="@Model.FilmCaption" />
-                    <meta itemprop="caption" content="@Model.FilmCaption" />
-                    <link itemprop="url" href="@Model.FilmContentUrl" />
-                    <link itemprop="contentUrl" href="@Model.FilmContentUrl" />
-                    <meta itemprop="description" content="@Model.FilmDescriptionForSchemaOrg" />
-                    <meta itemprop="duration" content="@Model.FilmDuration.ToString("'T'hh'H'mm'M'ss'S'")" />
-                    <meta itemprop="isFamilyFriendly" content="@Model.FilmIsFamilyFriendly.ToString()" />
-                    <link itemprop="thumbnail" href="https://@Context.Request.Host@Model.FilmImage.ImagePath/@Model.FilmImage.ImageFileName" />
-                    <link itemprop="thumbnailUrl" href="https://@Context.Request.Host@Model.FilmImage.ImagePath/@Model.FilmImage.ImageFileName" />
-                    <meta itemprop="uploadDate" content="@Model.FilmUploadDate.ToString("yyyy-MM-dd")" />
-                    <meta itemprop="height" content="@Model.FilmHeight" />
-                    <meta itemprop="width" content="@Model.FilmWidth" />
-
-                    @if (Model.FilmHeight <= 360)
-                    {
-                        <meta itemprop="videoQuality" content="low" />
-                    }
-
-                    @if (Model.FilmHeight > 360 & Model.FilmHeight <= 720)
-                    {
-                        <meta itemprop="videoQuality" content="medium" />
-                    }
-
-                    @if (Model.FilmHeight > 720 & Model.FilmHeight < 1080)
-                    {
-                        <meta itemprop="videoQuality" content="HD" />
-                    }
-
-                    @if (Model.FilmHeight >= 1080)
-                    {
-                        <meta itemprop="videoQuality" content="full HD" />
-                    }
-                    <meta itemprop="contentSize" content="@Model.FilmFileSize.ToString().Substring(0, Model.FilmFileSize.ToString().Length - 3)" />
-                    <meta itemprop="dateReleased" content="@Model.FilmDatePublished.ToString("yyyy-MM-dd")" />
-                    <meta itemprop="dateCreated" content="@Model.FilmDateCreated.ToString("yyyy-MM-dd")" />
-                    <meta itemprop="inLanguage" content="@Model.FilmInLanguage1" />
-                    @if (!string.IsNullOrEmpty(Model.FilmInLanguage2))
-                    {
-                        <meta itemprop="inLanguage" content="@Model.FilmInLanguage2" />
-                    }
-
-                    @if (!string.IsNullOrEmpty(Model.FilmSubtitles1))
-                    {
-                        <meta itemprop="subtitleLanguage" content="@Model.FilmSubtitles1" />
-                    }
-
-                    @if (!string.IsNullOrEmpty(Model.FilmSubtitles2))
-                    {
-                        <meta itemprop="subtitleLanguage" content="@Model.FilmSubtitles2" />
-                    }
-                    <meta itemprop="part" content="@Model.FilmPart" />
-                    <meta itemprop="genre" content="@Model.FilmGenre" />
-                    <meta itemprop="content_id" content="@Model.FilmFileModelId" />
-                    <meta itemprop="productionCompany" content="@Model.FilmРroductionCompany" />
-                    @if (!string.IsNullOrEmpty(Model.FilmDirector1))
-                    {
-                        <meta itemprop="director" content="@Model.FilmDirector1" />
-                    }
-
-                    @if (!string.IsNullOrEmpty(Model.FilmDirector2))
-                    {
-                        <meta itemprop="director" content="@Model.FilmDirector2" />
-                    }
-
-                    @if (!string.IsNullOrEmpty(Model.FilmMusicBy))
-                    {
-                        <meta itemprop="musicBy" content="@Model.FilmMusicBy" />
-                    }
-
-                    @if (!string.IsNullOrEmpty(Model.FilmActor01))
-                    {
-                        <meta itemprop="actor" content="@Model.FilmActor01" />
-                    }
-
-                    @if (!string.IsNullOrEmpty(Model.FilmActor02))
-                    {
-                        <meta itemprop="actor" content="@Model.FilmActor02" />
-                    }
-
-                    @if (!string.IsNullOrEmpty(Model.FilmActor03))
-                    {
-                        <meta itemprop="actor" content="@Model.FilmActor03" />
-                    }
-
-                    @if (!string.IsNullOrEmpty(Model.FilmActor04))
-                    {
-                        <meta itemprop="actor" content="@Model.FilmActor04" />
-                    }
-
-                    @if (!string.IsNullOrEmpty(Model.FilmActor05))
-                    {
-                        <meta itemprop="actor" content="@Model.FilmActor05" />
-                    }
-
-                    @if (!string.IsNullOrEmpty(Model.FilmActor06))
-                    {
-                        <meta itemprop="actor" content="@Model.FilmActor06" />
-                    }
-
-                    @if (!string.IsNullOrEmpty(Model.FilmActor07))
-                    {
-                        <meta itemprop="actor" content="@Model.FilmActor07" />
-                    }
-
-                    @if (!string.IsNullOrEmpty(Model.FilmActor08))
-                    {
-                        <meta itemprop="actor" content="@Model.FilmActor08" />
-                    }
-
-                    @if (!string.IsNullOrEmpty(Model.FilmActor09))
-                    {
-                        <meta itemprop="actor" content="@Model.FilmActor09" />
-                    }
-
-                    @if (!string.IsNullOrEmpty(Model.FilmActor10))
-                    {
-                        <meta itemprop="actor" content="@Model.FilmActor10" />
-                    }
-
-                    <meta itemprop="image" content="https://@Context.Request.Host@Model.FilmImage.ImagePath/@Model.FilmImage.ImageFileName" />
-                    <meta itemprop="playerType" content="@Model.FilmMimeType" />
-                    <meta itemprop="availablePlatform" content="Desktop" />
-                    <meta itemprop="availablePlatform" content="Mobile" />
-
-                </span>
+                <partial name="_FilmSchemaOrgPartial" model="@Model" />
 
                 @* Воспроизведение видео *@
-                <div class="div-adaptiv mx-auto" style="padding-bottom:@screenFormat">
+                <div id="videoScreen" class="div-adaptiv mx-auto mb-3" style="padding-bottom:@screenFormat">
 
                     @* Video -JS *@
                     @if (Model.CurrentVideoHost == Model.FilmContentUrl)
@@ -208,13 +84,13 @@
 
                         <script>
                             var player = videojs('playerId', {
-                            html5: {
-                            vhs: {
-                            overrideNative: true
-                            },
-                            nativeAudioTracks: false,
-                            nativeVideoTracks: false
-                            }
+                                html5: {
+                                    vhs: {
+                                        overrideNative: true
+                                    },
+                                    nativeAudioTracks: false,
+                                    nativeVideoTracks: false
+                                }
                             });
                         </script>
                     }
@@ -226,23 +102,24 @@
                 </div>
 
                 @* Списки под видео *@
-                <div id="movieDescription" class="accordion mt-4 mb-2 p-1">
+                <div id="listUnderScreen" class="accordion mb-2 p-1">
 
                     @* Описание фильма *@
-                    <div class="accordion-item shadw">
+                    <div id="aboutFilm" class="accordion-item shadw">
 
-                        <h2 id="heading1" class="accordion-header shadw">
+                        <h2 id="headingAboutFilm" class="accordion-header shadw">
 
                             <button class="accordion-button collapsed p-1 stranicy"
                                     type="button"
                                     data-bs-toggle="collapse"
-                                    data-bs-target="#collapse1"
+                                    data-bs-target="#blockAboutFilm"
                                     aria-expanded="true"
-                                    aria-controls="collapse1">
+                                    aria-controls="blockAboutFilm">
 
                                 <div>
 
                                     Содержание:
+
                                     <span id="descr">
                                         @Model.FilmDescriptionForSchemaOrg.StartOfDescription()
                                     </span>
@@ -253,12 +130,12 @@
 
                         </h2>
 
-                        <div id="collapse1"
+                        <div id="blockAboutFilm"
                              class="accordion-collapse collapse"
-                             aria-labelledby="heading1"
-                             data-bs-parent="#movieDescription">
+                             aria-labelledby="headingAboutFilm"
+                             data-bs-parent="#listUnderScreen">
 
-                            <div class="accordion-body">
+                            <div id="accordionBodyAboutFilm" class="accordion-body">
 
                                 @Html.Raw(Model.FilmDescriptionHtml)
 
@@ -322,7 +199,7 @@
                         <div id="collapse2"
                              class="accordion-collapse collapse"
                              aria-labelledby="heading2"
-                             data-bs-parent="#movieDescription">
+                             data-bs-parent="#listUnderScreen">
 
                             <div class="accordion-body accordion-body-nointend">
 
@@ -445,7 +322,10 @@
 
                         </h2>
 
-                        <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#movieDescription">
+                        <div id="collapse3"
+                            class="accordion-collapse collapse" 
+                            aria-labelledby="heading3" 
+                            data-bs-parent="#listUnderScreen">
 
                             <div class="accordion-body accordion-body-nointend">
 
@@ -561,7 +441,12 @@
 
         </div>
 
-        <vc:film-picture-carousel caption-for-picture-carousel="@Model.FilmCaption" />
+        @* Фотокарусель кадров из видео *@
+        <div id="fotoCarousel">
+
+            <vc:film-picture-carousel caption-for-picture-carousel="@(Model.FilmForPictureAround == null ? Model.FilmCaption : Model.FilmForPictureAround.FilmCaption)" />
+
+        </div>
 
     </div>
 
