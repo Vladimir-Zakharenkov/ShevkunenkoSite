@@ -146,17 +146,16 @@
                     </div>
 
                     @* Выбрать видеохостинг *@
-                    <div class="accordion-item shadw mt-3">
+                    <div id="chooseHost" class="accordion-item shadw mt-3">
 
-                        @* Заголовок вкладки*@
-                        <h2 id="heading2" class="accordion-header shadw">
+                        <h2 id="headingChooseHost" class="accordion-header shadw">
 
                             <button class="accordion-button collapsed p-1 stranicy"
                                     type="button"
                                     data-bs-toggle="collapse"
-                                    data-bs-target="#collapse2"
+                                    data-bs-target="#blockChooseHost"
                                     aria-expanded="true"
-                                    aria-controls="collapse2">
+                                    aria-controls="blockChooseHost">
 
                                 <span class="d-none d-sm-block pe-1">
                                     Видео на :
@@ -188,7 +187,7 @@
                                                icon-type="webicon100" />
 
                                 @* YandexDisk *@
-                                <vc:view-image image-id="@DataConfig.YandexDiskImage"
+                                <vc:view-image image-id="@DataConfig.DownloadFilmImage"
                                                css-class="maxwidth40px p-1"
                                                icon-type="webicon100" />
 
@@ -196,14 +195,14 @@
 
                         </h2>
 
-                        <div id="collapse2"
+                        <div id="blockChooseHost"
                              class="accordion-collapse collapse"
-                             aria-labelledby="heading2"
+                             aria-labelledby="headingChooseHost"
                              data-bs-parent="#listUnderScreen">
 
-                            <div class="accordion-body accordion-body-nointend">
+                            <div id="accordionBodyChooseHost" class="accordion-body accordion-body-nointend">
 
-                                <div class="row row-cols-3 g-1 g-sm-2 justify-content-center">
+                                <div id="hostOptions" class="row row-cols-3 g-1 g-sm-2 justify-content-center">
 
                                     @* YouTube *@
                                     <a asp-area=""
@@ -270,10 +269,13 @@
 
                                     </a>
 
-                                    @* Yandex Disk *@
-                                    <a onClick="this.target='_blank'" href="@Model.FilmYandexDiskVideo">
+                                    @* Download *@
+                                    <a asp-area=""
+                                       asp-controller="Films"
+                                       asp-action="DownloadFilm"
+                                       asp-route-filmFileName="@Model.FilmFileName">
 
-                                        <vc:view-image image-id="@DataConfig.YandexDiskImage"
+                                        <vc:view-image image-id="@DataConfig.DownloadFilmImage"
                                                        css-class="col shadw imageref"
                                                        icon-type="webicon300" />
 
@@ -288,16 +290,16 @@
                     </div>
 
                     @* Информация о фильме *@
-                    <div class="@((Model.FilmKinoTeatrRu != null || Model.FilmKinoPoisk != null || Model.FilmImbd != null) ? "accordion-item shadw mt-3" : "d-none")">
+                    <div id="internerInfo" class="@((Model.FilmKinoTeatrRu != null || Model.FilmKinoPoisk != null || Model.FilmImbd != null) ? "accordion-item shadw mt-3" : "d-none")">
 
-                        <h2 id="heading3" class="accordion-header">
+                        <h2 id="headingInternerInfo" class="accordion-header">
 
                             <button class="accordion-button collapsed p-1 stranicy"
                                     type="button"
                                     data-bs-toggle="collapse"
-                                    data-bs-target="#collapse3"
+                                    data-bs-target="#blockInternerInfo"
                                     aria-expanded="true"
-                                    aria-controls="collapse3">
+                                    aria-controls="blockInternerInfo">
 
                                 <span class="d-none d-sm-block pe-1">
                                     О фильме :
@@ -322,12 +324,12 @@
 
                         </h2>
 
-                        <div id="collapse3"
+                        <div id="blockInternerInfo"
                             class="accordion-collapse collapse" 
-                            aria-labelledby="heading3" 
+                             aria-labelledby="headingInternerInfo"
                             data-bs-parent="#listUnderScreen">
 
-                            <div class="accordion-body accordion-body-nointend">
+                            <div id="accordionBodyInternerInfo" class="accordion-body accordion-body-nointend">
 
                                 <div class="row row-cols-3 g-1 g-sm-2 justify-content-center">
 

@@ -95,6 +95,12 @@ public class DataConfig
 
     #endregion
 
+    #region Картинка DownloadFilm
+
+    public static Guid DownloadFilmImage { get; set; }
+
+    #endregion
+
     #region Картинка Kino-Teatr.ru
 
     public static Guid KinoTeatrImage { get; set; }

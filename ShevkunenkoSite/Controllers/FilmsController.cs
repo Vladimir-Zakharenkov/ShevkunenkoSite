@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ShevkunenkoSite.Controllers
 {
@@ -405,6 +406,32 @@ namespace ShevkunenkoSite.Controllers
             #endregion
 
             return View(photoAlbumView);
+        }
+
+        #endregion
+
+        #region Скачать файл
+
+        public async Task<IActionResult> DownloadFilm(string? filmFileName)
+        {
+            if (!string.IsNullOrEmpty(filmFileName)
+                && await filmContext.FilmFiles.Where(film => film.FilmFileName == filmFileName).AnyAsync())
+            {
+                string filePath = Path.Combine(DataConfig.MovieFoldersPath, filmFileName!);
+
+                if (!System.IO.File.Exists(filePath))
+                    return NotFound("Файл не найден");
+
+                var stream = System.IO.File.OpenRead(filePath);
+
+                var mimeType = "application/octet-stream";
+
+                return File(stream, mimeType, filmFileName);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         #endregion
