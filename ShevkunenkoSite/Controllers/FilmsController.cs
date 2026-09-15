@@ -67,6 +67,7 @@ namespace ShevkunenkoSite.Controllers
                     .Include(img => img.FilmImage)
                     .Include(img => img.FilmPoster)
                     .Include(film => film.FullFilm)
+                        .ThenInclude(image => image!.FilmImage)
                     .AsNoTracking()
                     .FirstAsync(film => film.FilmCaption == filmCaption);
 
@@ -97,12 +98,20 @@ namespace ShevkunenkoSite.Controllers
 
                 #endregion
 
-                #region Кадры слева и справа от фильма
+                #region Работа с кадрами фильма
+
+                #region Кадры фильма
 
                 // Картинки с фильтром == название фильма + #film-album#
                 var listOfPictures = from m in imageContext.ImageFiles
                    .Where(p => p.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
                                      select m;
+
+                filmItem.ListOfPictures = [.. listOfPictures];
+
+                #endregion
+
+                #region Кадры другого фильма
 
                 // Если задан GUID фильма для кадров
                 if (filmItem.FilmForPictureId != null
@@ -126,8 +135,14 @@ namespace ShevkunenkoSite.Controllers
                         listOfPictures = from m in imageContext.ImageFiles
                            .Where(p => p.SearchFilter.Contains(filmItem.FilmForPictureAround.FilmCaption + "#film-album#"))
                                          select m;
+
+                        filmItem.ListOfPictures = [.. listOfPictures];
                     }
                 }
+
+                #endregion
+
+                #region Кадры слева и справа
 
                 if (listOfPictures.Any())
                 {
@@ -158,6 +173,8 @@ namespace ShevkunenkoSite.Controllers
 
                     filmItem.FramesOnTheRight = [];
                 }
+
+                #endregion
 
                 #endregion
 

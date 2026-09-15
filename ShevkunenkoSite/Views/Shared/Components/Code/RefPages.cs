@@ -99,7 +99,7 @@ public class RefPages(
 
             if (string.IsNullOrEmpty(pageInfoModel.VideoFilterOut) == false && pageInfoModel.VideoLinks == true)
             {
-                string[] videoFilterOut = pageInfoModel.VideoFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                string[] videoFilterOut = pageInfoModel.VideoFilterOut.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
                 if (videoFilterOut.Length > 0)
                 {
@@ -125,7 +125,7 @@ public class RefPages(
 
             if (pageInfoModel.VideoFilterOut != null && pageInfoModel.VideoFilterOut != string.Empty && pageInfoModel.VideoLinks == true)
             {
-                string[] videoFilterOut = pageInfoModel.VideoFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                string[] videoFilterOut = pageInfoModel.VideoFilterOut.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
                 if (videoFilterOut.Length > 0)
                 {

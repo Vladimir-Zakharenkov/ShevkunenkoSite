@@ -13,14 +13,6 @@ public class BooksAndArticlesModel
 
     #endregion
 
-    #region Обложка книги
-
-    [Display(Name = "Обложка книги :")]
-    public Guid? ImageFileModelId { get; set; }
-    public ImageFileModel? ImageFileModel { get; set; }
-
-    #endregion
-
     #region Тип текста
 
     [DataType(DataType.Text)]
@@ -33,6 +25,14 @@ public class BooksAndArticlesModel
             "book",
             "article"
         ];
+
+    #endregion
+
+    #region Обложка книги
+
+    [Display(Name = "Обложка книги :")]
+    public Guid? ImageFileModelId { get; set; }
+    public ImageFileModel? ImageFileModel { get; set; }
 
     #endregion
 

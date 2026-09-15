@@ -7,7 +7,7 @@
     string posterForVideo = string.Empty;
 
     // количество миниатюр кадров фильма
-    int n = 0; 
+    int n = 0;
 }
 
 @* Заголовок страницы *@
@@ -83,15 +83,15 @@
                         <script src="https://vjs.zencdn.net/8.23.7/video.min.js"></script>
 
                         <script>
-                            var player = videojs('playerId', {
-                                html5: {
-                                    vhs: {
-                                        overrideNative: true
-                                    },
-                                    nativeAudioTracks: false,
-                                    nativeVideoTracks: false
-                                }
-                            });
+                                                var player = videojs('playerId', {
+                                                    html5: {
+                                                        vhs: {
+                                                            overrideNative: true
+                                                        },
+                                                        nativeAudioTracks: false,
+                                                        nativeVideoTracks: false
+                                                    }
+                                                });
                         </script>
                     }
                     else
@@ -292,7 +292,7 @@
                     @* Информация о фильме *@
                     <div id="internerInfo" class="@((Model.FilmKinoTeatrRu != null || Model.FilmKinoPoisk != null || Model.FilmImbd != null) ? "accordion-item shadw mt-3" : "d-none")">
 
-                        <h2 id="headingInternerInfo" class="accordion-header">
+                        <h2 id="headingInternerInfo" class="accordion-header shadw">
 
                             <button class="accordion-button collapsed p-1 stranicy"
                                     type="button"
@@ -325,9 +325,9 @@
                         </h2>
 
                         <div id="blockInternerInfo"
-                            class="accordion-collapse collapse" 
+                             class="accordion-collapse collapse"
                              aria-labelledby="headingInternerInfo"
-                            data-bs-parent="#listUnderScreen">
+                             data-bs-parent="#listUnderScreen">
 
                             <div id="accordionBodyInternerInfo" class="accordion-body accordion-body-nointend">
 
@@ -368,18 +368,71 @@
 
                     </div>
 
-                    @* кадры фильма *@
-                    <div class="@((Model.ListOfPictures != null && Model.ListOfPictures.Count > 0) ? "accordion-item shadw mt-3" : "d-none")">
+                    @* Полная версия фильма *@
+                    <div id="fullVersion" class="@(Model.FullFilmId != null ? "accordion-item shadw mt-3" : "d-none")">
+
+                        <h2 id="headingfullVersion" class="accordion-header shadw">
+
+                            <button class="accordion-button collapsed p-1 stranicy"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#blockFullVersion"
+                                    aria-expanded="true"
+                                    aria-controls="blockFullVersion">
+
+                                <span class="d-none d-sm-block pe-1">
+                                    Полная версия :
+                                </span>
+
+                                @if (Model.FullFilm != null)
+                                {
+                                    <vc:view-image image-id="@Model.FullFilm.FilmImageId"
+                                                   css-class="maxwidth40px p-0 me-2"
+                                                   icon-type="webicon100" />
+                                }
+
+                            </button>
+
+                        </h2>
+
+                        <div id="blockFullVersion"
+                             class="accordion-collapse collapse"
+                             aria-labelledby="headingfullVersion"
+                             data-bs-parent="#listUnderScreen">
+
+                            <div id="accordionBodyFullVersion" class="accordion-body accordion-body-nointend bg-info mt-1">
+
+                                <div id="accordionBodyFullVersion" class="accordion-body">
+
+                                    @if (@Model.FullFilm != null)
+                                    {
+                                        <div class="row justify-content-center">
+
+                                            <partial name="_LinkToFilmPartial" model="@Model.FullFilm" />
+
+                                        </div>
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    @* Кадры фильма *@
+                    <div id="filmStills" class="@((Model.ListOfPictures != null && Model.ListOfPictures.Count > 0) ? "accordion-item shadw mt-3" : "d-none")">
 
                         @* заголовок группы «кадры фильма» *@
-                        <h2 id="heading4" class="accordion-header">
+                        <h2 id="headingfilmStills" class="accordion-header shadw">
 
                             <button class="accordion-button collapsed py-1 stranicy"
                                     type="button"
                                     data-bs-toggle="collapse"
-                                    data-bs-target="#collapse4"
+                                    data-bs-target="#blockFilmStills"
                                     aria-expanded="true"
-                                    aria-controls="collapse4">
+                                    aria-controls="blockFilmStills">
 
                                 <span class="d-none d-sm-block pe-1">
                                     Кадры фильма :
@@ -404,9 +457,12 @@
 
                         </h2>
 
-                        <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#movieDescription">
+                        <div id="blockFilmStills"
+                             class="accordion-collapse collapse"
+                             aria-labelledby="heading4"
+                             data-bs-parent="#movieDescription">
 
-                            <div class="accordion-body accordion-body-nointend p-0 pt-2">
+                            <div id="accordionBodyFilmStills" class="accordion-body accordion-body-nointend p-0 pt-2">
 
                                 <div class="row row-cols-2 row-cols-sm-4 row-cols-md-5 row-cols-lg-6 g-4 pb-2 justify-content-center">
 
@@ -419,7 +475,7 @@
                                                asp-controller="Films"
                                                asp-action="FilmPhotoAlbum"
                                                asp-route-imageId="@item.ImageFileModelId"
-                                               asp-route-filmCaption="@Model.FilmCaption"
+                                               asp-route-filmCaption="@(Model.FilmForPictureAround == null ? Model.FilmCaption : Model.FilmForPictureAround.FilmCaption)"
                                                class="col w-auto rounded-3 text-center">
 
                                                 <vc:view-image image-id="@item.ImageFileModelId.ToString()"

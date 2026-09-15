@@ -817,6 +817,8 @@ public class BooksAndArticlesController
                     {
                         ModelState.AddModelError("CoverForBookFormFile", $"Выбран некорректный файл «{editBook.CoverForBookFormFile.FileName}»");
 
+                        #region ViewData
+
                         // Список картинок сайта для обложки
                         ViewData["ImageFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
 
@@ -829,6 +831,8 @@ public class BooksAndArticlesController
                         // Список фильмов на сайте
                         ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaptionCaption");
 
+                        #endregion
+
                         return View(editBook);
                     }
 
@@ -838,69 +842,17 @@ public class BooksAndArticlesController
                     }
                     else
                     {
-                        if (await imageContext.ImageFiles.Where(i => i.WebImageFileName == editBook.CoverForBookFormFile.FileName).AnyAsync())
+                        if (await imageContext.GetImageGuidByFileNameAsync(editBook.CoverForBookFormFile.FileName) != Guid.Empty)
                         {
                             var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.WebImageFileName == editBook.CoverForBookFormFile.FileName);
-
-                            bookUpdate.ImageFileModelId = imageFile.ImageFileModelId;
-                        }
-                        else if (await imageContext.ImageFiles.Where(i => i.WebImageHDFileName == editBook.CoverForBookFormFile.FileName).AnyAsync())
-                        {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.WebImageHDFileName == editBook.CoverForBookFormFile.FileName);
-
-                            bookUpdate.ImageFileModelId = imageFile.ImageFileModelId;
-                        }
-                        else if (await imageContext.ImageFiles.Where(i => i.WebIconFileName == editBook.CoverForBookFormFile.FileName).AnyAsync())
-                        {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.WebIconFileName == editBook.CoverForBookFormFile.FileName);
-
-                            bookUpdate.ImageFileModelId = imageFile.ImageFileModelId;
-                        }
-                        else if (await imageContext.ImageFiles.Where(i => i.WebIcon200FileName == editBook.CoverForBookFormFile.FileName).AnyAsync())
-                        {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.WebIcon200FileName == editBook.CoverForBookFormFile.FileName);
-
-                            bookUpdate.ImageFileModelId = imageFile.ImageFileModelId;
-                        }
-                        else if (await imageContext.ImageFiles.Where(i => i.WebIcon100FileName == editBook.CoverForBookFormFile.FileName).AnyAsync())
-                        {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.WebIcon100FileName == editBook.CoverForBookFormFile.FileName);
-
-                            bookUpdate.ImageFileModelId = imageFile.ImageFileModelId;
-                        }
-                        else if (await imageContext.ImageFiles.Where(i => i.ImageFileName == editBook.CoverForBookFormFile.FileName).AnyAsync())
-                        {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.ImageFileName == editBook.CoverForBookFormFile.FileName);
-
-                            bookUpdate.ImageFileModelId = imageFile.ImageFileModelId;
-                        }
-                        else if (await imageContext.ImageFiles.Where(i => i.ImageHDFileName == editBook.CoverForBookFormFile.FileName).AnyAsync())
-                        {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.ImageHDFileName == editBook.CoverForBookFormFile.FileName);
-
-                            bookUpdate.ImageFileModelId = imageFile.ImageFileModelId;
-                        }
-                        else if (await imageContext.ImageFiles.Where(i => i.IconFileName == editBook.CoverForBookFormFile.FileName).AnyAsync())
-                        {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.IconFileName == editBook.CoverForBookFormFile.FileName);
-
-                            bookUpdate.ImageFileModelId = imageFile.ImageFileModelId;
-                        }
-                        else if (await imageContext.ImageFiles.Where(i => i.Icon200FileName == editBook.CoverForBookFormFile.FileName).AnyAsync())
-                        {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.Icon200FileName == editBook.CoverForBookFormFile.FileName);
-
-                            bookUpdate.ImageFileModelId = imageFile.ImageFileModelId;
-                        }
-                        else if (await imageContext.ImageFiles.Where(i => i.Icon100FileName == editBook.CoverForBookFormFile.FileName).AnyAsync())
-                        {
-                            var imageFile = await imageContext.ImageFiles.FirstAsync(i => i.Icon100FileName == editBook.CoverForBookFormFile.FileName);
 
                             bookUpdate.ImageFileModelId = imageFile.ImageFileModelId;
                         }
                         else
                         {
                             ModelState.AddModelError("CoverForBookFormFile", $"Добавьте картинку «{editBook.CoverForBookFormFile.FileName}» в базу данных");
+
+                            #region ViewData
 
                             // Список картинок сайта для обложки
                             ViewData["ImageFiles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
@@ -913,6 +865,8 @@ public class BooksAndArticlesController
 
                             // Список фильмов на сайте
                             ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(orderFilm => orderFilm.FilmCaption), "FilmFileModelId", "FilmCaptionCaption");
+
+                            #endregion
 
                             return View(editBook);
                         }
