@@ -1,4 +1,6 @@
-﻿@model FilmFileModel
+﻿@* data-ap-blacklist  - атрибут блока запрещающий подстановку рекламы *@
+
+@model FilmFileModel
 
 @{
     // Адаптивный экран Video-JS
@@ -21,8 +23,8 @@
 
 </div>
 
-@* Кадры слева справа и видео *@
-<div id="filmView" class="row bg-secondary-subtle">
+@* Общий блок *@
+<div id="filmView" class="row bg-secondary-subtle py-2 shadw">
 
     @* кадры слева *@
     <div id="leftPictures" class="d-none d-md-block col-md-2 overflow-y-auto overflow-x-hidden foto-around">
@@ -47,11 +49,11 @@
     </div>
 
     @* видео *@
-    <div id="videoBlock" class="col-12 col-md-8 mb-3">
+    <div id="videoBlock" class="col-12 col-md-8 mb-3 shadw no-ads-zone">
 
         <div id="videoBlockRow" class="row">
 
-            <div id="videoBlockCols" class="col-12 p-0 p-sm-1 p-xl-2 mb-3 shadw">
+            <div id="videoBlockCols" class="col-12 p-0 p-sm-1 p-xl-2 shadw">
 
                 @* Данные http://schema.org/VideoObject  *@
                 <partial name="_FilmSchemaOrgPartial" model="@Model" />
@@ -499,13 +501,6 @@
 
         </div>
 
-        @* Фотокарусель кадров из видео *@
-        <div id="fotoCarousel">
-
-            <vc:film-picture-carousel caption-for-picture-carousel="@(Model.FilmForPictureAround == null ? Model.FilmCaption : Model.FilmForPictureAround.FilmCaption)" />
-
-        </div>
-
     </div>
 
     @* кадры справа *@
@@ -527,6 +522,13 @@
 
             </a>
         }
+
+    </div>
+
+    @* Фотокарусель кадров из видео *@
+    <div id="fotoCarousel">
+
+        <vc:film-picture-carousel caption-for-picture-carousel="@(Model.FilmForPictureAround == null ? Model.FilmCaption : Model.FilmForPictureAround.FilmCaption)" />
 
     </div>
 

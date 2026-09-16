@@ -319,22 +319,27 @@
 
     @*------------------------- Включаем скрипты если рабочий сервер ---------------------------------------*@
     <environment exclude="Development">
+
         @* Global site tag (gtag.js) - Google Analytics*@
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-3WELF8XC9E"></script>
         <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments); }
-            gtag('js', new Date());
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag() { dataLayer.push(arguments); }
+                    gtag('js', new Date());
 
-            gtag('config', 'G-3WELF8XC9E');
+                    gtag('config', 'G-3WELF8XC9E');
         </script>
 
-        <!-- Yandex Autoplacement 1648952 -->
+        @* Yandex Autoplacement 1648952 - авторасстановка рекламы *@
+        <script>
+                    window.APBlackList = ['.no-ads-zone', '#cart-summary'];
+        </script>
         <script src="https://yandex.ru/ads/system/context.js" async></script>
         <script data-page-id="1648952" src="https://yandex.ru/ads/system/ap-loader.js" async></script>
 
-        @* Yandex.RTB *@
+        @* Yandex.RTB - статичные блоки рекламы *@
         <script>window.yaContextCb = window.yaContextCb || []</script>
+
     </environment>
     @*-------------------------------------------------------------------------------------------------------------*@
 
