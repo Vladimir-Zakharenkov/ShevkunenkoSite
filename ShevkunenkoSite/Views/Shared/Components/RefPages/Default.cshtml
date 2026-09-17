@@ -85,17 +85,10 @@
             {
                 if (listOfPages.Count > 0)
                 {
-                    <div id="pageRefs" class="row bg-secondary-subtle shadw">
+                    <partial name="_HeadingPartial"
+                             model='(caption, "H2")' />
 
-                        <h2 id="pageRefsTegH2" class="col text_shadow">
-
-                            @caption
-
-                        </h2>
-
-                    </div>
-
-                    <div class="row row-cols-3 row-cols-lg-4 row-cols-xxl-5 py-3 mt-2 mb-4 bg-success-subtle justify-content-center shadw">
+                    <div class="row row-cols-3 row-cols-lg-4 row-cols-xxl-5 py-3 mt-2 mb-4 bg-dark bg-opacity-10 justify-content-center shadw">
 
                         @foreach (var itemOfList in listOfPages)
                         {
@@ -122,15 +115,8 @@
             {
                 if (listOfFilms.Count > 0)
                 {
-                    <div id="filmRefs" class="row bg-secondary-subtle shadw">
-
-                        <h2 id="filmRefsTegH2" class="col text_shadow">
-
-                            @caption.Replace("--", " ")
-
-                        </h2>
-
-                    </div>
+                    <partial name="_HeadingPartial"
+                             model='(caption, "H2")' />
 
                     <div class="row row-cols-3 row-cols-lg-4 row-cols-xxl-5 py-3 mt-2 mb-4 bg-primary-subtle justify-content-center shadw">
 

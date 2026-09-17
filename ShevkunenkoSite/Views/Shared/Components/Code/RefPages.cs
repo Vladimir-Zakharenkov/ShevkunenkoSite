@@ -49,7 +49,7 @@ public class RefPages(
 
             if (!string.IsNullOrEmpty(pageInfoModel.PageFilterOut) && pageInfoModel.PageLinksByFilters == true)
             {
-                string[] pageFilterOut = pageInfoModel.PageFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                string[] pageFilterOut = pageInfoModel.PageFilterOut.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
                 if (pageFilterOut.Length > 0)
                 {

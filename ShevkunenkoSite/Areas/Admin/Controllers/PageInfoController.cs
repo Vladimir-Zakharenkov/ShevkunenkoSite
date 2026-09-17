@@ -2065,6 +2065,9 @@ public class PageInfoController(
             // Список типов иконок
             ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
 
+            // Список фильмов
+            ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles, "FilmFileModelId", "FilmCaption");
+
             #endregion
 
             return View(editPage);
