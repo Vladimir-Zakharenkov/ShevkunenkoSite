@@ -2066,7 +2066,7 @@ public class PageInfoController(
             ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
 
             // Список фильмов
-            ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles, "FilmFileModelId", "FilmCaption");
+            ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(film => film.FilmCaption), "FilmFileModelId", "FilmCaption");
 
             #endregion
 

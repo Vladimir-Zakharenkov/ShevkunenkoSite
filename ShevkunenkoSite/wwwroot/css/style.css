@@ -13549,6 +13549,13 @@ li#yandex-search * {
     height: 900px;
   }
 }
+/* Боковые колонки — картинки */
+#picturesFromLeft,
+#picturesFromRight {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .note {
   display: inline;
   vertical-align: super;

@@ -746,7 +746,7 @@ public class FilmsController(
 
             // Картинки с фильтром == название фильма + #film-album#
             var listOfPictures = from m in imageContext.ImageFiles
-               .Where(p => p.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
+               .Where(p => p.SearchFilter.Contains(editFilm.FilmCaption + "#film-album#"))
                                  select m;
 
             // Если задан GUID фильма для кадров

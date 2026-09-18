@@ -197,3 +197,12 @@
         height: 900px;
     }
 }
+// ------------------------------------------
+
+/* Боковые колонки — картинки */
+#picturesFromLeft,
+#picturesFromRight {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+// ------------------------------------------
