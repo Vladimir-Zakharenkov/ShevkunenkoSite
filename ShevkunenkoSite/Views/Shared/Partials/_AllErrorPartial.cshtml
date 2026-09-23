@@ -1,0 +1,11 @@
+﻿<div id="allErrorsForm" class="my-3">
+
+    @if (Context.Request.Method == "POST" && ViewData.ModelState.ErrorCount > 0)
+    {
+        <partial name="_HeadingPartial"
+                 model='("Ошибки ввода данных", "h4")' />
+
+        <div asp-validation-summary="All" class="text-danger fs-5 fw-bolder border border-top-0 border-danger"></div>
+    }
+
+</div>

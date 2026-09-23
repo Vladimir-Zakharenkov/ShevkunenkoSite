@@ -18,7 +18,7 @@ public class PageInfoModel
 
     [Required(ErrorMessage = "Выберите MVC или RazorPages")]
     [Display(Name = "MVC или RazorPages :")]
-    public bool PageAsRazorPage { get; set; } = false;
+    public bool PageAsRazorPage { get; set; }
 
     [Required(AllowEmptyStrings = true)]
     [DisplayFormat(ConvertEmptyStringToNull = false)]
@@ -489,7 +489,9 @@ public class PageInfoModel
     #region Словарь ссылок на картинки по текстовым фильтрам (NotMapped)
 
     [NotMapped]
+#pragma warning disable VSSpell001 // Spell Check
     public Dictionary<string, ImageListViewModel>? DictionaryOfLinksByFotoFilterOut { get; set; }
+#pragma warning restore VSSpell001 // Spell Check
 
     #endregion
 

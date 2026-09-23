@@ -494,7 +494,9 @@ public record class PageInfoDTOModel
     #region Словарь ссылок на картинки по текстовым фильтрам (NotMapped)
 
     [NotMapped]
+#pragma warning disable VSSpell001 // Spell Check
     public Dictionary<string, ImageListViewModel>? DictionaryOfLinksByFotoFilterOut { get; set; }
+#pragma warning restore VSSpell001 // Spell Check
 
     #endregion
 

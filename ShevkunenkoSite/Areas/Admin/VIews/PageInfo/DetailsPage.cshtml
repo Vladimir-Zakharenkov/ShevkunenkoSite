@@ -4,87 +4,27 @@
     int i = 0;
     int innerAccordion = 0;
     string cssForLabel = "col-form-label text-primary fs-5 me-2";
+
+    string actionButton = "btn py-1 m-2 shadw minwidth100px";
+
+    // строка из БД, например: "filmId=42&sort=new&page=3"
+    var rawQuery = Model.RoutData ?? "";
+
+    var routeData = new Dictionary<string, string>();
+
+    foreach (var pair in rawQuery.TrimStart('?').Split('&', StringSplitOptions.RemoveEmptyEntries))
+    {
+        var kv = pair.Split('=', 2);
+
+        if (kv.Length == 2)
+            routeData[Uri.UnescapeDataString(kv[0])] = Uri.UnescapeDataString(kv[1]);
+    }
 }
 
-<h1 class="fs-3 text_shadow">Информация о странице</h1>
+<partial name="_HeadingPartial"
+         model='("Информация о странице", "h1")' />
 
-<hr class="liniya w-50" />
-
-@* Id страницы *@
-<div>
-
-    <label asp-for="PageInfoModelId" class="@cssForLabel"></label>
-
-    <p>
-
-        <span class="fs-5 text_shadow fluid-font-size">
-            @Model.PageInfoModelId
-        </span>
-
-        <br />
-
-        <span class="fs-6 form-text text-success">
-            идентификатор в базе данных (GUID)
-        </span>
-
-    </p>
-
-    <hr class=" w-50 mx-auto" />
-
-</div>
-
-@* Тег « title » *@
-<div>
-
-    <label asp-for="PageTitle" class="@cssForLabel"></label>
-
-    <p>
-
-        <span class="fs-5 text_shadow">
-            @Model.PageTitle
-        </span>
-
-        <br />
-
-        <span class="fs-6 form-text text-success">
-            тег « title »
-        </span>
-    </p>
-
-    <hr class="w-50 mx-auto" />
-
-</div>
-
-@* Карточка страницы и индекс сортировки *@
-<div>
-
-    <p class="mb-3">
-
-        <span class="fs-5 text-primary">
-            Карточка страницы
-        </span>
-
-    </p>
-
-    <div class="row justify-content-center">
-
-        <vc:card-of-page page=@Model />
-
-    </div>
-
-    <p class="mt-2">
-
-        <label asp-for="SortOfPage" class="@cssForLabel"></label>
-
-        <span class="fs-4 text-danger">
-            @Model.SortOfPage
-        </span>
-
-    </p>
-
-</div>
-
-<div class="row">
+<div id="blockInfoPage" class="row">
 
     @* кадры слева *@
     <div class="col-2 mx-auto d-none d-lg-block overflow-y-auto overflow-x-hidden height850">
@@ -112,16 +52,155 @@
 
     </div>
 
-    <div class="col-12 col-lg-8 mx-auto p-2">
+    @* Блок значений *@
+    <div id="blockForAllOptions" class="col-12 col-lg-8 p-2">
+
+        @* Переход к списку или иконкам *@
+        <div id="goToList" class="card-footer p-0 my-3 shadw">
+
+            <a asp-area="Admin"
+               asp-controller="PageInfo"
+               asp-action="Index"
+               asp-rout-pageCard="false"
+               class="@actionButton btn-outline-primary"
+               title="список страниц">
+
+                Список
+
+            </a>
+
+            <a asp-area="Admin"
+               asp-controller="PageInfo"
+               asp-action="Index"
+               asp-route-pageCard="true"
+               class="@actionButton btn-outline-danger"
+               title="иконки страниц">
+
+                Иконки
+
+            </a>
+
+        </div>
+
+        @* Карточка фильма или страницы *@
+        <div id="blockForCardOfPageAndGuid" class="bg-dark bg-opacity-10 shadw">
+
+            @if (Model.MovieFile != null)
+            {
+                @* Карточка фильма (movie) *@
+                <div id="blockForMovieOfPage" class="bg-dark bg-opacity-25 pb-2">
+
+                    <p class="fs-3 text-center text-danger-emphasis bg-light py-2">
+                        <span class="d-block mb-2">
+                            Существует запись для movie
+                        </span>
+                        <span class="d-block text-info-emphasis fluid-font-size">
+                            @Model.MovieFile.MovieFileModelId
+                        </span>
+                        <span class="fs-6 fw-bolder form-text text-danger-emphasis p-1 mt-0">
+                            GUID фильма (movie)
+                        </span>
+
+                        <a asp-area="Admin"
+                           asp-controller="MovieInfo"
+                           asp-action="DetailsMovie"
+                           asp-route-movieid="@Model.MovieFile.MovieFileModelId"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="d-block btn btn-outline-danger fs-4 py-1 m-2 shadw minwidth100px"
+                           title="данные фильма">
+
+                            Movie
+
+                        </a>
+
+                    </p>
+
+                </div>
+            }
+
+            @if (Model.FilmFileModel != null)
+            {
+                @* Карточка фильма (film) *@
+                <div id="blockForFilmOfPage" class="bg-dark bg-opacity-25 pb-2">
+
+                    <h2 class="text-center text-danger-emphasis py-2">
+                        Страница для фильма
+                    </h2>
+
+                    <partial name="_LinkToFilmPartial" model="@Model.FilmFileModel" />
+
+                    <p class="text-center text-danger-emphasis mb-2 fluid-font-size">
+                        @(DataConfig.MovieFoldersPath + '\\' + Model.FilmFileModel.FilmFileName)
+                    </p>
+
+                    <p>
+                        <span class="d-block mb-2 text-info-emphasis fluid-font-size">
+                            @Model.FilmFileModel.FilmFileModelId
+                        </span>
+                        <span class="fs-6 fw-bolder form-text text-danger-emphasis text-bg-light p-1">
+                            GUID фильма
+                        </span>
+                    </p>
+
+                </div>
+            }
+            else
+            {
+                @* Карточка страницы и GUID *@
+                <div id="blockForCardOfPageAndGuid" class="bg-dark bg-opacity-25 py-2">
+
+                    <h2 class="text-center text-danger-emphasis py-2">
+                        Карточка страницы
+                    </h2>
+
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 mb-3 justify-content-center">
+
+                        <vc:card-of-page page=Model />
+
+                    </div>
+
+                    <p>
+                        <span class="d-block mb-2 text-info-emphasis fluid-font-size">
+                            @Model.PageInfoModelId
+                        </span>
+                        <span class="fs-6 fw-bolder form-text text-danger-emphasis text-bg-light p-1">
+                            GUID страницы
+                        </span>
+                    </p>
+
+                </div>
+            }
+
+        </div>
+
+        @* Тег « title » *@
+        <div id="tagTitle" class="bg-body-secondary bg-opacity-10 shadw my-3 pt-2">
+
+            <p>
+
+                <span class="fs-5 text_shadow">
+                    @Model.PageTitle
+                </span>
+
+                <br />
+
+                <span class="fs-6 form-text text-success">
+                    тег « title »
+                </span>
+
+            </p>
+
+        </div>
 
         @* Управление страницей *@
-        <div class="card-footer border p-0 my-2">
+        <div class="card-footer p-0 my-3 shadw">
 
             <a asp-area="Admin"
                asp-controller="PageInfo"
                asp-action="EditPage"
                asp-route-pageid="@Model.PageInfoModelId"
-               class="btn btn-outline-dark py-1 m-2 shadw minwidth100px"
+               class="@actionButton btn-outline-success"
                title="редактировать данные">
 
                 Изменить
@@ -132,52 +211,81 @@
                asp-controller="PageInfo"
                asp-action="DeletePage"
                asp-route-pageid="@Model.PageInfoModelId"
-               class="btn btn-outline-danger py-1 m-2 shadw minwidth100px"
+               class="@actionButton btn-outline-danger"
                title="удалить страницу">
 
                 Удалить
 
             </a>
 
-            <a href="@Url.Content(Model.PageFullPathWithData)"
-               class="btn btn-outline-primary py-1 m-2 shadw minwidth100px"
-               title="просмотр">
-
-                Просмотр
-
-            </a>
-
-            @if (!string.IsNullOrEmpty(Model.PagePathNickName))
+            @if (Model.PageAsRazorPage == false)
             {
-                <a href="@Url.Content(Model.PagePathNickName)"
-                   class="btn btn-outline-primary py-1 m-2 shadw minwidth100px"
-                   title="просмотр">
+                <a asp-area="@Model.PageArea.Trim('/')"
+                   asp-controller="@Model.Controller.Trim('/')"
+                   asp-action="@Model.Action.Trim('/')"
+                   asp-all-route-data="@routeData"
+                   class="@actionButton btn-outline-primary"
+                   title="открыть в браузере">
 
-                    Псевдоним
+                    Открыть
+
+                </a>
+            }
+            else
+            {
+                <a asp-area="@Model.PageArea.Trim('/')"
+                   asp-page="@Model.PageLoc"
+                   asp-all-route-data="@routeData"
+                   class="@actionButton btn-outline-primary"
+                   title="открыть в браузере">
+
+                    Открыть
 
                 </a>
             }
 
-            <a asp-area="Admin"
-               asp-controller="PageInfo"
-               asp-action="Index"
-               class="btn btn-outline-success py-1 m-2 shadw minwidth100px"
-               title="список страниц">
+            <br />
 
-                Список
-
-            </a>
-
-            @if (Model.MovieFile != null)
+            @if (!string.IsNullOrEmpty(Model.PagePathNickName))
             {
-                <a asp-area="Admin"
-                   asp-controller="MovieInfo"
-                   asp-action="DetailsMovie"
-                   asp-route-movieid="@Model.MovieFile.MovieFileModelId"
-                   class="btn btn-outline-info py-1 m-2 shadw minwidth100px"
-                   title="данные фильма">
+                <a href="@Url.Content(Model.PagePathNickName)"
+                   class="@actionButton btn-outline-info"
+                   title="просмотр">
 
-                    Фильм
+                    Псевдоним(1)
+
+                </a>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.PagePathNickName2))
+            {
+                <a href="@Url.Content(Model.PagePathNickName2)"
+                   class="@actionButton btn-outline-info"
+                   title="просмотр">
+
+                    Псевдоним(2)
+
+                </a>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.PagePathNickName3))
+            {
+                <a href="@Url.Content(Model.PagePathNickName3)"
+                   class="@actionButton btn-outline-info"
+                   title="просмотр">
+
+                    Псевдоним(3)
+
+                </a>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.PagePathNickName4))
+            {
+                <a href="@Url.Content(Model.PagePathNickName4)"
+                   class="@actionButton btn-outline-info"
+                   title="просмотр">
+
+                    Псевдоним(4)
 
                 </a>
             }
@@ -185,10 +293,10 @@
         </div>
 
         @* Разделы информации (accordion) *@
-        <div class="accordion" id="accordionDetailsPage">
+        <div id="accordionDetailsPage" class="accordion">
 
             @* Адрес страницы *@
-            <div class="accordion-item mb-3 shadw">
+            <div id="pageAddressAccordionItem" class="accordion-item mb-3 shadw">
 
                 @* Заголовок группы «адрес страницы» *@
                 <h2 id="headingPageAddress" class="accordion-header shadw">
@@ -211,7 +319,7 @@
                      aria-labelledby="headingPageAddress"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div class="accordion-body accordion-body-nointend text-start">
+                    <div id="pageAddressAccordionBody" class="accordion-body accordion-body-nointend text-start">
 
                         @if (Model.PageAsRazorPage)
                         {
@@ -225,24 +333,27 @@
                                 </span>
                             </p>
 
-                            <hr class="w-75 mx-auto" />
+                            <hr />
 
-                            <p class="fs-5 text-primary mb-0">
-                                Область:
-                                <span class="text-black">
+                            <p class="fs-5 mb-0">
+                                <span class="text-primary fw-bold">
+                                    Область :
+                                </span>
+                                <br class="d-sm-none" />
+                                <span class="text_shadow">
                                     «@Model.PageArea.TrimStart('/')»
                                 </span>
                             </p>
-                            <p class="fs-5 text-primary mb-0">
-                                Адрес:
-                                <span class="text-black">
-                                    «@Model.PageArea@Model.PageLoc»
+
+                            <hr />
+
+                            <p class="fs-5 mb-0">
+                                <span class="text-primary fw-bold">
+                                    Адрес :
                                 </span>
-                            </p>
-                            <p class="fs-5 text-primary mb-0">
-                                Псевдоним:
-                                <span class="text-black">
-                                    «@Model.PagePathNickName»
+                                <br class="d-sm-none" />
+                                <span class="text_shadow">
+                                    «@Model.PageLoc»
                                 </span>
                             </p>
                         }
@@ -258,7 +369,7 @@
                                 </span>
                             </p>
 
-                            <hr class="w-75 mx-auto" />
+                            <hr />
 
                             <p class="fs-5 mb-0">
                                 <span class="text-primary fw-bold">
@@ -279,7 +390,7 @@
                                 }
                             </p>
 
-                            <hr class="w-75 mx-auto" />
+                            <hr />
 
                             <p class="fs-5 mb-0">
                                 <span class="text-primary fw-bold">
@@ -291,7 +402,7 @@
                                 </span>
                             </p>
 
-                            <hr class="w-75 mx-auto" />
+                            <hr />
 
                             <p class="fs-5 mb-0">
                                 <span class="text-primary fw-bold">
@@ -303,7 +414,7 @@
                                 </span>
                             </p>
 
-                            <hr class="w-75 mx-auto" />
+                            <hr />
 
                             <p class="fs-5 mb-0">
                                 <span class="text-primary fw-bold">
@@ -324,7 +435,7 @@
                                 }
                             </p>
 
-                            <hr class="w-75 mx-auto" />
+                            <hr />
 
                             <p class="fs-5 mb-0">
                                 <span class="text-primary fw-bold">
@@ -334,111 +445,104 @@
                                 <span class="text_shadow">
                                     @Model.PageFullPathWithData
                                 </span>
-                                <hr class="w-75 mx-auto" />
+                                <hr />
                                 <span class="text_shadow">
                                     @Uri.UnescapeDataString(Model.PageFullPathWithData)
                                 </span>
                             </p>
 
-                            <hr class="w-75 mx-auto" />
+                            <hr />
 
-                            <p class="fs-5 mb-0">
-                                <span class="text-primary fw-bold">
-                                    Псевдоним (1) :
-                                </span>
-                                <br class="d-sm-none" />
-                                @if (string.IsNullOrEmpty(Model.PagePathNickName))
-                                {
-                                    <span class="fs-6 form-text text-success">
-                                        псевдоним (1) не задан
+                            @if (!string.IsNullOrEmpty(Model.PagePathNickName))
+                            {
+                                <p class="fs-5 mb-0">
+
+                                    <span class="text-primary fw-bold">
+                                        Псевдоним (1) :
                                     </span>
-                                }
-                                else
-                                {
+
+                                    <br class="d-sm-none" />
+
                                     <span class="text_shadow">
                                         @Model.PagePathNickName
                                     </span>
-                                    <hr class="w-75 mx-auto" />
+                                    <hr />
                                     <span class="text_shadow">
                                         @Uri.UnescapeDataString(Model.PagePathNickName)
                                     </span>
-                                }
-                            </p>
 
-                            <hr class="w-75 mx-auto" />
+                               
+                                </p>
+                            }
 
-                            <p class="fs-5 mb-0">
-                                <span class="text-primary fw-bold">
-                                    Псевдоним (2) :
-                                </span>
-                                <br class="d-sm-none" />
-                                @if (string.IsNullOrEmpty(Model.PagePathNickName2))
-                                {
-                                    <span class="fs-6 form-text text-success">
-                                        псевдоним (2) не задан
+                            @if (!string.IsNullOrEmpty(Model.PagePathNickName2))
+                            {
+                                <hr />
+
+                                <p class="fs-5 mb-0">
+
+                                    <span class="text-primary fw-bold">
+                                        Псевдоним (2) :
                                     </span>
-                                }
-                                else
-                                {
+
+                                    <br class="d-sm-none" />
+
                                     <span class="text_shadow">
                                         @Model.PagePathNickName2
                                     </span>
-                                    <hr class="w-75 mx-auto" />
+                                    <hr />
                                     <span class="text_shadow">
                                         @Uri.UnescapeDataString(Model.PagePathNickName2)
                                     </span>
-                                }
-                            </p>
 
-                            <hr class="w-75 mx-auto" />
+                                </p>
+                            }
 
-                            <p class="fs-5 mb-0">
-                                <span class="text-primary fw-bold">
-                                    Псевдоним (3) :
-                                </span>
-                                <br class="d-sm-none" />
-                                @if (string.IsNullOrEmpty(Model.PagePathNickName3))
-                                {
-                                    <span class="fs-6 form-text text-success">
-                                        псевдоним (3) не задан
+                            @if (!string.IsNullOrEmpty(Model.PagePathNickName3))
+                            {
+                                <hr />
+
+                                <p class="fs-5 mb-0">
+
+                                    <span class="text-primary fw-bold">
+                                        Псевдоним (3) :
                                     </span>
-                                }
-                                else
-                                {
+
+                                    <br class="d-sm-none" />
+
                                     <span class="text_shadow">
                                         @Model.PagePathNickName3
                                     </span>
-                                    <hr class="w-75 mx-auto" />
+                                    <hr />
                                     <span class="text_shadow">
                                         @Uri.UnescapeDataString(Model.PagePathNickName3)
                                     </span>
-                                }
-                            </p>
 
-                            <hr class="w-75 mx-auto" />
+                                </p>
+                            }
 
-                            <p class="fs-5 mb-0">
-                                <span class="text-primary fw-bold">
-                                    Псевдоним (4) :
-                                </span>
-                                <br class="d-sm-none" />
-                                @if (string.IsNullOrEmpty(Model.PagePathNickName4))
-                                {
-                                    <span class="fs-6 form-text text-success">
-                                        псевдоним (3) не задан
+                            @if (!string.IsNullOrEmpty(Model.PagePathNickName4))
+                            {
+                                <hr />
+
+                                <p class="fs-5 mb-0">
+
+                                    <span class="text-primary fw-bold">
+                                        Псевдоним (4) :
                                     </span>
-                                }
-                                else
-                                {
+
+                                    <br class="d-sm-none" />
+
                                     <span class="text_shadow">
                                         @Model.PagePathNickName4
                                     </span>
-                                    <hr class="w-75 mx-auto" />
+                                    <hr />
                                     <span class="text_shadow">
                                         @Uri.UnescapeDataString(Model.PagePathNickName4)
                                     </span>
-                                }
-                            </p>
+
+                                </p>
+                            }
                         }
 
                     </div>
@@ -2298,13 +2402,13 @@
         </div>
 
         @* Управление страницей *@
-        <div class="card-footer border p-0 my-2">
+        <div class="card-footer p-0 my-3 shadw">
 
             <a asp-area="Admin"
                asp-controller="PageInfo"
                asp-action="EditPage"
                asp-route-pageid="@Model.PageInfoModelId"
-               class="btn btn-outline-dark py-1 m-2 shadw minwidth100px"
+               class="@actionButton btn-outline-success"
                title="редактировать данные">
 
                 Изменить
@@ -2315,55 +2419,99 @@
                asp-controller="PageInfo"
                asp-action="DeletePage"
                asp-route-pageid="@Model.PageInfoModelId"
-               class="btn btn-outline-danger py-1 m-2 shadw minwidth100px"
+               class="@actionButton btn-outline-danger"
                title="удалить страницу">
 
                 Удалить
 
             </a>
 
-            <a href="@Url.Content(Model.PageFullPathWithData)"
-               class="btn btn-outline-primary py-1 m-2 shadw minwidth100px"
-               title="просмотр">
+            @if (Model.PageAsRazorPage == false)
+            {
+                <a asp-area="@Model.PageArea.Trim('/')"
+                   asp-controller="@Model.Controller.Trim('/')"
+                   asp-action="@Model.Action.Trim('/')"
+                   asp-all-route-data="@routeData"
+                   class="@actionButton btn-outline-primary"
+                   title="открыть в браузере">
 
-                Просмотр
+                    Открыть
 
-            </a>
+                </a>
+            }
+            else
+            {
+                <a asp-area="@Model.PageArea.Trim('/')"
+                   asp-page="@Model.PageLoc"
+                   asp-all-route-data="@routeData"
+                   class="@actionButton btn-outline-primary"
+                   title="открыть в браузере">
+
+                    Открыть
+
+                </a>
+            }
+
+            <br />
 
             @if (!string.IsNullOrEmpty(Model.PagePathNickName))
             {
                 <a href="@Url.Content(Model.PagePathNickName)"
-                   class="btn btn-outline-primary py-1 m-2 shadw minwidth100px"
+                   class="@actionButton btn-outline-info"
                    title="просмотр">
 
-                    Псевдоним
+                    Псевдоним(1)
 
                 </a>
             }
 
-            <a asp-area="Admin"
-               asp-controller="PageInfo"
-               asp-action="Index"
-               class="btn btn-outline-success py-1 m-2 shadw minwidth100px"
-               title="список страниц">
-
-                Список
-
-            </a>
-
-            @if (Model.MovieFile != null)
+            @if (!string.IsNullOrEmpty(Model.PagePathNickName2))
             {
-                <a asp-area="Admin"
-                   asp-controller="MovieInfo"
-                   asp-action="DetailsMovie"
-                   asp-route-movieid="@Model.MovieFile.MovieFileModelId"
-                   class="btn btn-outline-info py-1 m-2 shadw minwidth100px"
-                   title="данные фильма">
+                <a href="@Url.Content(Model.PagePathNickName2)"
+                   class="@actionButton btn-outline-info"
+                   title="просмотр">
 
-                    Фильм
+                    Псевдоним(2)
 
                 </a>
             }
+
+            @if (!string.IsNullOrEmpty(Model.PagePathNickName3))
+            {
+                <a href="@Url.Content(Model.PagePathNickName3)"
+                   class="@actionButton btn-outline-info"
+                   title="просмотр">
+
+                    Псевдоним(3)
+
+                </a>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.PagePathNickName4))
+            {
+                <a href="@Url.Content(Model.PagePathNickName4)"
+                   class="@actionButton btn-outline-info"
+                   title="просмотр">
+
+                    Псевдоним(4)
+
+                </a>
+            }
+
+        </div>
+
+        @* Индекс сортировки *@
+        <div>
+
+            <p class="mt-2">
+
+                <label asp-for="SortOfPage" class="@cssForLabel"></label>
+
+                <span class="fs-4 text-danger">
+                    @Model.SortOfPage
+                </span>
+
+            </p>
 
         </div>
 

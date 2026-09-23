@@ -9,7 +9,7 @@
 <partial name="_HeadingPartial"
          model='("Редактировать страницу", "h1")' />
 
-<div id="blockForCardOfPageAndGuid" class="row">
+<div id="blockEditPage" class="row">
 
     @* Кадры слева *@
     <div id="picturesFromLeft" class="col-2 d-none d-lg-block">
@@ -87,14 +87,7 @@
                 </div>
 
                 @* Все ошибки ввода данных *@
-                <div id="allErrorsForm">
-
-                    @if (Context.Request.Method == "POST")
-                    {
-                        <div asp-validation-summary="All" class="text-danger border border-top-0 border-danger mb-3"></div>
-                    }
-
-                </div>
+                <partial name="_AllErrorPartial" />
 
                 @* Данные по группам *@
                 <div id="accordionEditPage" class="accordion">
@@ -169,7 +162,7 @@
 
                     </div>
 
-                    @*  Картинка для страницы *@
+                    @* Картинка для страницы *@
                     <div id="changeImageForPage" class="accordion-item mb-3 mt-2 shadw">
 
                         @* Заголовок группы «Картинка для страницы» *@
@@ -363,11 +356,350 @@
 
                     </div>
 
-                    @* текст для страницы *@
+                    @* Адрес и псевдонимы  страницы  *@
+                    <div id="addressAndAliasAccordion" class="accordion-item mb-3 mt-2 shadw">
+
+                        @* Заголовок группы «Адрес и псевдонимы  страницы» *@
+                        <h2 id="headingPageAdress" class="accordion-header shadw">
+
+                            <button class="accordion-button collapsed py-0 stranicy"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#PageAdress"
+                                    aria-expanded="true"
+                                    aria-controls="PageAdress">
+
+                                <span class="form-label fs-5">Адрес и псевдонимы :</span>
+
+                            </button>
+
+                        </h2>
+
+                        @* Адрес и псевдонимы *@
+                        <div id="PageAdress"
+                             class="accordion-collapse collapse"
+                             aria-labelledby="headingPageAdress"
+                             data-bs-parent="#accordionEditPage">
+
+                            <div id="addressAndAliasAccordionBody" class="accordion-body accordion-body-nointend text-center">
+
+                                @* Выбор области Area *@
+                                <div id="changeArea" class="row g-2 justify-content-center">
+
+                                    <label asp-for="PageArea" class="@cssForLabel col-auto"></label>
+
+                                    <div id="pageAreaList" class="col-auto" aria-describedby="PageAreaInputHelpBlock">
+
+                                        <select asp-for="PageArea" id="AreaInput" class="form-select">
+
+                                            @for (int i = 0; i < Model.AreaItems.Count(); i++)
+                                            {
+                                                <option value="@Model.AreaItems[i]">@Model.AreaItems[i]</option>
+                                            }
+
+                                        </select>
+
+                                    </div>
+
+                                    <div id="PageAreaInputHelpBlock" class="form-text">
+
+                                        <span class="fs-6 text-success">
+                                            область «Area»
+                                        </span>
+
+                                    </div>
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="PageArea" class="text-danger"></span>
+                                    }
+
+                                </div>
+
+                                @* Выбор контроллера *@
+                                <div id="changeController">
+
+                                    <label asp-for="Controller" class="@cssForLabel"></label>
+
+                                    <input asp-for="Controller" id="ControllerInput" class="col text-start" aria-describedby="ControllerInputHelpBlock" />
+
+                                    <div id="ControllerInputHelpBlock" class="form-text">
+
+                                        <span class="fs-6 text-success">
+                                            Controller для страницы MVC
+                                        </span>
+
+                                    </div>
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="Controller" class="text-danger"></span>
+                                    }
+
+                                </div>
+
+                                @* Выбор действия *@
+                                <div id="changeAction">
+
+                                    <label asp-for="Action" class="@cssForLabel"></label>
+
+                                    <input asp-for="Action" id="ActionInput" class="col text-start" aria-describedby="ActionInputHelpBlock" />
+
+                                    <div id="ActionInputHelpBlock" class="form-text">
+
+                                        <span class="fs-6 text-success">
+                                            Action для страницы MVC
+                                        </span>
+
+                                    </div>
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="Action" class="text-danger"></span>
+                                    }
+
+                                </div>
+
+                                @* Данные адреса *@
+                                <div id="dataForAdress">
+
+                                    <label asp-for="RoutData" class="@cssForLabel"></label>
+
+                                    <input asp-for="RoutData" id="RoutDataInput" class="col-9 text-start" aria-describedby="RoutDataInputHelpBlock" />
+
+                                    <div id="ActionInputHelpBlock" class="form-text">
+
+                                        <span class="fs-6 text-success">
+                                            данные запроса (QweryString)
+                                        </span>
+
+                                    </div>
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="RoutData" class="text-danger"></span>
+                                    }
+
+                                </div>
+
+                                @* Адрес для RazorPage *@
+                                <div id="adressForRazorPage">
+
+                                    <label asp-for="PageLoc" class="@cssForLabel"></label>
+
+                                    <input asp-for="PageLoc" id="PageLocInput" class="col text-start" aria-describedby="PageLocInputHelpBlock" />
+
+                                    <div id="PageLocInputHelpBlock" class="form-text">
+
+                                        <span class="fs-6 text-danger">
+                                            указывать только для RazorPages
+                                        </span>
+
+                                    </div>
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="PageLoc" class="text-danger"></span>
+                                    }
+
+                                </div>
+
+                                @* Псевдоним адреса (1) *@
+                                <div id="pseudonym1OfAdress">
+
+                                    <label asp-for="PagePathNickName" class="@cssForLabel"></label>
+
+                                    <input asp-for="PagePathNickName" id="PagePathNickNameInput" class="col-11 text-start" aria-describedby="PagePathNickNameInputHelpBlock" />
+
+                                    <div id="PagePathNickNameInputHelpBlock" class="form-text">
+
+                                        <span class="fs-6 text-success">
+                                            псевдоним страницы (1)
+                                        </span>
+
+                                    </div>
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="PagePathNickName" class="text-danger"></span>
+                                    }
+
+                                </div>
+
+                                @* Псевдоним адреса (2) *@
+                                <div id="pseudonym2OfAdress">
+
+                                    <label asp-for="PagePathNickName2" class="@cssForLabel"></label>
+
+                                    <input asp-for="PagePathNickName2" id="PagePathNickName2Input" class="col-11 text-start" aria-describedby="PagePathNickName2InputHelpBlock" />
+
+                                    <div id="PagePathNickName2InputHelpBlock" class="form-text">
+
+                                        <span class="fs-6 text-success">
+                                            псевдоним страницы (2)
+                                        </span>
+
+                                    </div>
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="PagePathNickName2" class="text-danger"></span>
+                                    }
+
+                                </div>
+
+                                @* Псевдоним адреса (3) *@
+                                <div id="pseudonym3OfAdress">
+
+                                    <label asp-for="PagePathNickName3" class="@cssForLabel"></label>
+
+                                    <input asp-for="PagePathNickName3" id="PagePathNickName3Input" class="col-11 text-start" aria-describedby="PagePathNickName3InputHelpBlock" />
+
+                                    <div id="PagePathNickName3InputHelpBlock" class="form-text">
+
+                                        <span class="fs-6 text-success">
+                                            псевдоним страницы (3)
+                                        </span>
+
+                                    </div>
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="PagePathNickName3" class="text-danger"></span>
+                                    }
+
+                                </div>
+
+                                @* Псевдоним адреса (4) *@
+                                <div id="pseudonym4OfAdress">
+
+                                    <label asp-for="PagePathNickName4" class="@cssForLabel"></label>
+
+                                    <input asp-for="PagePathNickName4" id="PagePathNickName4Input" class="col-11 text-start" aria-describedby="PagePathNickName4InputHelpBlock" />
+
+                                    <div id="PagePathNickName4InputHelpBlock" class="form-text">
+
+                                        <span class="fs-6 text-success">
+                                            псевдоним страницы (4)
+                                        </span>
+
+                                    </div>
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="PagePathNickName4" class="text-danger"></span>
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    @* Фильм для страницы *@
+                    <div id="changeFilmForPage" class="accordion-item mb-3 mt-2 shadw">
+
+                        @* Заголовок группы «фильм для страницы» *@
+                        <h2 id="headingFilmForPage" class="accordion-header shadw">
+
+                            <button class="accordion-button collapsed py-0 stranicy"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#FilmForPage"
+                                    aria-expanded="true"
+                                    aria-controls="FilmForPage">
+
+                                <span class="form-label fs-5">
+                                    Фильм для страницы :
+                                </span>
+
+                            </button>
+
+                        </h2>
+
+                        @* Выбрать фильм *@
+                        <div id="FilmForPage"
+                             class="accordion-collapse collapse"
+                             aria-labelledby="headingFilmForPage"
+                             data-bs-parent="#accordionEditPage">
+
+                            <div id="filmForPageAccordionBody" class="accordion-body accordion-body-nointend text-center">
+
+                                @if (Model.FilmFileModel != null)
+                                {
+                                    <div id="currentFilm" class="bg-dark bg-opacity-75 py-2 mb-3">
+
+                                        <partial name="_LinkToFilmPartial" model="@Model.FilmFileModel" />
+
+                                        <p class="text-center fluid-font-size text-white">
+                                            @(DataConfig.MovieFoldersPath + '\\' + Model.FilmFileModel.FilmFileName)
+                                        </p>
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p class="text-center fluid-font-size text-bg-danger mb-3">
+                                        файл фильма для страницы не задан
+                                    </p>
+                                }
+
+                                <input asp-for="FilmFileFormFile"
+                                       id="FilmFormFileInput"
+                                       class="form-control w-75 mx-auto"
+                                       aria-describedby="FilmFormFileInputHelpBlock" />
+
+                                @if (Context.Request.Method == "POST")
+                                {
+                                    <span asp-validation-for="FilmFileFormFile" class="text-danger mt-2 fw-bolder"></span>
+                                }
+
+                                <div id="FilmFormFileInputHelpBlock" class="form-text">
+
+                                    <span class="fs-6 text-success">
+                                        выбрать файл фильма
+                                    </span>
+
+                                </div>
+
+                                <select asp-for="FilmFileModelId"
+                                        asp-items="ViewBag.FilmFIles"
+                                        class="d-flex col-12 col-sm-7 col-lg-6 mx-auto mt-3"
+                                        aria-describedby="FilmFormFileInputHelpBlock">
+
+                                    <option value="@Guid.Empty" selected>
+                                        Фильм не выбран
+                                    </option>
+
+                                </select>
+
+
+                                @if (Context.Request.Method == "POST")
+                                {
+                                    <span asp-validation-for="FilmFileModelId" class="text-danger"></span>
+                                }
+
+                                <div class="form-text">
+
+                                    <span class="fs-6 text-success">
+                                        выбрать фильм
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    @* Текст для страницы *@
                     <div class="accordion-item mb-3 mt-2 shadw">
 
-                        @* заголовок группы «Текст для страницы» *@
-                        <h2 id="headingTextForPage" class="accordion-header">
+                        @* Заголовок группы «Текст для страницы» *@
+                        <h2 id="headingTextForPage" class="accordion-header shadw">
 
                             <button class="accordion-button collapsed py-0 stranicy"
                                     type="button"
@@ -382,7 +714,7 @@
 
                         </h2>
 
-                        @* выбрать файл текста *@
+                        @* Выбрать файл текста *@
                         <div id="TextForPage"
                              class="accordion-collapse collapse"
                              aria-labelledby="headingTextForPage"
@@ -556,11 +888,11 @@
 
                     </div>
 
-                    @* фон для страницы (фотопленка) *@
+                    @* Фон для страницы (фотопленка) *@
                     <div class="accordion-item mb-3 mt-2 shadw">
 
-                        @* заголовок группы «Фон для для страницы (фотопленка)» *@
-                        <h2 id="headingBackgroundForPage" class="accordion-header">
+                        @* Заголовок группы «Фон для страницы (фотопленка)» *@
+                        <h2 id="headingBackgroundForPage" class="accordion-header shadw">
 
                             <button class="accordion-button collapsed py-0 stranicy"
                                     type="button"
@@ -575,11 +907,11 @@
 
                         </h2>
 
-                        @* выбрать фон*@
+                        @* Выбрать фон*@
                         <div id="BackgroundForPage"
                              class="accordion-collapse collapse"
                              aria-labelledby="headingBackgroundForPage"
-                             data-bs-parent="#accordionAddPage">
+                             data-bs-parent="#accordionEditPage">
 
                             <div class="accordion-body accordion-body-nointend text-center">
 
@@ -638,11 +970,11 @@
 
                     </div>
 
-                    @* аудиофайл для страницы *@
+                    @* Аудиофайл для страницы *@
                     <div class="accordion-item mb-3 mt-2 shadw">
 
                         @* заголовок группы «Аудиофайл для страницы» *@
-                        <h2 id="headingAudioForPage" class="accordion-header">
+                        <h2 id="headingAudioForPage" class="accordion-header shadw">
 
                             <button class="accordion-button collapsed py-0 stranicy"
                                     type="button"
@@ -749,11 +1081,11 @@
 
                     </div>
 
-                    @* индекс сортировки страницы *@
+                    @* Индекс сортировки страницы *@
                     <div class="accordion-item mb-3 mt-2 shadw">
 
-                        @* заголовок группы «Индекс сортировки страницы» *@
-                        <h2 id="headingIndexOfSorting" class="accordion-header">
+                        @* Заголовок группы «Индекс сортировки страницы» *@
+                        <h2 id="headingIndexOfSorting" class="accordion-header shadw">
 
                             <button class="accordion-button collapsed py-0 stranicy"
                                     type="button"
@@ -812,267 +1144,11 @@
 
                     </div>
 
-                    @* адрес и псевдонимы  страницы  *@
-                    <div class="accordion-item mb-3 mt-2 shadw">
-
-                        @* заголовок группы «Адрес и псевдонимы  страницы» *@
-                        <h2 id="headingPageAdress" class="accordion-header">
-
-                            <button class="accordion-button collapsed py-0 stranicy"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#PageAdress"
-                                    aria-expanded="true"
-                                    aria-controls="PageAdress">
-
-                                <span class="form-label fs-5">Адрес и псевдонимы :</span>
-
-                            </button>
-
-                        </h2>
-
-                        @* адрес и псевдонимы *@
-                        <div id="PageAdress"
-                             class="accordion-collapse collapse"
-                             aria-labelledby="headingPageAdress"
-                             data-bs-parent="#accordionAddPage">
-
-                            <div class="accordion-body accordion-body-nointend text-center">
-
-                                @* Выбор области Area *@
-                                <div class="row g-2 justify-content-center">
-
-                                    <label asp-for="PageArea" class="@cssForLabel col-auto"></label>
-
-                                    <div class="col-auto" aria-describedby="PageAreaInputHelpBlock">
-
-                                        <select asp-for="PageArea" id="AreaInput" class="form-select">
-
-                                            @for (int i = 0; i < Model.AreaItems.Count(); i++)
-                                            {
-                                                <option value="@Model.AreaItems[i]">@Model.AreaItems[i]</option>
-                                            }
-
-                                        </select>
-
-                                    </div>
-
-                                    <div id="PageAreaInputHelpBlock" class="form-text">
-
-                                        <span class="fs-6 text-success">
-                                            область «Area»
-                                        </span>
-
-                                    </div>
-
-                                    @if (Context.Request.Method == "POST")
-                                    {
-                                        <span asp-validation-for="PageArea" class="text-danger"></span>
-                                    }
-
-                                    <hr class="w-50 mx-auto" />
-
-                                </div>
-
-                                @* Выбор контроллера *@
-                                <div>
-
-                                    <label asp-for="Controller" class="@cssForLabel"></label>
-
-                                    <input asp-for="Controller" id="ControllerInput" class="text-center col-11 col-lg-6" aria-describedby="ControllerInputHelpBlock" />
-
-                                    <div id="ControllerInputHelpBlock" class="form-text">
-
-                                        <span class="fs-6 text-success">
-                                            Controller для страницы MVC
-                                        </span>
-
-                                    </div>
-
-                                    @if (Context.Request.Method == "POST")
-                                    {
-                                        <span asp-validation-for="Controller" class="text-danger"></span>
-                                    }
-
-                                    <hr class="w-50 mx-auto" />
-
-                                </div>
-
-                                @* Выбор действия *@
-                                <div>
-
-                                    <label asp-for="Action" class="@cssForLabel"></label>
-
-                                    <input asp-for="Action" id="ActionInput" class="text-center col-11 col-lg-6" aria-describedby="ActionInputHelpBlock" />
-
-                                    <div id="ActionInputHelpBlock" class="form-text">
-
-                                        <span class="fs-6 text-success">
-                                            Action для страницы MVC
-                                        </span>
-
-                                    </div>
-
-                                    @if (Context.Request.Method == "POST")
-                                    {
-                                        <span asp-validation-for="Action" class="text-danger"></span>
-                                    }
-
-                                    <hr class="w-50 mx-auto" />
-
-                                </div>
-
-                                @* Данные адреса *@
-                                <div>
-
-                                    <label asp-for="RoutData" class="@cssForLabel"></label>
-
-                                    <input asp-for="RoutData" id="RoutDataInput" class="col-11 text-start" aria-describedby="RoutDataInputHelpBlock" />
-
-                                    <div id="ActionInputHelpBlock" class="form-text">
-
-                                        <span class="fs-6 text-success">
-                                            Данные запроса (QweryString)
-                                        </span>
-
-                                    </div>
-
-                                    @if (Context.Request.Method == "POST")
-                                    {
-                                        <span asp-validation-for="RoutData" class="text-danger"></span>
-                                    }
-
-                                    <hr class="w-50 mx-auto" />
-
-                                </div>
-
-                                @* Адрес для RazorPage *@
-                                <div>
-
-                                    <label asp-for="PageLoc" class="@cssForLabel"></label>
-
-                                    <input asp-for="PageLoc" id="PageLocInput" class="col-11 text-start" aria-describedby="PageLocInputHelpBlock" />
-
-                                    <div id="PageLocInputHelpBlock" class="form-text">
-
-                                        <span class="fs-6 text-danger">
-                                            указывать только для RazorPages
-                                        </span>
-
-                                    </div>
-
-                                    @if (Context.Request.Method == "POST")
-                                    {
-                                        <span asp-validation-for="PageLoc" class="text-danger"></span>
-                                    }
-
-                                    <hr class="w-50 mx-auto" />
-
-                                </div>
-
-                                @* Псевдоним адреса (1) *@
-                                <div>
-
-                                    <label asp-for="PagePathNickName" class="@cssForLabel"></label>
-
-                                    <input asp-for="PagePathNickName" id="PagePathNickNameInput" class="col-11 text-start" aria-describedby="PagePathNickNameInputHelpBlock" />
-
-                                    <div id="PagePathNickNameInputHelpBlock" class="form-text">
-
-                                        <span class="fs-6 text-success">
-                                            псевдоним страницы (1)
-                                        </span>
-
-                                    </div>
-
-                                    @if (Context.Request.Method == "POST")
-                                    {
-                                        <span asp-validation-for="PagePathNickName" class="text-danger"></span>
-                                    }
-
-                                    <hr class="w-50 mx-auto" />
-
-                                </div>
-
-                                @* Псевдоним адреса (2) *@
-                                <div>
-
-                                    <label asp-for="PagePathNickName2" class="@cssForLabel"></label>
-
-                                    <input asp-for="PagePathNickName2" id="PagePathNickName2Input" class="col-11 text-start" aria-describedby="PagePathNickName2InputHelpBlock" />
-
-                                    <div id="PagePathNickName2InputHelpBlock" class="form-text">
-
-                                        <span class="fs-6 text-success">
-                                            псевдоним страницы (2)
-                                        </span>
-
-                                    </div>
-
-                                    @if (Context.Request.Method == "POST")
-                                    {
-                                        <span asp-validation-for="PagePathNickName2" class="text-danger"></span>
-                                    }
-
-                                    <hr class="w-50 mx-auto" />
-
-                                </div>
-
-                                @* Псевдоним адреса (3) *@
-                                <div>
-
-                                    <label asp-for="PagePathNickName3" class="@cssForLabel"></label>
-
-                                    <input asp-for="PagePathNickName3" id="PagePathNickName3Input" class="col-11 text-start" aria-describedby="PagePathNickName3InputHelpBlock" />
-
-                                    <div id="PagePathNickName3InputHelpBlock" class="form-text">
-
-                                        <span class="fs-6 text-success">
-                                            псевдоним страницы (3)
-                                        </span>
-
-                                    </div>
-
-                                    @if (Context.Request.Method == "POST")
-                                    {
-                                        <span asp-validation-for="PagePathNickName3" class="text-danger"></span>
-                                    }
-
-                                </div>
-
-                                @* Псевдоним адреса (4) *@
-                                <div>
-
-                                    <label asp-for="PagePathNickName4" class="@cssForLabel"></label>
-
-                                    <input asp-for="PagePathNickName4" id="PagePathNickName4Input" class="col-11 text-start" aria-describedby="PagePathNickName4InputHelpBlock" />
-
-                                    <div id="PagePathNickName4InputHelpBlock" class="form-text">
-
-                                        <span class="fs-6 text-success">
-                                            псевдоним страницы (4)
-                                        </span>
-
-                                    </div>
-
-                                    @if (Context.Request.Method == "POST")
-                                    {
-                                        <span asp-validation-for="PagePathNickName4" class="text-danger"></span>
-                                    }
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
                     @* Title-Description-KeyWords  *@
                     <div class="accordion-item mb-3 mt-2 shadw">
 
-                        @* заголовок группы «Title-Description-KeyWords» *@
-                        <h2 id="headingTitleDescriptionKeyWords" class="accordion-header">
+                        @* Заголовок группы «Title-Description-KeyWords» *@
+                        <h2 id="headingTitleDescriptionKeyWords" class="accordion-header shadw">
 
                             <button class="accordion-button collapsed py-0 stranicy"
                                     type="button"
@@ -1183,8 +1259,8 @@
                     @* Open Graph тег OgType *@
                     <div class="accordion-item mb-3 mt-2 shadw">
 
-                        @* заголовок группы «Open Graph тег OgType» *@
-                        <h2 id="headingOpenGraph" class="accordion-header">
+                        @* Заголовок группы «Open Graph тег OgType» *@
+                        <h2 id="headingOpenGraph" class="accordion-header shadw">
 
                             <button class="accordion-button collapsed py-0 stranicy"
                                     type="button"
@@ -1203,7 +1279,7 @@
                         <div id="OpenGraph"
                              class="accordion-collapse collapse"
                              aria-labelledby="headingOpenGraph"
-                             data-bs-parent="#accordionAddPage">
+                             data-bs-parent="#accordionEditPage">
 
                             <div class="accordion-body accordion-body-nointend text-center">
 
@@ -1248,8 +1324,8 @@
                     @* Инфо для Sitemap *@
                     <div class="accordion-item mb-3 mt-2 shadw">
 
-                        @* заголовок группы «инфо для Sitemap» *@
-                        <h2 id="headingSitemapInfo" class="accordion-header">
+                        @* Заголовок группы «инфо для Sitemap» *@
+                        <h2 id="headingSitemapInfo" class="accordion-header shadw">
 
                             <button class="accordion-button collapsed py-0 stranicy"
                                     type="button"
@@ -1264,7 +1340,7 @@
 
                         </h2>
 
-                        @* инфо для Sitemap *@
+                        @* Инфо для Sitemap *@
                         <div id="SitemapInfo"
                              class="accordion-collapse collapse"
                              aria-labelledby="headingSitemapInfo"
@@ -1359,8 +1435,8 @@
                     @* Содержание страницы (заголовок, картинка под заголовком, текст) *@
                     <div class="accordion-item mb-3 mt-2 shadw">
 
-                        @* заголовок группы «содержание страницы» *@
-                        <h2 id="headingPageContent" class="accordion-header">
+                        @* Заголовок группы «содержание страницы» *@
+                        <h2 id="headingPageContent" class="accordion-header shadw">
 
                             <button class="accordion-button collapsed py-0 stranicy"
                                     type="button"
@@ -1375,7 +1451,7 @@
 
                         </h2>
 
-                        @* содержание страницы *@
+                        @* Содержание страницы *@
                         <div id="PageContent"
                              class="accordion-collapse collapse"
                              aria-labelledby="headingPageContent"
@@ -1492,11 +1568,11 @@
 
                     </div>
 
-                    @* фильтры поиска текущей страницы *@
+                    @* Фильтры поиска текущей страницы *@
                     <div class="accordion-item mb-3 mt-2 shadw">
 
-                        @* заголовок группы «Фильтры поиска текущей страницы» *@
-                        <h2 id="headingSearchCurrentPage" class="accordion-header">
+                        @* Заголовок группы «Фильтры поиска текущей страницы» *@
+                        <h2 id="headingSearchCurrentPage" class="accordion-header shadw">
 
                             <button class="accordion-button collapsed py-0 stranicy"
                                     type="button"
@@ -1511,11 +1587,11 @@
 
                         </h2>
 
-                        @* фильтры поиска текущей страницы *@
+                        @* Фильтры поиска текущей страницы *@
                         <div id="SearchCurrentPage"
                              class="accordion-collapse collapse"
                              aria-labelledby="headingSearchCurrentPage"
-                             data-bs-parent="#accordionAddPage">
+                             data-bs-parent="#accordionEditPage">
 
                             <div class="accordion-body accordion-body-nointend text-center">
 
@@ -1660,11 +1736,11 @@
 
                     </div>
 
-                    @* поиск связанных страниц *@
+                    @* Поиск связанных страниц *@
                     <div class="accordion-item mb-3 mt-2 shadw">
 
-                        @* заголовок группы «Поиск связанных страниц» *@
-                        <h2 id="headingRelatedPages" class="accordion-header">
+                        @* Заголовок группы «Поиск связанных страниц» *@
+                        <h2 id="headingRelatedPages" class="accordion-header shadw">
 
                             <button class="accordion-button collapsed py-0 stranicy"
                                     type="button"
@@ -2714,7 +2790,7 @@
 
     </div>
 
-    @* кадры справа *@
+    @* Кадры справа *@
     <div id="picturesFromRight" class="col-2 d-none d-lg-block">
 
         @if (Model.FramesAroundMainContent != null && Model.FramesAroundMainContent.FramesOnTheRight != null)

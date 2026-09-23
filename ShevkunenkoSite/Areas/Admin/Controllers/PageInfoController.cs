@@ -91,7 +91,8 @@ public class PageInfoController(
                 .Include(audioFile => audioFile.AudioInfo)
                 // TODO: убрать nullable для картинки фильма 
                 .Include(movie => movie.MovieFile)
-                .Include(movie => movie.MovieFile)
+                .Include(film => film.FilmFileModel).ThenInclude(filmImage => filmImage != null ? filmImage.FilmImage : null)
+                .Include(film => film.FilmFileModel).ThenInclude(filmPoster => filmPoster != null ? filmPoster.FilmPoster : null)
                 .Include(iconType => iconType.IconType).ThenInclude(icon => icon.IconList)
                 .AsNoTracking()
                 .FirstAsync(p => p.PageInfoModelId == pageId);
@@ -1710,6 +1711,8 @@ public class PageInfoController(
                 .Include(text => text.TextInfo).ThenInclude(book => book != null ? book.BooksAndArticlesModel : null)
                 .Include(background => background.BackgroundFileModel)
                 .Include(audioFile => audioFile.AudioInfo)
+                .Include(film => film.FilmFileModel).ThenInclude(filmImage => filmImage != null ? filmImage.FilmImage : null)
+                .Include(film => film.FilmFileModel).ThenInclude(filmImage => filmImage != null ? filmImage.FilmPoster : null)
                 .Include(movie => movie.MovieFile).ThenInclude(movieImage => movieImage != null ? movieImage.ImageFileModel : null)
                 .Include(movie => movie.MovieFile).ThenInclude(moviePoster => moviePoster != null ? moviePoster.MoviePoster : null)
                 .Include(iconType => iconType.IconType).ThenInclude(icon => icon.IconList)
@@ -2050,6 +2053,9 @@ public class PageInfoController(
 
             #region ViewData
 
+            // Список фильмов
+            ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
             // Список картинок сайта
             ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
 
@@ -2064,9 +2070,6 @@ public class PageInfoController(
 
             // Список типов иконок
             ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
-
-            // Список фильмов
-            ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(film => film.FilmCaption), "FilmFileModelId", "FilmCaption");
 
             #endregion
 
@@ -2088,6 +2091,8 @@ public class PageInfoController(
                 "PageInfoModelId," +
                 "IconTypeModelId," +
                 "PageAsRazorPage," +
+                "FilmFileModelId," +
+                "FilmFileFormFile," +
                 "ImageFileModelId," +
                 "ImageFileFormFile," +
                 "BackgroundFileModelId," +
@@ -2357,6 +2362,56 @@ public class PageInfoController(
 
             #endregion
 
+            #region Изменить видео для страницы
+
+            if (editPage.FilmFileFormFile != null)
+            {
+                if (await filmContext.FilmFiles.Where(filmFile => filmFile.FilmFileName == editPage.FilmFileFormFile.FileName).AnyAsync())
+                {
+                    var changeFilm = await filmContext.FilmFiles.FirstAsync(filmFile => filmFile.FilmFileName == editPage.FilmFileFormFile.FileName);
+
+                    pageUpdate.FilmFileModelId = changeFilm.FilmFileModelId;
+                }
+                else
+                {
+                    ModelState.AddModelError("FilmFileFormFile", $"Фильма «{editPage.FilmFileFormFile.FileName}» нет в базе данных");
+
+                    #region ViewData
+
+                    // Список фильмов
+                    ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
+                    // Список картинок сайта
+                    ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
+
+                    // Список картинок для фона (фотопленка)
+                    ViewData["BackgroundImages"] = new SelectList(backgroundContext.BackgroundFiles.OrderBy(orderBackgroundImage => orderBackgroundImage.WebLeftBackground), "BackgroundFileModelId", "WebLeftBackground");
+
+                    // Список текстовых файлов
+                    ViewData["Texts"] = new SelectList(textFileContext.Texts.OrderBy(orderText => orderText.TxtFileName), "TextInfoModelId", "TxtFileName");
+
+                    // Список аудиофайлов
+                    ViewData["AudioFiles"] = new SelectList(audioFileContext.AudioFiles.OrderBy(audioFile => audioFile.CaptionOfTextInAudioFile), "AudioInfoModelId", "CaptionOfTextInAudioFile");
+
+                    // Список типов иконок
+                    ViewData["IconTypes"] = new SelectList(iconTypeContext.IconTypes, "IconTypeModelId", "PathToIcon");
+
+                    #endregion
+
+                    return View(pageUpdate);
+                }
+            }
+            else if (editPage.FilmFileFormFile == null & editPage.FilmFileModelId != Guid.Empty)
+            {
+                pageUpdate.FilmFileModelId = editPage.FilmFileModelId;
+            }
+            else
+            {
+                pageUpdate.FilmFileModelId = null;
+            }
+
+            #endregion
+
             #region Изменить индекс сортировки
 
             pageUpdate.SortOfPage = editPage.SortOfPage;
@@ -2478,6 +2533,9 @@ public class PageInfoController(
 
                         #region ViewData
 
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                         // Список картинок сайта
                         ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
 
@@ -2525,6 +2583,9 @@ public class PageInfoController(
                         ModelState.AddModelError("TextFileFormFile", $"Выбран некорректный файл «{editPage.TextFileFormFile.FileName}»");
 
                         #region ViewData
+
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                         // Список картинок сайта
                         ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
@@ -2604,6 +2665,9 @@ public class PageInfoController(
 
                         #region ViewData
 
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                         // Список картинок сайта
                         ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
 
@@ -2654,6 +2718,9 @@ public class PageInfoController(
 
                         #region ViewData
 
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                         // Список картинок сайта
                         ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
 
@@ -2702,6 +2769,9 @@ public class PageInfoController(
 
                         #region ViewData
 
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
+
                         // Список картинок сайта
                         ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
 
@@ -2733,6 +2803,9 @@ public class PageInfoController(
                         ModelState.AddModelError("AudioInfoFormFile", $"Добавьте аудиофайл «{editPage.AudioInfoFormFile.FileName}» в базу данных");
 
                         #region ViewData
+
+                        // Список фильмов
+                        ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                         // Список картинок сайта
                         ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
@@ -2789,6 +2862,9 @@ public class PageInfoController(
                     ModelState.AddModelError("ImagePageHeadingFormFile", $"Добавьте картинку «{editPage.ImagePageHeadingFormFile.FileName}» в базу данных");
 
                     #region ViewData
+
+                    // Список фильмов
+                    ViewData["FilmFiles"] = new SelectList(filmContext.FilmFiles.OrderBy(filmFile => filmFile.FilmCaption), "FilmFileModelId", "FilmCaption");
 
                     // Список картинок сайта
                     ViewData["ImageFIles"] = new SelectList(imageContext.ImageFiles.OrderBy(orderImage => orderImage.ImageCaption), "ImageFileModelId", "ImageCaption");
