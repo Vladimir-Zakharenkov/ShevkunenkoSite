@@ -79,3 +79,12 @@
 .ten {
     box-shadow: .5rem .4rem .4rem hsla(0,0%,0%,.6);
 }
+
+.fade-bg {
+    background-color: transparent;
+    transition: background-color .3s ease;
+}
+
+    .fade-bg:hover {
+        background-color: rgba(13, 110, 253, .15);
+    }

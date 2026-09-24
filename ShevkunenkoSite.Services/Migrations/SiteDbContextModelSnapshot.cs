@@ -1255,7 +1255,9 @@ namespace ShevkunenkoSite.Services.Migrations
 
                     b.HasIndex("ImagePageHeadingId");
 
-                    b.HasIndex("TextInfoId");
+                    b.HasIndex("TextInfoId")
+                        .IsUnique()
+                        .HasFilter("[TextInfoId] IS NOT NULL");
 
                     b.ToTable("PageInfo");
                 });
@@ -1530,8 +1532,8 @@ namespace ShevkunenkoSite.Services.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ShevkunenkoSite.Models.DataModels.TextInfoModel", "TextInfo")
-                        .WithMany()
-                        .HasForeignKey("TextInfoId")
+                        .WithOne("PageInfoModel")
+                        .HasForeignKey("ShevkunenkoSite.Models.DataModels.PageInfoModel", "TextInfoId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("AudioInfo");
@@ -1586,6 +1588,11 @@ namespace ShevkunenkoSite.Services.Migrations
             modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.PageInfoModel", b =>
                 {
                     b.Navigation("MovieFile");
+                });
+
+            modelBuilder.Entity("ShevkunenkoSite.Models.DataModels.TextInfoModel", b =>
+                {
+                    b.Navigation("PageInfoModel");
                 });
 #pragma warning restore 612, 618
         }

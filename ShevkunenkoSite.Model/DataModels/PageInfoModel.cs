@@ -165,7 +165,15 @@ public class PageInfoModel
 
     #endregion
 
-    #region Связанный текстовый файл
+    #region One-to-One with FilmFileModel as child
+
+    public Guid? FilmFileModelId { get; set; }
+
+    public FilmFileModel? FilmFileModel { get; set; }
+
+    #endregion
+
+    #region One-to-One with TextInfoModel as child
 
     public Guid? TextInfoId { get; set; }
     public TextInfoModel? TextInfo { get; set; }
@@ -322,14 +330,6 @@ public class PageInfoModel
     #region Навигационное свойство MovieFileModel
 
     public MovieFileModel? MovieFile { get; set; }
-
-    #endregion
-
-    #region One-to-One with FilmFileModel as child
-
-    public Guid? FilmFileModelId { get; set; }
-
-    public FilmFileModel? FilmFileModel { get; set; }
 
     #endregion
 

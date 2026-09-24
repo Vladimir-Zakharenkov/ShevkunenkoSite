@@ -161,6 +161,12 @@ services.AddScoped<IIconTypeRepository, IconTypeImplementation>();
 
 #endregion
 
+#region Открыть папку на компьютере
+
+builder.Services.AddScoped<IFolderOpener, FolderOpener>();
+
+#endregion
+
 #endregion
 
 #region  Configure the HTTP request pipeline
@@ -214,7 +220,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "MyArea",
-    pattern: "{area}/{controller=Shevkunenko}/{action=Index}/{id?}");
+    pattern: "{area?}/{controller=Shevkunenko}/{action=Index}/{id?}");
 
 app.MapAreaControllerRoute(
         name: "videos_area",

@@ -12,9 +12,9 @@ public class BooksAndArticlesModel
     public Guid BooksAndArticlesModelId { get; set; } = Guid.Empty;
 
     #endregion
-
+    
     #region Тип текста
-
+    
     [DataType(DataType.Text)]
     [Display(Name = "Тип текста :")]
     public string TypeOfText { get; set; } = string.Empty;

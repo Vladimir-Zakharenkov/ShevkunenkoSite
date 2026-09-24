@@ -77,6 +77,12 @@ public class TextInfoModel
 
     #endregion
 
+    #region One-to-One with PageInfoModel as parent
+
+    public PageInfoModel? PageInfoModel { get; set; }
+
+    #endregion
+
     #region NotMapped
 
     #region Текст без разметки TXT (NotMapped)

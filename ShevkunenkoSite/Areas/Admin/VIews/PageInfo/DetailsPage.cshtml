@@ -1,8 +1,12 @@
 ﻿@model PageInfoModel
 
+@Html.AntiForgeryToken()
+
 @{
     int i = 0;
+
     int innerAccordion = 0;
+
     string cssForLabel = "col-form-label text-primary fs-5 me-2";
 
     string actionButton = "btn py-1 m-2 shadw minwidth100px";
@@ -356,6 +360,24 @@
                                     «@Model.PageLoc»
                                 </span>
                             </p>
+
+                            <hr />
+
+                            <p class="fs-5 mb-0">
+                                <span class="text-danger fw-bold">
+                                    Полный адрес :
+                                </span>
+                                <br class="d-sm-none" />
+                                <span class="d-inline-block p-1 shadw">
+                                    <a asp-area="@Model.PageArea.Trim('/')"
+                                       asp-page="@Model.PageLoc"
+                                       class="btn btn-outline-primary fs-6"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        @Model.PageArea@Model.PageLoc
+                                    </a>
+                                </span>
+                            </p>
                         }
                         else
                         {
@@ -416,62 +438,63 @@
 
                             <hr />
 
-                            <p class="fs-5 mb-0">
-                                <span class="text-primary fw-bold">
-                                    Данные :
-                                </span>
-                                <br class="d-sm-none" />
-                                @if (string.IsNullOrEmpty(Model.RoutData))
-                                {
-                                    <span class="fs-6 form-text text-success">
-                                        данные не заданы
+                            @if (!string.IsNullOrEmpty(Model.RoutData))
+                            {
+                                <p class="fs-5 mb-0">
+                                    <span class="text-primary fw-bold">
+                                        Данные :
                                     </span>
-                                }
-                                else
-                                {
+                                    <br class="d-sm-none" />
                                     <span class="text_shadow">
                                         @Model.RoutData
                                     </span>
-                                }
-                            </p>
+                                </p>
 
-                            <hr />
+                                <hr />
+                            }
 
                             <p class="fs-5 mb-0">
-                                <span class="text-primary fw-bold">
+                                <span class="text-danger fw-bold">
                                     Полный адрес :
                                 </span>
-                                <br class="d-sm-none" />
-                                <span class="text_shadow">
-                                    @Model.PageFullPathWithData
-                                </span>
-                                <hr />
-                                <span class="text_shadow">
-                                    @Uri.UnescapeDataString(Model.PageFullPathWithData)
+                                <br />
+                                <span class="d-block fade-bg p-1 shadw">
+                                    <a asp-area="@Model.PageArea.Trim('/')"
+                                       asp-controller="@Model.Controller.Trim('/')"
+                                       asp-action="@Model.Action.Trim('/')"
+                                       asp-all-route-data="@routeData"
+                                       class="fs-6"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        @Model.PageArea@Model.Controller@Model.Action@rawQuery
+                                    </a>
                                 </span>
                             </p>
-
-                            <hr />
 
                             @if (!string.IsNullOrEmpty(Model.PagePathNickName))
                             {
-                                <p class="fs-5 mb-0">
+                                <hr />
 
-                                    <span class="text-primary fw-bold">
+                                <p class="fs-5 mb-0">
+                                    <span class="text-danger fw-bold">
                                         Псевдоним (1) :
                                     </span>
-
-                                    <br class="d-sm-none" />
-
-                                    <span class="text_shadow">
-                                        @Model.PagePathNickName
+                                    <span class="d-block fade-bg p-1 shadw">
+                                        <a href="@Model.PagePathNickName"
+                                           class="fs-6"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                            @Model.PagePathNickName
+                                        </a>
                                     </span>
-                                    <hr />
-                                    <span class="text_shadow">
-                                        @Uri.UnescapeDataString(Model.PagePathNickName)
+                                    <span class="d-block mt-2 fade-bg p-1 shadw">
+                                        <a href="@Uri.UnescapeDataString(Model.PagePathNickName)"
+                                           class="fs-6"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                            @Uri.UnescapeDataString(Model.PagePathNickName)
+                                        </a>
                                     </span>
-
-                               
                                 </p>
                             }
 
@@ -480,21 +503,26 @@
                                 <hr />
 
                                 <p class="fs-5 mb-0">
-
-                                    <span class="text-primary fw-bold">
+                                    <span class="text-danger fw-bold">
                                         Псевдоним (2) :
                                     </span>
-
-                                    <br class="d-sm-none" />
-
-                                    <span class="text_shadow">
-                                        @Model.PagePathNickName2
+                                    <br />
+                                    <span class="d-block fade-bg p-1 shadw">
+                                        <a href="@Model.PagePathNickName2"
+                                           class="fs-6"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                            @Model.PagePathNickName2
+                                        </a>
                                     </span>
-                                    <hr />
-                                    <span class="text_shadow">
-                                        @Uri.UnescapeDataString(Model.PagePathNickName2)
+                                    <span class="d-block mt-2 fade-bg p-1 shadw">
+                                        <a href="@Uri.UnescapeDataString(Model.PagePathNickName2)"
+                                           class="fs-6"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                            @Uri.UnescapeDataString(Model.PagePathNickName2)
+                                        </a>
                                     </span>
-
                                 </p>
                             }
 
@@ -503,21 +531,26 @@
                                 <hr />
 
                                 <p class="fs-5 mb-0">
-
-                                    <span class="text-primary fw-bold">
+                                    <span class="text-danger fw-bold">
                                         Псевдоним (3) :
                                     </span>
-
-                                    <br class="d-sm-none" />
-
-                                    <span class="text_shadow">
-                                        @Model.PagePathNickName3
+                                    <br />
+                                    <span class="d-block fade-bg p-1 shadw">
+                                        <a href="@Model.PagePathNickName3"
+                                           class="fs-6"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                            @Model.PagePathNickName3
+                                        </a>
                                     </span>
-                                    <hr />
-                                    <span class="text_shadow">
-                                        @Uri.UnescapeDataString(Model.PagePathNickName3)
+                                    <span class="d-block mt-2 fade-bg p-1 shadw">
+                                        <a href="@Uri.UnescapeDataString(Model.PagePathNickName3)"
+                                           class="fs-6"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                            @Uri.UnescapeDataString(Model.PagePathNickName3)
+                                        </a>
                                     </span>
-
                                 </p>
                             }
 
@@ -526,21 +559,26 @@
                                 <hr />
 
                                 <p class="fs-5 mb-0">
-
-                                    <span class="text-primary fw-bold">
+                                    <span class="text-danger fw-bold">
                                         Псевдоним (4) :
                                     </span>
-
-                                    <br class="d-sm-none" />
-
-                                    <span class="text_shadow">
-                                        @Model.PagePathNickName4
+                                    <br />
+                                    <span class="d-block fade-bg p-1 shadw">
+                                        <a href="@Model.PagePathNickName4"
+                                           class="fs-6"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                            @Model.PagePathNickName4
+                                        </a>
                                     </span>
-                                    <hr />
-                                    <span class="text_shadow">
-                                        @Uri.UnescapeDataString(Model.PagePathNickName4)
+                                    <span class="d-block mt-2 fade-bg p-1 shadw">
+                                        <a href="@Uri.UnescapeDataString(Model.PagePathNickName4)"
+                                           class="fs-6"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                            @Uri.UnescapeDataString(Model.PagePathNickName4)
+                                        </a>
                                     </span>
-
                                 </p>
                             }
                         }
@@ -552,8 +590,9 @@
             </div>
 
             @* Карточка страницы *@
-            <div class="accordion-item mb-3 shadw">
+            <div id="pageAccordionItem" class="accordion-item mb-3 shadw">
 
+                @* Заголовок группы «карточка страницы» *@
                 <h2 id="headingPagePicture" class="accordion-header shadw">
 
                     <button class="accordion-button collapsed py-0 stranicy"
@@ -574,7 +613,7 @@
                      aria-labelledby="headingPagePicture"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div class="accordion-body accordion-body-nointend text-start text-sm-center">
+                    <div id="pageAccordionBody" class="accordion-body accordion-body-nointend text-start text-sm-center">
 
                         @if (Model.ImageFileModel != null)
                         {
@@ -594,8 +633,8 @@
 
                             @if (!string.IsNullOrEmpty(Model.ImageFileModel.WebImageFileName))
                             {
-                                <a class="fs-5 text_shadow"
-                                   href="@Url.Content($" {Model.ImageFileModel.ImagePath}\\ /{Model.ImageFileModel.WebImageFileName}")"
+                                <a class="d-inline-block p-1 shadw fs-5 text_shadow fade-bg imageref"
+                                   href="@Url.Content($"{Model.ImageFileModel.ImagePath}/{Model.ImageFileModel.WebImageFileName}")"
                                    onclick="this.target='_blank'">
                                     @Model.ImageFileModel.ImagePath/@Model.ImageFileModel.WebImageFileName
                                 </a>
@@ -603,7 +642,7 @@
                             else
                             {
                                 <a class="fs-5 text_shadow"
-                                   href="@Url.Content($" {Model.ImageFileModel.ImagePath}\\ /{Model.ImageFileModel.WebImageFileName}")"
+                                   href="@Url.Content($"{Model.ImageFileModel.ImagePath}/{Model.ImageFileModel.WebImageFileName}")"
                                    onclick="this.target='_blank'">
                                     @Model.ImageFileModel.ImagePath/@Model.ImageFileModel.ImageFileName
                                 </a>
@@ -620,11 +659,12 @@
 
                         @* Текст карточки страницы *@
                         <p class="fw-bold fs-5 text-primary mb-2">
-                            Текст карточки (PageCardText) :
+                            Текст карточки :
                         </p>
+
                         @if (string.IsNullOrEmpty(Model.PageCardText))
                         {
-                            <p class="fs-6 form-text text-success text-center">
+                            <p class="fs-6 form-text text-danger text-center">
                                 (текст не задан)
                             </p>
                         }
@@ -642,8 +682,9 @@
             </div>
 
             @* Связанный файл текста *@
-            <div class="accordion-item mb-3 shadw">
+            <div id="textFileAccordionItem" class="accordion-item mb-3 shadw">
 
+                @* Заголовок группы «связанный файл текста» *@
                 <h2 id="headingTextFile" class="accordion-header shadw">
 
                     <button class="accordion-button collapsed py-0 stranicy"
@@ -664,7 +705,7 @@
                      aria-labelledby="headingPageTitle"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div class="accordion-body accordion-body-nointend text-center">
+                    <div id="textFileAccordionBody" class="accordion-body accordion-body-nointend text-center">
 
                         @if (Model.TextInfo == null)
                         {
@@ -676,21 +717,27 @@
                         {
                             <div id="accordionForTextFile" class="accordion">
 
+                                <label asp-for="@Model.TextInfo.FolderForText" class="@cssForLabel"></label>
+
+                                <button type="button"
+                                        class="d-block fs-5 fade-bg mx-auto mb-3 maxwidth300px shadw text_shadow imageref"
+                                        onclick="openTextFolder('@Model.TextInfo.TextInfoModelId')">
+
+                                    📂 @DataConfig.TextsFolderPath.Replace('\\', '/')@Model.TextInfo.FolderForText
+
+                                </button>
+
+                                <p class="fs-5 text-primary mb-2">
+                                    Файлы :
+                                </p>
+
                                 <a asp-area="Admin"
                                    asp-controller="TextInfo"
                                    asp-action="DetailsText"
                                    asp-route-textId="@Model.TextInfoId"
-                                   class="d-block mx-auto maxwidth300px shadw imageref"
+                                   class="d-block fade-bg mx-auto maxwidth300px shadw imageref"
                                    title="информация о файле текста"
                                    onclick="this.target='_blank'">
-
-                                    <label asp-for="@Model.TextInfo.FolderForText" class="@cssForLabel"></label>
-
-                                    <p class="text_shadow text-indent-0 text-center fs-5">
-                                        @DataConfig.TextsFolderPath.Replace('\\', '/')@Model.TextInfo.FolderForText
-                                    </p>
-
-                                    <hr class="w-25 mx-auto" />
 
                                     <span class="text_shadow my-2 fluid-font-size">
                                         @Model.TextInfo.TxtFileName
@@ -703,7 +750,7 @@
                                 </a>
 
                                 @* Файл TXT *@
-                                <div class="accordion-item my-3 shadw">
+                                <div id="txtAccordionItem" class="accordion-item my-3 shadw">
 
                                     @* Заголовок группы «файл TXT» *@
                                     <h2 id="headingTxtText" class="accordion-header shadw">
@@ -715,7 +762,9 @@
                                                 aria-expanded="true"
                                                 aria-controls="TxtText">
 
-                                            <span class="form-label fs-5">Файл TXT :</span>
+                                            <span class="form-label fs-5">
+                                                Файл TXT :
+                                            </span>
 
                                         </button>
 
@@ -725,17 +774,23 @@
                                          class="accordion-collapse collapse pb-2 px-2"
                                          aria-labelledby="headingTxtText">
 
-                                        <div class="accordion-body accordion-body-nointend text-center">
+                                        <div id="txtAccordionBody" class="accordion-body accordion-body-nointend text-center">
 
-                                            <textarea id="ClearTextInput" class="form-control fordetails fs-6 mb-2"
+                                            <textarea id="ClearTextInput" class="form-control fordetails fs-5 mb-2"
                                                       asp-for="ClearText"
                                                       readonly
                                                       rows="10"
                                                       aria-describedby="ClearTextInputHelpBlock"></textarea>
 
                                             <div id="ClearTextInputHelpBlock" class="form-text">
-                                                <span class="d-none d-sm-inline-block fs-6 text-success">тег «ClearText» - </span>
-                                                <span class="fs-6 text-success">текст без разметки</span>
+
+                                                <span class="d-none d-sm-inline-block fs-6 text-success">
+                                                    тег «ClearText» -
+                                                </span>
+                                                <span class="fs-6 text-success">
+                                                    текст без разметки
+                                                </span>
+
                                             </div>
 
                                         </div>
@@ -745,7 +800,7 @@
                                 </div>
 
                                 @* Файл HTML *@
-                                <div class="accordion-item my-3 shadw">
+                                <div id="htmlAccordionItem" class="accordion-item my-3 shadw">
 
                                     @* Заголовок группы «файл HTML» *@
                                     <h2 id="headingHtmlText" class="accordion-header shadw">
@@ -757,7 +812,9 @@
                                                 aria-expanded="true"
                                                 aria-controls="HtmlText">
 
-                                            <span class="form-label fs-5">Файл HTML :</span>
+                                            <span class="form-label fs-5">
+                                                Файл HTML :
+                                            </span>
 
                                         </button>
 
@@ -767,9 +824,9 @@
                                          class="accordion-collapse collapse pb-2 px-2"
                                          aria-labelledby="headingHtmlText">
 
-                                        <div class="accordion-body accordion-body-nointend text-center">
+                                        <div id="htmlAccordionBody" class="accordion-body accordion-body-nointend text-center">
 
-                                            <textarea id="HtmlTextInput" class="form-control fordetails fs-6 mb-2"
+                                            <textarea id="HtmlTextInput" class="form-control fordetails fs-5 mb-2"
                                                       asp-for="HtmlText"
                                                       readonly
                                                       rows="10"
@@ -777,8 +834,12 @@
 
                                             <div id="HtmlTextInputHelpBlock" class="form-text">
 
-                                                <span class="d-none d-sm-inline-block fs-6 text-success">тег «HtmlText» - </span>
-                                                <span class="fs-6 text-success">текст с разметкой</span>
+                                                <span class="d-none d-sm-inline-block fs-6 text-success">
+                                                    тег «HtmlText» -
+                                                </span>
+                                                <span class="fs-6 text-success">
+                                                    текст с разметкой
+                                                </span>
 
                                             </div>
 
@@ -2544,3 +2605,7 @@
     </div>
 
 </div>
+
+@section Scripts {
+    <script src="~/js/folder-opener.js" asp-append-version="true"></script>
+}
