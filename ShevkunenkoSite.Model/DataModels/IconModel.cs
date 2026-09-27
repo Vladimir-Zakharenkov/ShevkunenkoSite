@@ -27,7 +27,7 @@ public record class IconModel
     [Display(Name = "Purpose в manifest :")]
     public string IconPurpose { get; set; } = string.Empty;
 
-    #region Связь с таблицей IconTypeModel
+    #region One-to-Many with IconModel as Many
 
     public Guid IconTypeModelId { get; set; }
     public IconTypeModel IconType { get; set; } = null!;

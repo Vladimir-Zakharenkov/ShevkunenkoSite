@@ -180,6 +180,13 @@ public class PageInfoModel
 
     #endregion
 
+    #region One-to-Many with IconTypeModel as Many
+
+    public Guid IconTypeModelId { get; set; }
+    public IconTypeModel IconType { get; set; } = null!;
+
+    #endregion
+
     #region Связанный аудиофайл
 
     public Guid? AudioInfoId { get; set; }
@@ -330,13 +337,6 @@ public class PageInfoModel
     #region Навигационное свойство MovieFileModel
 
     public MovieFileModel? MovieFile { get; set; }
-
-    #endregion
-
-    #region Связь с таблицей IconTypeModel
-
-    public Guid IconTypeModelId { get; set; }
-    public IconTypeModel IconType { get; set; } = null!;
 
     #endregion
 

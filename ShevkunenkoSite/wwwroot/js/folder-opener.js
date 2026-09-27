@@ -1,7 +1,5 @@
 ﻿async function openTextFolder(textInfoId) {
 
-    console.log('openTextFolder вызван с:', textInfoId);
-
     const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
 
     const res = await fetch('/Folder/OpenText', {

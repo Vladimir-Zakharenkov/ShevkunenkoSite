@@ -682,7 +682,7 @@
             </div>
 
             @* Связанный файл текста *@
-            <div id="textFileAccordionItem" class="accordion-item mb-3 shadw">
+            <div id="textFileAccordionItem" class="accordion-item mb-3 shadw @(Model.TextInfoId == null ? "d-none" : "")">
 
                 @* Заголовок группы «связанный файл текста» *@
                 <h2 id="headingTextFile" class="accordion-header shadw">
@@ -877,8 +877,9 @@
             </div>
 
             @* Иконка страницы *@
-            <div class="accordion-item mb-3 shadw">
+            <div id="pageIconAccordionItem" class="accordion-item mb-3 shadw">
 
+                @* Заголовок группы «иконка страницы» *@
                 <h2 id="headingPageIcon" class="accordion-header shadw">
 
                     <button class="accordion-button collapsed py-0 stranicy"
@@ -888,7 +889,9 @@
                             aria-expanded="true"
                             aria-controls="PageIcon">
 
-                        <span class="form-label fs-5">Иконка страницы :</span>
+                        <span class="form-label fs-5">
+                            Иконка страницы :
+                        </span>
 
                     </button>
 
@@ -899,7 +902,7 @@
                      aria-labelledby="headingPageIcon"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div class="accordion-body accordion-body-nointend text-center">
+                    <div id="pageIconAccordionBody" class="accordion-body accordion-body-nointend text-center">
 
                         <a asp-area="Admin"
                            asp-controller="Icon"
@@ -918,8 +921,19 @@
                         </a>
 
                         <p class="my-2 fluid-font-size">
-                            <span class="text-primary">Папка : </span>
-                            <span class="text_shadow">@DataConfig.IconsFolder@Model.IconType.PathToIcon</span>
+
+                            <span class="text-primary">
+                                Папка :
+                            </span>
+
+                            <button type="button"
+                                    class="d-block fs-5 fade-bg mx-auto mb-3 maxwidth300px shadw text_shadow imageref"
+                                    onclick="openTextFolder('@Model.IconType.IconTypeModelId')">
+
+                                @DataConfig.IconsFolder@Model.IconType.PathToIcon 📂
+
+                            </button>
+
                         </p>
 
                     </div>
@@ -931,6 +945,7 @@
             @* Тег «title» *@
             <div class="accordion-item mb-3 shadw">
 
+                @* Заголовок группы «тег title» *@
                 <h2 id="headingPageTitle" class="accordion-header shadw">
 
                     <button class="accordion-button collapsed py-0 stranicy"
@@ -940,7 +955,9 @@
                             aria-expanded="true"
                             aria-controls="PageTitle">
 
-                        <span class="form-label fs-5">Заголовок (title) :</span>
+                        <span class="form-label fs-5">
+                            Заголовок (title) :
+                        </span>
 
                     </button>
 
