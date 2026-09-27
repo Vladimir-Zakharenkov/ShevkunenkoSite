@@ -6,10 +6,10 @@ using System.Diagnostics;
 
 namespace ShevkunenkoSite.Services;
 
-// Services/FolderOpener.cs
 public interface IFolderOpener
 {
-    (bool Ok, string? Error) OpenTextFolder(string folderName);
+    // baseFolderName — папка внутри wwwroot (например, "texts" или "icons")
+    (bool Ok, string? Error) OpenFolder(string baseFolderName, string folderName);
 }
 
 public class FolderOpener(IWebHostEnvironment env, ILogger<FolderOpener> logger) : IFolderOpener
@@ -17,8 +17,11 @@ public class FolderOpener(IWebHostEnvironment env, ILogger<FolderOpener> logger)
     private readonly IWebHostEnvironment _env = env;
     private readonly ILogger<FolderOpener> _logger = logger;
 
-    public (bool Ok, string? Error) OpenTextFolder(string folderName)
+    public (bool Ok, string? Error) OpenFolder(string baseFolderName, string folderName)
     {
+        if (string.IsNullOrWhiteSpace(baseFolderName))
+            return (false, "Базовая папка не указана");
+
         if (string.IsNullOrWhiteSpace(folderName))
             return (false, "Имя папки не указано");
 
@@ -28,7 +31,7 @@ public class FolderOpener(IWebHostEnvironment env, ILogger<FolderOpener> logger)
         var webRoot = _env.WebRootPath
             ?? Path.Combine(_env.ContentRootPath, "wwwroot");
 
-        var baseFolder = Path.GetFullPath(Path.Combine(webRoot, "texts"));
+        var baseFolder = Path.GetFullPath(Path.Combine(webRoot, baseFolderName));
 
         string full;
         try
@@ -44,14 +47,15 @@ public class FolderOpener(IWebHostEnvironment env, ILogger<FolderOpener> logger)
             ? baseFolder
             : baseFolder + Path.DirectorySeparatorChar;
 
+        // Защита от выхода за пределы базовой папки (path traversal)
         if (!full.StartsWith(baseWithSep, StringComparison.OrdinalIgnoreCase))
         {
-            _logger.LogWarning("Попытка выйти за пределы texts: {Name}", folderName);
+            _logger.LogWarning("Попытка выйти за пределы {Base}: {Name}", baseFolderName, folderName);
             return (false, "Недопустимый путь");
         }
 
         if (!Directory.Exists(full))
-            return (false, $"Папка не найдена: {folderName}");
+            return (false, $"Папка не найдена: {full}");
 
         try
         {

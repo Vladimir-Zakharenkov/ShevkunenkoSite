@@ -11,6 +11,8 @@
 
     string actionButton = "btn py-1 m-2 shadw minwidth100px";
 
+    string textForAccordionBtn = "form-label fs-5 mb-1";
+
     // строка из БД, например: "filmId=42&sort=new&page=3"
     var rawQuery = Model.RoutData ?? "";
 
@@ -312,7 +314,7 @@
                             aria-expanded="true"
                             aria-controls="PageAddress">
 
-                        <span class="form-label fs-5">Адрес :</span>
+                        <span class="@textForAccordionBtn">Адрес :</span>
 
                     </button>
 
@@ -602,7 +604,9 @@
                             aria-expanded="true"
                             aria-controls="PagePicture">
 
-                        <span class="form-label fs-5">Карточка :</span>
+                        <span class="@textForAccordionBtn">
+                            Карточка :
+                        </span>
 
                     </button>
 
@@ -694,7 +698,9 @@
                             aria-expanded="true"
                             aria-controls="TextFile">
 
-                        <span class="form-label fs-5">Связанный файл текста :</span>
+                        <span class="@textForAccordionBtn">
+                            Связанный файл текста :
+                        </span>
 
                     </button>
 
@@ -720,8 +726,8 @@
                                 <label asp-for="@Model.TextInfo.FolderForText" class="@cssForLabel"></label>
 
                                 <button type="button"
-                                        class="d-block fs-5 fade-bg mx-auto mb-3 maxwidth300px shadw text_shadow imageref"
-                                        onclick="openTextFolder('@Model.TextInfo.TextInfoModelId')">
+                                        class="d-block fs-5 fade-bg mx-auto mb-3 shadw text_shadow imageref"
+                                        onclick="openFolder('text', '@Model.TextInfo.TextInfoModelId')">
 
                                     📂 @DataConfig.TextsFolderPath.Replace('\\', '/')@Model.TextInfo.FolderForText
 
@@ -735,7 +741,7 @@
                                    asp-controller="TextInfo"
                                    asp-action="DetailsText"
                                    asp-route-textId="@Model.TextInfoId"
-                                   class="d-block fade-bg mx-auto maxwidth300px shadw imageref"
+                                   class="d-inline-block p-1 fade-bg mx-auto shadw imageref"
                                    title="информация о файле текста"
                                    onclick="this.target='_blank'">
 
@@ -762,7 +768,7 @@
                                                 aria-expanded="true"
                                                 aria-controls="TxtText">
 
-                                            <span class="form-label fs-5">
+                                            <span class="@textForAccordionBtn">
                                                 Файл TXT :
                                             </span>
 
@@ -812,7 +818,7 @@
                                                 aria-expanded="true"
                                                 aria-controls="HtmlText">
 
-                                            <span class="form-label fs-5">
+                                            <span class="@textForAccordionBtn">
                                                 Файл HTML :
                                             </span>
 
@@ -889,7 +895,7 @@
                             aria-expanded="true"
                             aria-controls="PageIcon">
 
-                        <span class="form-label fs-5">
+                        <span class="@textForAccordionBtn">
                             Иконка страницы :
                         </span>
 
@@ -920,15 +926,15 @@
 
                         </a>
 
-                        <p class="my-2 fluid-font-size">
+                        <p class="my-3 fs-4">
 
                             <span class="text-primary">
                                 Папка :
                             </span>
 
                             <button type="button"
-                                    class="d-block fs-5 fade-bg mx-auto mb-3 maxwidth300px shadw text_shadow imageref"
-                                    onclick="openTextFolder('@Model.IconType.IconTypeModelId')">
+                                    class="d-block fs-5 fade-bg mx-auto mb-3 shadw text_shadow imageref"
+                                    onclick="openFolder('icon', '@Model.IconType.IconTypeModelId')">
 
                                 @DataConfig.IconsFolder@Model.IconType.PathToIcon 📂
 
@@ -942,54 +948,12 @@
 
             </div>
 
-            @* Тег «title» *@
-            <div class="accordion-item mb-3 shadw">
-
-                @* Заголовок группы «тег title» *@
-                <h2 id="headingPageTitle" class="accordion-header shadw">
-
-                    <button class="accordion-button collapsed py-0 stranicy"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#PageTitle"
-                            aria-expanded="true"
-                            aria-controls="PageTitle">
-
-                        <span class="form-label fs-5">
-                            Заголовок (title) :
-                        </span>
-
-                    </button>
-
-                </h2>
-
-                <div id="PageTitle"
-                     class="accordion-collapse collapse"
-                     aria-labelledby="headingPageTitle"
-                     data-bs-parent="#accordionDetailsPage">
-
-                    <div class="accordion-body accordion-body-nointend text-center">
-
-                        <p class="text-start fluid-font-size">
-                            @Model.PageTitle
-                        </p>
-
-                        <p class="fs-6 form-text text-success">
-                            тег «title»
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
             @* Тег «description» *@
             <div class="accordion-item mb-3 shadw">
 
                 <h2 id="headingPageDescription" class="accordion-header shadw">
                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageDescription" aria-expanded="true" aria-controls="PageDescription">
-                        <span class="form-label fs-5">Описание :</span>
+                        <span class="@textForAccordionBtn">Описание :</span>
                     </button>
                 </h2>
 
@@ -1015,10 +979,20 @@
             <div class="accordion-item mb-3 shadw">
 
                 <h2 id="headingPageKeywords" class="accordion-header shadw">
+
                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageKeywords" aria-expanded="true" aria-controls="PageKeywords">
-                        <span class="form-label fs-5 d-sm-none">Ключ-слова :</span>
-                        <span class="form-label fs-5 d-none d-sm-inline">Ключевые слова :</span>
+
+                        <span class="@textForAccordionBtn d-sm-none">
+                            Ключ-слова :
+
+                        </span>
+
+                        <span class="@textForAccordionBtn d-none d-sm-inline">
+                            Ключевые слова :
+                        </span>
+
                     </button>
+
                 </h2>
 
                 <div id="PageKeywords" class="accordion-collapse collapse" aria-labelledby="headingPageKeywords" data-bs-parent="#accordionDetailsPage">
@@ -1043,10 +1017,19 @@
             <div class="accordion-item mb-3 shadw">
 
                 <h2 id="headingPageHeading" class="accordion-header shadw">
+
                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageHeading" aria-expanded="true" aria-controls="PageHeading">
-                        <span class="form-label fs-5 d-sm-none">Заголовок (H1) :</span>
-                        <span class="form-label fs-5 d-none d-sm-inline">Заголовок вверху страницы (H1) :</span>
+
+                        <span class="@textForAccordionBtn d-sm-none">
+                            Заголовок (H1) :
+
+                        </span>
+                        <span class="@textForAccordionBtn d-none d-sm-inline">
+                            Заголовок вверху страницы (H1) :
+                        </span>
+
                     </button>
+
                 </h2>
 
                 <div id="PageHeading" class="accordion-collapse collapse" aria-labelledby="headingPageHeading" data-bs-parent="#accordionDetailsPage">
@@ -1076,14 +1059,19 @@
             <div class="accordion-item mb-3 shadw">
 
                 <h2 id="headingImagePageHeading" class="accordion-header shadw">
+
                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#ImagePageHeading" aria-expanded="true" aria-controls="ImagePageHeading">
-                        <span class="form-label fs-5 d-sm-none">
+                        
+                        <span class="@textForAccordionBtn d-sm-none">
                             Картинка верх :
                         </span>
-                        <span class="form-label fs-5 d-none d-sm-inline">
+                        
+                        <span class="@textForAccordionBtn d-none d-sm-inline">
                             Картинка вверху страницы :
                         </span>
+
                     </button>
+
                 </h2>
 
                 <div id="ImagePageHeading" class="accordion-collapse collapse" aria-labelledby="headingImagePageHeading" data-bs-parent="#accordionDetailsPage">
@@ -1144,14 +1132,18 @@
             <div class="accordion-item mb-3 shadw">
 
                 <h2 id="headingPageText" class="accordion-header shadw">
+                    
                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageText" aria-expanded="true" aria-controls="PageText">
-                        <span class="form-label fs-5 d-sm-none">
+                        
+                        <span class="@textForAccordionBtn d-sm-none">
                             Текст :
                         </span>
-                        <span class="form-label fs-5 d-none d-sm-inline">
+                        <span class="@textForAccordionBtn d-none d-sm-inline">
                             Текст страницы :
                         </span>
+
                     </button>
+
                 </h2>
 
                 <div id="PageText" class="accordion-collapse collapse" aria-labelledby="headingPageText" data-bs-parent="#accordionDetailsPage">
@@ -1184,7 +1176,7 @@
 
                 <h2 id="headingPageSitemap" class="accordion-header shadw">
                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageSitemap" aria-expanded="true" aria-controls="PageSitemap">
-                        <span class="form-label fs-5">Sitemap<span class="d-none d-sm-inline">, Manifest, Browserconfig</span> :</span>
+                        <span class="@textForAccordionBtn">Sitemap<span class="d-none d-sm-inline">, Manifest, Browserconfig</span> :</span>
                     </button>
                 </h2>
 
@@ -1280,7 +1272,7 @@
 
                 <h2 id="headingLinkToCurrentPage" class="accordion-header shadw">
                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#LinkToCurrentPage" aria-expanded="true" aria-controls="LinkToCurrentPage">
-                        <span class="form-label fs-5">
+                        <span class="@textForAccordionBtn">
                             <span class="d-sm-none">
                                 Ref-In GUID1
                             </span>
@@ -1391,7 +1383,7 @@
 
                 <h2 id="headingLinkToCurrentPage2" class="accordion-header shadw">
                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#LinkToCurrentPage2" aria-expanded="true" aria-controls="LinkToCurrentPage2">
-                        <span class="form-label fs-5">
+                        <span class="@textForAccordionBtn">
                             <span class="d-sm-none">
                                 Ref-In GUID2
                             </span>
@@ -1509,7 +1501,7 @@
                             aria-expanded="true"
                             aria-controls="PageFilter">
 
-                        <span class="form-label fs-5">
+                        <span class="@textForAccordionBtn">
                             <span>
                                 Фильтры поиска
                             </span>
@@ -1673,7 +1665,7 @@
                             aria-expanded="true"
                             aria-controls="PageLinksByFilters">
 
-                        <span class="form-label fs-5">
+                        <span class="@textForAccordionBtn">
                             Ссылки на страницы :
                         </span>
 
@@ -1702,7 +1694,7 @@
                                             aria-expanded="true"
                                             aria-controls="SwitchPage">
 
-                                        <span class="form-label fs-5">
+                                        <span class="@textForAccordionBtn">
                                             Состояние :
                                         </span>
 
@@ -1749,7 +1741,7 @@
                                             aria-expanded="true"
                                             aria-controls="PageLinkFilters">
 
-                                        <span class="form-label fs-5">
+                                        <span class="@textForAccordionBtn">
                                             Фильтры выбора :
                                         </span>
 
@@ -1806,7 +1798,7 @@
                                                             @* Заголовок группы *@
                                                             <h2 id="headingFiltersOfPage" class="accordion-header shadw">
                                                                 <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_@innerAccordion" aria-expanded="false" aria-controls="collapseOne_@innerAccordion">
-                                                                    <span class="form-label fs-5">@caption :</span>
+                                                                    <span class="@textForAccordionBtn">@caption :</span>
                                                                 </button>
                                                             </h2>
 
@@ -1906,7 +1898,7 @@
 
                 <h2 id="headingVideoLinks" class="accordion-header shadw">
                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#VideoLinks" aria-expanded="true" aria-controls="VideoLinks">
-                        <span class="form-label fs-5">Ссылки на видео :</span>
+                        <span class="@textForAccordionBtn">Ссылки на видео :</span>
                     </button>
                 </h2>
 
@@ -1921,7 +1913,7 @@
 
                                 <h2 id="headingSwitchVideoLinks" class="accordion-header shadw">
                                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#SwitchVideo" aria-expanded="true" aria-controls="SwitchVideo">
-                                        <span class="form-label fs-5">Состояние :</span>
+                                        <span class="@textForAccordionBtn">Состояние :</span>
                                     </button>
                                 </h2>
 
@@ -1954,7 +1946,7 @@
                                 @* Заголовок группы *@
                                 <h2 id="headingPageVideoFilters" class="accordion-header shadw">
                                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageVideoFilters" aria-expanded="true" aria-controls="PageVideoFilters">
-                                        <span class="form-label fs-5">Фильтры для видео :</span>
+                                        <span class="@textForAccordionBtn">Фильтры для видео :</span>
                                     </button>
                                 </h2>
 
@@ -1999,7 +1991,7 @@
                                                             @* Заголовок группы *@
                                                             <h2 id="headingFiltersOfVideo" class="accordion-header shadw">
                                                                 <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_@innerAccordion" aria-expanded="false" aria-controls="collapseOne_@innerAccordion">
-                                                                    <span class="form-label fs-5">@caption :</span>
+                                                                    <span class="@textForAccordionBtn">@caption :</span>
                                                                 </button>
                                                             </h2>
 
@@ -2052,7 +2044,7 @@
 
                 <h2 id="headingPageLinksByGuid1" class="accordion-header">
                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageLinksByGuid1" aria-expanded="true" aria-controls="PageLinksByGuid1">
-                        <span class="form-label fs-5">Ссылки  по GUID1 :</span>
+                        <span class="@textForAccordionBtn">Ссылки  по GUID1 :</span>
                     </button>
                 </h2>
 
@@ -2067,7 +2059,7 @@
 
                                 <h2 id="headingPageLinksByGuid1_accordion" class="accordion-header">
                                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#SwitchPageLinksByGUID1" aria-expanded="true" aria-controls="SwitchPageLinksByGUID1">
-                                        <span class="form-label fs-5">Состояние :</span>
+                                        <span class="@textForAccordionBtn">Состояние :</span>
                                     </button>
                                 </h2>
 
@@ -2099,7 +2091,7 @@
 
                                 <h2 id="headingLinksGuid1" class="accordion-header">
                                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#RefPagesGuid1" aria-expanded="true" aria-controls="RefPagesGuid1">
-                                        <span class="form-label fs-5">Страницы по GUID1 :</span>
+                                        <span class="@textForAccordionBtn">Страницы по GUID1 :</span>
                                     </button>
                                 </h2>
 
@@ -2212,7 +2204,7 @@
 
                 <h2 id="headingPageLinksByGuid2" class="accordion-header">
                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PageLinksByGuid2" aria-expanded="true" aria-controls="PageLinksByGuid2">
-                        <span class="form-label fs-5">Ссылки  по GUID2 :</span>
+                        <span class="@textForAccordionBtn">Ссылки  по GUID2 :</span>
                     </button>
                 </h2>
 
@@ -2227,7 +2219,7 @@
 
                                 <h2 id="headingPageLinksByGuid2_accordion" class="accordion-header">
                                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#SwitchPageLinksByGUID2" aria-expanded="true" aria-controls="SwitchPageLinksByGUID2">
-                                        <span class="form-label fs-5">Состояние :</span>
+                                        <span class="@textForAccordionBtn">Состояние :</span>
                                     </button>
                                 </h2>
 
@@ -2259,7 +2251,7 @@
 
                                 <h2 id="headingLinksGuid2" class="accordion-header">
                                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#RefPagesGuid2" aria-expanded="true" aria-controls="RefPagesGuid2">
-                                        <span class="form-label fs-5">Страницы по GUID1 :</span>
+                                        <span class="@textForAccordionBtn">Страницы по GUID1 :</span>
                                     </button>
                                 </h2>
 
@@ -2379,7 +2371,7 @@
                             aria-expanded="true"
                             aria-controls="Pictures">
 
-                        <span class="form-label fs-5">Картинки :</span>
+                        <span class="@textForAccordionBtn">Картинки :</span>
 
                     </button>
 
@@ -2396,7 +2388,7 @@
 
                                 <h2 id="headingPicturesCondition" class="accordion-header">
                                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PicturesCondition" aria-expanded="true" aria-controls="PicturesCondition">
-                                        <span class="form-label fs-5">Состояние :</span>
+                                        <span class="@textForAccordionBtn">Состояние :</span>
                                     </button>
                                 </h2>
 
@@ -2428,7 +2420,7 @@
 
                                 <h2 id="headingPicturesAlbum" class="accordion-header">
                                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PicturesAlbum" aria-expanded="true" aria-controls="PicturesAlbum">
-                                        <span class="form-label fs-5">Фотоальбом :</span>
+                                        <span class="@textForAccordionBtn">Фотоальбом :</span>
                                     </button>
                                 </h2>
 

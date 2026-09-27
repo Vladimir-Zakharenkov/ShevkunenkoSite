@@ -2,10 +2,6 @@
   "ProjectData": {
     "TempPath": "\\Temp\\",
 
-    "IconsFolder": "/images/pageicons/",
-
-    "IconFoldersPath": "/wwwroot/images/pageicons/",
-
     "NoImage": "29F51581-8F24-4EDC-1F48-08DAE2B985EA",
 
     "YoutubeImage": "454a9adb-58d7-4cd2-8b78-08db0babccab",
@@ -27,6 +23,10 @@
     "KinopoiskImage": "31eec46d-5556-4cdb-67a7-08db0b99fb42",
 
     "ImdbImage": "9923aec8-f82b-4032-00f2-08db0b9fc418",
+
+    "IconsFolder": "/images/pageicons/",
+
+    "IconFoldersPath": "/wwwroot/images/pageicons/",
 
     "MovieFoldersPath": "D:\\site-video",
 

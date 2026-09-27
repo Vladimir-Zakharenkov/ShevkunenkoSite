@@ -1,20 +1,25 @@
-﻿async function openTextFolder(textInfoId) {
-
+﻿async function openFolder(folderType, entityId) {
     const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
 
-    const res = await fetch('/Folder/OpenText', {
+    const res = await fetch('/Folder/Open', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'RequestVerificationToken': token ?? ''
         },
-        body: 'textInfoId=' + encodeURIComponent(textInfoId)
+        body: `folderType=${encodeURIComponent(folderType)}&entityId=${encodeURIComponent(entityId)}`
     });
 
     if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        alert('Не удалось открыть: ' + (data.error ?? res.status));
+        let errorMessage = res.status.toString();
+        try {
+            const data = await res.json();
+            errorMessage = data.error ?? errorMessage;
+        } catch {
+            // сервер вернул не JSON (например, HTML-страницу ошибки)
+        }
+        alert('Не удалось открыть: ' + errorMessage);
     }
 }
 
-window.openTextFolder = openTextFolder;
+window.openFolder = openFolder;
