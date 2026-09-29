@@ -2,21 +2,16 @@
 
 @{
     string cssForLabel = "col-form-label text-primary fs-5 me-2";
+
+    string textForAccordionBtn = "form-label fs-5 mb-1";
 }
 
-<script src="~/js/ckeditor5/ckeditor.js"></script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function (event) {
-        ClassicEditor.create(document.querySelector('#FilmDescriptionHtmlInput'));
-    });
-</script>
-
-<h1 class="fs-3 text_shadow mb-3">Добавить фильм</h1>
+<partial name="_HeadingPartial"
+         model='("Добавить фильм", "h1")' />
 
 <div class="row">
 
-    <div class="col col-lg-9 col-xl-8 d-block mx-auto px-2">
+    <div class="col col-lg-9 col-xl-8 mx-auto px-2">
 
         <form asp-area="Admin"
               asp-controller="Films"
@@ -24,20 +19,18 @@
               method="post"
               enctype="multipart/form-data">
 
-            @* все ошибки ввода данных *@
-            @if (Context.Request.Method == "POST")
-            {
-                <div asp-validation-summary="All" class="text-danger border border-top-0 border-danger mb-3"></div>
-            }
+            @* Все ошибки ввода данных *@
+            <partial name="_AllErrorPartial" />
 
-            @* данные по группам*@
-            <div class="accordion" id="accordionAddFilm">
+            @* Данные по группам*@
+            <div id="accordionAddFilm" class="accordion">
 
                 @* Файл фильма *@
-                <div class="accordion-item mb-3 shadw">
+                <div id="inputFilmAccordionItem" class="accordion-item mb-3 shadw">
 
-                    @* заголовок группы «файл фильма» *@
-                    <h2 id="headingInputFile" class="accordion-header">
+                    @* Заголовок группы «файл фильма» *@
+                    <h2 id="headingInputFile" class="accordion-header shadw">
+
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
                                 data-bs-toggle="collapse"
@@ -45,11 +38,12 @@
                                 aria-expanded="true"
                                 aria-controls="InputFile">
 
-                            <span class="form-label fs-5">
+                            <span class="@textForAccordionBtn">
                                 Файл фильма :
                             </span>
 
                         </button>
+
                     </h2>
 
                     <div id="InputFile"
@@ -57,10 +51,10 @@
                          aria-labelledby="headingInputFile"
                          data-bs-parent="#accordionAddFilm">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div id="inputFilmAccordionBody" class="accordion-body accordion-body-nointend text-center">
 
-                            @* выбрать файл фильма и полную версию фильма *@
-                            <div class="row g-2 justify-content-center">
+                            @* выбрать файл фильма *@
+                            <div class="row g-2 justify-content-center mb-4">
 
                                 <div class="col-auto">
 
@@ -90,10 +84,10 @@
 
                                 @if (Context.Request.Method == "POST")
                                 {
-                                    <span class="text-danger preline">@Html.ValidationMessageFor(model => model.FileForFilmFormFile)</span>
+                                    <span class="text-danger preline">
+                                        @Html.ValidationMessageFor(model => model.FileForFilmFormFile)
+                                    </span>
                                 }
-
-                                <hr class="w-50 mx-auto" />
 
                             </div>
 
@@ -101,14 +95,18 @@
                             <div class="row g-2 justify-content-center">
 
                                 <div class="col-auto">
+
                                     <label asp-for="FullFilmFormFile" for="FullFilmFormFileInput" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-auto text-start">
+
                                     <input asp-for="FullFilmFormFile"
                                            id="FullFilmFormFile"
                                            class="form-control"
                                            aria-describedby="FullFilmFormFileInputHelpBlock" />
+
                                 </div>
 
                                 <div id="FullFilmFormFileInputHelpBlock" class="form-text">
@@ -133,10 +131,11 @@
                 </div>
 
                 @* Заголовок и оригинальное название *@
-                <div class="accordion-item mb-3 shadw">
+                <div id="filmCaptionAccordionItem" class="accordion-item mb-3 shadw">
 
-                    @* заголовок группы «описание фильма» *@
-                    <h2 id="headingCaption" class="accordion-header">
+                    @* Заголовок группы «Название фильма и оригинальное название» *@
+                    <h2 id="headingCaption" class="accordion-header shadw">
+
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
                                 data-bs-toggle="collapse"
@@ -149,6 +148,7 @@
                             </span>
 
                         </button>
+
                     </h2>
 
                     <div id="FilmCaption"
@@ -156,27 +156,35 @@
                          aria-labelledby="headingCaption"
                          data-bs-parent="#accordionAddFilm">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div id="filmCaptionAccordionBody" class="accordion-body accordion-body-nointend text-center">
 
-                            @* название фильма *@
-                            <div class="row g-2 justify-content-center">
+                            @* Название фильма *@
+                            <div class="row g-2 justify-content-center mb-4">
 
                                 <div class="col-auto">
+
                                     <label asp-for="FilmCaption" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-12 col-md-10">
+
                                     <input asp-for="FilmCaption"
                                            id="FilmCaptionInput"
                                            class="form-control text-center"
                                            aria-describedby="FilmCaptionInputHelpBlock" />
+
                                 </div>
 
                                 <div id="FilmCaptionInputHelpBlock" class="form-text">
 
-                                    <span class="fs-6 text-success">название фильма - </span>
+                                    <span class="fs-6 text-success">
+                                        название фильма -
+                                    </span>
                                     <br class="d-inline-block d-md-none" />
-                                    <span class="fs-6 text-danger">обязательное поле</span>
+                                    <span class="fs-6 text-danger">
+                                        обязательное поле
+                                    </span>
 
                                 </div>
 
@@ -185,27 +193,31 @@
                                     <span asp-validation-for="FilmCaption" class="text-danger"></span>
                                 }
 
-                                <hr class="w-50 mx-auto mb-2" />
-
                             </div>
 
-                            @* оригинальное название фильма *@
+                            @* Оригинальное название фильма *@
                             <div class="row g-2 justify-content-center">
 
                                 <div class="col-auto">
+
                                     <label asp-for="FilmCaptionOriginal" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-12 col-md-10">
+
                                     <input asp-for="FilmCaptionOriginal"
                                            id="FilmCaptionOriginalInput"
                                            class="form-control text-center"
                                            aria-describedby="FilmCaptionOriginalInputHelpBlock" />
+
                                 </div>
 
                                 <div id="FilmCaptionOriginalInputHelpBlock" class="form-text">
 
-                                    <span class="fs-6 text-success">оригинальное название</span>
+                                    <span class="fs-6 text-success">
+                                        оригинальное название
+                                    </span>
 
                                 </div>
 
@@ -1713,3 +1725,13 @@
     </div>
 
 </div>
+
+@section Scripts {
+    <script src="~/js/ckeditor5/ckeditor.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+            ClassicEditor.create(document.querySelector('#FilmDescriptionHtmlInput'));
+        });
+    </script>
+}
