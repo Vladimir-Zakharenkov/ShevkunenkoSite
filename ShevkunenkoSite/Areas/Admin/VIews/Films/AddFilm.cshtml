@@ -1,7 +1,7 @@
 ﻿@model FilmFileAddDTOModel
 
 @{
-    string cssForLabel = "col-form-label text-primary fs-5 me-2";
+    string cssForLabel = "col-form-label text-primary fs-5 me-2 py-0";
 
     string textForAccordionBtn = "form-label fs-5 mb-1";
 }
@@ -159,7 +159,7 @@
                         <div id="filmCaptionAccordionBody" class="accordion-body accordion-body-nointend text-center">
 
                             @* Название фильма *@
-                            <div class="row g-2 justify-content-center mb-4">
+                            <div id="captionOfFilm" class="row g-2 justify-content-center mb-4">
 
                                 <div class="col-auto">
 
@@ -196,7 +196,7 @@
                             </div>
 
                             @* Оригинальное название фильма *@
-                            <div class="row g-2 justify-content-center">
+                            <div id="originalCaptionOfFilm" class="row g-2 justify-content-center">
 
                                 <div class="col-auto">
 
@@ -234,11 +234,12 @@
 
                 </div>
 
-                @* Описание фильма *@
-                <div class="accordion-item mb-3 shadw">
+                @* Описание и примечания фильма *@
+                <div id="filmDescriptionAccordionItem" class="accordion-item mb-3 shadw">
 
-                    @* заголовок группы «описание фильма» *@
-                    <h2 id="headingDescription" class="accordion-header">
+                    @* Заголовок группы «описание и примечания фильма» *@
+                    <h2 id="headingDescription" class="accordion-header shadw">
+
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
                                 data-bs-toggle="collapse"
@@ -251,6 +252,7 @@
                             </span>
 
                         </button>
+
                     </h2>
 
                     <div id="FilmDescription"
@@ -258,25 +260,29 @@
                          aria-labelledby="headingDescription"
                          data-bs-parent="#accordionAddFilm">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div id="filmDescriptionAccordionBody" class="accordion-body accordion-body-nointend text-center">
 
-                            @* краткое содержание (SchemaOrg TXT) *@
-                            <div>
+                            @* Краткое содержание (SchemaOrg TXT) *@
+                            <div id="shortDescriptionTxt">
 
                                 <label asp-for="FilmDescriptionForSchemaOrg" class="@cssForLabel"></label>
 
                                 <textarea asp-for="FilmDescriptionForSchemaOrg"
                                           id="FilmDescriptionForSchemaOrgInput"
                                           class="form-control"
-                                          rows="3"
+                                          rows="5"
                                           aria-describedby="FilmDescriptionForSchemaOrgInputHelpBlock">
                                 </textarea>
 
                                 <div id="FilmDescriptionForSchemaOrgInputHelpBlock" class="form-text mb-2">
 
-                                    <span class="fs-6 text-success">краткое содержание (SchemaOrg) - </span>
+                                    <span class="fs-6 text-success">
+                                        краткое содержание (SchemaOrg) -
+                                    </span>
                                     <br class="d-inline-block d-sm-none" />
-                                    <span class="fs-6 text-danger">обязательное поле</span>
+                                    <span class="fs-6 text-danger">
+                                        обязательное поле
+                                    </span>
 
                                 </div>
 
@@ -285,27 +291,29 @@
                                     <span asp-validation-for="FilmDescriptionForSchemaOrg" class="text-danger"></span>
                                 }
 
-                                <hr class="w-50 mx-auto" />
-
                             </div>
 
-                            @* краткое содержание (HTML) *@
-                            <div>
+                            @* Краткое содержание (HTML) *@
+                            <div id="shortDescriptionHtml">
 
                                 <label asp-for="FilmDescriptionHtml" class="@cssForLabel"></label>
 
                                 <textarea asp-for="FilmDescriptionHtml"
                                           id="FilmDescriptionHtmlInput"
                                           class="form-control"
-                                          rows="5"
+                                          rows="7"
                                           aria-describedby="FilmDescriptionHtmlHelpBlock">
                                 </textarea>
 
                                 <div id="FilmDescriptionHtmlHelpBlock" class="form-text mb-2">
 
-                                    <span class="fs-6 text-success">краткое содержание (HTML) - </span>
+                                    <span class="fs-6 text-success">
+                                        краткое содержание (HTML) -
+                                    </span>
                                     <br class="d-inline-block d-sm-none" />
-                                    <span class="fs-6 text-danger">обязательное поле</span>
+                                    <span class="fs-6 text-danger">
+                                        обязательное поле
+                                    </span>
 
                                 </div>
 
@@ -314,12 +322,10 @@
                                     <span asp-validation-for="FilmDescriptionHtml" class="text-danger"></span>
                                 }
 
-                                <hr class="w-50 mx-auto" />
-
                             </div>
 
-                            @* примечания админа *@
-                            <div>
+                            @* Примечания админа *@
+                            <div id="adminNotes">
 
                                 <label asp-for="FilmNote" class="@cssForLabel"></label>
 
@@ -332,7 +338,9 @@
 
                                 <div id="FilmNoteHelpBlock" class="form-text mb-2">
 
-                                    <span class="fs-6 text-success">примечания админа</span>
+                                    <span class="fs-6 text-success">
+                                        примечания админа
+                                    </span>
 
                                 </div>
 
@@ -340,8 +348,6 @@
                                 {
                                     <span asp-validation-for="FilmNote" class="text-danger"></span>
                                 }
-
-                                <hr class="w-50 mx-auto" />
 
                             </div>
 
@@ -352,10 +358,11 @@
                 </div>
 
                 @* Критерии поиска фильма *@
-                <div class="accordion-item mb-3 shadw">
+                <div id="searchCriteriaAccordionItem" class="accordion-item mb-3 shadw">
 
-                    @* заголовок группы «критерии поиска фильма» *@
-                    <h2 id="headingSearchCriteria" class="accordion-header">
+                    @* Заголовок группы «критерии поиска фильма» *@
+                    <h2 id="headingSearchCriteria" class="accordion-header shadw">
+
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
                                 data-bs-toggle="collapse"
@@ -368,6 +375,7 @@
                             </span>
 
                         </button>
+
                     </h2>
 
                     <div id="SearchCriteria"
@@ -375,10 +383,10 @@
                          aria-labelledby="headingSearchCriteria"
                          data-bs-parent="#accordionAddFilm">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div id="searchCriteriaAccordionBody" class="accordion-body accordion-body-nointend text-center">
 
-                            @* в основном списке фильмов сайта *@
-                            <div>
+                            @* В основном списке фильмов сайта *@
+                            <div id="inMainFilmList" class="mb-3">
 
                                 <label asp-for="FilmInMainList" class="@cssForLabel"></label>
 
@@ -387,10 +395,10 @@
                                        class=""
                                        aria-describedby="FilmInMainListInputHelpBlock" />
 
-                                <div id="FilmInMainListInputHelpBlock" class="form-text">
+                                <div id="FilmInMainListInputHelpBlock" class="form-text mt-0">
 
                                     <span class="fs-6 text-success">
-                                        фильм в списке видео сайта
+                                        фильм в основном списке
                                     </span>
 
                                 </div>
@@ -400,12 +408,10 @@
                                     <span asp-validation-for="FilmInMainList" class="text-danger"></span>
                                 }
 
-                                <hr class="w-50 mx-auto" />
-
                             </div>
 
-                            @* фильтры поиска фильма *@
-                            <div>
+                            @* Фильтры поиска фильма *@
+                            <div id="searchFiltersForFilm" class="mb-3">
 
                                 <label asp-for="SearchFilterForFilm" class="@cssForLabel"></label>
 
@@ -429,12 +435,10 @@
                                     <span asp-validation-for="SearchFilterForFilm" class="text-danger"></span>
                                 }
 
-                                <hr class="w-50 mx-auto" />
-
                             </div>
 
-                            @* жанры фильма *@
-                            <div>
+                            @* Жанры фильма *@
+                            <div id="filmGenre" class="mb-3">
 
                                 <label asp-for="FilmGenre" class="@cssForLabel"></label>
 
@@ -459,12 +463,10 @@
                                     <span asp-validation-for="FilmGenre" class="text-danger"></span>
                                 }
 
-                                <hr class="w-50 mx-auto" />
-
                             </div>
 
-                            @* ограничения по возрасту *@
-                            <div>
+                            @* Ограничения по возрасту *@
+                            <div id="adultFilm">
 
                                 <label asp-for="FilmAdult" class="@cssForLabel"></label>
 
@@ -473,7 +475,7 @@
                                        class=""
                                        aria-describedby="FilmAdultInputHelpBlock" />
 
-                                <div id="FilmAdultInputHelpBlock" class="form-text">
+                                <div id="FilmAdultInputHelpBlock" class="form-text mt-0">
 
                                     <span class="fs-6 text-success">
                                         фильм 18+
@@ -495,10 +497,11 @@
                 </div>
 
                 @* Даты фильма *@
-                <div class="accordion-item mb-3 shadw">
+                <div id="filmDateAccordionItem" class="accordion-item mb-3 shadw">
 
-                    @* заголовок группы «даты фильма» *@
-                    <h2 class="accordion-header" id="headingFilmDate">
+                    @* Заголовок группы «даты фильма» *@
+                    <h2 id="headingFilmDate" class="accordion-header shadw">
+
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
                                 data-bs-toggle="collapse"
@@ -511,6 +514,7 @@
                             </span>
 
                         </button>
+
                     </h2>
 
                     <div id="FilmDate"
@@ -518,27 +522,35 @@
                          aria-labelledby="headingFilmDate"
                          data-bs-parent="#accordionAddFilm">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div id="filmDateAccordionBody" class="accordion-body accordion-body-nointend text-center">
 
-                            @* дата примьеры фильма *@
-                            <div class="row g-2 justify-content-center mb-xl-2">
+                            @* Дата примьеры фильма *@
+                            <div id="filmPremiereDate" class="row g-2 justify-content-center mb-xl-2">
 
                                 <div class="col-auto">
+
                                     <label asp-for="FilmDatePublished" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-auto">
+
                                     <input asp-for="FilmDatePublished"
                                            id="MovieDatePublishedInput"
                                            class="form-control text-center"
                                            aria-describedby="FilmDatePublishedInputHelpBlock" />
+
                                 </div>
 
                                 <div id="FilmDatePublishedInputHelpBlock" class="form-text mb-2">
 
-                                    <span class="fs-6 text-success">дата премьеры - </span>
+                                    <span class="fs-6 text-success">
+                                        дата премьеры -
+                                    </span>
                                     <br class="d-inline-block d-md-none" />
-                                    <span class="fs-6 text-danger">обязательное поле</span>
+                                    <span class="fs-6 text-danger">
+                                        обязательное поле
+                                    </span>
 
                                 </div>
 
@@ -549,8 +561,8 @@
 
                             </div>
 
-                            @* дата создания фильма *@
-                            <div class="row g-2 justify-content-center mb-xl-2">
+                            @* Дата создания фильма *@
+                            <div id="filmProductionDate" class="row g-2 justify-content-center mb-xl-2">
 
                                 <div class="col-auto">
                                     <label asp-for="FilmDateCreated" class="@cssForLabel"></label>
@@ -578,8 +590,8 @@
 
                             </div>
 
-                            @* дата загрузки фильма на сайт *@
-                            <div class="row g-2 justify-content-center">
+                            @* Дата загрузки фильма на сайт *@
+                            <div id="filmDownloadDate" class="row g-2 justify-content-center">
 
                                 <div class="col-auto">
                                     <label asp-for="FilmUploadDate" class="@cssForLabel"></label>
@@ -614,10 +626,11 @@
                 </div>
 
                 @* Язык и субтитры фильма *@
-                <div class="accordion-item mb-3 shadw">
+                <div id="filmLanguageAccordionItem" class="accordion-item mb-3 shadw">
 
-                    @* заголовок группы «язык и субтитры» *@
-                    <h2 class="accordion-header" id="headingLanguage">
+                    @* Заголовок группы «язык и субтитры» *@
+                    <h2 id="headingLanguage" class="accordion-header shadw">
+
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
                                 data-bs-toggle="collapse"
@@ -627,10 +640,10 @@
 
                             <span class="form-label fs-5">
                                 Язык и субтитры :
-
                             </span>
 
                         </button>
+
                     </h2>
 
                     <div id="FilmLanguage"
@@ -638,16 +651,19 @@
                          aria-labelledby="headingLanguage"
                          data-bs-parent="#accordionAddFilm">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div id="filmLanguageAccordionBody" class="accordion-body accordion-body-nointend text-center">
 
-                            @* язык фильма (1) *@
-                            <div class="row g-2 justify-content-center mb-xl-2">
+                            @* Язык фильма (1) *@
+                            <div id="filmLanguageOne" class="row g-2 justify-content-center mb-4">
 
                                 <div class="col-auto">
+
                                     <label asp-for="FilmInLanguage1" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-auto">
+
                                     <select asp-for="FilmInLanguage1"
                                             id="FilmInLanguage1Input"
                                             class="form-select"
@@ -659,15 +675,18 @@
                                         <option value="it">it</option>
 
                                     </select>
+
                                 </div>
 
-                                <div class="col-12 justify-content-center mb-2">
+                                <div class="col-12 justify-content-center">
 
                                     <span id="FilmInLanguage1InputHelpBlock" class="fs-6 text-success">
                                         язык звуковой дорожки (1) -
                                     </span>
                                     <br class="d-inline-block d-md-none" />
-                                    <span class="fs-6 text-danger">обязательное поле</span>
+                                    <span class="fs-6 text-danger">
+                                        обязательное поле
+                                    </span>
 
                                 </div>
 
@@ -676,18 +695,19 @@
                                     <span asp-validation-for="FilmInLanguage1" class="text-danger"></span>
                                 }
 
-                                <hr class="w-50 mx-auto" />
-
                             </div>
 
-                            @* язык фильма (2)*@
-                            <div class="row g-2 justify-content-center mb-xl-2">
+                            @* Язык фильма (2)*@
+                            <div id="filmLanguageTwo" class="row g-2 justify-content-center mb-4">
 
                                 <div class="col-auto">
+
                                     <label asp-for="FilmInLanguage2" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-auto">
+
                                     <select asp-for="FilmInLanguage2"
                                             id="FilmInLanguage2Input"
                                             class="form-select"
@@ -699,6 +719,7 @@
                                         <option value="it">it</option>
 
                                     </select>
+
                                 </div>
 
                                 <div class="col-12 justify-content-center">
@@ -714,31 +735,37 @@
                                     <span asp-validation-for="FilmInLanguage2" class="text-danger"></span>
                                 }
 
-                                <hr class="w-50 mx-auto" />
-
                             </div>
 
-                            @* субтитры фильма (1)*@
-                            <div class="row g-2 justify-content-center mb-xl-2">
+                            @* Субтитры фильма (1)*@
+                            <div id="movieSubtitlesOne" class="row g-2 justify-content-center mb-4">
 
                                 <div class="col-auto">
+
                                     <label asp-for="FilmSubtitles1" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-auto">
+
                                     <select asp-for="FilmSubtitles1"
                                             id="MovieSubtitles1Input"
                                             class="form-select" aria-describedby="FilmSubtitles1InputHelpBlock">
+
                                         <option value="">Язык</option>
                                         <option value="ru">ru</option>
                                         <option value="en">en</option>
+
                                     </select>
+
                                 </div>
 
                                 <div class="col-12 justify-content-center">
+
                                     <span id="FilmSubtitles1InputHelpBlock" class="fs-6 text-success">
                                         язык субтитров (1)
                                     </span>
+
                                 </div>
 
                                 @if (Context.Request.Method == "POST")
@@ -746,29 +773,35 @@
                                     <span asp-validation-for="FilmSubtitles1" class="text-danger"></span>
                                 }
 
-                                <hr class="w-50 mx-auto" />
-
                             </div>
 
-                            @* субтитры фильма (2)*@
-                            <div class="row g-2 justify-content-center">
+                            @* Субтитры фильма (2)*@
+                            <div id="movieSubtitlesTwo" class="row g-2 justify-content-center">
 
                                 <div class="col-auto">
-                                    <label asp-for="FilmSubtitles2" class="col-form-label text-primary fs-5"></label>
+
+                                    <label asp-for="FilmSubtitles2" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-auto">
+
                                     <select id="MovieSubtitles2Input" asp-for="FilmSubtitles2" class="form-select" aria-describedby="FilmSubtitles2InputHelpBlock">
+
                                         <option value="">Язык</option>
                                         <option value="ru">ru</option>
                                         <option value="en">en</option>
+
                                     </select>
+
                                 </div>
 
                                 <div class="col-12 justify-content-center">
+
                                     <span id="FilmSubtitles2InputHelpBlock" class="fs-6 text-success">
                                         язык субтитров (2)
                                     </span>
+
                                 </div>
 
                                 @if (Context.Request.Method == "POST")
@@ -785,10 +818,11 @@
                 </div>
 
                 @* Съёмочная группа фильма *@
-                <div class="accordion-item mb-3 shadw">
+                <div id="filmCrewAccordionItem" class="accordion-item mb-3 shadw">
 
-                    @* заголовок группы «съёмочная группа» *@
-                    <h2 class="accordion-header" id="headingFilmCrew">
+                    @* Заголовок группы «съёмочная группа» *@
+                    <h2 id="headingFilmCrew" class="accordion-header shadw">
+
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
                                 data-bs-toggle="collapse"
@@ -801,6 +835,7 @@
                             </span>
 
                         </button>
+
                     </h2>
 
                     <div id="FilmCrew"
@@ -808,26 +843,36 @@
                          aria-labelledby="headingFilmCrew"
                          data-bs-parent="#accordionAddFilm">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div id="filmCrewAccordionBody" class="accordion-body accordion-body-nointend text-center">
 
-                            @* кинокомпания *@
-                            <div class="row g-2 justify-content-center mb-2 mb-xl-3">
+                            @* Кинокомпания *@
+                            <div id="filmCompany" class="row g-2 justify-content-center mb-2 mb-4">
 
                                 <div class="col-auto">
+
                                     <label asp-for="FilmРroductionCompany" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-auto">
+
                                     <input asp-for=FilmРroductionCompany"
                                            id="РroductionCompanyInput"
                                            class="form-control text-center"
                                            aria-describedby="РroductionCompanyInputHelpBlock" />
+
                                 </div>
 
                                 <div id="РroductionCompanyInputHelpBlock" class="form-text">
-                                    <span class="fs-6 text-success">кинокомпания - </span>
+
+                                    <span class="fs-6 text-success">
+                                        кинокомпания -
+                                    </span>
                                     <br class="d-inline-block d-md-none" />
-                                    <span class="fs-6 text-danger">обязательное поле</span>
+                                    <span class="fs-6 text-danger">
+                                        обязательное поле
+                                    </span>
+
                                 </div>
 
                                 @if (Context.Request.Method == "POST")
@@ -837,24 +882,34 @@
 
                             </div>
 
-                            @* режиссер фильма (1) *@
-                            <div class="row g-2 justify-content-center mb-2 mb-xl-3">
+                            @* Режиссер фильма (1) *@
+                            <div id="filmDirectorOne" class="row g-2 justify-content-center mb-2 mb-4">
 
                                 <div class="col-auto">
+
                                     <label asp-for="FilmDirector1" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-auto">
+
                                     <input asp-for="FilmDirector1"
                                            id="Director1Input"
                                            class="form-control text-center"
                                            aria-describedby="Director1InputHelpBlock" />
+
                                 </div>
 
                                 <div id="Director1InputHelpBlock" class="form-text">
-                                    <span class="fs-6 text-success">режиссер (1) - </span>
+
+                                    <span class="fs-6 text-success">
+                                        режиссер (1) -
+                                    </span>
                                     <br class="d-inline-block d-md-none" />
-                                    <span class="fs-6 text-danger">обязательное поле</span>
+                                    <span class="fs-6 text-danger">
+                                        обязательное поле
+                                    </span>
+
                                 </div>
 
                                 @if (Context.Request.Method == "POST")
@@ -864,22 +919,30 @@
 
                             </div>
 
-                            @* режиссер фильма (2) *@
-                            <div class="row g-2 justify-content-center mb-2 mb-xl-3">
+                            @* Режиссер фильма (2) *@
+                            <div id="filmDirectorTwo" class="row g-2 justify-content-center mb-2 mb-4">
 
                                 <div class="col-auto">
+
                                     <label asp-for="FilmDirector2" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-auto">
+
                                     <input asp-for="FilmDirector2"
                                            id="Director2Input"
                                            class="form-control text-center"
                                            aria-describedby="Director2InputHelpBlock" />
+
                                 </div>
 
                                 <div id="Director2InputHelpBlock" class="form-text">
-                                    <span class="fs-6 text-success">режиссер (2)</span>
+
+                                    <span class="fs-6 text-success">
+                                        режиссер (2)
+                                    </span>
+
                                 </div>
 
                                 @if (Context.Request.Method == "POST")
@@ -888,18 +951,22 @@
                                 }
                             </div>
 
-                            @* композитор фильма *@
-                            <div class="row g-2 justify-content-center mb-2 mb-xl-3">
+                            @* Композитор фильма *@
+                            <div id="filmComposer" class="row g-2 justify-content-center mb-2 mb-4">
 
                                 <div class="col-auto">
+
                                     <label asp-for="FilmMusicBy" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-auto">
+
                                     <input asp-for="FilmMusicBy"
                                            id="MovieMusicByInput"
                                            class="form-control text-center"
                                            aria-describedby="MovieMusicByInputHelpBlock" />
+
                                 </div>
 
                                 <div id="MovieMusicByInputHelpBlock" class="form-text">
@@ -912,26 +979,30 @@
 
                                 @if (Context.Request.Method == "POST")
                                 {
-
                                     <span asp-validation-for="FilmMusicBy" class="text-danger"></span>
                                 }
+
                             </div>
 
-                            @* актёры фильма *@
-                            <div>
+                            @* Актёры фильма *@
+                            <div id="filmCast">
 
-                                @* актёр (1) *@
-                                <div class="row g-2 justify-content-center mb-2 mb-xl-3">
+                                @* Aктёр (1) *@
+                                <div id="actor1" class="row g-2 justify-content-center mb-4">
 
                                     <div class="col-auto">
+
                                         <label asp-for="FilmActor01" class="@cssForLabel"></label>
+
                                     </div>
 
                                     <div class="col-auto">
+
                                         <input asp-for="FilmActor01"
                                                id="MovieActor01Input"
                                                class="form-control text-center"
                                                aria-describedby="MovieActor01InputHelpBlock" />
+
                                     </div>
 
                                     <div id="MovieActor01InputHelpBlock" class="form-text">
@@ -946,13 +1017,16 @@
                                     {
                                         <span asp-validation-for="FilmActor01" class="text-danger"></span>
                                     }
+
                                 </div>
 
-                                @* актёр (2) *@
-                                <div class="row g-2 justify-content-center mb-2 mb-xl-3">
+                                @* Актёр (2) *@
+                                <div id="actor2" class="row g-2 justify-content-center mb-4">
 
                                     <div class="col-auto">
+
                                         <label asp-for="FilmActor02" class="@cssForLabel"></label>
+
                                     </div>
 
                                     <div class="col-auto">
@@ -977,18 +1051,22 @@
 
                                 </div>
 
-                                @* актёр (3) *@
-                                <div class="row g-2 justify-content-center mb-2 mb-xl-3">
+                                @* Актёр (3) *@
+                                <div id="actor3" class="row g-2 justify-content-center mb-4">
 
                                     <div class="col-auto">
+
                                         <label asp-for="FilmActor03" class="@cssForLabel"></label>
+
                                     </div>
 
                                     <div class="col-auto">
+
                                         <input asp-for="FilmActor03"
                                                id="MovieActor03Input"
                                                class="form-control text-center"
                                                aria-describedby="MovieActor03InputHelpBlock" />
+
                                     </div>
 
                                     <div id="MovieActor03InputHelpBlock" class="form-text">
@@ -1006,18 +1084,22 @@
 
                                 </div>
 
-                                @* актёр (4) *@
-                                <div class="row g-2 justify-content-center mb-2 mb-xl-3">
+                                @* Актёр (4) *@
+                                <div id="actor4" class="row g-2 justify-content-center mb-4">
 
                                     <div class="col-auto">
+
                                         <label asp-for="FilmActor04" class="@cssForLabel"></label>
+
                                     </div>
 
                                     <div class="col-auto">
+
                                         <input asp-for="FilmActor04"
                                                id="MovieActor04Input"
                                                class="form-control text-center"
                                                aria-describedby="MovieActor04InputHelpBlock" />
+
                                     </div>
 
                                     <div id="MovieActor04InputHelpBlock" class="form-text">
@@ -1035,18 +1117,22 @@
 
                                 </div>
 
-                                @* актёр (5) *@
-                                <div class="row g-2 justify-content-center mb-2 mb-xl-3">
+                                @* Актёр (5) *@
+                                <div id="actor5" class="row g-2 justify-content-center mb-4">
 
                                     <div class="col-auto">
+
                                         <label asp-for="FilmActor05" class="@cssForLabel"></label>
+
                                     </div>
 
                                     <div class="col-auto">
+
                                         <input asp-for="FilmActor05"
                                                id="MovieActor05Input"
                                                class="form-control text-center"
                                                aria-describedby="MovieActor05InputHelpBlock" />
+
                                     </div>
 
                                     <div id="MovieActor05InputHelpBlock" class="form-text">
@@ -1064,21 +1150,26 @@
 
                                 </div>
 
-                                @* актёр (6) *@
-                                <div class="row g-2 justify-content-center mb-2 mb-xl-3">
+                                @* Актёр (6) *@
+                                <div id="actor6" class="row g-2 justify-content-center mb-4">
 
                                     <div class="col-auto">
+
                                         <label asp-for="FilmActor06" class="@cssForLabel"></label>
+
                                     </div>
 
                                     <div class="col-auto">
+
                                         <input asp-for="FilmActor06"
                                                id="MovieActor06Input"
                                                class="form-control text-center"
                                                aria-describedby="MovieActor06InputHelpBlock" />
+
                                     </div>
 
                                     <div id="MovieActor06InputHelpBlock" class="form-text">
+
                                         <span class="fs-6 text-success">
                                             актер (актриса) - 6
                                         </span>
@@ -1092,18 +1183,22 @@
 
                                 </div>
 
-                                @* актёр (7) *@
-                                <div class="row g-2 justify-content-center mb-2 mb-xl-3">
+                                @* Актёр (7) *@
+                                <div id="actor7" class="row g-2 justify-content-center mb-4">
 
                                     <div class="col-auto">
+
                                         <label asp-for="FilmActor07" class="@cssForLabel"></label>
+
                                     </div>
 
                                     <div class="col-auto">
+
                                         <input asp-for="FilmActor07"
                                                id="MovieActor07Input"
                                                class="form-control text-center"
                                                aria-describedby="MovieActor07InputHelpBlock" />
+
                                     </div>
 
                                     <div id="MovieActor07InputHelpBlock" class="form-text">
@@ -1121,18 +1216,22 @@
 
                                 </div>
 
-                                @* актёр (8) *@
-                                <div class="row g-2 justify-content-center mb-2 mb-xl-3">
+                                @* Актёр (8) *@
+                                <div id="actor8" class="row g-2 justify-content-center mb-4">
 
                                     <div class="col-auto">
+
                                         <label asp-for="FilmActor08" class="@cssForLabel"></label>
+
                                     </div>
 
                                     <div class="col-auto">
+
                                         <input asp-for="FilmActor08"
                                                id="MovieActor08Input"
                                                class="form-control text-center"
                                                aria-describedby="MovieActor08InputHelpBlock" />
+
                                     </div>
 
                                     <div id="MovieActor08InputHelpBlock" class="form-text">
@@ -1150,18 +1249,22 @@
 
                                 </div>
 
-                                @* актёр (9) *@
-                                <div class="row g-2 justify-content-center mb-2 mb-xl-3">
+                                @* Актёр (9) *@
+                                <div id="actor9" class="row g-2 justify-content-center mb-4">
 
                                     <div class="col-auto">
+
                                         <label asp-for="FilmActor09" class="@cssForLabel"></label>
+
                                     </div>
 
                                     <div class="col-auto">
+
                                         <input asp-for="FilmActor09"
                                                id="MovieActor09Input"
                                                class="form-control text-center"
                                                aria-describedby="MovieActor09InputHelpBlock" />
+
                                     </div>
 
                                     <div id="MovieActor09InputHelpBlock" class="form-text">
@@ -1179,18 +1282,22 @@
 
                                 </div>
 
-                                @* актёр (10) *@
-                                <div class="row g-2 justify-content-center">
+                                @* Актёр (10) *@
+                                <div id="actor10" class="row g-2 justify-content-center">
 
                                     <div class="col-auto">
+
                                         <label asp-for="FilmActor10" class="@cssForLabel"></label>
+
                                     </div>
 
                                     <div class="col-auto">
+
                                         <input asp-for="FilmActor10"
                                                id="MovieActor10Input"
                                                class="form-control text-center"
                                                aria-describedby="MovieActor10InputHelpBlock" />
+
                                     </div>
 
                                     <div id="MovieActor10InputHelpBlock" class="form-text">
@@ -1217,10 +1324,11 @@
                 </div>
 
                 @* Фильм на видеохостингах *@
-                <div class="accordion-item mb-3 shadw">
+                <div id="refForFilmAccordionItem" class="accordion-item mb-3 shadw">
 
-                    @* заголовок группы «фильм на видеохостингах» *@
-                    <h2 class="accordion-header" id="headingRefForFilm">
+                    @* Заголовок группы «фильм на видеохостингах» *@
+                    <h2 id="headingRefForFilm" class="accordion-header shadw">
+
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
                                 data-bs-toggle="collapse"
@@ -1233,6 +1341,7 @@
                             </span>
 
                         </button>
+
                     </h2>
 
                     <div id="RefForFilm"
@@ -1240,12 +1349,14 @@
                          aria-labelledby="headingRef"
                          data-bs-parent="#accordionAddFilm">
 
-                        <div class="accordion-body text-center">
+                        <div id="refForFilmAccordionBody" class="accordion-body text-center text-indent-0">
 
-                            @* фильм на youtube *@
-                            <div>
+                            @* Фильм на youtube *@
+                            <div id="refToYoutube">
 
-                                <label asp-for="FilmYouTube" class="@cssForLabel"></label> <br />
+                                <label asp-for="FilmYouTube" class="@cssForLabel"></label>
+
+                                <br />
 
                                 <input asp-for="FilmYouTube"
                                        id="MovieYouTubeInput"
@@ -1267,10 +1378,12 @@
 
                             </div>
 
-                            @* фильм на vkvideo *@
-                            <div>
+                            @* Фильм на vkvideo *@
+                            <div id="refToVkvideo">
 
-                                <label asp-for="FilmVkVideo" class="@cssForLabel"></label><br />
+                                <label asp-for="FilmVkVideo" class="@cssForLabel"></label>
+
+                                <br />
 
                                 <input asp-for="FilmVkVideo"
                                        id="FilmVkVideoInput"
@@ -1292,10 +1405,12 @@
 
                             </div>
 
-                            @* фильм на mail.ru *@
-                            <div>
+                            @* Фильм на mail.ru *@
+                            <div id="refToMailru">
 
-                                <label asp-for="FilmMailRuVideo" class="@cssForLabel"></label><br />
+                                <label asp-for="FilmMailRuVideo" class="@cssForLabel"></label>
+
+                                <br />
 
                                 <input asp-for="FilmMailRuVideo"
                                        id="FilmMailRuVideoInput"
@@ -1317,10 +1432,12 @@
 
                             </div>
 
-                            @* фильм на ok.ru *@
-                            <div>
+                            @* Фильм на ok.ru *@
+                            <div id="refToOkru">
 
-                                <label asp-for="FilmOkVideo" class="@cssForLabel"></label><br />
+                                <label asp-for="FilmOkVideo" class="@cssForLabel"></label>
+
+                                <br />
 
                                 <input asp-for="FilmOkVideo"
                                        id="FilmOkVideoInput"
@@ -1342,10 +1459,12 @@
 
                             </div>
 
-                            @* фильм на yandex.disk *@
-                            <div>
+                            @* Фильм на yandex.disk *@
+                            <div id="refToYandexDisk">
 
-                                <label asp-for="FilmYandexDiskVideo" class="@cssForLabel"></label><br />
+                                <label asp-for="FilmYandexDiskVideo" class="@cssForLabel"></label>
+
+                                <br />
 
                                 <input asp-for="FilmYandexDiskVideo"
                                        id="FilmYandexDiskVideoInput"
@@ -1374,10 +1493,11 @@
                 </div>
 
                 @* Ссылки на информацию о фильме *@
-                <div class="accordion-item mb-3 shadw">
+                <div id="infoRefAccordionItem" class="accordion-item mb-3 shadw">
 
-                    @* заголовок группы «ссылки на информацию» *@
-                    <h2 class="accordion-header" id="headingInfoRef">
+                    @* Заголовок группы «ссылки на информацию» *@
+                    <h2 id="headingInfoRef" class="accordion-header shadw">
+
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
                                 data-bs-toggle="collapse"
@@ -1390,6 +1510,7 @@
                             </span>
 
                         </button>
+
                     </h2>
 
                     <div id="infoRef"
@@ -1397,10 +1518,10 @@
                          aria-labelledby="headingInfoRef"
                          data-bs-parent="#accordionAddFilm">
 
-                        <div class="accordion-body text-center">
+                        <div id="infoRefAccordionBody" class="accordion-body text-center text-indent-0">
 
-                            @* инфо на kino-teatr.ru *@
-                            <div>
+                            @* Инфо на kino-teatr.ru *@
+                            <div id="kinoTeatrRu">
 
                                 <label asp-for="FilmKinoTeatrRu" class="@cssForLabel"></label>
 
@@ -1426,8 +1547,8 @@
 
                             </div>
 
-                            @* инфо на kinopoisk.ru *@
-                            <div>
+                            @* Инфо на kinopoisk.ru *@
+                            <div id="rinoPoisk">
 
                                 <label asp-for="FilmKinoPoisk" class="@cssForLabel"></label>
 
@@ -1453,8 +1574,8 @@
 
                             </div>
 
-                            @* инфо на imdb.com *@
-                            <div>
+                            @* Инфо на imdb.com *@
+                            <div id="imdbCom">
 
                                 <label asp-for="FilmImbd" class="@cssForLabel"></label>
 
@@ -1487,10 +1608,11 @@
                 </div>
 
                 @* Данные многосерийного фильма *@
-                <div class="accordion-item mb-3 shadw">
+                <div id="filmSeriesAccordionItem" class="accordion-item mb-3 shadw">
 
-                    @* заголовок группы «многосерийный фильм» *@
-                    <h2 class="accordion-header" id="headingSeries">
+                    @* Заголовок группы «многосерийный фильм» *@
+                    <h2 id="headingSeries" class="accordion-header shadw">
+
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
                                 data-bs-toggle="collapse"
@@ -1503,6 +1625,7 @@
                             </span>
 
                         </button>
+
                     </h2>
 
                     <div id="FilmSeries"
@@ -1510,20 +1633,24 @@
                          aria-labelledby="headingSeries"
                          data-bs-parent="#accordionAddFilm">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div id="filmSeriesAccordionBody" class="accordion-body text-center text-indent-0">
 
-                            @* текст поиска всех серий *@
-                            <div class="row g-2 justify-content-center mb-2 mb-xl-4">
+                            @* Текст поиска всех серий *@
+                            <div class="row g-2 justify-content-center mb-4">
 
                                 <div class="col-auto text-end">
+
                                     <label asp-for="SeriesSearchFilter" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-12 col-md-10">
+
                                     <input asp-for="SeriesSearchFilter"
                                            id="SeriesSearchFilterInput"
                                            class="form-control text-center"
                                            aria-describedby="SeriesSearchFilterInputHelpBlock" />
+
                                 </div>
 
                                 <div id="SeriesSearchFilterInputHelpBlock" class="form-text">
@@ -1541,18 +1668,22 @@
 
                             </div>
 
-                            @*  количество серий *@
-                            <div class="row g-2 justify-content-center mb-2 mb-xl-4">
+                            @* Количество серий *@
+                            <div class="row g-2 justify-content-center mb-4">
 
                                 <div class="col-auto">
+
                                     <label asp-for="FilmTotalParts" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-5 col-sm-3 col-xxl-2">
+
                                     <input asp-for="FilmTotalParts"
                                            id="MovieTotalPartsInput"
                                            class="form-control text-center"
                                            aria-describedby="FilmTotalPartsInputHelpBlock" />
+
                                 </div>
 
                                 <div id="FilmTotalPartsInputHelpBlock" class="form-text">
@@ -1570,18 +1701,22 @@
 
                             </div>
 
-                            @*  номер серии *@
+                            @* Номер серии *@
                             <div class="row g-2 justify-content-center">
 
                                 <div class="col-auto">
-                                    <label asp-for="FilmPart" class="form-label text-primary fs-5"></label>
+
+                                    <label asp-for="FilmPart" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-5 col-sm-3 col-xxl-2">
+
                                     <input asp-for="FilmPart"
                                            id="MoviePartInput"
                                            class="form-control text-center"
                                            aria-describedby="FilmPartInputHelpBlock" />
+
                                 </div>
 
                                 <div id="FilmPartInputHelpBlock" class="form-text">
@@ -1606,10 +1741,11 @@
                 </div>
 
                 @* Постер и картинка фильма *@
-                <div class="accordion-item mb-3 shadw">
+                <div id="inputPictureAccordionItem" class="accordion-item shadw">
 
-                    @* заголовок группы «постер и картинка фильма» *@
-                    <h2 class="accordion-header" id="headingInputPicture">
+                    @* Заголовок группы «постер и картинка фильма» *@
+                    <h2 id="headingInputPicture" class="accordion-header shadw">
+
                         <button class="accordion-button collapsed py-0 stranicy"
                                 type="button"
                                 data-bs-toggle="collapse"
@@ -1622,6 +1758,7 @@
                             </span>
 
                         </button>
+
                     </h2>
 
                     <div id="InputPicture"
@@ -1629,27 +1766,35 @@
                          aria-labelledby="headingInputPicture"
                          data-bs-parent="#accordionAddFilm">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div id="inputPictureAccordionBody" class="accordion-body text-center text-indent-0">
 
-                            @* выбрать постер фильма *@
-                            <div class="row g-2 justify-content-center mb-3">
+                            @* Выбрать постер фильма *@
+                            <div id="posterInput" class="row g-2 justify-content-center mb-4">
 
                                 <div class="col-auto">
+
                                     <label asp-for="PosterForFilmFormFile" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-auto text-start">
+
                                     <input asp-for="PosterForFilmFormFile"
                                            id="PosterForMovieFormFileInput"
                                            class="form-control"
                                            aria-describedby="PosterForFilmFormFileInputHelpBlock" />
+
                                 </div>
 
                                 <div id="PosterForFilmFormFileInputHelpBlock" class="form-text">
 
-                                    <span class="fs-6 text-success">постер для фильма - </span>
+                                    <span class="fs-6 text-success">
+                                        постер для фильма -
+                                    </span>
                                     <br class="d-inline-block d-xl-none" />
-                                    <span class="fs-6 text-danger">обязательное поле</span>
+                                    <span class="fs-6 text-danger">
+                                        обязательное поле
+                                    </span>
 
                                 </div>
 
@@ -1660,25 +1805,33 @@
 
                             </div>
 
-                            @* выбрать картинку фильма *@
-                            <div class="row g-2 justify-content-center">
+                            @* Выбрать картинку фильма *@
+                            <div id="pictureInput" class="row g-2 justify-content-center">
 
                                 <div class="col-auto">
+
                                     <label asp-for="ImageForFilmFormFile" class="@cssForLabel"></label>
+
                                 </div>
 
                                 <div class="col-auto text-start">
+
                                     <input asp-for="ImageForFilmFormFile"
                                            id="ImageForMovieFormFileInput"
                                            class="form-control"
                                            aria-describedby="ImageForFilmFormFileInputHelpBlock" />
+
                                 </div>
 
                                 <div id="ImageForFilmFormFileInputHelpBlock" class="form-text">
 
-                                    <span class="fs-6 text-success">картинка для фильму - </span>
+                                    <span class="fs-6 text-success">
+                                        картинка для фильму -
+                                    </span>
                                     <br class="d-inline-block d-xl-none" />
-                                    <span class="fs-6 text-danger">обязательное поле</span>
+                                    <span class="fs-6 text-danger">
+                                        обязательное поле
+                                    </span>
 
                                 </div>
 
@@ -1710,7 +1863,7 @@
 
                 <a class="btn btn-outline-danger m-2 shadw"
                    asp-area="Admin"
-                   asp-controller="MovieInfo"
+                   asp-controller="Films"
                    asp-action="Index"
                    title="отменить">
 
