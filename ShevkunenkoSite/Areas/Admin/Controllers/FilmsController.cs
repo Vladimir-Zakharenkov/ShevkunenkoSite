@@ -1,5 +1,6 @@
 ﻿//Ignore Spelling: Org
 using Microsoft.IdentityModel.Tokens;
+using System.Text.RegularExpressions;
 
 namespace ShevkunenkoSite.Areas.Admin.Controllers;
 
@@ -445,6 +446,9 @@ public class FilmsController(
             #endregion
 
             #region Название фильма в базе данных
+
+            // Меняем любое количество пробелов на "--"
+            filmItem.FilmCaption = Regex.Replace(filmItem.FilmCaption, @"\s+", "--");
 
             if (await filmContext.FilmFiles.Where(film => film.FilmCaption == filmItem.FilmCaption).AnyAsync())
             {
@@ -1350,12 +1354,16 @@ public class FilmsController(
                     ModelState.AddModelError("PosterForFilmFormFile", $"Вы выбрали файл «{editFilm.PosterForFilmFormFile.FileName}»" + Environment.NewLine + "Файла с таким именем нет в базе данных");
 
                     return View(editFilm);
-
                 }
+            }
+            else if (editFilm.FilmPosterId != Guid.Empty
+                && await imageContext.ImageFiles.AnyAsync(i => i.ImageFileModelId == editFilm.FilmPosterId))
+            {
+                filmUpdate.FilmPosterId = editFilm.FilmPosterId;
             }
             else
             {
-                filmUpdate.FilmPosterId = editFilm.FilmPosterId;
+                filmUpdate.FilmPosterId = filmUpdate.FilmPosterId;
             }
 
             if (editFilm.ImageForFilmFormFile != null)
@@ -1373,9 +1381,14 @@ public class FilmsController(
                     return View(editFilm);
                 }
             }
-            else
+            else if (editFilm.FilmImageId != Guid.Empty 
+                && await imageContext.ImageFiles.AnyAsync(i => i.ImageFileModelId == editFilm.FilmImageId))
             {
                 filmUpdate.FilmImageId = editFilm.FilmImageId;
+            }
+            else
+            {
+                filmUpdate.FilmImageId = filmUpdate.FilmImageId;
             }
 
             #endregion

@@ -19,8 +19,8 @@
 @* Общий блок *@
 <div id="filmView" class="row bg-secondary-subtle py-2 shadw">
 
-    @* кадры слева *@
-    <div id="leftPictures" class="d-none d-md-block col-md-2 overflow-y-auto overflow-x-hidden foto-around">
+    @* Кадры слева *@
+    <div id="picturesFromLeft" class="d-none d-md-block col-md-2 ">
 
         @foreach (var item in Model.FramesOnTheLeft)
         {
@@ -41,8 +41,8 @@
 
     </div>
 
-    @* видео *@
-    <div id="videoBlock" class="col-12 col-md-8 mb-3 shadw no-ads-zone">
+    @* Видео *@
+    <div id="blockForAllOptions" class="col-12 col-md-8 mb-3 shadw no-ads-zone">
 
         <div id="videoBlockRow" class="row">
 
@@ -496,8 +496,8 @@
 
     </div>
 
-    @* кадры справа *@
-    <div id="rightPictures" class="d-none d-md-block col-md-2 mx-auto overflow-y-auto overflow-x-hidden foto-around">
+    @* Кадры справа *@
+    <div id="picturesFromRight" class="d-none d-md-block col-md-2">
 
         @foreach (var item in Model.FramesOnTheRight)
         {
@@ -526,3 +526,7 @@
     </div>
 
 </div>
+
+@section Scripts {
+    <script src="~/js/sync-heights.js" asp-append-version="true"></script>
+}

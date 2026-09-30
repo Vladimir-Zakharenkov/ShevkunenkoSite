@@ -687,6 +687,50 @@
 
             </div>
 
+            @* Индекс сортировки страницы *@
+            <div id="indexOfSortingAccordionItem" class="accordion-item mb-3 mt-2 shadw">
+
+                @* Заголовок группы «Индекс сортировки страницы» *@
+                <h2 id="headingIndexOfSorting" class="accordion-header shadw">
+
+                    <button class="accordion-button collapsed py-0 stranicy"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#IndexOfSorting"
+                            aria-expanded="true"
+                            aria-controls="IndexOfSorting">
+
+                        <span class="form-label fs-5">
+                            Индекс сортировки :
+                        </span>
+
+                    </button>
+
+                </h2>
+
+                <div id="IndexOfSorting"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="headingIndexOfSorting"
+                     data-bs-parent="#accordionDetailsPage">
+
+                    <div id="indexOfSortingAccordionBody" class="accordion-body text-center text-indent-0">
+
+                        <p class="mt-2">
+
+                            <label asp-for="SortOfPage" class="@cssForLabel"></label>
+
+                            <span class="fs-4 text-danger">
+                                @Model.SortOfPage
+                            </span>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
             @* Связанный файл текста *@
             <div id="textFileAccordionItem" class="accordion-item mb-3 shadw @(Model.TextInfoId == null ? "d-none" : "")">
 
@@ -2892,21 +2936,6 @@
 
                 </a>
             }
-
-        </div>
-
-        @* Индекс сортировки *@
-        <div>
-
-            <p class="mt-2">
-
-                <label asp-for="SortOfPage" class="@cssForLabel"></label>
-
-                <span class="fs-4 text-danger">
-                    @Model.SortOfPage
-                </span>
-
-            </p>
 
         </div>
 

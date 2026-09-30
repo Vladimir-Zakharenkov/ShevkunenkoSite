@@ -6,7 +6,7 @@
 
         if (!central) return;
 
-        const maxHeight = central.offsetHeight * 0.94 + 'px';
+        const maxHeight = central.offsetHeight + 'px';
         if (left) left.style.maxHeight = maxHeight;
         if (right) right.style.maxHeight = maxHeight;
     }

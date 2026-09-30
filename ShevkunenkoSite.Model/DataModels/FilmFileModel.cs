@@ -1,7 +1,5 @@
 ﻿// Ignore Spelling: Org Рroduction Imbd Poisk Online Teatr Vk Yandex
 
-using ShevkunenkoSite.Models.ViewModels;
-
 namespace ShevkunenkoSite.Models.DataModels;
 
 public class FilmFileModel
@@ -372,9 +370,9 @@ public class FilmFileModel
     public FilmFileModel? FilmForPictureAround { get; set; }
 
     #endregion
-    
+
     #region Кадры фильма
-    
+
     [NotMapped]
     public List<ImageFileModel> ListOfPictures { get; set; } = [];
 
