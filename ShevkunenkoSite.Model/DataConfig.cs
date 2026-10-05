@@ -58,6 +58,12 @@ public class DataConfig
 
     #endregion
 
+    #region Картинка Film
+
+    public static Guid ImageForFilm { get; set; }
+
+    #endregion
+
     #region Картинка YouTube
 
     public static Guid YoutubeImage {  get; set; }
@@ -117,6 +123,30 @@ public class DataConfig
 
     public static Guid ImdbImage { get; set; }
 #pragma warning restore VSSpell001 // Spell Check
+
+    #endregion
+
+    #region Картинка Word
+
+    public static Guid WordImage { get; set; }
+
+    #endregion
+
+    #region Картинка Pdf
+
+    public static Guid PdfImage { get; set; }
+
+    #endregion
+
+    #region Картинка Audio
+
+    public static Guid AudioImage { get; set; }
+
+    #endregion
+
+    #region Картинка принтера
+
+    public static Guid PrintImage { get; set; }
 
     #endregion
 

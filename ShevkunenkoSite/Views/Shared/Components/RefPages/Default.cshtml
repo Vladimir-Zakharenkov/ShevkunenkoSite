@@ -1,4 +1,6 @@
-﻿@model RefPagesViewModel
+﻿@* data-ap-blacklist - отключить рекламу в блоке *@
+
+@model RefPagesViewModel
 
 @* Ссылки на связанные страницы по GUID (1) *@
 <div>
@@ -118,7 +120,7 @@
                     <partial name="_HeadingPartial"
                              model='(caption, "H2")' />
 
-                    <div class="row row-cols-3 row-cols-lg-4 row-cols-xxl-5 py-3 mt-2 mb-4 bg-primary-subtle justify-content-center shadw">
+                    <div class="row row-cols-3 row-cols-lg-4 row-cols-xxl-5 g-3 p-2 my-3 bg-primary-subtle justify-content-center shadw">
 
                         @foreach (var item in listOfFilms)
                         {

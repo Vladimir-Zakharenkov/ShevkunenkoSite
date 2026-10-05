@@ -4,7 +4,7 @@
     string sitePath = "https://" + Context.Request.Host;
 }
 
-<span class="d-block" itemscope itemtype="http://schema.org/ImageObject">
+<span class="d-flex col-auto rounded mt-0 shadw" itemscope itemtype="http://schema.org/ImageObject">
 
     <meta itemprop="name" content="@Model.ImageItem.ImageCaption" />
 
@@ -30,7 +30,7 @@
             <meta itemprop="width" content="@Model.ImageItem.WebImageWidth" />
             <meta itemprop="height" content="@Model.ImageItem.WebImageHeight" />
 
-            <img class="@Model.CssClass"
+            <img class="maxwidth700px @Model.CssClass"
                  src="@Model.ImageItem.ImagePath/@Model.ImageItem.WebImageFileName"
                  asp-append-version="true"
                  alt="@Model.ImageItem.ImageAltTitle"
@@ -53,7 +53,7 @@
             <meta itemprop="width" content="@Model.ImageItem.ImageWidth" />
             <meta itemprop="height" content="@Model.ImageItem.ImageHeight" />
 
-            <img class="@Model.CssClass"
+            <img class="maxwidth700px @Model.CssClass"
                  src="@Model.ImageItem.ImagePath/@Model.ImageItem.ImageFileName"
                  asp-append-version="true"
                  alt="@Model.ImageItem.ImageAltTitle"
@@ -85,7 +85,7 @@
             <meta itemprop="width" content="@Model.ImageItem.ImageWidth" />
             <meta itemprop="height" content="@Model.ImageItem.ImageHeight" />
 
-            <img class="@Model.CssClass"
+            <img class="maxwidth700px @Model.CssClass"
                  src="@Model.ImageItem.ImagePath/@Model.ImageItem.ImageFileName"
                  asp-append-version="true"
                  alt="@Model.ImageItem.ImageAltTitle"
@@ -108,7 +108,7 @@
             <meta itemprop="width" content="@Model.ImageItem.WebImageWidth" />
             <meta itemprop="height" content="@Model.ImageItem.WebImageHeight" />
 
-            <img class="@Model.CssClass"
+            <img class="maxwidth700px @Model.CssClass"
                  src="@Model.ImageItem.ImagePath/@Model.ImageItem.WebImageFileName"
                  asp-append-version="true"
                  alt="@Model.ImageItem.ImageAltTitle"
@@ -141,7 +141,7 @@
             <meta itemprop="width" content="@Model.ImageItem.WebIconWidth" />
             <meta itemprop="height" content="@Model.ImageItem.WebIconHeight" />
 
-            <img class="@Model.CssClass"
+            <img class="maxwidth300px @Model.CssClass"
                  src="@Model.ImageItem.ImagePath/@Model.ImageItem.WebIconFileName"
                  asp-append-version="true"
                  alt="@Model.ImageItem.ImageAltTitle"
@@ -253,7 +253,7 @@
             <meta itemprop="width" content="@Model.ImageItem.WebIcon200Width" />
             <meta itemprop="height" content="@Model.ImageItem.WebIcon200Height" />
 
-            <img class="maxwidth200px @Model.CssClass"
+            <img class="@Model.CssClass"
                  src="@Model.ImageItem.ImagePath/@Model.ImageItem.WebIcon200FileName"
                  asp-append-version="true"
                  alt="@Model.ImageItem.ImageAltTitle"
@@ -276,7 +276,7 @@
             <meta itemprop="width" content="@Model.ImageItem.Icon200Width" />
             <meta itemprop="height" content="@Model.ImageItem.Icon200Height" />
 
-            <img class="maxwidth200px @Model.CssClass"
+            <img class="@Model.CssClass"
                  src="@Model.ImageItem.ImagePath/@Model.ImageItem.Icon200FileName"
                  asp-append-version="true"
                  alt="@Model.ImageItem.ImageAltTitle"
@@ -449,7 +449,7 @@
             <meta itemprop="width" content="@Model.ImageItem.WebImageHDWidth" />
             <meta itemprop="height" content="@Model.ImageItem.WebImageHDHeight" />
 
-            <img class="@Model.CssClass"
+            <img class="maxwidth800px @Model.CssClass"
                  src="@Model.ImageItem.ImagePath/@Model.ImageItem.WebImageHDFileName"
                  asp-append-version="true"
                  alt="@Model.ImageItem.ImageAltTitle"
@@ -472,7 +472,7 @@
             <meta itemprop="width" content="@Model.ImageItem.ImageHDWidth" />
             <meta itemprop="height" content="@Model.ImageItem.ImageHDHeight" />
 
-            <img class="@Model.CssClass"
+            <img class="maxwidth800px @Model.CssClass"
                  src="@Model.ImageItem.ImagePath/@Model.ImageItem.ImageHDFileName"
                  asp-append-version="true"
                  alt="@Model.ImageItem.ImageAltTitle"
@@ -505,7 +505,7 @@
             <meta itemprop="width" content="@Model.ImageItem.ImageHDWidth" />
             <meta itemprop="height" content="@Model.ImageItem.ImageHDHeight" />
 
-            <img class="@Model.CssClass"
+            <img class="maxwidth800px @Model.CssClass"
                  src="@Model.ImageItem.ImagePath/@Model.ImageItem.ImageHDFileName"
                  asp-append-version="true"
                  alt="@Model.ImageItem.ImageAltTitle"
@@ -528,7 +528,7 @@
             <meta itemprop="width" content="@Model.ImageItem.WebImageHDWidth" />
             <meta itemprop="height" content="@Model.ImageItem.WebImageHDHeight" />
 
-            <img class="@Model.CssClass"
+            <img class="maxwidth800px @Model.CssClass"
                  src="@Model.ImageItem.ImagePath/@Model.ImageItem.WebImageHDFileName"
                  asp-append-version="true"
                  alt="@Model.ImageItem.ImageAltTitle"

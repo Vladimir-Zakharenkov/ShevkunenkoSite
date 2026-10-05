@@ -4,6 +4,8 @@
 
     "NoImage": "29F51581-8F24-4EDC-1F48-08DAE2B985EA",
 
+    "ImageForFilm": "b386f45b-fc84-4748-bc75-08dd67cfc8ed",
+
     "YoutubeImage": "454a9adb-58d7-4cd2-8b78-08db0babccab",
 
     "VkVideoImage": "3dc5ea15-b873-4f01-b103-08db0baedb98",
@@ -23,6 +25,14 @@
     "KinopoiskImage": "31eec46d-5556-4cdb-67a7-08db0b99fb42",
 
     "ImdbImage": "9923aec8-f82b-4032-00f2-08db0b9fc418",
+
+    "WordImage": "562a0cbc-54fb-4059-1187-08dd8ec59a70",
+
+    "PdfImage": "63b93d4a-6f6f-43f9-1188-08dd8ec59a70",
+
+    "AudioImage": "84c9851e-7b45-4bd1-1189-08dd8ec59a70",
+
+    "PrintImage": "f271cf6f-a66e-4c55-9d5e-08dc1058c236",
 
     "IconsFolder": "/images/pageicons/",
 

@@ -62,8 +62,7 @@ public class ViewImage(
 
         #region CSS для картинки
 
-        viewImageViewModel.CssClass = cssClass ?? string.Empty;
-        viewImageViewModel.CssClass = ($"img-fluid img-thumbnail {viewImageViewModel.CssClass}");
+        viewImageViewModel.CssClass = string.IsNullOrEmpty(cssClass)  ? "img-fluid w-100" : ($"img-fluid w-100 {cssClass}");
 
         #endregion
 

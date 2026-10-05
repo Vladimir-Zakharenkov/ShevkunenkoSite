@@ -4,21 +4,24 @@
     int i = 0;
 }
 
-<h1 class="h2 text_shadow">
+<div class="row bg-secondary-subtle shadw mb-3 mx-0">
 
-    @Model.CaptionOfAlbum.Replace("--", " ").ToUpper()
+    <h1 class="col h2 text_shadow mb-0 py-1">
 
-    @if (Model.NoteForCaptionOfAlbum != null)
-    {
-        <br />
-        <span class="h2">
-            (@Model.NoteForCaptionOfAlbum)
-        </span>
-    }
+        @Model.CaptionOfAlbum.Replace("--", " ").ToUpper()
 
-</h1>
+        @if (Model.NoteForCaptionOfAlbum != null)
+        {
+            <br />
 
-<hr class="liniya" />
+            <span class="h2">
+                (@Model.NoteForCaptionOfAlbum)
+            </span>
+        }
+
+    </h1>
+
+</div>
 
 @* Просмотр страницы альбома *@
 @if (Model.AlbumOrPhoto)

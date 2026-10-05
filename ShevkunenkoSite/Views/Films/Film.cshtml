@@ -152,39 +152,47 @@
                                     aria-expanded="true"
                                     aria-controls="blockChooseHost">
 
-                                <span class="d-none d-sm-block pe-1">
-                                    Видео на :
-                                </span>
+                                <div class="container">
 
-                                @* YouTube *@
-                                <vc:view-image image-id="@DataConfig.YoutubeImage"
-                                               css-class="maxwidth40px p-1 me-1 @(Context.Request.QueryString.ToString().Contains("yt", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
-                                               icon-type="webicon100" />
+                                    <div class="d-flex flex-wrap align-items-center justify-content-start gap-2">
 
-                                @* VkVideo *@
-                                <vc:view-image image-id="@DataConfig.VkVideoImage"
-                                               css-class="maxwidth40px p-1 me-1 @(Context.Request.QueryString.ToString().Contains("vk", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
-                                               icon-type="webicon100" />
+                                        <span class="d-none d-sm-inline-block me-2">
+                                            Видео на :
+                                        </span>
 
-                                @* MailRuVideo *@
-                                <vc:view-image image-id="@DataConfig.MailRuVideoImage"
-                                               css-class="maxwidth40px p-1 me-1 @(Context.Request.QueryString.ToString().Contains("ml", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
-                                               icon-type="webicon100" />
+                                        @* YouTube *@
+                                        <vc:view-image image-id="@DataConfig.YoutubeImage"
+                                                       css-class="border border-secondary rounded @(Context.Request.QueryString.ToString().Contains("yt", StringComparison.InvariantCultureIgnoreCase) ? "border-danger" : string.Empty)"
+                                                       icon-type="webicon100" />
 
-                                @* OkVideo *@
-                                <vc:view-image image-id="@DataConfig.OkVideoImage"
-                                               css-class="maxwidth40px p-1 me-1 @(Context.Request.QueryString.ToString().Contains("ok", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
-                                               icon-type="webicon100" />
+                                        @* VkVideo *@
+                                        <vc:view-image image-id="@DataConfig.VkVideoImage"
+                                                       css-class="border border-secondary rounded @(Context.Request.QueryString.ToString().Contains("vk", StringComparison.InvariantCultureIgnoreCase) ? "border-danger" : string.Empty)"
+                                                       icon-type="webicon100" />
 
-                                @* AsusVideo *@
-                                <vc:view-image image-id="@DataConfig.AsusVideoImage"
-                                               css-class="maxwidth40px p-1 me-1 @(Context.Request.QueryString.ToString().Contains("ss", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
-                                               icon-type="webicon100" />
+                                        @* MailRuVideo *@
+                                        <vc:view-image image-id="@DataConfig.MailRuVideoImage"
+                                                       css-class="border border-secondary rounded @(Context.Request.QueryString.ToString().Contains("ml", StringComparison.InvariantCultureIgnoreCase) ? "border-danger" : string.Empty)"
+                                                       icon-type="webicon100" />
 
-                                @* YandexDisk *@
-                                <vc:view-image image-id="@DataConfig.DownloadFilmImage"
-                                               css-class="maxwidth40px p-1"
-                                               icon-type="webicon100" />
+                                        @* OkVideo *@
+                                        <vc:view-image image-id="@DataConfig.OkVideoImage"
+                                                       css-class="border border-secondary rounded @(Context.Request.QueryString.ToString().Contains("ok", StringComparison.InvariantCultureIgnoreCase) ? "border-danger" : string.Empty)"
+                                                       icon-type="webicon100" />
+
+                                        @* AsusVideo *@
+                                        <vc:view-image image-id="@DataConfig.AsusVideoImage"
+                                                       css-class="border border-secondary rounded @(Context.Request.QueryString.ToString().Contains("ss", StringComparison.InvariantCultureIgnoreCase) ? "border-danger" : string.Empty)"
+                                                       icon-type="webicon100" />
+
+                                        @* YandexDisk *@
+                                        <vc:view-image image-id="@DataConfig.DownloadFilmImage"
+                                                       css-class="border border-secondary rounded"
+                                                       icon-type="webicon100" />
+
+                                    </div>
+
+                                </div>
 
                             </button>
 
@@ -296,24 +304,32 @@
                                     aria-expanded="true"
                                     aria-controls="blockInternerInfo">
 
-                                <span class="d-none d-sm-block pe-1">
-                                    О фильме :
-                                </span>
+                                <div class="container">
 
-                                @* Kino-Teatr.Ru *@
-                                <vc:view-image image-id="@DataConfig.KinoTeatrImage"
-                                               css-class="maxwidth40px p-0 me-2"
-                                               icon-type="webicon100" />
+                                    <div class="d-flex flex-wrap align-items-center justify-content-start gap-2">
 
-                                @* Kinopoisk.Ru *@
-                                <vc:view-image image-id="@DataConfig.KinopoiskImage"
-                                               css-class="maxwidth40px p-0 me-2"
-                                               icon-type="webicon100" />
+                                        <span class="d-none d-sm-inline-block me-2">
+                                            О фильме :
+                                        </span>
 
-                                @* IMDB.com *@
-                                <vc:view-image image-id="@DataConfig.ImdbImage"
-                                               css-class="maxwidth40px p-0"
-                                               icon-type="webicon100" />
+                                        @* Kino-Teatr.Ru *@
+                                        <vc:view-image image-id="@DataConfig.KinoTeatrImage"
+                                                       css-class="border border-secondary rounded"
+                                                       icon-type="webicon100" />
+
+                                        @* Kinopoisk.Ru *@
+                                        <vc:view-image image-id="@DataConfig.KinopoiskImage"
+                                                       css-class="border border-secondary rounded"
+                                                       icon-type="webicon100" />
+
+                                        @* IMDB.com *@
+                                        <vc:view-image image-id="@DataConfig.ImdbImage"
+                                                       css-class="border border-secondary rounded"
+                                                       icon-type="webicon100" />
+
+                                    </div>
+
+                                </div>
 
                             </button>
 
@@ -324,7 +340,7 @@
                              aria-labelledby="headingInternerInfo"
                              data-bs-parent="#listUnderScreen">
 
-                            <div id="accordionBodyInternerInfo" class="accordion-body accordion-body-nointend">
+                            <div id="accordionBodyInternerInfo" class="accordion-body text-indent-0">
 
                                 <div class="row row-cols-3 g-1 g-sm-2 justify-content-center">
 
@@ -375,16 +391,24 @@
                                     aria-expanded="true"
                                     aria-controls="blockFullVersion">
 
-                                <span class="d-none d-sm-block pe-1">
-                                    Полная версия :
-                                </span>
+                                <div class="container">
 
-                                @if (Model.FullFilm != null)
-                                {
-                                    <vc:view-image image-id="@Model.FullFilm.FilmImageId"
-                                                   css-class="maxwidth40px p-0 me-2"
-                                                   icon-type="webicon100" />
-                                }
+                                    <div class="d-flex flex-wrap align-items-center justify-content-start gap-2">
+
+                                        <span class="d-none d-sm-block pe-1">
+                                            Полная версия :
+                                        </span>
+
+                                        @if (Model.FullFilm != null)
+                                        {
+                                            <vc:view-image image-id="@Model.FullFilm.FilmImageId"
+                                                           css-class="border border-secondary rounded"
+                                                           icon-type="webicon100" />
+                                        }
+
+                                    </div>
+
+                                </div>
 
                             </button>
 
@@ -397,15 +421,11 @@
 
                             <div id="accordionBodyFullVersion" class="accordion-body accordion-body-nointend bg-info mt-1">
 
-                                <div id="accordionBodyFullVersion" class="accordion-body">
+                                <div id="accordionBodyFullVersion" class="accordion-body text-center">
 
                                     @if (@Model.FullFilm != null)
                                     {
-                                        <div class="row justify-content-center">
-
-                                            <partial name="_LinkToFilmPartial" model="@Model.FullFilm" />
-
-                                        </div>
+                                        <partial name="_LinkToFilmPartial" model="@Model.FullFilm" />
                                     }
 
                                 </div>
@@ -422,31 +442,40 @@
                         @* заголовок группы «кадры фильма» *@
                         <h2 id="headingfilmStills" class="accordion-header shadw">
 
-                            <button class="accordion-button collapsed py-1 stranicy"
+                            <button class="accordion-button collapsed p-1 stranicy"
                                     type="button"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#blockFilmStills"
                                     aria-expanded="true"
                                     aria-controls="blockFilmStills">
 
-                                <span class="d-none d-sm-block pe-1">
-                                    Кадры фильма :
-                                </span>
+                                <div class="container">
 
-                                @if (Model.ListOfPictures != null && Model.ListOfPictures.Count > 0)
-                                {
-                                    @do
-                                    {
-                                        Random rnd = new();
-                                        int rndIndex = rnd.Next(Model.ListOfPictures.Count);
+                                    <div class="d-flex flex-wrap align-items-center justify-content-start gap-2">
 
-                                        <vc:view-image image-id="@Model.ListOfPictures[rndIndex].ImageFileModelId"
-                                                       css-class="maxwidth40px p-0 me-2"
-                                                       icon-type="webicon100" />
-                                        n++;
-                                    }
-                                    while (n < Model.ListOfPictures.Count && n < 5);
-                                }
+                                        <span class="d-none d-sm-inline-block me-2">
+                                            Кадры фильма :
+                                        </span>
+
+                                        @if (Model.ListOfPictures != null && Model.ListOfPictures.Count > 0)
+                                        {
+                                            @do
+                                            {
+                                                Random rnd = new();
+
+                                                int rndIndex = rnd.Next(Model.ListOfPictures.Count);
+
+                                                <vc:view-image image-id="@Model.ListOfPictures[rndIndex].ImageFileModelId"
+                                                               css-class="border border-secondary rounded"
+                                                               icon-type="webicon100" />
+                                                n++;
+                                            }
+                                            while (n < Model.ListOfPictures.Count && n < 5);
+                                        }
+
+                                    </div>
+
+                                </div>
 
                             </button>
 
@@ -457,7 +486,7 @@
                              aria-labelledby="heading4"
                              data-bs-parent="#movieDescription">
 
-                            <div id="accordionBodyFilmStills" class="accordion-body accordion-body-nointend p-0 pt-2">
+                            <div id="accordionBodyFilmStills" class="accordion-body text-indent-0 p-0 pt-2">
 
                                 <div class="row row-cols-2 row-cols-sm-4 row-cols-md-5 row-cols-lg-6 g-4 pb-2 justify-content-center">
 

@@ -12,12 +12,16 @@
 <a href="@href"
    target="@(isAdmin ? "_blank" : "_self")"
    rel="@(isAdmin ? null : "noopener noreferrer")"
-   class="d-inline-flex col justify-content-center maxwidth300px"
+   class="d-inline-flex mt-0"
    title="@(isAdmin ? "информация о фильме" : Model.FilmCaption.Replace("--", " "))">
 
     <partial name="_FilmSchemaOrgPartial" model="@Model" />
 
-    <vc:view-image image-id="@Model.FilmPosterId"
-                   css-class="card-img-top shadw rounded-3 imageref"
-                   icon-type="webicon300" />
+    <div id="imageCard" class="card">
+
+        <vc:view-image image-id="@Model.FilmPosterId"
+                       css-class="card-img-top imageref"
+                       icon-type="webicon300" />
+
+    </div>
 </a>

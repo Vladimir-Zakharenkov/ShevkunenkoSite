@@ -1,4 +1,21 @@
-﻿.height400 {
+﻿.container {
+    display: flex;
+    gap: 10px;
+}
+
+.col-width-content {
+    flex: 0 0 auto; /* НЕ растягиваться, НЕ сжиматься, размер = auto */
+    max-width: 100%; /* чтобы не вылезала за контейнер */
+    width: fit-content; /* ширина = ширине контента */
+}
+
+    .col-width-content img {
+        display: block; /* убирает инлайновый отступ снизу */
+        max-width: 100%; /* не вылезает за колонку */
+        height: auto;
+    }
+
+.height400 {
     height: 400px !important;
 }
 
@@ -108,12 +125,20 @@
     min-width: 300px;
 }
 
+.maxwidth30px {
+    max-width: 30px !important;
+}
+
 .maxwidth40px {
     max-width: 40px !important;
 }
 
 .maxwidth60px {
     max-width: 60px !important;
+}
+
+.maxwidth80px {
+    max-width: 80px !important;
 }
 
 .maxwidth100px {
@@ -204,5 +229,50 @@
 #picturesFromRight {
     overflow-y: auto;
     overflow-x: hidden;
+}
+// ------------------------------------------
+
+/* Ширина колонок в разметке содержание книги - название главы*/
+.chapter-row {
+    display: grid;
+    grid-template-columns: 70px 1fr auto auto; /* метка | название | страница | аудио */
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    padding-left: .25rem;
+    padding-right: .25rem;
+    text-indent: 0;
+}
+
+    .chapter-row .text-wrap {
+        min-width: 0;
+        overflow-wrap: break-word;
+        word-break: normal; /* ← отключаем «жёсткий» разрыв */
+        text-align: left;
+    }
+// ------------------------------------------
+
+/* Ширина колонок в разметке содержание книги - Глава ** */
+.list-group {
+    --chapter-label-width: 80px;
+}
+
+.chapter-row {
+    display: grid;
+    grid-template-columns: var(--chapter-label-width) 1fr auto auto;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .chapter-row > .fw-bold {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; /* страховка, если всё-таки не влезет */
+    }
+
+@media (min-width: 1400px) {
+    .list-group {
+        --chapter-label-width: 90px;
+    }
 }
 // ------------------------------------------

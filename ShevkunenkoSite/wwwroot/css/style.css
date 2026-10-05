@@ -12654,6 +12654,11 @@ p {
   color: white;
 }
 
+.text-break-flex {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 /* перенос слов в тексте */
 body {
   word-wrap: break-word;
@@ -13356,7 +13361,7 @@ li#yandex-search * {
 
 .footer_page {
   min-height: 3rem;
-  padding-top: 0.3rem;
+  padding-top: 1rem;
   border-top: 1px solid hsl(0, 60%, 45%);
 }
 
@@ -13368,6 +13373,23 @@ li#yandex-search * {
 .charst::before {
   margin-right: 4px;
   content: "часть ";
+}
+
+.container {
+  display: flex;
+  gap: 10px;
+}
+
+.col-width-content {
+  flex: 0 0 auto; /* НЕ растягиваться, НЕ сжиматься, размер = auto */
+  max-width: 100%; /* чтобы не вылезала за контейнер */
+  width: fit-content; /* ширина = ширине контента */
+}
+
+.col-width-content img {
+  display: block; /* убирает инлайновый отступ снизу */
+  max-width: 100%; /* не вылезает за колонку */
+  height: auto;
 }
 
 .height400 {
@@ -13478,12 +13500,20 @@ li#yandex-search * {
   min-width: 300px;
 }
 
+.maxwidth30px {
+  max-width: 30px !important;
+}
+
 .maxwidth40px {
   max-width: 40px !important;
 }
 
 .maxwidth60px {
   max-width: 60px !important;
+}
+
+.maxwidth80px {
+  max-width: 80px !important;
 }
 
 .maxwidth100px {
@@ -13565,6 +13595,48 @@ li#yandex-search * {
   overflow-x: hidden;
 }
 
+/* Ширина колонок в разметке содержание книги - название главы*/
+.chapter-row {
+  display: grid;
+  grid-template-columns: 70px 1fr auto auto; /* метка | название | страница | аудио */
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  text-indent: 0;
+}
+
+.chapter-row .text-wrap {
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: normal; /* ← отключаем «жёсткий» разрыв */
+  text-align: left;
+}
+
+/* Ширина колонок в разметке содержание книги - Глава ** */
+.list-group {
+  --chapter-label-width: 80px;
+}
+
+.chapter-row {
+  display: grid;
+  grid-template-columns: var(--chapter-label-width) 1fr auto auto;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.chapter-row > .fw-bold {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* страховка, если всё-таки не влезет */
+}
+
+@media (min-width: 1400px) {
+  .list-group {
+    --chapter-label-width: 90px;
+  }
+}
 .note {
   display: inline;
   vertical-align: super;

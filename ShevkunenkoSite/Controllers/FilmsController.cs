@@ -204,16 +204,20 @@ public class FilmsController
 
         #region Если нельзя найти картинки по filmCaption
 
-        if (!string.IsNullOrEmpty(filmCaption) && await imageContext.ImageFiles.Where(img => img.SearchFilter.Contains(filmCaption + album)).AnyAsync() == false)
+        if (!string.IsNullOrEmpty(filmCaption) 
+            && await imageContext.ImageFiles
+                .Where(img => img.SearchFilter.Contains(filmCaption + album)).AnyAsync() == false)
         {
-            return RedirectToAction(nameof(Film), new { filmCaption = filmCaption, host = "ok" });
+            return RedirectToAction(nameof(Film), new { filmCaption, host = "ok" });
         }
 
         #endregion
 
         #region Если не задан или не найден в фильтрах картинок filmCaption
 
-        if (string.IsNullOrEmpty(filmCaption) || await imageContext.ImageFiles.Where(img => img.SearchFilter.Contains(filmCaption + album)).AnyAsync() == false)
+        if (string.IsNullOrEmpty(filmCaption) 
+            || await imageContext.ImageFiles
+                .Where(img => img.SearchFilter.Contains(filmCaption + album)).AnyAsync() == false)
         {
             return RedirectToAction(nameof(Index));
         }
@@ -226,7 +230,9 @@ public class FilmsController
 
         #region Если картинка не найдена
 
-        if (imageId != null && await imageContext.ImageFiles.Where(img => img.ImageFileModelId == imageId).AnyAsync() == false)
+        if (imageId != null 
+            && await imageContext.ImageFiles
+                .Where(img => img.ImageFileModelId == imageId).AnyAsync() == false)
         {
             return RedirectToAction(nameof(Film), new { filmCaption });
         }
@@ -255,7 +261,7 @@ public class FilmsController
             {
                 #region Определение заголовка и подзаголовка альбома
 
-                string[] filters = imageItem.SearchFilter.Split(',', StringSplitOptions.TrimEntries);
+                string[] filters = imageItem.SearchFilter.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
                 string? filterForCaption = Array.Find(filters, p => p.Contains((filmCaption + album), StringComparison.OrdinalIgnoreCase));
 
