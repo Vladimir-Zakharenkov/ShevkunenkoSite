@@ -2,6 +2,10 @@
 
 @{
     int n = 0; // количество миниатюр фотографий
+
+    string navigatonBlock = "d-flex align-items-center col col-md-8 maxwidth700px p-2 my-2 mx-auto bg-success-subtle bg-opacity-10 shadw d-print-none";
+
+    string goToNextPage = "btn btn-outline-dark py-0 shadw";
 }
 
 <div class="mx-auto fluid-font-size" itemscope itemtype="https://schema.org/Book">
@@ -18,7 +22,7 @@
 
     </span>
 
-    @* Выбор картинки для книги  display:none *@
+    @* Выбор картинки для книги display:none *@
     <span class="d-none" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
 
         @if (Model.BookOrArticle.LogoOfArticle != null)
@@ -282,45 +286,48 @@
     </div>
 
     @* Навигация по статье *@
-    <div class="@(Model.PageNumber == 0 ? "d-none" : "col col-md-8 maxwidth700px mt-4 mb-0 mx-auto clearfix d-print-none")">
+    <div class="row align-items-center">
 
-        @* переход к предыдущей странице*@
-        <a class="@((Model.PageNumber > 1) ? "btn btn-outline-primary py-0 float-start shadw" : "d-none")"
-           asp-area=""
-           asp-controller="Books"
-           asp-action="Book"
-           asp-route-bookCaption="@Model.BookOrArticle.CaptionOfText.Replace(' ', '-')"
-           asp-route-pageNumber="@(Model.PageNumber - 1)"
-           title="предыдущая страница"
-           itemprop="url">
+        <div id="pageNavigation" class="@(Model.PageNumber == 0 ? "d-none" : $"{navigatonBlock}")">
 
-            &lt;&lt;
-            <span class="nomstr fluid-font-size">
-                @(Model.PageNumber - 1)
-            </span>
+            @* Переход к предыдущей странице*@
+            <a id="goPrev" class="@((Model.PageNumber > 1) ? $"{goToNextPage}" : "d-none")"
+               asp-area=""
+               asp-controller="Books"
+               asp-action="Book"
+               asp-route-bookCaption="@Model.BookOrArticle.CaptionOfText.Replace(' ', '-')"
+               asp-route-pageNumber="@(Model.PageNumber - 1)"
+               title="предыдущая страница"
+               itemprop="url">
 
-        </a>
+                <span class="nomstr fluid-font-size">
+                    &lt;&lt; @(Model.PageNumber - 1)
+                </span>
 
-        @* переход к следующей странице*@
-        <a class="@((Model.PageNumber < Model.BookOrArticle.NumberOfPages) ? "btn btn-outline-primary py-0 float-end shadw" : "d-none")"
-           asp-area=""
-           asp-controller="Books"
-           asp-action="Book"
-           asp-route-bookCaption="@Model.BookOrArticle.CaptionOfText.Replace(' ', '-')"
-           asp-route-pageNumber="@(Model.PageNumber + 1)"
-           title="следующая страница"
-           itemprop="url">
+            </a>
 
-            <span class="nomstr fluid-font-size">
-                @(Model.PageNumber + 1) &gt;&gt;
-            </span>
+            @* Переход к следующей странице*@
+            <a id="goNext" class="@((Model.PageNumber < Model.BookOrArticle.NumberOfPages) ? $"{goToNextPage} ms-auto" : "d-none")"
+               asp-area=""
+               asp-controller="Books"
+               asp-action="Book"
+               asp-route-bookCaption="@Model.BookOrArticle.CaptionOfText.Replace(' ', '-')"
+               asp-route-pageNumber="@(Model.PageNumber + 1)"
+               title="следующая страница"
+               itemprop="url">
 
-        </a>
+                <span class="nomstr fluid-font-size">
+                    @(Model.PageNumber + 1) &gt;&gt;
+                </span>
+
+            </a>
+
+        </div>
 
     </div>
 
     @* Раскрывающиеся поля *@
-    <div class="@(Model.PageNumber == 0 ? "d-none" : "") bg-dark-subtle bg-opacity-10 p-3 mt-4 shadw">
+    <div class="@(Model.PageNumber == 0 ? "d-none" : "") bg-dark-subtle bg-opacity-10 p-3 shadw">
 
         <div id="accordionForBook" class="@(Model.PageNumber == 0 ? "d-none" : "accordion maxwidth700px mx-auto mt-4 d-print-none")">
 
@@ -553,7 +560,7 @@
 
             @* Аудио *@
             <div class="@((Model.TextForBookOrArticle != null && Model.TextForBookOrArticle.AudioInfoModel != null
-                                                                                                                                        && !string.IsNullOrEmpty(Model.TextForBookOrArticle.AudioInfoModel.PlayerPodsterFm)) ? "accordion-item my-3 shadw" : "d-none")">
+                                                                                                                                                        && !string.IsNullOrEmpty(Model.TextForBookOrArticle.AudioInfoModel.PlayerPodsterFm)) ? "accordion-item my-3 shadw" : "d-none")">
                 @* Заголовок группы «Аудио» *@
                 <h2 id="headingAudioForPage" class="accordion-header shadw">
 

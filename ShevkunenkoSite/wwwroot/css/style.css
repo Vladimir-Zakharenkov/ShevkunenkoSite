@@ -13365,11 +13365,6 @@ li#yandex-search * {
   border-top: 1px solid hsl(0, 60%, 45%);
 }
 
-.nomstr::before {
-  margin-right: 4px;
-  content: "страница ";
-}
-
 .charst::before {
   margin-right: 4px;
   content: "часть ";
