@@ -18,7 +18,7 @@
 
         @if (Model.MoviePosterString != null)
         {
-            <vc:image-view file-name="@Model.MoviePosterString" css-class="card-img-top m-2 width50percent shadw" is-icon="false" />
+            <vc:image-view file-name="@Model.MoviePosterString" css-class="card-img-top m-2 width50percent block-shadow" is-icon="false" />
         }
 
         <hr class="liniya" />
@@ -44,8 +44,8 @@
 
                     <div class="card-footer p-2">
 
-                        <button type="submit" class="btn btn-outline-danger me-2 shadw" title="удалить фильм">Delete</button>
-                        <a asp-area="Admin" asp-controller="MovieInfo" asp-action="Index" class="btn btn-outline-success shadw" title="не удалять">Cancel</a>
+                        <button type="submit" class="btn btn-outline-danger me-2 block-shadow" title="удалить фильм">Delete</button>
+                        <a asp-area="Admin" asp-controller="MovieInfo" asp-action="Index" class="btn btn-outline-success block-shadow" title="не удалять">Cancel</a>
 
                     </div>
 

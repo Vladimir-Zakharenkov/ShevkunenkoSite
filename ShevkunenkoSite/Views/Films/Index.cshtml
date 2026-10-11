@@ -75,7 +75,7 @@
                    class="d-inline-block align-middle mt-1 w-50"
                    type="text" />
 
-            <input class="btn btn-outline-success shadw py-1"
+            <input class="btn btn-outline-success block-shadow py-1"
                    type="submit"
                    value="Поиск"
                    title="поиск фильмов" />
@@ -100,13 +100,13 @@
            class="d-flex col"
            title="смотреть">
 
-            <div class="card h-100 me-1 mb-1 p-1 shadw borderforitem" title="@film.FilmCaption">
+            <div class="card h-100 me-1 mb-1 p-1 block-shadow borderforitem" title="@film.FilmCaption">
 
                 <vc:view-image image-id="@film.FilmPosterId"
-                               css-class="card-img-top shadw rounded-3"
+                               css-class="card-img-top block-shadow rounded-3"
                                icon-type="webicon300" />
 
-                <div class="card-body p-0 mt-2 shadw cardBodyBg">
+                <div class="card-body p-0 mt-2 block-shadow cardBodyBg">
 
                     @if (!string.IsNullOrEmpty(film.FilmCaption))
                     {

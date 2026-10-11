@@ -1,0 +1,9 @@
+﻿@model ArticleViewModel
+
+@* Блок вверху страницы *@
+<div class="@(Model.Scan == true ? "d-none" : "d-flex align-items-center mb-4 top_page") d-print-none">
+
+    @* Иконки и номер страницы*@
+    <partial name="_PageToolsPartial" model="Model" />
+
+</div>

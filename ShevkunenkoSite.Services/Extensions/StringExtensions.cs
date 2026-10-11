@@ -19,4 +19,7 @@ public static class StringExtensions
 
         return startOfDescription;
     }
+
+    public static string SpaceToDash(this string s) =>
+        string.IsNullOrWhiteSpace(s) ? string.Empty : s.Replace(' ', '-');
 }

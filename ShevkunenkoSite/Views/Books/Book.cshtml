@@ -1,74 +1,57 @@
 ﻿@model ArticleViewModel
 
 @{
-    int n = 0; // количество миниатюр фотографий
+    var isCover = Model.PageNumber == 0;
 
-    string navigatonBlock = "d-flex align-items-center col col-md-8 maxwidth700px p-2 my-2 mx-auto bg-success-subtle bg-opacity-10 shadw d-print-none";
+    var caption = Model.BookOrArticle.CaptionOfText.SpaceToDash();
 
-    string goToNextPage = "btn btn-outline-dark py-0 shadw";
+    string navigationBlock = "d-flex align-items-center maxwidth700px w-100 p-2 mt-3 mx-auto bg-light-subtle block-shadow d-print-none";
+
+    string goToNextPage = "btn btn-outline-dark py-0 block-shadow";
+
+    var hasPictures = Model.ListOfPictures is { Count: > 0 };
+
+    string previewImageClass = "border border-secondary rounded max-width-40-60";
+
+    var picturesPreview = Model.PageNumber != 0 && Model.ListOfPictures is { Count: > 0 }
+        ? Model.ListOfPictures
+            .OrderBy(_ => Random.Shared.Next())
+            .Take(4)
+            .ToList()
+        : new List<ImageFileModel>();
+
+    var hasAudioPlayer = !string.IsNullOrEmpty(
+            Model.TextForBookOrArticle?.AudioInfoModel?.PlayerPodsterFm);
+
+    string audioPreviewClass = Model.BookOrArticle.RefToAudio == null
+        ? $"d-none {previewImageClass}"
+        : previewImageClass;
 }
 
-<div class="mx-auto fluid-font-size" itemscope itemtype="https://schema.org/Book">
+<div id="viewForBookPage" class="mx-auto fluid-font-size" itemscope itemtype="https://schema.org/Book">
 
-    @* Данные для  https://schema.org/Book display:none *@
-    <span class="d-none">
-
-        <meta itemprop="author" content="@Model.BookOrArticle.AuthorOfText" />
-        <meta itemprop="headline" content="@Model.BookOrArticle.CaptionOfText" />
-        <meta itemprop="url" content="https://@Context.Request.Host@Context.Request.Path@Context.Request.QueryString">
-        <meta itemprop="publisher" content="@Model.BookOrArticle.Publisher">
-        <meta itemprop="dateModified datePublished dateModified" content="@Model.BookOrArticle.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")">
-        <meta itemprop="description" content="@Model.BookOrArticle.BookDescription">
-
-    </span>
-
-    @* Выбор картинки для книги display:none *@
-    <span class="d-none" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-
-        @if (Model.BookOrArticle.LogoOfArticle != null)
-        {
-            <meta itemprop="caption" content="@Model.BookOrArticle.LogoOfArticle.ImageCaption">
-            <link itemprop="contentUrl url" href="https://@Context.Request.Host@Model.BookOrArticle.LogoOfArticle.ImagePath/@Model.BookOrArticle.LogoOfArticle.WebImageFileName">
-            <link itemprop="thumbnailUrl" href="https://@Context.Request.Host@Model.BookOrArticle.LogoOfArticle.ImagePath/@Model.BookOrArticle.LogoOfArticle.WebIconFileName">
-            <meta itemprop="width" content="@Model.BookOrArticle.LogoOfArticle.WebImageWidth">
-            <meta itemprop="height" content="@Model.BookOrArticle.LogoOfArticle.WebImageHeight">
-        }
-        else
-        {
-            <meta itemprop="caption" content="@Model.PageInfo.ImageFileModel!.ImageCaption">
-            <link itemprop="contentUrl url" href="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.WebImageFileName">
-            <link itemprop="thumbnailUrl" href="https://@Context.Request.Host@Model.PageInfo.ImageFileModel.ImagePath/@Model.PageInfo.ImageFileModel.WebIconFileName">
-            <meta itemprop="width" content="@Model.PageInfo.ImageFileModel.WebImageWidth">
-            <meta itemprop="height" content="@Model.PageInfo.ImageFileModel.WebImageHeight">
-        }
-
-    </span>
+    <partial name="_BookSchemaOrgPartial"
+             model="Model.BookOrArticle" />
 
     @* Страница *@
-    <div class="row justify-content-center py-3 bg-secondary-subtle bg-opacity-25 shadw">
+    <div id="mainBlockForBookPage" class="row gx-2 justify-content-center py-3 bg-secondary-subtle bg-opacity-25 block-shadow">
 
         @* Кадры слева *@
-        <div id="picturesFromLeft" class="d-none d-md-flex flex-column col-md-2 overflow-y-auto overflow-x-hidden">
+        <div id="picturesFromLeft" class="d-none d-lg-flex col-lg-2 flex-column">
 
             @if (Model.FramesAroundMainContent?.FramesOnTheLeft != null)
             {
                 @foreach (var item in Model.FramesAroundMainContent.FramesOnTheLeft)
                 {
-                    @* Вывод фотографии в отдельное окно *@
-                    @* <a href="@item.ImagePath/@(string.IsNullOrEmpty(item.WebImageHDFileName) == false ? item.WebImageHDFileName : item.WebImageFileName)"
-                       class=""
-                       title="@item.ImageAltTitle"
-                       onclick="this.target='_blank'"> *@
-
                     <a asp-area=""
                        asp-controller="Books"
                        asp-action="PhotoAlbum"
                        asp-route-imageId="@item.ImageFileModelId"
-                       asp-route-albumCaption="@Model.BookOrArticle.CaptionOfText.Replace(' ', '-')"
+                       asp-route-albumCaption="@caption"
                        class="d-block w-100 mb-2">
 
                         <vc:view-image image-id="@item.ImageFileModelId"
-                                       css-class="shadw imageref"
+                                       css-class="block-shadow imageref"
                                        icon-type="webicon200" />
                     </a>
                 }
@@ -77,530 +60,390 @@
         </div>
 
         @* Заголовок книги и текст страницы*@
-        <div id="blockForAllOptions" class="col-12 col-md-8 pb-3">
+        <div id="blockForAllOptions" class="col-12 col-lg-8 pb-3">
 
             @* Заголовок книги *@
-            <header itemprop="headline" class="my-3 mx-auto">
+            <header class="lay1 p-2 my-3 mx-auto lh-1 times-new-roman maxwidth700px">
 
-                <h1 class="lay1 p-2 lh-1 times-new-roman">
+                <p class="fs-2 fw-bold mb-2 h1_print">
 
-                    <span class="fs-2 fw-bold d-inline-block h1_print">
-                        @Model.BookOrArticle.AuthorOfText
-                    </span>
-                    <span class="d-block mt-2 fs-2 fw-bold">
-                        «@Model.BookOrArticle.CaptionOfText»
-                    </span>
-                    <span class="@(Model.PageNumber == 0 ? "d-block fs-5 mt-3 text_shadow" : "d-none")">
-                        @Model.BookOrArticle.TheSubtitle
-                    </span>
+                    @Model.BookOrArticle.AuthorOfText
+
+                </p>
+
+                <h1 class="fs-2 fw-bold mb-2" itemprop="headline">
+
+                    «@Model.BookOrArticle.CaptionOfText»
 
                 </h1>
+
+                @if (isCover)
+                {
+                    <p class="fs-5 mt-3 text_shadow mb-0">
+
+                        @Model.BookOrArticle.TheSubtitle
+
+                    </p>
+                }
 
             </header>
 
             @* Текст страницы *@
-            <div class="article_page mx-auto paragraph shadw
-                @(Model.PageNumber == 0 ? "px-0 px-sm-2 px-md-3" : "")"
-                 itemprop="articleBody text">
+            <div class="article_page mx-auto paragraph block-shadow
+                @(isCover ? "px-0 px-sm-2 px-md-3" : "")">
 
                 @* Инфо вверху страницы *@
-                <div class="@(Model.Scan == true ? "d-none" : "d-flex mb-4 top_page align-items-center d-print-none")">
-
-                    @* Иконка аудио *@
-                    <a class="@((Model.AudioFileForText != null && Model.AudioFileForText.AudioBookModel != null) ? "col-width-content me-2" : "d-none")"
-                       asp-area=""
-                       asp-controller="Books"
-                       asp-action="AudioBook"
-                       asp-route-audioBookCaption="@Model.AudioFileForText?.AudioBookModel?.CaptionOfAudioBook"
-                       asp-route-audioBookPart="@Model.AudioFileForText?.SequenceNumber"
-                       asp-route-audioActor="@Model.AudioFileForText?.AudioBookModel?.ActorOfAudioBook"
-                       title="аудиокнига">
-
-                        <vc:view-image image-id="@DataConfig.AudioImage"
-                                       css-class="maxwidth30px shadw imageref d-print-none"
-                                       icon-type="webicon100" />
-
-                    </a>
-
-                    @* Иконка видео *@
-                    @* <a class="@(Model.BookOrArticle.VideoForBookOrArticle == null ? "d-none" : "col-width-content mx-2")"
-                       asp-area=""
-                       asp-controller="AllVideo"
-                       asp-action="Movie"
-                       asp-route-movieId="@Model.BookOrArticle.VideoForBookOrArticleId"
-                       asp-route-pageOfSeries="true"
-                       asp-route-videohosting="@Model.BookOrArticle.VideoForBookOrArticle?.MovieVkVideo"
-                       title="видео к тексту">
-
-                        <vc:view-image image-id="b386f45b-fc84-4748-bc75-08dd67cfc8ed"
-                                       css-class="maxwidth40px shadw imageref d-print-none"
-                                       icon-type="webicon100" />
-
-                    </a> *@
-
-                    @* Иконка фильма *@
-                    <a class="@(Model.BookOrArticle.FilmForBookOrArticle == null ? "d-none" : "col-width-content me-2")"
-                       asp-area=""
-                       asp-controller="Films"
-                       asp-action="Film"
-                       asp-route-filmCaption="@Model.BookOrArticle.FilmForBookOrArticle?.FilmCaption"
-                       asp-route-host="@Model.BookOrArticle.FilmForBookOrArticle?.FilmContentUrl"
-                       title="видео к тексту">
-
-                        <vc:view-image image-id="b386f45b-fc84-4748-bc75-08dd67cfc8ed"
-                                       css-class="maxwidth30px shadw imageref d-print-none"
-                                       icon-type="webicon100" />
-
-                    </a>
-
-                    @* Иконка принтера *@
-                    <a class="col-width-content"
-                       href="javascript:window.print(); void 0;"
-                       title="распечатать страницу">
-
-                        <vc:view-image image-id="@DataConfig.PrintImage"
-                                       css-class="maxwidth30px shadw imageref d-print-none"
-                                       icon-type="webicon100" />
-
-                    </a>
-
-                    @* Номер страницы *@
-                    <p class="col-width-content ms-auto text-primary nomstr fluid-font-size @(Model.PageNumber == 0 ? "d-none" : "")">
-
-                        @Model.PageNumber
-
-                    </p>
-
-                </div>
+                <partial name="_PageToolsTopPartial" model="Model" />
 
                 @* Текст страницы *@
-                <div class="minheight900 times-new-roman">
+                <div class="page-min-height times-new-roman" itemprop="text">
 
                     @Html.Raw(Model.HtmlText)
 
                 </div>
 
                 @* Инфо внизу страницы *@
-                <footer class="@(Model.Scan == true ? "d-none" : "d-flex mt-4 top_page align-items-center d-print-none")">
+                <partial name="_PageToolsBottomPartial" model="Model" />
 
-                    @* Иконка аудио *@
-                    <a class="@((Model.AudioFileForText != null && Model.AudioFileForText.AudioBookModel != null) ? "col-width-content me-2" : "d-none")"
-                       asp-area=""
-                       asp-controller="Books"
-                       asp-action="AudioBook"
-                       asp-route-audioBookCaption="@Model.AudioFileForText?.AudioBookModel?.CaptionOfAudioBook"
-                       asp-route-audioBookPart="@Model.AudioFileForText?.SequenceNumber"
-                       asp-route-audioActor="@Model.AudioFileForText?.AudioBookModel?.ActorOfAudioBook"
-                       title="аудиокнига">
+            </div>
 
-                        <vc:view-image image-id="@DataConfig.AudioImage"
-                                       css-class="maxwidth30px shadw imageref d-print-none"
-                                       icon-type="webicon100" />
+            @* Навигация Следующая и Предыдущая страницы *@
+            <div id="pageNavigation" class="@(Model.PageNumber == 0 ? "d-none" : $"{navigationBlock}")">
 
-                    </a>
+                @* Переход к предыдущей странице*@
+                <a id="goPrev" class="@((Model.PageNumber > 1) ? $"{goToNextPage} me-3" : "d-none")"
+                   asp-area=""
+                   asp-controller="Books"
+                   asp-action="Book"
+                   asp-route-bookCaption="@caption"
+                   asp-route-pageNumber="@(Model.PageNumber - 1)"
+                   title="Предыдущая страница"
+                   aria-label="Предыдущая страница">
 
-                    @* Иконка видео *@
-                    @* <a class="@(Model.BookOrArticle.VideoForBookOrArticle == null ? "d-none" : "col-width-content mx-2")"
-                       asp-area=""
-                       asp-controller="AllVideo"
-                       asp-action="Movie"
-                       asp-route-movieId="@Model.BookOrArticle.VideoForBookOrArticleId"
-                       asp-route-pageOfSeries="true"
-                       asp-route-videohosting="@Model.BookOrArticle.VideoForBookOrArticle?.MovieVkVideo"
-                       title="видео к тексту">
+                    <span class="nomstr fluid-font-size">
+                        @(Model.PageNumber - 1)
+                    </span>
 
-                        <vc:view-image image-id="b386f45b-fc84-4748-bc75-08dd67cfc8ed"
-                                       css-class="maxwidth40px shadw imageref d-print-none"
-                                       icon-type="webicon100" />
+                </a>
 
-                    </a> *@
+                @* Переход к следующей странице*@
+                <a id="goNext" class="@((Model.PageNumber < Model.BookOrArticle.NumberOfPages) ? $"{goToNextPage} ms-auto" : "d-none")"
+                   asp-area=""
+                   asp-controller="Books"
+                   asp-action="Book"
+                   asp-route-bookCaption="@caption"
+                   asp-route-pageNumber="@(Model.PageNumber + 1)"
+                   title="Следующая страница"
+                   aria-label="Следующая страница">
 
-                    @* Иконка фильма *@
-                    <a class="@(Model.BookOrArticle.FilmForBookOrArticle == null ? "d-none" : "col-width-content me-2")"
-                       asp-area=""
-                       asp-controller="Films"
-                       asp-action="Film"
-                       asp-route-filmCaption="@Model.BookOrArticle.FilmForBookOrArticle?.FilmCaption"
-                       asp-route-host="@Model.BookOrArticle.FilmForBookOrArticle?.FilmContentUrl"
-                       title="видео к тексту">
+                    <span class="nomstr fluid-font-size">
+                        @(Model.PageNumber + 1)
+                    </span>
 
-                        <vc:view-image image-id="b386f45b-fc84-4748-bc75-08dd67cfc8ed"
-                                       css-class="maxwidth30px shadw imageref d-print-none"
-                                       icon-type="webicon100" />
+                </a>
 
-                    </a>
+            </div>
 
-                    @* Иконка принтера *@
-                    <a class="col-width-content"
-                       href="javascript:window.print(); void 0;"
-                       title="распечатать страницу">
+            @* Раскрывающиеся поля *@
+            <div class="@(Model.PageNumber == 0 ? "d-none" : "") mx-auto px-2 py-1 mt-3 bg-primary-subtle bg-opacity-10 maxwidth700px block-shadow">
 
-                        <vc:view-image image-id="@DataConfig.PrintImage"
-                                       css-class="maxwidth30px shadw imageref d-print-none"
-                                       icon-type="webicon100" />
+                <div id="accordionForBook" class="@(Model.PageNumber == 0 ? "d-none" : "accordion maxwidth700px d-print-none")">
 
-                    </a>
+                    @* Страницы книги *@
+                    <div id="bookPagesAccordionItem" class="accordion-item my-3 block-shadow">
 
-                    @* Номер страницы *@
-                    <p class="col-width-content ms-auto text-primary nomstr fluid-font-size @(Model.PageNumber == 0 ? "d-none" : "")">
+                        @* Заголовок группы «страницы книги» *@
+                        <h2 id="headingPagesOfBook" class="accordion-header block-shadow">
 
-                        @Model.PageNumber
+                            <button class="accordion-button collapsed py-1 stranicy"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#PagesOfBook"
+                                    aria-expanded="false"
+                                    aria-controls="PagesOfBook">
 
-                    </p>
+                                <span class="d-flex pb-1">
+                                    Страницы книги :
+                                </span>
 
-                </footer>
+                            </button>
+
+                        </h2>
+
+                        <div id="PagesOfBook"
+                             class="accordion-collapse collapse"
+                             aria-labelledby="headingPagesOfBook"
+                             data-bs-parent="#accordionForBook">
+
+                            <div id="bookPagesAccordionBody" class="accordion-body text-indent-0 text-center px-1">
+
+                                @for (int i = 0; i < Model.BookOrArticle.NumberOfPages; i++)
+                                {
+                                    <a asp-area=""
+                                       asp-controller="Books"
+                                       asp-action="Book"
+                                       asp-route-bookCaption="@caption"
+                                       asp-route-pagenumber="@(i + 1)"
+                                       class="ref-to-page rounded ten @(Model.PageNumber == (i + 1) ? "border border-primary border-2" : "border border-1 border-secondary")"
+                                       title="Страница @(i + 1)">
+
+                                        @(i + 1)
+
+                                    </a>
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    @* Скачать книгу *@
+                    <div id="downloadBookAccordionItem" class="accordion-item my-3 block-shadow">
+
+                        @* Заголовок группы «скачать книгу» *@
+                        <h2 id="headingLoadBook" class="accordion-header block-shadow">
+
+                            <button class="accordion-button collapsed py-2 stranicy"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#LoadBook"
+                                    aria-expanded="false"
+                                    aria-controls="LoadBook">
+
+                                @* Картинки на кнопке аккордеона *@
+                                <div class="ps-0">
+
+                                    <div class="d-flex flex-wrap align-items-center justify-content-start gap-2">
+
+                                        <span class="d-none d-sm-block me-2 text-start">
+                                            Скачать книгу :
+                                        </span>
+
+                                        @* Word *@
+                                        <vc:view-image image-id="@DataConfig.WordImage"
+                                                       css-class="@previewImageClass"
+                                                       icon-type="webicon100" />
+
+                                        @* Pdf *@
+                                        <vc:view-image image-id="@DataConfig.PdfImage"
+                                                       css-class="@previewImageClass"
+                                                       icon-type="webicon100" />
+
+                                        @* Audio *@
+                                        <vc:view-image image-id="@DataConfig.AudioImage"
+                                                       css-class="@audioPreviewClass"
+                                                       icon-type="webicon100" />
+
+                                    </div>
+
+                                </div>
+
+                            </button>
+
+                        </h2>
+
+                        <div id="LoadBook"
+                             class="accordion-collapse collapse p-2"
+                             aria-labelledby="headingLoadBook"
+                             data-bs-parent="#accordionForBook">
+
+                            <div id="downloadBookAccordionBody" class="accordion-body text-indent-0">
+
+                                <div class="row row-cols-3 g-1 g-sm-2 justify-content-center">
+
+                                    @* Текст в формате word *@
+                                    <a class="@(Model.BookOrArticle.RefToWordDoc == null ? "d-none" : "")"
+                                       href="@Model.BookOrArticle.RefToWordDoc"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       title="Скачать в формате Word"
+                                       aria-label="Скачать в формате Word">
+
+                                        <vc:view-image image-id="@DataConfig.WordImage"
+                                                       css-class="block-shadow imageref"
+                                                       icon-type="webicon300" />
+                                    </a>
+
+                                    @* Текст в формате pdf *@
+                                    <a class="@(Model.BookOrArticle.RefToPdf == null ? "d-none" : "")"
+                                       href="@Model.BookOrArticle.RefToPdf"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       title="Скачать в формате Pdf"
+                                       aria-label="Скачать в формате Pdf">
+
+                                        <vc:view-image image-id="@DataConfig.PdfImage"
+                                                       css-class="block-shadow imageref"
+                                                       icon-type="webicon300" />
+
+                                    </a>
+
+                                    @* Аудиокнига *@
+                                    <a class="@(Model.BookOrArticle.RefToAudio == null ? "d-none" : "")"
+                                       href="@Model.BookOrArticle.RefToAudio"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       title="Скачать аудиокнигу"
+                                       aria-label="Скачать аудиокнигу">
+
+                                        <vc:view-image image-id="@DataConfig.AudioImage"
+                                                       css-class="block-shadow imageref"
+                                                       icon-type="webicon300" />
+
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    @* Фото из книги *@
+                    <div id="photoFromBookAccordionItem" class="@(hasPictures ? "accordion-item my-3 block-shadow" : "d-none")">
+
+                        @* Заголовок группы «фото из книги» *@
+                        <h2 id="headingPhoto" class="accordion-header block-shadow">
+
+                            <button class="accordion-button collapsed py-2 stranicy"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#Photo"
+                                    aria-expanded="false"
+                                    aria-controls="Photo">
+
+                                @* Картинки на кнопке аккордеона *@
+                                <div class="ps-0">
+
+                                    <div class="d-flex flex-wrap align-items-center justify-content-start gap-2">
+
+                                        <span class="d-none d-sm-block me-2">
+                                            Фото из книги :
+                                        </span>
+
+                                        @foreach (var pic in picturesPreview)
+                                        {
+                                            <vc:view-image image-id="@pic.ImageFileModelId"
+                                                           css-class="@previewImageClass"
+                                                           icon-type="webicon100" />
+                                        }
+
+                                    </div>
+
+                                </div>
+
+                            </button>
+
+                        </h2>
+
+                        <div id="Photo"
+                             class="accordion-collapse collapse"
+                             aria-labelledby="headingPhoto"
+                             data-bs-parent="#accordionForBook">
+
+                            <div id="photoFromBookAccordionBody" class="accordion-body text-indent-0 py-2">
+
+                                <div class="row row-cols-2 row-cols-sm-4 row-cols-md-5 row-cols-lg-6 g-2 pb-2 justify-content-center">
+
+                                    @if (Model.ListOfPictures != null)
+                                    {
+
+                                        @foreach (var item in Model.ListOfPictures)
+                                        {
+                                            <a asp-area=""
+                                               asp-controller="Books"
+                                               asp-action="PhotoAlbum"
+                                               asp-route-albumCaption="@caption"
+                                               asp-route-imageId="@item.ImageFileModelId"
+                                               class="col rounded-3 text-center">
+
+                                                <vc:view-image image-id="@item.ImageFileModelId.ToString()"
+                                                               css-class="rounded-3 block-shadow imageref"
+                                                               icon-type="webicon100" />
+                                            </a>
+                                        }
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    @* Аудио *@
+                    <div class="@(hasAudioPlayer ? "accordion-item my-3 block-shadow" : "d-none")">
+
+                        @* Заголовок группы «Аудио» *@
+                        <h2 id="headingAudioForPage" class="accordion-header align-items-center block-shadow">
+
+                            <button class="accordion-button collapsed py-2 stranicy"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#AudioForPage"
+                                    aria-expanded="false"
+                                    aria-controls="AudioForPage">
+
+                                <span class="d-inline-block w-100 fs-5">
+                                    Аудиокнига :
+                                </span>
+
+                            </button>
+
+                        </h2>
+
+                        <div id="AudioForPage"
+                             class="accordion-collapse collapse p-0"
+                             aria-labelledby="headingAudioForPage"
+                             data-bs-parent="#accordionForBook">
+
+                            <div class="accordion-body text-indent-0">
+
+                                <p class="d-sm-none my-2 text-center text_shadow ">
+                                    плеер отображается при разрешении экрана от 576px
+                                </p>
+
+                                <div class="d-none d-sm-flex my-2 block-shadow rounded-3 bg-dark">
+
+                                    @Html.Raw(Model.TextForBookOrArticle?.AudioInfoModel?.PlayerPodsterFm)
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
         </div>
 
         @* Кадры справа *@
-        <div id="picturesFromRight" class="d-none d-md-flex flex-column col-md-2 overflow-y-auto overflow-x-hidden">
+        <div id="picturesFromRight" class="d-none d-lg-flex col-lg-2 flex-column">
 
             @if (Model.FramesAroundMainContent != null && Model.FramesAroundMainContent.FramesOnTheRight != null)
             {
                 @foreach (var item in Model.FramesAroundMainContent.FramesOnTheRight)
                 {
-                    @* Вывод фотографии в отдельное окно *@
-                    @* <a href="@item.ImagePath/@(string.IsNullOrEmpty(item.WebImageHDFileName) == false ? item.WebImageHDFileName : item.WebImageFileName)"
-                       class=""
-                       title="@item.ImageAltTitle"
-                       onclick="this.target='_blank'"> *@
-
                     <a asp-area=""
                        asp-controller="Books"
                        asp-action="PhotoAlbum"
                        asp-route-imageId="@item.ImageFileModelId"
-                       asp-route-albumCaption="@Model.BookOrArticle.CaptionOfText.Replace(' ', '-')"
+                       asp-route-albumCaption="@caption"
                        class="d-block w-100 mb-2">
 
                         <vc:view-image image-id="@item.ImageFileModelId"
-                                       css-class="shadw imageref"
+                                       css-class="block-shadow imageref"
                                        icon-type="webicon200" />
                     </a>
                 }
             }
-
-        </div>
-
-    </div>
-
-    @* Навигация по статье *@
-    <div class="row align-items-center">
-
-        <div id="pageNavigation" class="@(Model.PageNumber == 0 ? "d-none" : $"{navigatonBlock}")">
-
-            @* Переход к предыдущей странице*@
-            <a id="goPrev" class="@((Model.PageNumber > 1) ? $"{goToNextPage}" : "d-none")"
-               asp-area=""
-               asp-controller="Books"
-               asp-action="Book"
-               asp-route-bookCaption="@Model.BookOrArticle.CaptionOfText.Replace(' ', '-')"
-               asp-route-pageNumber="@(Model.PageNumber - 1)"
-               title="предыдущая страница"
-               itemprop="url">
-
-                <span class="nomstr fluid-font-size">
-                    &lt;&lt; @(Model.PageNumber - 1)
-                </span>
-
-            </a>
-
-            @* Переход к следующей странице*@
-            <a id="goNext" class="@((Model.PageNumber < Model.BookOrArticle.NumberOfPages) ? $"{goToNextPage} ms-auto" : "d-none")"
-               asp-area=""
-               asp-controller="Books"
-               asp-action="Book"
-               asp-route-bookCaption="@Model.BookOrArticle.CaptionOfText.Replace(' ', '-')"
-               asp-route-pageNumber="@(Model.PageNumber + 1)"
-               title="следующая страница"
-               itemprop="url">
-
-                <span class="nomstr fluid-font-size">
-                    @(Model.PageNumber + 1) &gt;&gt;
-                </span>
-
-            </a>
-
-        </div>
-
-    </div>
-
-    @* Раскрывающиеся поля *@
-    <div class="@(Model.PageNumber == 0 ? "d-none" : "") bg-dark-subtle bg-opacity-10 p-3 shadw">
-
-        <div id="accordionForBook" class="@(Model.PageNumber == 0 ? "d-none" : "accordion maxwidth700px mx-auto mt-4 d-print-none")">
-
-            @* Страницы книги *@
-            <div id="bookPagesAccordionItem" class="accordion-item my-3 shadw">
-
-                @* заголовок группы «страницы книги» *@
-                <h2 id="headingPagesOfBook" class="accordion-header shadw">
-
-                    <button class="accordion-button collapsed py-2 stranicy"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#PagesOfBook"
-                            aria-expanded="true"
-                            aria-controls="PagesOfBook">
-
-                        <span class="d-flex pb-1">
-                            Страницы книги :
-                        </span>
-
-                    </button>
-
-                </h2>
-
-                <div id="PagesOfBook"
-                     class="accordion-collapse collapse"
-                     aria-labelledby="headingPagesOfBook"
-                     data-bs-parent="#accordionForBook">
-
-                    <div id="bookPagesAccordionItem" class="accordion-body text-indent-0 text-center px-1">
-
-                        @for (int i = 0; i < Model.BookOrArticle.NumberOfPages; i++)
-                        {
-                            <a asp-area=""
-                               asp-controller="Books"
-                               asp-action="Book"
-                               asp-route-bookCaption="@Model.BookOrArticle.CaptionOfText.Replace(' ', '-')"
-                               asp-route-pagenumber="@(i + 1)"
-                               class="ref-to-page rounded ten @(Model.PageNumber == (i + 1) ? "border border-primary border-2" : "border border-1 border-secondary")"
-                               title="страница @(i + 1)"
-                               itemprop="url">
-
-                                @(i + 1)
-
-                            </a>
-                        }
-                    </div>
-
-                </div>
-
-            </div>
-
-            @* Скачать книгу *@
-            <div id="downloadBookAccordionItem" class="accordion-item my-3 shadw">
-
-                @* Заголовок группы «скачать книгу» *@
-                <h2 id="headingLoadBook" class="accordion-header shadw">
-
-                    <button class="accordion-button collapsed py-2 stranicy"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#LoadBook"
-                            aria-expanded="true"
-                            aria-controls="LoadBook">
-
-                        @* Картинки на кнопке аккордеона *@
-                        <div class="container ps-0">
-
-                            <div class="d-flex flex-wrap align-items-center justify-content-start gap-2">
-
-                                <span class="d-none d-sm-block me-2 text-start">
-                                    Скачать книгу :
-                                </span>
-
-                                @* Word *@
-                                <vc:view-image image-id="@DataConfig.WordImage"
-                                               css-class="border border-secondary rounded maxwidth60px"
-                                               icon-type="webicon100" />
-
-                                @* Pdf *@
-                                <vc:view-image image-id="@DataConfig.PdfImage"
-                                               css-class="border border-secondary rounded maxwidth60px"
-                                               icon-type="webicon100" />
-
-                                @* Audio *@
-                                <vc:view-image image-id="@DataConfig.AudioImage"
-                                               css-class="border border-secondary rounded maxwidth60px @(Model.BookOrArticle.RefToAudio == null ? "d-none" : "")"
-                                               icon-type="webicon100" />
-
-                            </div>
-
-                        </div>
-
-                    </button>
-
-                </h2>
-
-                <div id="LoadBook"
-                     class="accordion-collapse collapse p-2"
-                     aria-labelledby="headingLoadBook"
-                     data-bs-parent="#accordionForBook">
-
-                    <div id="downloadBookAccordionBody" class="accordion-body accordion-body-nointend">
-
-                        <div class="row row-cols-3 g-1 g-sm-2 justify-content-center">
-
-                            @* Текст в формате word *@
-                            <a class="@(Model.BookOrArticle.RefToWordDoc == null ? "d-none" : "")"
-                               href="@Model.BookOrArticle.RefToWordDoc"
-                               title="скачать в формате word"
-                               onClick="this.target='_blank'">
-
-                                <vc:view-image image-id="@DataConfig.WordImage"
-                                               css-class="shadw imageref"
-                                               icon-type="webicon300" />
-
-                            </a>
-
-                            @* Текст в формате pdf *@
-                            <a class="@(Model.BookOrArticle.RefToPdf == null ? "d-none" : "")"
-                               href="@Model.BookOrArticle.RefToPdf"
-                               title="скачать в формате pdf"
-                               onClick="this.target='_blank'">
-
-                                <vc:view-image image-id="@DataConfig.PdfImage"
-                                               css-class="shadw imageref"
-                                               icon-type="webicon300" />
-
-                            </a>
-
-                            @* аудиокнига *@
-                            <a class="@(Model.BookOrArticle.RefToAudio == null ? "d-none" : "")"
-                               href="@Model.BookOrArticle.RefToAudio"
-                               title="скачать аудиокнигу"
-                               onClick="this.target='_blank'">
-
-                                <vc:view-image image-id="@DataConfig.AudioImage"
-                                               css-class="shadw imageref"
-                                               icon-type="webicon300" />
-
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            @* Фото из книги *@
-            <div class="@((Model.ListOfPictures != null && Model.ListOfPictures.Count > 0) ? "accordion-item my-3 shadw" : "d-none")">
-
-                @* Заголовок группы «фото из книги» *@
-                <h2 id="headingPhoto" class="accordion-header shadw">
-
-                    <button class="accordion-button collapsed py-2 stranicy"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#Photo"
-                            aria-expanded="true"
-                            aria-controls="Photo">
-
-                        @* Картинки на кнопке аккордеона *@
-                        <div class="container ps-0">
-
-                            <div class="d-flex flex-wrap align-items-center justify-content-start gap-2">
-
-                                <span class="d-none d-sm-block me-2">
-                                    Фото из книги :
-                                </span>
-
-                                @if (Model.ListOfPictures != null && Model.ListOfPictures.Count > 0)
-                                {
-                                    @do
-                                    {
-                                        Random rnd = new();
-
-                                        int rndIndex = rnd.Next(Model.ListOfPictures.Count);
-
-                                        <vc:view-image image-id="@Model.ListOfPictures[rndIndex].ImageFileModelId"
-                                                       css-class="border border-secondary rounded maxwidth60px"
-                                                       icon-type="webicon100" />
-                                        n++;
-                                    }
-                                    while (n < Model.ListOfPictures.Count && n < 4);
-                                }
-
-                            </div>
-
-                        </div>
-
-                    </button>
-
-                </h2>
-
-                <div id="Photo" class="accordion-collapse collapse" aria-labelledby="headingPhoto" data-bs-parent="#accordionForBook">
-
-                    <div class="accordion-body accordion-body-nointend p-0 pt-2">
-
-                        @* <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-2 pb-2 justify-content-center"> - для «webicon200» *@
-                        <div class="row row-cols-2 row-cols-sm-4 row-cols-md-5 row-cols-lg-6 g-4 pb-2 justify-content-center">
-
-                            @if (Model.ListOfPictures != null)
-                            {
-
-                                @foreach (var item in Model.ListOfPictures)
-                                {
-                                    <a asp-area=""
-                                       asp-controller="Books"
-                                       asp-action="PhotoAlbum"
-                                       asp-route-albumCaption="@Model.BookOrArticle.CaptionOfText.Replace(' ', '-')"
-                                       asp-route-imageId="@item.ImageFileModelId"
-                                       class="col w-auto rounded-3 text-center">
-
-                                        <vc:view-image image-id="@item.ImageFileModelId.ToString()"
-                                                       css-class="rounded-3 shadw imageref"
-                                                       icon-type="webicon100" />
-                                    </a>
-                                }
-                            }
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            @* Аудио *@
-            <div class="@((Model.TextForBookOrArticle != null && Model.TextForBookOrArticle.AudioInfoModel != null
-                                                                                                                                                        && !string.IsNullOrEmpty(Model.TextForBookOrArticle.AudioInfoModel.PlayerPodsterFm)) ? "accordion-item my-3 shadw" : "d-none")">
-                @* Заголовок группы «Аудио» *@
-                <h2 id="headingAudioForPage" class="accordion-header shadw">
-
-                    <button class="accordion-button collapsed py-2 stranicy"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#AudioForPage"
-                            aria-expanded="true"
-                            aria-controls="AudioForPage">
-
-                        <span class="d-inline-block w-100 fs-5">
-                            Аудиокнига :
-                        </span>
-
-                    </button>
-
-                </h2>
-
-                <div id="AudioForPage"
-                     class="accordion-collapse collapse p-2 py-3"
-                     aria-labelledby="headingAudioForPage"
-                     data-bs-parent="#accordionForBook">
-
-                    <div class="accordion-body accordion-body-nointend">
-
-                        <p class="d-sm-none my-2 text_shadow ">
-                            плеер отображается при разрешении экрана от 576px
-                        </p>
-
-                        <div class="d-none d-sm-flex my-2 shadw rounded-3 bg-dark">
-
-                            @Html.Raw(Model.TextForBookOrArticle?.AudioInfoModel?.PlayerPodsterFm)
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
 
         </div>
 

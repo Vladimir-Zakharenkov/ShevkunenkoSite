@@ -132,6 +132,18 @@ public class DataConfig
 
     #endregion
 
+    #region Картинка Txt
+
+    public static Guid TxtImage { get; set; }
+
+    #endregion
+
+    #region Картинка MP3
+
+    public static Guid Mp3Image { get; set; }
+
+    #endregion
+
     #region Картинка Pdf
 
     public static Guid PdfImage { get; set; }

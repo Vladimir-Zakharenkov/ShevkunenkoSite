@@ -2,7 +2,7 @@
 $shadow-bottom-right: hsla(0,0%,40%,1);
 $shadow-top-left: hsla(0,70%,100%,1);
 
-.shadw {
+.block-shadow {
     background: $shadow-background;
     box-shadow: 0 15px 10px -10px hsla(350,60%,0%,.5), 0 1px 4px hsla(350,60%,0%,.3), 0 0 40px hsla(350,60%,0%,.1) inset;
     border-right: 1px ridge $shadow-bottom-right;
@@ -11,10 +11,27 @@ $shadow-top-left: hsla(0,70%,100%,1);
     border-left: 1px ridge $shadow-top-left;
 }
 
-.shadw:after {
-    content: "";
-    position: absolute;
-    z-index: -2;
+    .block-shadow:after {
+        content: "";
+        position: absolute;
+        z-index: -2;
+    }
+
+@media print {
+    .block-shadow {
+        background: none;
+        box-shadow: none;
+        border-right: none;
+        border-bottom: none;
+        border-top: none;
+        border-left: none;
+    }
+
+        .block-shadow:after, .block-shadow:before {
+            content: none;
+            position: relative;
+            z-index: auto;
+        }
 }
 
 .lay1 {
@@ -27,27 +44,8 @@ $shadow-top-left: hsla(0,70%,100%,1);
     border-left: 1px ridge hsla(0,70%,100%,1);
 }
 
-.lay1:before, .lay1:after {
-    content: "";
-    position: absolute;
-    z-index: -2;
-}
-
-@media print {
-    .shadw {
-        background: none;
-        box-shadow: none;
-        border-right: none;
-        border-bottom: none;
-        border-top: none;
-        border-left: none;
+    .lay1:before, .lay1:after {
+        content: "";
+        position: absolute;
+        z-index: -2;
     }
-}
-
-@media print {
-    .shadw:after, .shadw:before {
-        content: none;
-        position: relative;
-        z-index: auto;
-    }
-}

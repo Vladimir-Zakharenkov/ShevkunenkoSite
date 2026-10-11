@@ -1,16 +1,39 @@
 ﻿@model BooksAndArticlesModel
 
-@{
-    string sitePath = "https://" + Context.Request.Host + Context.Request.Path.ToString().TrimEnd('/');
-}
-
-<div itemscope itemtype="https://schema.org/Book">
+<div class="d-none">
 
     <meta itemprop="author" content="@Model.AuthorOfText">
     <meta itemprop="name" content="@Model.CaptionOfText">
     <meta itemprop="publisher" content="@Model.Publisher">
-    <meta itemprop="datePublished" content="@Model.DateOfPublication.ToString("yyyy-MM-ddTHH:mm:ssZ")">
+    <meta itemprop="datePublished" content="@Model.DateOfPublication.ToString("o")">
     <meta itemprop="numberOfPages" content="@Model.NumberOfPages">
     <meta itemprop="description" content="@Model.BookDescription">
+    <meta itemprop="url" content="@Context.Request.Scheme://@Context.Request.Host@Context.Request.Path@Context.Request.QueryString">
+
+    @* Микроразметка картинки книги / статьи *@
+    <span itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+
+        @if (Model.TypeOfText == "article" && Model.LogoOfArticle != null)
+        {
+            <meta itemprop="caption" content="@Model.LogoOfArticle.ImageCaption">
+            <link itemprop="contentUrl" href="@Context.Request.Scheme://@Context.Request.Host@Model.LogoOfArticle.ImagePath/@Model.LogoOfArticle.WebImageFileName">
+            <link itemprop="thumbnailUrl" href="@Context.Request.Scheme://@Context.Request.Host@Model.LogoOfArticle.ImagePath/@Model.LogoOfArticle.WebIconFileName">
+            <meta itemprop="width" content="@Model.LogoOfArticle.WebImageWidth">
+            <meta itemprop="height" content="@Model.LogoOfArticle.WebImageHeight">
+        }
+
+        @if (Model.TypeOfText == "book")
+        {
+            if (Model.ImageFileModel != null)
+            {
+                <meta itemprop="caption" content="@Model.ImageFileModel.ImageCaption">
+                <link itemprop="contentUrl" href="@Context.Request.Scheme://@Context.Request.Host@Model.ImageFileModel.ImagePath/@Model.ImageFileModel.WebImageFileName">
+                <link itemprop="thumbnailUrl" href="@Context.Request.Scheme://@Context.Request.Host@Model.ImageFileModel.ImagePath/@Model.ImageFileModel.WebIconFileName">
+                <meta itemprop="width" content="@Model.ImageFileModel.WebImageWidth">
+                <meta itemprop="height" content="@Model.ImageFileModel.WebImageHeight">
+            }
+        }
+
+    </span>
 
 </div>

@@ -1,0 +1,59 @@
+﻿@model ArticleViewModel
+
+@{
+    var hasAudio = Model.AudioFileForText?.AudioBookModel != null;
+    var hasFilm = Model.BookOrArticle.FilmForBookOrArticle != null;
+    var hasPage = Model.PageNumber != 0;
+}
+
+@* Иконка аудио *@
+<a class="@(hasAudio ? "me-2" : "d-none")"
+   asp-area=""
+   asp-controller="Books"
+   asp-action="AudioBook"
+   asp-route-audioBookCaption="@Model.AudioFileForText?.AudioBookModel?.CaptionOfAudioBook"
+   asp-route-audioBookPart="@Model.AudioFileForText?.SequenceNumber"
+   asp-route-audioActor="@Model.AudioFileForText?.AudioBookModel?.ActorOfAudioBook"
+   title="Слушать аудиокнигу"
+   aria-label="Слушать аудиокнигу">
+
+    <vc:view-image image-id="@DataConfig.AudioImage"
+                   css-class="max-width-40-60 block-shadow imageref"
+                   icon-type="webicon100" />
+
+</a>
+
+@* Иконка фильма *@
+<a class="@(hasFilm ? "me-2" : "d-none")"
+   asp-area=""
+   asp-controller="Films"
+   asp-action="Film"
+   asp-route-filmCaption="@Model.BookOrArticle.FilmForBookOrArticle?.FilmCaption"
+   asp-route-host="@Model.BookOrArticle.FilmForBookOrArticle?.FilmContentUrl"
+   title="Смотреть видео по книге"
+   aria-label="Смотреть видео по книге">
+
+    <vc:view-image image-id="@DataConfig.ImageForFilm"
+                   css-class="max-width-40-60 block-shadow imageref"
+                   icon-type="webicon100" />
+
+</a>
+
+@* Иконка принтера *@
+<button type="button"
+        class="btn btn-link p-0 border-0"
+        onclick="window.print()"
+        title="Распечатать страницу"
+        aria-label="Распечатать страницу">
+
+    <vc:view-image image-id="@DataConfig.PrintImage"
+                   css-class="max-width-40-60 block-shadow imageref"
+                   icon-type="webicon100" />
+</button>
+
+@* Номер страницы *@
+<p class="col-width-content ms-auto mb-0 text-primary nomstr fluid-font-size @(hasPage ? "" : "d-none")">
+
+    @Model.PageNumber
+
+</p>

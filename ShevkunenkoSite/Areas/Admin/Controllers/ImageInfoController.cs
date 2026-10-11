@@ -76,7 +76,7 @@ public class ImageInfoController(
 
             bool fileExists = true;
 
-            string buttonInfoStyle = "btn btn-outline-primary py-1 px-1 shadw";
+            string buttonInfoStyle = "btn btn-outline-primary py-1 px-1 block-shadow";
 
             string webImageButtonInfostyle = buttonInfoStyle;
             string imageButtonInfostyle = buttonInfoStyle;
@@ -99,7 +99,7 @@ public class ImageInfoController(
 
                 if (!imageFile.Exists)
                 {
-                    webImageButtonInfostyle = "btn btn-outline-danger py-1 px-1 shadw";
+                    webImageButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
                 }
             }
 
@@ -109,7 +109,7 @@ public class ImageInfoController(
 
                 if (!imageFile.Exists)
                 {
-                    imageButtonInfostyle = "btn btn-outline-danger py-1 px-1 shadw";
+                    imageButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
                 }
             }
 
@@ -119,7 +119,7 @@ public class ImageInfoController(
 
                 if (!imageFile.Exists)
                 {
-                    webhdButtonInfostyle = "btn btn-outline-danger py-1 px-1 shadw";
+                    webhdButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
                 }
             }
 
@@ -129,7 +129,7 @@ public class ImageInfoController(
 
                 if (!imageFile.Exists)
                 {
-                    hdButtonInfostyle = "btn btn-outline-danger py-1 px-1 shadw";
+                    hdButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
                 }
             }
 
@@ -139,7 +139,7 @@ public class ImageInfoController(
 
                 if (!imageFile.Exists)
                 {
-                    webIcon300ButtonInfostyle = "btn btn-outline-danger py-1 px-1 shadw";
+                    webIcon300ButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
                 }
             }
 
@@ -149,7 +149,7 @@ public class ImageInfoController(
 
                 if (!imageFile.Exists)
                 {
-                    icon300ButtonInfostyle = "btn btn-outline-danger py-1 px-1 shadw";
+                    icon300ButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
                 }
             }
 
@@ -159,7 +159,7 @@ public class ImageInfoController(
 
                 if (!imageFile.Exists)
                 {
-                    webIcon200ButtonInfostyle = "btn btn-outline-danger py-1 px-1 shadw";
+                    webIcon200ButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
                 }
             }
 
@@ -169,7 +169,7 @@ public class ImageInfoController(
 
                 if (!imageFile.Exists)
                 {
-                    icon200ButtonInfostyle = "btn btn-outline-danger py-1 px-1 shadw";
+                    icon200ButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
                 }
             }
 
@@ -179,7 +179,7 @@ public class ImageInfoController(
 
                 if (!imageFile.Exists)
                 {
-                    webIcon100ButtonInfostyle = "btn btn-outline-danger py-1 px-1 shadw";
+                    webIcon100ButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
                 }
             }
 
@@ -189,7 +189,7 @@ public class ImageInfoController(
 
                 if (!imageFile.Exists)
                 {
-                    icon100ButtonInfostyle = "btn btn-outline-danger py-1 px-1 shadw";
+                    icon100ButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
                 }
             }
 

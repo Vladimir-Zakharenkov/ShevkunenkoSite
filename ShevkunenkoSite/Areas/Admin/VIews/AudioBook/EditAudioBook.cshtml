@@ -197,7 +197,7 @@
 					   asp-controller="BooksAndArticles"
 					   asp-action="DetailsBook"
 					   asp-route-bookId="@Model.BookForAudioBook.BooksAndArticlesModelId"
-					   class="d-block mx-auto mb-3 maxwidth300px shadw imageref"
+					   class="d-block mx-auto mb-3 maxwidth300px block-shadow imageref"
 					   title="информация о книге"
 					   onclick="this.target='_blank'">
 
@@ -243,12 +243,12 @@
 			@* Кнопки «Сохранить» - «Отменить» *@
 			<div class="card-footer p-0 pb-2 mt-4 mx-auto maxwidth700px">
 
-				<button type="submit" class="btn btn-outline-success mt-2 me-3 text-center shadw"
+				<button type="submit" class="btn btn-outline-success mt-2 me-3 text-center block-shadow"
 						title="Сохранить">
 					Сохранить
 				</button>
 
-				<a class="btn btn-outline-danger mt-2 shadw"
+				<a class="btn btn-outline-danger mt-2 block-shadow"
 				   asp-area="Admin"
 				   asp-controller="AudioBook"
 				   asp-action="Index"

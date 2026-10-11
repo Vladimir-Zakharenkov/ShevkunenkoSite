@@ -9,7 +9,7 @@
 
     string cssForLabel = "col-form-label text-primary fs-5 me-2";
 
-    string actionButton = "btn py-1 m-2 shadw minwidth100px";
+    string actionButton = "btn py-1 m-2 block-shadow minwidth100px";
 
     string textForAccordionBtn = "form-label fs-5 mb-1";
 
@@ -45,7 +45,7 @@
                    onclick="this.target='_blank'">
 
                     <vc:view-image image-id="@item.ImageFileModelId"
-                                   css-class="my-2 w-100 shadw imageref"
+                                   css-class="my-2 w-100 block-shadow imageref"
                                    icon-type="webicon200" />
 
                 </a>
@@ -62,7 +62,7 @@
     <div id="blockForAllOptions" class="col-12 col-lg-8 p-2">
 
         @* Переход к списку или иконкам *@
-        <div id="goToList" class="card-footer p-0 my-3 shadw">
+        <div id="goToList" class="card-footer p-0 my-3 block-shadow">
 
             <a asp-area="Admin"
                asp-controller="PageInfo"
@@ -89,7 +89,7 @@
         </div>
 
         @* Карточка фильма или страницы *@
-        <div id="blockForCardOfPageAndGuid" class="bg-dark bg-opacity-10 shadw">
+        <div id="blockForCardOfPageAndGuid" class="bg-dark bg-opacity-10 block-shadow">
 
             @if (Model.MovieFile != null)
             {
@@ -113,7 +113,7 @@
                            asp-route-movieid="@Model.MovieFile.MovieFileModelId"
                            target="_blank"
                            rel="noopener noreferrer"
-                           class="d-block btn btn-outline-danger fs-4 py-1 m-2 shadw minwidth100px"
+                           class="d-block btn btn-outline-danger fs-4 py-1 m-2 block-shadow minwidth100px"
                            title="данные фильма">
 
                             Movie
@@ -181,7 +181,7 @@
         </div>
 
         @* Тег « title » *@
-        <div id="tagTitle" class="bg-body-secondary bg-opacity-10 shadw my-3 pt-2">
+        <div id="tagTitle" class="bg-body-secondary bg-opacity-10 block-shadow my-3 pt-2">
 
             <p>
 
@@ -200,7 +200,7 @@
         </div>
 
         @* Управление страницей *@
-        <div class="card-footer p-0 my-3 shadw">
+        <div class="card-footer p-0 my-3 block-shadow">
 
             <a asp-area="Admin"
                asp-controller="PageInfo"
@@ -302,10 +302,10 @@
         <div id="accordionDetailsPage" class="accordion">
 
             @* Адрес страницы *@
-            <div id="pageAddressAccordionItem" class="accordion-item mb-3 shadw">
+            <div id="pageAddressAccordionItem" class="accordion-item mb-3 block-shadow">
 
                 @* Заголовок группы «адрес страницы» *@
-                <h2 id="headingPageAddress" class="accordion-header shadw">
+                <h2 id="headingPageAddress" class="accordion-header block-shadow">
 
                     <button class="accordion-button collapsed py-0 stranicy"
                             type="button"
@@ -327,7 +327,7 @@
                      aria-labelledby="headingPageAddress"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div id="pageAddressAccordionBody" class="accordion-body accordion-body-nointend text-start">
+                    <div id="pageAddressAccordionBody" class="accordion-body text-indent-0 text-start">
 
                         @if (Model.PageAsRazorPage)
                         {
@@ -372,7 +372,7 @@
                                     Полный адрес :
                                 </span>
                                 <br class="d-sm-none" />
-                                <span class="d-inline-block p-1 shadw">
+                                <span class="d-inline-block p-1 block-shadow">
                                     <a asp-area="@Model.PageArea.Trim('/')"
                                        asp-page="@Model.PageLoc"
                                        class="btn btn-outline-primary fs-6"
@@ -462,7 +462,7 @@
                                     Полный адрес :
                                 </span>
                                 <br />
-                                <span class="d-block fade-bg p-1 shadw">
+                                <span class="d-block fade-bg p-1 block-shadow">
                                     <a asp-area="@Model.PageArea.Trim('/')"
                                        asp-controller="@Model.Controller.Trim('/')"
                                        asp-action="@Model.Action.Trim('/')"
@@ -483,7 +483,7 @@
                                     <span class="text-danger fw-bold">
                                         Псевдоним (1) :
                                     </span>
-                                    <span class="d-block fade-bg p-1 shadw">
+                                    <span class="d-block fade-bg p-1 block-shadow">
                                         <a href="@Model.PagePathNickName"
                                            class="fs-6"
                                            target="_blank"
@@ -491,7 +491,7 @@
                                             @Model.PagePathNickName
                                         </a>
                                     </span>
-                                    <span class="d-block mt-2 fade-bg p-1 shadw">
+                                    <span class="d-block mt-2 fade-bg p-1 block-shadow">
                                         <a href="@Uri.UnescapeDataString(Model.PagePathNickName)"
                                            class="fs-6"
                                            target="_blank"
@@ -511,7 +511,7 @@
                                         Псевдоним (2) :
                                     </span>
                                     <br />
-                                    <span class="d-block fade-bg p-1 shadw">
+                                    <span class="d-block fade-bg p-1 block-shadow">
                                         <a href="@Model.PagePathNickName2"
                                            class="fs-6"
                                            target="_blank"
@@ -519,7 +519,7 @@
                                             @Model.PagePathNickName2
                                         </a>
                                     </span>
-                                    <span class="d-block mt-2 fade-bg p-1 shadw">
+                                    <span class="d-block mt-2 fade-bg p-1 block-shadow">
                                         <a href="@Uri.UnescapeDataString(Model.PagePathNickName2)"
                                            class="fs-6"
                                            target="_blank"
@@ -539,7 +539,7 @@
                                         Псевдоним (3) :
                                     </span>
                                     <br />
-                                    <span class="d-block fade-bg p-1 shadw">
+                                    <span class="d-block fade-bg p-1 block-shadow">
                                         <a href="@Model.PagePathNickName3"
                                            class="fs-6"
                                            target="_blank"
@@ -547,7 +547,7 @@
                                             @Model.PagePathNickName3
                                         </a>
                                     </span>
-                                    <span class="d-block mt-2 fade-bg p-1 shadw">
+                                    <span class="d-block mt-2 fade-bg p-1 block-shadow">
                                         <a href="@Uri.UnescapeDataString(Model.PagePathNickName3)"
                                            class="fs-6"
                                            target="_blank"
@@ -567,7 +567,7 @@
                                         Псевдоним (4) :
                                     </span>
                                     <br />
-                                    <span class="d-block fade-bg p-1 shadw">
+                                    <span class="d-block fade-bg p-1 block-shadow">
                                         <a href="@Model.PagePathNickName4"
                                            class="fs-6"
                                            target="_blank"
@@ -575,7 +575,7 @@
                                             @Model.PagePathNickName4
                                         </a>
                                     </span>
-                                    <span class="d-block mt-2 fade-bg p-1 shadw">
+                                    <span class="d-block mt-2 fade-bg p-1 block-shadow">
                                         <a href="@Uri.UnescapeDataString(Model.PagePathNickName4)"
                                            class="fs-6"
                                            target="_blank"
@@ -594,10 +594,10 @@
             </div>
 
             @* Карточка страницы *@
-            <div id="pageAccordionItem" class="accordion-item mb-3 shadw">
+            <div id="pageAccordionItem" class="accordion-item mb-3 block-shadow">
 
                 @* Заголовок группы «карточка страницы» *@
-                <h2 id="headingPagePicture" class="accordion-header shadw">
+                <h2 id="headingPagePicture" class="accordion-header block-shadow">
 
                     <button class="accordion-button collapsed py-0 stranicy"
                             type="button"
@@ -619,7 +619,7 @@
                      aria-labelledby="headingPagePicture"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div id="pageAccordionBody" class="accordion-body accordion-body-nointend text-start text-sm-center">
+                    <div id="pageAccordionBody" class="accordion-body text-indent-0 text-start text-sm-center">
 
                         @if (Model.ImageFileModel != null)
                         {
@@ -627,7 +627,7 @@
                                asp-controller="ImageInfo"
                                asp-action="DetailsImage"
                                asp-route-imageid="@Model.ImageFileModelId"
-                               class="d-block mx-auto mb-3 maxwidth300px shadw imageref"
+                               class="d-block mx-auto mb-3 maxwidth300px block-shadow imageref"
                                title="информация о картинке"
                                onclick="this.target='_blank'">
 
@@ -639,7 +639,7 @@
 
                             @if (!string.IsNullOrEmpty(Model.ImageFileModel.WebImageFileName))
                             {
-                                <a class="d-inline-block p-1 shadw fs-5 text_shadow fade-bg imageref"
+                                <a class="d-inline-block p-1 block-shadow fs-5 text_shadow fade-bg imageref"
                                    href="@Url.Content($"{Model.ImageFileModel.ImagePath}/{Model.ImageFileModel.WebImageFileName}")"
                                    onclick="this.target='_blank'">
                                     @Model.ImageFileModel.ImagePath/@Model.ImageFileModel.WebImageFileName
@@ -688,10 +688,10 @@
             </div>
 
             @* Индекс сортировки страницы *@
-            <div id="indexOfSortingAccordionItem" class="accordion-item mb-3 mt-2 shadw">
+            <div id="indexOfSortingAccordionItem" class="accordion-item mb-3 mt-2 block-shadow">
 
                 @* Заголовок группы «Индекс сортировки страницы» *@
-                <h2 id="headingIndexOfSorting" class="accordion-header shadw">
+                <h2 id="headingIndexOfSorting" class="accordion-header block-shadow">
 
                     <button class="accordion-button collapsed py-0 stranicy"
                             type="button"
@@ -732,10 +732,10 @@
             </div>
 
             @* Связанный файл текста *@
-            <div id="textFileAccordionItem" class="accordion-item mb-3 shadw @(Model.TextInfoId == null ? "d-none" : "")">
+            <div id="textFileAccordionItem" class="accordion-item mb-3 block-shadow @(Model.TextInfoId == null ? "d-none" : "")">
 
                 @* Заголовок группы «связанный файл текста» *@
-                <h2 id="headingTextFile" class="accordion-header shadw">
+                <h2 id="headingTextFile" class="accordion-header block-shadow">
 
                     <button class="accordion-button collapsed py-0 stranicy"
                             type="button"
@@ -757,7 +757,7 @@
                      aria-labelledby="headingPageTitle"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div id="textFileAccordionBody" class="accordion-body accordion-body-nointend text-center">
+                    <div id="textFileAccordionBody" class="accordion-body text-indent-0 text-center">
 
                         @if (Model.TextInfo == null)
                         {
@@ -772,7 +772,7 @@
                                 <label asp-for="@Model.TextInfo.FolderForText" class="@cssForLabel"></label>
 
                                 <button type="button"
-                                        class="d-block fs-5 fade-bg mx-auto mb-3 shadw text_shadow imageref"
+                                        class="d-block fs-5 fade-bg mx-auto mb-3 block-shadow text_shadow imageref"
                                         onclick="openFolder('text', '@Model.TextInfo.TextInfoModelId')">
 
                                     📂 @DataConfig.TextsFolderPath.Replace('\\', '/')@Model.TextInfo.FolderForText
@@ -787,7 +787,7 @@
                                    asp-controller="TextInfo"
                                    asp-action="DetailsText"
                                    asp-route-textId="@Model.TextInfoId"
-                                   class="d-inline-block p-1 fade-bg mx-auto shadw imageref"
+                                   class="d-inline-block p-1 fade-bg mx-auto block-shadow imageref"
                                    title="информация о файле текста"
                                    onclick="this.target='_blank'">
 
@@ -802,10 +802,10 @@
                                 </a>
 
                                 @* Файл TXT *@
-                                <div id="txtAccordionItem" class="accordion-item my-3 shadw">
+                                <div id="txtAccordionItem" class="accordion-item my-3 block-shadow">
 
                                     @* Заголовок группы «файл TXT» *@
-                                    <h2 id="headingTxtText" class="accordion-header shadw">
+                                    <h2 id="headingTxtText" class="accordion-header block-shadow">
 
                                         <button class="accordion-button collapsed py-0 stranicy"
                                                 type="button"
@@ -826,7 +826,7 @@
                                          class="accordion-collapse collapse pb-2 px-2"
                                          aria-labelledby="headingTxtText">
 
-                                        <div id="txtAccordionBody" class="accordion-body accordion-body-nointend text-center">
+                                        <div id="txtAccordionBody" class="accordion-body text-indent-0 text-center">
 
                                             <textarea id="ClearTextInput" class="form-control fordetails fs-5 mb-2"
                                                       asp-for="ClearText"
@@ -852,10 +852,10 @@
                                 </div>
 
                                 @* Файл HTML *@
-                                <div id="htmlAccordionItem" class="accordion-item my-3 shadw">
+                                <div id="htmlAccordionItem" class="accordion-item my-3 block-shadow">
 
                                     @* Заголовок группы «файл HTML» *@
-                                    <h2 id="headingHtmlText" class="accordion-header shadw">
+                                    <h2 id="headingHtmlText" class="accordion-header block-shadow">
 
                                         <button class="accordion-button collapsed py-0 stranicy"
                                                 type="button"
@@ -876,7 +876,7 @@
                                          class="accordion-collapse collapse pb-2 px-2"
                                          aria-labelledby="headingHtmlText">
 
-                                        <div id="htmlAccordionBody" class="accordion-body accordion-body-nointend text-center">
+                                        <div id="htmlAccordionBody" class="accordion-body text-indent-0 text-center">
 
                                             <textarea id="HtmlTextInput" class="form-control fordetails fs-5 mb-2"
                                                       asp-for="HtmlText"
@@ -929,10 +929,10 @@
             </div>
 
             @* Иконка страницы *@
-            <div id="pageIconAccordionItem" class="accordion-item mb-3 shadw">
+            <div id="pageIconAccordionItem" class="accordion-item mb-3 block-shadow">
 
                 @* Заголовок группы «иконка страницы» *@
-                <h2 id="headingPageIcon" class="accordion-header shadw">
+                <h2 id="headingPageIcon" class="accordion-header block-shadow">
 
                     <button class="accordion-button collapsed py-0 stranicy"
                             type="button"
@@ -954,13 +954,13 @@
                      aria-labelledby="headingPageIcon"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div id="pageIconAccordionBody" class="accordion-body accordion-body-nointend text-center">
+                    <div id="pageIconAccordionBody" class="accordion-body text-indent-0 text-center">
 
                         <a asp-area="Admin"
                            asp-controller="Icon"
                            asp-action="Index"
                            asp-route-iconId="@Model.IconType.IconList.First(icon => icon.IconFileName == "ms-tile-558.webp").IconModelId"
-                           class="d-inline-block maxwidth300px mx-auto shadw imageref"
+                           class="d-inline-block maxwidth300px mx-auto block-shadow imageref"
                            title="информация об иконке"
                            onclick="this.target='_blank'">
 
@@ -979,7 +979,7 @@
                             </span>
 
                             <button type="button"
-                                    class="d-block fs-5 fade-bg mx-auto mb-3 shadw text_shadow imageref"
+                                    class="d-block fs-5 fade-bg mx-auto mb-3 block-shadow text_shadow imageref"
                                     onclick="openFolder('icon', '@Model.IconType.IconTypeModelId')">
 
                                 @DataConfig.IconsFolder@Model.IconType.PathToIcon 📂
@@ -995,10 +995,10 @@
             </div>
 
             @* Тег «description» *@
-            <div id="pageDescriptionAccordionItem" class="accordion-item mb-3 shadw">
+            <div id="pageDescriptionAccordionItem" class="accordion-item mb-3 block-shadow">
 
                 @* Заголовок группы «описание страницы» *@
-                <h2 id="headingPageDescription" class="accordion-header shadw">
+                <h2 id="headingPageDescription" class="accordion-header block-shadow">
 
                     <button class="accordion-button collapsed py-0 stranicy"
                             type="button"
@@ -1017,7 +1017,7 @@
 
                 <div id="PageDescription" class="accordion-collapse collapse" aria-labelledby="headingPageDescription" data-bs-parent="#accordionDetailsPage">
 
-                    <div class="accordion-body accordion-body-nointend text-center">
+                    <div class="accordion-body text-indent-0 text-center">
 
                         <p class="text-start fluid-font-size">
                             @Model.PageDescription
@@ -1034,10 +1034,10 @@
             </div>
 
             @* Тег «keywords» *@
-            <div id="pageKeyWOrdsAccordionItem" class="accordion-item mb-3 shadw">
+            <div id="pageKeyWOrdsAccordionItem" class="accordion-item mb-3 block-shadow">
 
                 @* Заголовок группы «ключевые слова» *@
-                <h2 id="headingPageKeywords" class="accordion-header shadw">
+                <h2 id="headingPageKeywords" class="accordion-header block-shadow">
 
                     <button class="accordion-button collapsed py-0 stranicy"
                             type="button"
@@ -1061,7 +1061,7 @@
 
                 <div id="PageKeywords" class="accordion-collapse collapse" aria-labelledby="headingPageKeywords" data-bs-parent="#accordionDetailsPage">
 
-                    <div id="pageKeyWordsAccordionBody" class="accordion-body accordion-body-nointend">
+                    <div id="pageKeyWordsAccordionBody" class="accordion-body text-indent-0">
 
                         @if (!string.IsNullOrEmpty(Model.PageKeyWords))
                         {
@@ -1086,10 +1086,10 @@
             </div>
 
             @* Заголовок, картинка, текст для страницы *@
-            <div id="pageHeadImageTextAccordionItem" class="accordion-item mb-3 shadw">
+            <div id="pageHeadImageTextAccordionItem" class="accordion-item mb-3 block-shadow">
 
                 @* Заголовок группы «заголовок, картинка, текст» *@
-                <h2 id="headingPageHeadImageText" class="accordion-header shadw">
+                <h2 id="headingPageHeadImageText" class="accordion-header block-shadow">
 
                     <button class="accordion-button collapsed py-0 stranicy"
                             type="button"
@@ -1111,16 +1111,16 @@
                      aria-labelledby="headingPageHeadImageText"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div id="pageHeadImageTextAccordionBody" class="accordion-body accordion-body-nointend text-center">
+                    <div id="pageHeadImageTextAccordionBody" class="accordion-body text-indent-0 text-center">
 
                         @* Заголовок страницы, картинка, текст (accordion) *@
                         <div id="accordionHeadImageText" class="accordion">
 
                             @* Заголовок вверху страницы *@
-                            <div id="pageHeadingAccordionItem" class="accordion-item mb-3 shadw">
+                            <div id="pageHeadingAccordionItem" class="accordion-item mb-3 block-shadow">
 
                                 @* Заголовок группы «заголовок вверху страницы» *@
-                                <h2 id="headingPageHeading" class="accordion-header shadw">
+                                <h2 id="headingPageHeading" class="accordion-header block-shadow">
 
                                     <button class="accordion-button collapsed py-0 stranicy"
                                             type="button"
@@ -1145,7 +1145,7 @@
                                      aria-labelledby="headingPageHeading"
                                      data-bs-parent="#accordionHeadImageText">
 
-                                    <div id="pageHeadingAccordionBody" class="accordion-body accordion-body-nointend text-center">
+                                    <div id="pageHeadingAccordionBody" class="accordion-body text-indent-0 text-center">
 
                                         @if (!string.IsNullOrEmpty(Model.PageHeading))
                                         {
@@ -1167,10 +1167,10 @@
                             </div>
 
                             @* Картинка вверху страницы *@
-                            <div id="pageImageAccordionItem" class="accordion-item mb-3 shadw">
+                            <div id="pageImageAccordionItem" class="accordion-item mb-3 block-shadow">
 
                                 @* Заголовок группы «заголовок картинка вверху страницы» *@
-                                <h2 id="headingImagePage" class="accordion-header shadw">
+                                <h2 id="headingImagePage" class="accordion-header block-shadow">
 
                                     <button class="accordion-button collapsed py-0 stranicy"
                                             type="button"
@@ -1196,7 +1196,7 @@
                                      aria-labelledby="headingImagePageHeading"
                                      data-bs-parent="#accordionHeadImageText">
 
-                                    <div id="pageImageAccordionBody" class="accordion-body accordion-body-nointend">
+                                    <div id="pageImageAccordionBody" class="accordion-body text-indent-0">
 
                                         @if (Model.ImagePageHeadingId != null)
                                         {
@@ -1204,7 +1204,7 @@
                                                asp-controller="ImageInfo"
                                                asp-action="DetailsImage"
                                                asp-route-imageid="@Model.ImagePageHeadingId"
-                                               class="d-block mx-auto mb-3 maxwidth600px shadw imageref"
+                                               class="d-block mx-auto mb-3 maxwidth600px block-shadow imageref"
                                                title="информация о картинке"
                                                onclick="this.target='_blank'">
 
@@ -1249,10 +1249,10 @@
                             </div>
 
                             @* Текст страницы *@
-                            <div id="pageTextAccordionItem" class="accordion-item mb-3 shadw">
+                            <div id="pageTextAccordionItem" class="accordion-item mb-3 block-shadow">
 
                                 @* Заголовок группы «текст страницы» *@
-                                <h2 id="headingPageText" class="accordion-header shadw">
+                                <h2 id="headingPageText" class="accordion-header block-shadow">
 
                                     <button class="accordion-button collapsed py-0 stranicy"
                                             type="button"
@@ -1277,7 +1277,7 @@
                                      aria-labelledby="headingPageText"
                                      data-bs-parent="#accordionHeadImageText">
 
-                                    <div id="pageTextAccordionBody" class="accordion-body accordion-body-nointend text-center">
+                                    <div id="pageTextAccordionBody" class="accordion-body text-indent-0 text-center">
 
                                         @if (!string.IsNullOrEmpty(Model.TextOfPage))
                                         {
@@ -1309,10 +1309,10 @@
             </div>
 
             @* Параметры Sitemap, Manifest, Browserconfig *@
-            <div id="sitemapAccordionItem" class="accordion-item mb-3 shadw">
+            <div id="sitemapAccordionItem" class="accordion-item mb-3 block-shadow">
 
                 @* Заголовок группы «Sitemap, Manifest, Browserconfig» *@
-                <h2 id="headingPageSitemap" class="accordion-header shadw">
+                <h2 id="headingPageSitemap" class="accordion-header block-shadow">
 
                     <button class="accordion-button collapsed py-0 stranicy"
                             type="button"
@@ -1334,7 +1334,7 @@
                      aria-labelledby="headingPageSitemap"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div id="sitemapAccordionBody" class="accordion-body accordion-body-nointend text-start text-sm-center">
+                    <div id="sitemapAccordionBody" class="accordion-body text-indent-0 text-start text-sm-center">
 
                         <p class="fs-5 mb-0">
                             <span class="text-primary fw-bold d-sm-none">
@@ -1420,10 +1420,10 @@
             </div>
 
             @* Ссылки на текущую страницу по GUID1 *@
-            <div id="refByGuid1AccordionItem" class="accordion-item mb-3 shadw">
+            <div id="refByGuid1AccordionItem" class="accordion-item mb-3 block-shadow">
 
                 @* Заголовок группы «ссылки на страницу по GUID (1)» *@
-                <h2 id="headingLinkToCurrentPage" class="accordion-header shadw">
+                <h2 id="headingLinkToCurrentPage" class="accordion-header block-shadow">
 
                     <button class="accordion-button collapsed py-0 stranicy"
                             type="button"
@@ -1451,7 +1451,7 @@
                      aria-labelledby="headingLinkToCurrentPage"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div id="refByGuid1AccordionBody" class="accordion-body accordion-body-nointend text-start">
+                    <div id="refByGuid1AccordionBody" class="accordion-body text-indent-0 text-start">
 
                         @if (Model.LinksFromPagesByGuid != null && Model.LinksFromPagesByGuid.Count > 0)
                         {
@@ -1499,23 +1499,23 @@
                                 {
                                     <div class="col p-1 p-lg-2">
 
-                                        <div class="card shadw rounded-3 cardborder" title="@item.PageTitle">
+                                        <div class="card block-shadow rounded-3 cardborder" title="@item.PageTitle">
 
                                             <a asp-area="Admin"
                                                asp-controller="PageInfo"
                                                asp-action="DetailsPage"
                                                asp-route-pageid="@item.PageInfoModelId"
-                                               class="rounded-3 p-0 p-md-1 shadw"
+                                               class="rounded-3 p-0 p-md-1 block-shadow"
                                                onclick="this.target='_blank'"
                                                title="данные о странице">
 
                                                 <vc:view-image image-id="@item.ImageFileModelId"
-                                                               css-class="card-img-top shadw rounded-3"
+                                                               css-class="card-img-top block-shadow rounded-3"
                                                                icon-type="webicon300" />
 
                                                 @if (!string.IsNullOrEmpty(@item.PageCardText))
                                                 {
-                                                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 shadw cardBodyBg">
+                                                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 block-shadow cardBodyBg">
 
                                                         <p class="card-title p-0 mb-0 fw-medium fontadaptive text-center">@item.PageCardText</p>
 
@@ -1545,10 +1545,10 @@
             </div>
 
             @* Ссылки на текущую страницу по GUID2 *@
-            <div id="refByGuid2AccordionItem" class="accordion-item mb-3 shadw">
+            <div id="refByGuid2AccordionItem" class="accordion-item mb-3 block-shadow">
 
                 @* Заголовок группы «ссылки на страницу по GUID (2)» *@
-                <h2 id="headingLinkToCurrentPage2" class="accordion-header shadw">
+                <h2 id="headingLinkToCurrentPage2" class="accordion-header block-shadow">
 
                     <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#LinkToCurrentPage2" aria-expanded="true" aria-controls="LinkToCurrentPage2">
 
@@ -1570,7 +1570,7 @@
                      aria-labelledby="headingLinkToCurrentPage2"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div id="refByGuid2AccordionBody" class="accordion-body accordion-body-nointend text-start">
+                    <div id="refByGuid2AccordionBody" class="accordion-body text-indent-0 text-start">
 
                         @if (Model.LinksFromPagesByGuid2 != null && Model.LinksFromPagesByGuid2.Count > 0)
                         {
@@ -1620,23 +1620,23 @@
                                 {
                                     <div class="col p-1 p-lg-2">
 
-                                        <div class="card shadw rounded-3 cardborder" title="@item.PageTitle">
+                                        <div class="card block-shadow rounded-3 cardborder" title="@item.PageTitle">
 
                                             <a asp-area="Admin"
                                                asp-controller="PageInfo"
                                                asp-action="DetailsPage"
                                                asp-route-pageid="@item.PageInfoModelId"
-                                               class="rounded-3 p-0 p-md-1 shadw"
+                                               class="rounded-3 p-0 p-md-1 block-shadow"
                                                onclick="this.target='_blank'"
                                                title="данные о странице">
 
                                                 <vc:view-image image-id="@item.ImageFileModelId"
-                                                               css-class="card-img-top shadw rounded-3"
+                                                               css-class="card-img-top block-shadow rounded-3"
                                                                icon-type="webicon300" />
 
                                                 @if (!string.IsNullOrEmpty(@item.PageCardText))
                                                 {
-                                                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 shadw cardBodyBg">
+                                                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 block-shadow cardBodyBg">
 
                                                         <p class="card-title p-0 mb-0 fw-medium fontadaptive text-center">
 
@@ -1670,10 +1670,10 @@
             </div>
 
             @* Фильтры для поиска текущей страницы *@
-            <div id="textSearchForPageAccordionItem" class="accordion-item mb-3 shadw">
+            <div id="textSearchForPageAccordionItem" class="accordion-item mb-3 block-shadow">
 
                 @* Заголовок группы «фильтр поиска текущей страницы» *@
-                <h2 id="headingPageFilter" class="accordion-header shadw">
+                <h2 id="headingPageFilter" class="accordion-header block-shadow">
 
                     <button class="accordion-button collapsed py-0 stranicy"
                             type="button"
@@ -1700,7 +1700,7 @@
                      aria-labelledby="headingPageFilter"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div id="textSearchForPageAccordionBody" class="accordion-body accordion-body-nointend">
+                    <div id="textSearchForPageAccordionBody" class="accordion-body text-indent-0">
 
                         @if (!string.IsNullOrEmpty(Model.PageFilter))
                         {
@@ -1738,7 +1738,7 @@
                                         {
                                             innerAccordion++;
 
-                                            <div class="accordion-item mb-2 shadw">
+                                            <div class="accordion-item mb-2 block-shadow">
 
                                                 <h2 class="accordion-header">
 
@@ -1780,7 +1780,7 @@
                                                                        onclick="this.target='_blank'"
                                                                        title="данные о странице">
 
-                                                                        <div class="card p-0 rounded-3 shadw" title="@item.PageTitle">
+                                                                        <div class="card p-0 rounded-3 block-shadow" title="@item.PageTitle">
 
                                                                             <vc:view-image image-id="@item.ImageFileModelId"
                                                                                            css-class="d-flex card-img-top rounded-3 p-0"
@@ -1790,13 +1790,13 @@
 
                                                                                 @if (!string.IsNullOrEmpty(@item.PageCardText))
                                                                                 {
-                                                                                    <p class="card-text px-2 text-indent-0 arial fontadaptive shadw">
+                                                                                    <p class="card-text px-2 text-indent-0 arial fontadaptive block-shadow">
                                                                                         @item.PageCardText
                                                                                     </p>
                                                                                 }
                                                                                 else
                                                                                 {
-                                                                                    <p class="card-text px-2 text-indent-0 arial fontadaptive shadw">
+                                                                                    <p class="card-text px-2 text-indent-0 arial fontadaptive block-shadow">
                                                                                         БЕЗ ТЕКСТА
                                                                                     </p>
                                                                                 }
@@ -1837,10 +1837,10 @@
             </div>
 
             @* Ссылки на страницы *@
-            <div id="refToPagesAccordionItem" class="accordion-item mb-3 shadw">
+            <div id="refToPagesAccordionItem" class="accordion-item mb-3 block-shadow">
 
                 @* Заголовок группы «ссылки на страницы» *@
-                <h2 id="headingPageLinksByFilters" class="accordion-header shadw">
+                <h2 id="headingPageLinksByFilters" class="accordion-header block-shadow">
 
                     <button class="accordion-button collapsed py-0 stranicy"
                             type="button" data-bs-toggle="collapse"
@@ -1861,16 +1861,16 @@
                      aria-labelledby="headingPageLinksByFilters"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div id="refToPagesAccordionBody" class="accordion-body accordion-body-nointend text-center">
+                    <div id="refToPagesAccordionBody" class="accordion-body text-indent-0 text-center">
 
                         @* Ссылки на страницы (accordion)*@
                         <div id="switchForPageLinks" class="accordion">
 
                             @* Состояние (включено или выключено) *@
-                            <div id="onOffForRefToPagesAccordionItem" class="accordion-item mb-3 shadw">
+                            <div id="onOffForRefToPagesAccordionItem" class="accordion-item mb-3 block-shadow">
 
                                 @* Заголовок группы «состояние включено или выключено» *@
-                                <h2 id="headingSwitchPageLinks" class="accordion-header shadw">
+                                <h2 id="headingSwitchPageLinks" class="accordion-header block-shadow">
 
                                     <button class="accordion-button collapsed py-0 stranicy"
                                             type="button"
@@ -1892,7 +1892,7 @@
                                      aria-labelledby="headingSwitchPageLinks"
                                      data-bs-parent="#switchForPageLinks">
 
-                                    <div id="onOffForRefToPagesAccordionBody" class="accordion-body accordion-body-nointend text-center">
+                                    <div id="onOffForRefToPagesAccordionBody" class="accordion-body text-indent-0 text-center">
 
                                         @if (Model.PageLinksByFilters)
                                         {
@@ -1914,10 +1914,10 @@
                             </div>
 
                             @* Фильтры связанных страниц *@
-                            <div id="filtersForRefToPagesAccordionItem" class="accordion-item mb-3 shadw">
+                            <div id="filtersForRefToPagesAccordionItem" class="accordion-item mb-3 block-shadow">
 
                                 @* Заголовок группы «фильтры связанных страниц» *@
-                                <h2 id="headingPageLinkFilters" class="accordion-header shadw">
+                                <h2 id="headingPageLinkFilters" class="accordion-header block-shadow">
 
                                     <button class="accordion-button collapsed py-0 stranicy"
                                             type="button"
@@ -1939,7 +1939,7 @@
                                      aria-labelledby="headingPageLinkFilters"
                                      data-bs-parent="#switchForPageLinks">
 
-                                    <div id="filtersForRefToPagesAccordionBody" class="accordion-body accordion-body-nointend text-center">
+                                    <div id="filtersForRefToPagesAccordionBody" class="accordion-body text-indent-0 text-center">
 
                                         @if (!string.IsNullOrEmpty(Model.PageFilterOut))
                                         {
@@ -1978,10 +1978,10 @@
                                                     {
                                                         innerAccordion++;
 
-                                                        <div class="accordion-item mb-3 shadw">
+                                                        <div class="accordion-item mb-3 block-shadow">
 
                                                             @* Заголовок группы *@
-                                                            <h2 id="headingFiltersOfPage" class="accordion-header shadw">
+                                                            <h2 id="headingFiltersOfPage" class="accordion-header block-shadow">
                                                                 <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_@innerAccordion" aria-expanded="false" aria-controls="collapseOne_@innerAccordion">
                                                                     <span class="@textForAccordionBtn">@caption :</span>
                                                                 </button>
@@ -1989,7 +1989,7 @@
 
                                                             <div id="collapseOne_@innerAccordion" class="accordion-collapse collapse" aria-labelledby="headingFiltersOfPage" data-bs-parent="#accordionFiltersOfPage">
 
-                                                                <div class="accordion-body accordion-body-nointend text-center">
+                                                                <div class="accordion-body text-indent-0 text-center">
 
                                                                     <div class="row mt-1 justify-content-center g-1
                                                                         @(modelForPageLinks.Count < 4 ? "row-cols-3" : "")
@@ -2008,7 +2008,7 @@
                                                                                    onclick="this.target='_blank'"
                                                                                    title="данные о странице">
 
-                                                                                    <div class="card p-0 rounded-3 shadw" title="@item.PageTitle">
+                                                                                    <div class="card p-0 rounded-3 block-shadow" title="@item.PageTitle">
 
                                                                                         <vc:view-image image-id="@item.ImageFileModelId"
                                                                                                        css-class="card-img-top rounded-3 p-0"
@@ -2019,13 +2019,13 @@
 
                                                                                             @if (!string.IsNullOrEmpty(@item.PageCardText))
                                                                                             {
-                                                                                                <p class="card-text px-2 text-indent-0 arial fontadaptive shadw">
+                                                                                                <p class="card-text px-2 text-indent-0 arial fontadaptive block-shadow">
                                                                                                     @item.PageCardText
                                                                                                 </p>
                                                                                             }
                                                                                             else
                                                                                             {
-                                                                                                <p class="card-text px-2 text-indent-0 arial fontadaptive shadw">
+                                                                                                <p class="card-text px-2 text-indent-0 arial fontadaptive block-shadow">
                                                                                                     БЕЗ ТЕКСТА
                                                                                                 </p>
                                                                                             }
@@ -2078,10 +2078,10 @@
             </div>
 
             @* Ссылки на видео *@
-            <div id="refToFilmsAccordionItem" class="accordion-item mb-3 shadw">
+            <div id="refToFilmsAccordionItem" class="accordion-item mb-3 block-shadow">
 
                 @* Заголовок группы «ссылки на видео» *@
-                <h2 id="headingVideoLinks" class="accordion-header shadw">
+                <h2 id="headingVideoLinks" class="accordion-header block-shadow">
 
                     <button class="accordion-button collapsed py-0 stranicy"
                             type="button"
@@ -2100,16 +2100,16 @@
 
                 <div id="VideoLinks" class="accordion-collapse collapse" aria-labelledby="headingVideoLinks" data-bs-parent="#accordionDetailsPage">
 
-                    <div id="refToFilmsAccordionBody" class="accordion-body accordion-body-nointend text-center">
+                    <div id="refToFilmsAccordionBody" class="accordion-body text-indent-0 text-center">
 
                         @* Ссылки на видео (accordion)*@
                         <div id="switchForVideoLinks" class="accordion">
 
                             @* Состояние (включено или выключено) *@
-                            <div id="onOffRefToFilmsAccordionItem" class="accordion-item mb-3 shadw">
+                            <div id="onOffRefToFilmsAccordionItem" class="accordion-item mb-3 block-shadow">
 
                                 @* Заголовок группы «включить-выключить ссылки на видео» *@
-                                <h2 id="headingSwitchVideoLinks" class="accordion-header shadw">
+                                <h2 id="headingSwitchVideoLinks" class="accordion-header block-shadow">
 
                                     <button class="accordion-button collapsed py-0 stranicy"
                                             type="button"
@@ -2128,7 +2128,7 @@
 
                                 <div id="SwitchVideo" class="accordion-collapse collapse" aria-labelledby="headingSwitchVideoLinks" data-bs-parent="#switchForVideoLinks">
 
-                                    <div id="onOffRefToFilmsAccordionBody" class="accordion-body accordion-body-nointend text-center">
+                                    <div id="onOffRefToFilmsAccordionBody" class="accordion-body text-indent-0 text-center">
 
                                         @if (Model.VideoLinks)
                                         {
@@ -2150,10 +2150,10 @@
                             </div>
 
                             @* Фильтры связанных видео *@
-                            <div id="filtersForRefToVideoAccordionItem" class="accordion-item mb-3 shadw">
+                            <div id="filtersForRefToVideoAccordionItem" class="accordion-item mb-3 block-shadow">
 
                                 @* Заголовок группы «фильтры связанных видео» *@
-                                <h2 id="headingPageVideoFilters" class="accordion-header shadw">
+                                <h2 id="headingPageVideoFilters" class="accordion-header block-shadow">
 
                                     <button class="accordion-button collapsed py-0 stranicy"
                                             type="button"
@@ -2172,7 +2172,7 @@
 
                                 <div id="PageVideoFilters" class="accordion-collapse collapse" aria-labelledby="headingPageVideoFilters" data-bs-parent="#switchForVideoLinks">
 
-                                    <div id="filtersForRefToVideoAccordionBody" class="accordion-body accordion-body-nointend text-center">
+                                    <div id="filtersForRefToVideoAccordionBody" class="accordion-body text-indent-0 text-center">
 
                                         @if (!string.IsNullOrEmpty(Model.VideoFilterOut))
                                         {
@@ -2206,10 +2206,10 @@
                                                     {
                                                         innerAccordion++;
 
-                                                        <div class="accordion-item mb-3 shadw">
+                                                        <div class="accordion-item mb-3 block-shadow">
 
                                                             @* Заголовок группы *@
-                                                            <h2 id="headingFiltersOfVideo" class="accordion-header shadw">
+                                                            <h2 id="headingFiltersOfVideo" class="accordion-header block-shadow">
                                                                 <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne_@innerAccordion" aria-expanded="false" aria-controls="collapseOne_@innerAccordion">
                                                                     <span class="@textForAccordionBtn">@caption :</span>
                                                                 </button>
@@ -2217,7 +2217,7 @@
 
                                                             <div id="collapseOne_@innerAccordion" class="accordion-collapse collapse" aria-labelledby="headingFiltersOfVideo" data-bs-parent="#accordionFiltersOfVideo">
 
-                                                                <div class="accordion-body accordion-body-nointend text-center">
+                                                                <div class="accordion-body text-indent-0 text-center">
 
                                                                     <vc:video-links movies-list="@modelForVideoLinks" link-to-info-about-movie="true" />
 
@@ -2260,7 +2260,7 @@
             </div>
 
             @* Ссылки на страницы по GUID1 *@
-            <div id="refToPagesByGuid1AccordionItem" class="accordion-item mb-3 shadw">
+            <div id="refToPagesByGuid1AccordionItem" class="accordion-item mb-3 block-shadow">
 
                 @* Заголовок группы «ссылки на страницы по GUID (1)» *@
                 <h2 id="headingPageLinksByGuid1" class="accordion-header">
@@ -2285,13 +2285,13 @@
                      aria-labelledby="headingPageLinksByGuid1"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div id="refToPagesByGuid1AccordionBody" class="accordion-body accordion-body-nointend text-center">
+                    <div id="refToPagesByGuid1AccordionBody" class="accordion-body text-indent-0 text-center">
 
                         @* Ссылки на страницы по GUID (1) (accordion) *@
                         <div id="PageLinksByGuid1_accordion" class="accordion">
 
                             @* Состояние (включено - выключено)*@
-                            <div id="onOffRefToPagesByGuid1AccordionItem" class="accordion-item mb-3 shadw">
+                            <div id="onOffRefToPagesByGuid1AccordionItem" class="accordion-item mb-3 block-shadow">
 
                                 @* Заголовок группы «включить-выключить ссылки по GUID (1)» *@
                                 <h2 id="headingPageLinksByGuid1_accordion" class="accordion-header">
@@ -2316,7 +2316,7 @@
                                      aria-labelledby="headingPageLinksByGuid1_accordion"
                                      data-bs-parent="#PageLinksByGuid1_accordion">
 
-                                    <div id="onOffRefToPagesByGuid1AccordionBody" class="accordion-body accordion-body-nointend text-center">
+                                    <div id="onOffRefToPagesByGuid1AccordionBody" class="accordion-body text-indent-0 text-center">
 
                                         @if (Model.PageLinks)
                                         {
@@ -2338,7 +2338,7 @@
                             </div>
 
                             @* Ссылки на страницы по GUID (1) *@
-                            <div id="onOffRefToPagesByGuid1AccordionItem" class="accordion-item mb-3 shadw">
+                            <div id="onOffRefToPagesByGuid1AccordionItem" class="accordion-item mb-3 block-shadow">
 
                                 @* Заголовок группы «ссылки на страницы по GUID (1)» *@
                                 <h2 id="headingLinksGuid1" class="accordion-header">
@@ -2363,7 +2363,7 @@
                                      aria-labelledby="headingLinksGuid1"
                                      data-bs-parent="#PageLinksByGuid1_accordion">
 
-                                    <div id="onOffRefToPagesByGuid1AccordionBody" class="accordion-body accordion-body-nointend text-start">
+                                    <div id="onOffRefToPagesByGuid1AccordionBody" class="accordion-body text-indent-0 text-start">
 
                                         @if (Model.LinksToPagesByGuid != null && Model.LinksToPagesByGuid.Count > 0)
                                         {
@@ -2411,23 +2411,23 @@
                                                 {
                                                     <div class="col p-1 p-lg-2">
 
-                                                        <div class="card shadw rounded-3 cardborder" title="@item.PageTitle">
+                                                        <div class="card block-shadow rounded-3 cardborder" title="@item.PageTitle">
 
                                                             <a asp-area="Admin"
                                                                asp-controller="PageInfo"
                                                                asp-action="DetailsPage"
                                                                asp-route-pageid="@item.PageInfoModelId"
-                                                               class="rounded-3 p-0 p-md-1 shadw"
+                                                               class="rounded-3 p-0 p-md-1 block-shadow"
                                                                onclick="this.target='_blank'"
                                                                title="данные о странице">
 
                                                                 <vc:view-image image-id="@item.ImageFileModelId"
-                                                                               css-class="card-img-top shadw rounded-3"
+                                                                               css-class="card-img-top block-shadow rounded-3"
                                                                                icon-type="webicon300" />
 
                                                                 @if (!string.IsNullOrEmpty(@item.PageCardText))
                                                                 {
-                                                                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 shadw cardBodyBg">
+                                                                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 block-shadow cardBodyBg">
 
                                                                         <p class="card-title p-0 mb-0 fw-medium fontadaptive text-center">@item.PageCardText</p>
 
@@ -2466,7 +2466,7 @@
             </div>
 
             @* Ссылки на страницы по GUID2 *@
-            <div id="refToPagesByGuid2AccordionItem" class="accordion-item mb-3 shadw">
+            <div id="refToPagesByGuid2AccordionItem" class="accordion-item mb-3 block-shadow">
 
                 @* Заголовок группы «ссылки на страницы по GUID (2)» *@
                 <h2 id="headingPageLinksByGuid2" class="accordion-header">
@@ -2491,13 +2491,13 @@
                      aria-labelledby="headingPageLinksByGuid2"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div id="refToPagesByGuid2AccordionBody" class="accordion-body accordion-body-nointend text-center">
+                    <div id="refToPagesByGuid2AccordionBody" class="accordion-body text-indent-0 text-center">
 
                         @* Ссылки на страницы по GUID (2) (accordion) *@
                         <div id="PageLinksByGuid2_accordion" class="accordion">
 
                             @* Состояние (включено - выключено)*@
-                            <div id="onOffRefToPagesByGuid2AccordionItem" class="accordion-item mb-3 shadw">
+                            <div id="onOffRefToPagesByGuid2AccordionItem" class="accordion-item mb-3 block-shadow">
 
                                 @* Заголовок группы «состояние (включено - выключено)» *@
                                 <h2 id="headingPageLinksByGuid2_accordion" class="accordion-header">
@@ -2520,7 +2520,7 @@
 
                                 <div id="SwitchPageLinksByGUID2" class="accordion-collapse collapse" aria-labelledby="headingPageLinksByGuid2_accordion" data-bs-parent="#PageLinksByGuid2_accordion">
 
-                                    <div id="onOffRefToPagesByGuid2AccordionBody" class="accordion-body accordion-body-nointend text-center">
+                                    <div id="onOffRefToPagesByGuid2AccordionBody" class="accordion-body text-indent-0 text-center">
 
                                         @if (Model.PageLinks2)
                                         {
@@ -2550,7 +2550,7 @@
                             </div>
 
                             @* Ссылки на страницы по GUID (2) *@
-                            <div id="pagesForFiltersByGuid2AccordionItem" class="accordion-item mb-3 shadw">
+                            <div id="pagesForFiltersByGuid2AccordionItem" class="accordion-item mb-3 block-shadow">
 
                                 @* Заголовок группы «ссылки на страницы по GUID (2)» *@
                                 <h2 id="headingLinksGuid2" class="accordion-header">
@@ -2575,7 +2575,7 @@
                                      aria-labelledby="headingLinksGuid2"
                                      data-bs-parent="#PageLinksByGuid2_accordion">
 
-                                    <div id="pagesForFiltersByGuid2AccordionBody" class="accordion-body accordion-body-nointend text-start">
+                                    <div id="pagesForFiltersByGuid2AccordionBody" class="accordion-body text-indent-0 text-start">
 
                                         @if (Model.LinksToPagesByGuid2 != null && Model.LinksToPagesByGuid2.Count > 0)
                                         {
@@ -2625,23 +2625,23 @@
                                                 {
                                                     <div class="col p-1 p-lg-2">
 
-                                                        <div class="card shadw rounded-3 cardborder" title="@item.PageTitle">
+                                                        <div class="card block-shadow rounded-3 cardborder" title="@item.PageTitle">
 
                                                             <a asp-area="Admin"
                                                                asp-controller="PageInfo"
                                                                asp-action="DetailsPage"
                                                                asp-route-pageid="@item.PageInfoModelId"
-                                                               class="rounded-3 p-0 p-md-1 shadw"
+                                                               class="rounded-3 p-0 p-md-1 block-shadow"
                                                                onclick="this.target='_blank'"
                                                                title="данные о странице">
 
                                                                 <vc:view-image image-id="@item.ImageFileModelId"
-                                                                               css-class="card-img-top shadw rounded-3"
+                                                                               css-class="card-img-top block-shadow rounded-3"
                                                                                icon-type="webicon300" />
 
                                                                 @if (!string.IsNullOrEmpty(@item.PageCardText))
                                                                 {
-                                                                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 shadw cardBodyBg">
+                                                                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 block-shadow cardBodyBg">
 
                                                                         <p class="card-title p-0 mb-0 fw-medium fontadaptive text-center">@item.PageCardText</p>
 
@@ -2681,7 +2681,7 @@
             </div>
 
             @* Фотоальбом *@
-            <div class="accordion-item mb-3 shadw">
+            <div class="accordion-item mb-3 block-shadow">
 
                 <h2 id="headingPictures" class="accordion-header">
 
@@ -2705,13 +2705,13 @@
                      aria-labelledby="headingPictures"
                      data-bs-parent="#accordionDetailsPage">
 
-                    <div class="accordion-body accordion-body-nointend text-center">
+                    <div class="accordion-body text-indent-0 text-center">
 
                         @* (accordion)*@
                         <div id="Pictures_accordion" class="accordion">
 
                             @* Состояние (включено - выключено)*@
-                            <div class="accordion-item mb-3 shadw">
+                            <div class="accordion-item mb-3 block-shadow">
 
                                 <h2 id="headingPicturesCondition" class="accordion-header">
 
@@ -2735,7 +2735,7 @@
                                      aria-labelledby="headingPicturesCondition"
                                      data-bs-parent="#Pictures_accordion">
 
-                                    <div class="accordion-body accordion-body-nointend text-center">
+                                    <div class="accordion-body text-indent-0 text-center">
 
                                         @if (Model.PhotoLinks)
                                         {
@@ -2765,7 +2765,7 @@
                             </div>
 
                             @* Картинки *@
-                            <div class="accordion-item mb-3 shadw">
+                            <div class="accordion-item mb-3 block-shadow">
 
                                 <h2 id="headingPicturesAlbum" class="accordion-header">
 
@@ -2789,7 +2789,7 @@
                                      aria-labelledby="headingPicturesAlbum"
                                      data-bs-parent="#Pictures_accordion">
 
-                                    <div class="accordion-body accordion-body-nointend text-start">
+                                    <div class="accordion-body text-indent-0 text-start">
 
                                         @if (!string.IsNullOrEmpty(Model.PhotoFilterOut))
                                         {
@@ -2841,7 +2841,7 @@
         </div>
 
         @* Управление страницей *@
-        <div class="card-footer p-0 my-3 shadw">
+        <div class="card-footer p-0 my-3 block-shadow">
 
             <a asp-area="Admin"
                asp-controller="PageInfo"
@@ -2954,7 +2954,7 @@
                    onclick="this.target='_blank'">
 
                     <vc:view-image image-id="@item.ImageFileModelId"
-                                   css-class="my-2 w-100 shadw imageref"
+                                   css-class="my-2 w-100 block-shadow imageref"
                                    icon-type="webicon200" />
 
                 </a>

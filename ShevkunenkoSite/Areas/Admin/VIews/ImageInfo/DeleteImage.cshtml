@@ -19,7 +19,7 @@
         <p class="text-primary fs-6 mb-0">КАРТИНКА (@Model.WebImageWidth x @Model.WebImageHeight)</p>
 
         <vc:view-image image-id="@Model.ImageFileModelId"
-                       css-class="card-img-top m-2 maxwidth700px shadw"
+                       css-class="card-img-top m-2 maxwidth700px block-shadow"
                        icon-type="webimage" />
 
         @if (!string.IsNullOrEmpty(Model.WebImageFileName))
@@ -45,8 +45,8 @@
 
             <div class="card-footer p-2">
 
-                <button type="submit" class="btn btn-outline-danger me-2 shadw" title="удалить картинку">Delete</button>
-                <a asp-area="Admin" asp-controller="ImageInfo" asp-action="Index" asp-route-iconlist="false" class="btn btn-outline-success shadw" title="не удалять">Cancel</a>
+                <button type="submit" class="btn btn-outline-danger me-2 block-shadow" title="удалить картинку">Delete</button>
+                <a asp-area="Admin" asp-controller="ImageInfo" asp-action="Index" asp-route-iconlist="false" class="btn btn-outline-success block-shadow" title="не удалять">Cancel</a>
 
             </div>
 

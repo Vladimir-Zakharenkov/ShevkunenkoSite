@@ -1,0 +1,9 @@
+﻿@model ArticleViewModel
+
+@* Блок внизу страницы *@
+<footer class="@(Model.Scan == true ? "d-none" : "d-flex align-items-center mt-4 footer_page") d-print-none">
+
+    @* Иконки и номер страницы*@
+    <partial name="_PageToolsPartial" model="Model" />
+
+</footer>

@@ -33,7 +33,7 @@ else
                asp-route-iconId=@iconItem.IconTypeModelId
                title="параметры иконки">
 
-                <div class="card m-1 p-1 shadw borderforitem">
+                <div class="card m-1 p-1 block-shadow borderforitem">
 
                     <img src="@DataConfig.IconsFolder@iconItem.IconType.PathToIcon/@iconItem.IconFileName" />
 
@@ -53,7 +53,7 @@ else
        asp-controller="IconType"
        asp-action="AddIconType"
        asp-route-pathForIcon=@null
-       class="btn btn-outline-danger shadw py-1 mt-5 minwidth100px"
+       class="btn btn-outline-danger block-shadow py-1 mt-5 minwidth100px"
        title="добавить иконку">
 
         Добавить

@@ -131,7 +131,7 @@ else
             @if (Model.FileExists)
             {
                 <vc:view-image image-id="@Model.ImageItem.ImageFileModelId"
-                               css-class="mx-auto my-2 shadw maxwidth300px"
+                               css-class="mx-auto my-2 block-shadow maxwidth300px"
                                icon-type="@Model.IconType" />
 
                 <p>
@@ -154,7 +154,7 @@ else
 
             <div class="card-footer p-2 my-2">
 
-                <a class="btn btn-outline-success p-1 m-2 shadw"
+                <a class="btn btn-outline-success p-1 m-2 block-shadow"
                    asp-area="Admin"
                    asp-controller="ImageInfo"
                    asp-action="EditImage"
@@ -163,7 +163,7 @@ else
                     Изменить
                 </a>
 
-                <a class="btn btn-outline-danger p-1 px-2 m-2 shadw"
+                <a class="btn btn-outline-danger p-1 px-2 m-2 block-shadow"
                    asp-area="Admin"
                    asp-controller="ImageInfo"
                    asp-action="DeleteImage"
@@ -174,7 +174,7 @@ else
 
                 @if (Model.IconType == null || Model.IconType == "image" || Model.IconType == "webimage")
                 {
-                    <a class="btn btn btn-outline-primary p-1 px-3 m-2 shadw"
+                    <a class="btn btn btn-outline-primary p-1 px-3 m-2 block-shadow"
                        asp-area="Admin"
                        asp-controller="ImageInfo"
                        asp-action="Index"
@@ -183,7 +183,7 @@ else
                         Список
                     </a>
 
-                    <a class="btn btn btn-outline-info p-1 m-2 shadw"
+                    <a class="btn btn btn-outline-info p-1 m-2 block-shadow"
                        asp-area="Admin"
                        asp-controller="ImageInfo"
                        asp-action="Index"
@@ -196,7 +196,7 @@ else
                 {
                     if (Model.IconType.Contains("web"))
                     {
-                        <a class="btn btn btn-outline-info p-1 m-2 shadw"
+                        <a class="btn btn btn-outline-info p-1 m-2 block-shadow"
                            asp-area="Admin"
                            asp-controller="ImageInfo"
                            asp-action="DetailsImage"
@@ -209,7 +209,7 @@ else
                     }
                     else
                     {
-                        <a class="btn btn btn-outline-info p-1 m-2 shadw"
+                        <a class="btn btn btn-outline-info p-1 m-2 block-shadow"
                            asp-area="Admin"
                            asp-controller="ImageInfo"
                            asp-action="DetailsImage"
@@ -225,7 +225,7 @@ else
 
             <div class="row">
 
-                <div class="col m-1 shadw">
+                <div class="col m-1 block-shadow">
 
                     <div class="table-responsive">
 

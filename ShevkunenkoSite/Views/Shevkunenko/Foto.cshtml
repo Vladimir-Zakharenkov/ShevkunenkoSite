@@ -8,7 +8,7 @@
 
     <div class="col">
 
-        <div id="fotoAlbumCarousel" class="carousel slide carousel-dark rounded-3 pb-5 shadw">
+        <div id="fotoAlbumCarousel" class="carousel slide carousel-dark rounded-3 pb-5 block-shadow">
 
             <div class="carousel-indicators pb-5">
 
@@ -36,9 +36,9 @@
                 {
                     @if (Model.CurrentImageId == picture.ImageFileModelId)
                     {
-                        <div class="carousel-item active p-1 rounded-3 shadw">
+                        <div class="carousel-item active p-1 rounded-3 block-shadow">
 
-                            <vc:view-image image-id=@picture.ImageFileModelId css-class="d-block mx-auto shadw" icon-type="" />
+                            <vc:view-image image-id=@picture.ImageFileModelId css-class="d-block mx-auto block-shadow" icon-type="" />
 
                             <p class="d-none d-md-block fs-4 mt-3 text_shadow">
                                 @picture.ImageDescription
@@ -48,9 +48,9 @@
                     }
                     else
                     {
-                        <div class="carousel-item p-1 rounded-3 shadw">
+                        <div class="carousel-item p-1 rounded-3 block-shadow">
 
-                            <vc:view-image image-id=@picture.ImageFileModelId css-class="d-block mx-auto shadw" icon-type="" />
+                            <vc:view-image image-id=@picture.ImageFileModelId css-class="d-block mx-auto block-shadow" icon-type="" />
 
                             <p class="d-none d-md-block fs-4 mt-3 text_shadow">
                                 @picture.ImageDescription

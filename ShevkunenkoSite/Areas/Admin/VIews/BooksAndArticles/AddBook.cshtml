@@ -35,7 +35,7 @@
             <div id="accordionAddArticle" class="accordion">
 
                 @* тип текста *@
-                <div class="accordion-item mt-2 shadw">
+                <div class="accordion-item mt-2 block-shadow">
 
                     @* заголовок группы «тип текста» *@
                     <h2 id="headingTextType" class="accordion-header">
@@ -60,7 +60,7 @@
                          aria-labelledby="headingTextType"
                          data-bs-parent="#accordionAddArticle">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             @* выбор типа текста *@
                             <div class="row g-2 justify-content-center">
@@ -114,7 +114,7 @@
                 </div>
 
                 @* обложка для книги *@
-                <div class="accordion-item mt-2 shadw">
+                <div class="accordion-item mt-2 block-shadow">
 
                     @* заголовок группы «Обложка для книги» *@
                     <h2 id="headingCoverForBook" class="accordion-header">
@@ -140,7 +140,7 @@
                          aria-labelledby="headingCoverForBook"
                          data-bs-parent="#accordionAddArticle">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             <div>
 
@@ -197,7 +197,7 @@
                 </div>
 
                 @* издатель книги (статьи) *@
-                <div class="accordion-item mt-2 shadw">
+                <div class="accordion-item mt-2 block-shadow">
 
                     @* заголовок группы «Издатель книги (статьи)» *@
                     <h2 id="headingPublisher" class="accordion-header">
@@ -220,7 +220,7 @@
                          aria-labelledby="headingPublisher"
                          data-bs-parent="#accordionAddArticle">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             <label asp-for="Publisher" class="@cssForLabel"></label>
 
@@ -247,7 +247,7 @@
                 </div>
 
                 @*  логотип книги (статьи) *@
-                <div class="accordion-item mt-2 shadw">
+                <div class="accordion-item mt-2 block-shadow">
 
                     @* Заголовок группы «логотип книги (статьи)» *@
                     <h2 class="accordion-header" id="headingLogo">
@@ -273,7 +273,7 @@
                          data-bs-parent="#accordionAddArticle">
 
                         @* логотип книги (статьи) *@
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             <label asp-for="LogoOfArticleId" class="@cssForLabel"></label>
 
@@ -325,7 +325,7 @@
                 </div>
 
                 @*  скан книги (статьи) *@
-                <div class="accordion-item mt-2 shadw">
+                <div class="accordion-item mt-2 block-shadow">
 
                     @* заголовок группы «Cкан книги (статьи)» *@
                     <h2 class="accordion-header" id="headingScan">
@@ -349,7 +349,7 @@
                          aria-labelledby="headingScan"
                          data-bs-parent="#accordionAddArticle">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             <label asp-for="ScanOfArticleId" class="@cssForLabel"></label>
 
@@ -401,7 +401,7 @@
                 </div>
 
                 @*  видео (movie) связанное с книгой (статьёй) *@
-                <div class="accordion-item mt-2 shadw">
+                <div class="accordion-item mt-2 block-shadow">
 
                     @* Заголовок группы «видео связанное с книгой (статьёй)» *@
                     <h2 id="headingVideoForBookOrArticle" class="accordion-header">
@@ -426,7 +426,7 @@
                          aria-labelledby="headingVideoForBookOrArticle"
                          data-bs-parent="#accordionAddArticle">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             <label asp-for="VideoForBookOrArticleId" class="@cssForLabel"></label>
 
@@ -478,7 +478,7 @@
                 </div>
 
                 @*  фильм (film) связанный с книгой (статьёй) *@
-                <div class="accordion-item mt-2 shadw">
+                <div class="accordion-item mt-2 block-shadow">
 
                     @* Заголовок группы «фильм связанный с книгой (статьёй)» *@
                     <h2 id="headingFilmForBookOrArticle" class="accordion-header">
@@ -503,7 +503,7 @@
                          aria-labelledby="headingFilmForBookOrArticle"
                          data-bs-parent="#accordionAddArticle">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             <label asp-for="FilmForBookOrArticleId" class="@cssForLabel"></label>
 
@@ -557,7 +557,7 @@
                 </div>
 
                 @*  ссылка на статью (издателя) *@
-                <div class="accordion-item mt-2 shadw">
+                <div class="accordion-item mt-2 block-shadow">
 
                     @* заголовок группы «Ссылка на статью (издателя)» *@
                     <h2 id="headingUrlOfArticle" class="accordion-header">
@@ -580,7 +580,7 @@
                          aria-labelledby="headingUrlOfArticle"
                          data-bs-parent="#accordionAddArticle">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             <label asp-for="UrlOfArticle" class="@cssForLabel"></label>
 
@@ -627,7 +627,7 @@
                 </div>
 
                 @* автор книги (статьи) *@
-                <div class="accordion-item mt-2 shadw">
+                <div class="accordion-item mt-2 block-shadow">
 
                     @* заголовок группы «Автор книги (статьи)» *@
                     <h2 class="accordion-header" id="headingAuthor">
@@ -649,7 +649,7 @@
                          aria-labelledby="headingAuthor"
                          data-bs-parent="#accordionAddArticle">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             <label asp-for="AuthorOfText" class="@cssForLabel"></label>
 
@@ -678,7 +678,7 @@
                 </div>
 
                 @* заголовок книги (статьи) *@
-                <div class="accordion-item mt-2 shadw">
+                <div class="accordion-item mt-2 block-shadow">
 
                     @* заголовок группы «Заголовок книги (статьи)» *@
                     <h2 id="headingCaptionOfText" class="accordion-header">
@@ -701,7 +701,7 @@
                          aria-labelledby="headingCaptionOfText"
                          data-bs-parent="#accordionAddArticle">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             <label asp-for="CaptionOfText" class="@cssForLabel"></label>
 
@@ -730,7 +730,7 @@
                 </div>
 
                 @* подзаголовок книги (статьи) *@
-                <div class="accordion-item mt-2 shadw">
+                <div class="accordion-item mt-2 block-shadow">
 
                     @* заголовок группы «Подзаголовок книги (статьи)» *@
                     <h2 id="headingTheSubtitle" class="accordion-header">
@@ -753,7 +753,7 @@
                          aria-labelledby="headingTheSubtitle"
                          data-bs-parent="#accordionAddArticle">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             <label asp-for="TheSubtitle" class="@cssForLabel"></label>
 
@@ -780,7 +780,7 @@
                 </div>
 
                 @* описание текста *@
-                <div class="accordion-item mt-2 shadw">
+                <div class="accordion-item mt-2 block-shadow">
 
                     @* заголовок группы «Описание текста» *@
                     <h2 class="accordion-header" id="headingBookDescription">
@@ -805,7 +805,7 @@
                          aria-labelledby="headingBookDescription"
                          data-bs-parent="#accordionAddArticle">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             <label asp-for="BookDescription" class="@cssForLabel"></label>
 
@@ -835,7 +835,7 @@
                 </div>
 
                 @* количество страниц *@
-                <div class="accordion-item mt-2 shadw">
+                <div class="accordion-item mt-2 block-shadow">
 
                     @* заголовок группы «Количество страниц» *@
                     <h2 class="accordion-header" id="headingNumberOfPages">
@@ -858,7 +858,7 @@
                          aria-labelledby="headingNumberOfPages"
                          data-bs-parent="#accordionAddArticle">
 
-                        <div class="row accordion-body accordion-body-nointend text-center justify-content-center justify-content-sm-start">
+                        <div class="row accordion-body text-indent-0 text-center justify-content-center justify-content-sm-start">
 
                             <label asp-for="NumberOfPages" class="@cssForLabel col-12 col-sm-8 text-center text-sm-end"></label>
 
@@ -887,7 +887,7 @@
                 </div>
 
                 @* дата публикации книги (статьи) *@
-                <div class="accordion-item mt-2 shadw">
+                <div class="accordion-item mt-2 block-shadow">
 
                     @* заголовок группы «Дата публикации книги (статьи)» *@
                     <h2 class="accordion-header" id="headingDateOfPublication">
@@ -910,7 +910,7 @@
                          aria-labelledby="headingDateOfPublication"
                          data-bs-parent="#accordionAddArticle">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             <div class="row g-2 justify-content-center">
 
@@ -947,7 +947,7 @@
                 </div>
 
                 @* Теги по содержанию текста *@
-                <div class="accordion-item mt-2 shadw">
+                <div class="accordion-item mt-2 block-shadow">
 
                     @* заголовок группы «Теги по содержанию текста» *@
                     <h2 class="accordion-header" id="headingTagsForBook">
@@ -972,7 +972,7 @@
                          aria-labelledby="headingTagsForBook"
                          data-bs-parent="#accordionAddArticle">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             <label asp-for="TagsForBook" class="@cssForLabel"></label>
 
@@ -1012,7 +1012,7 @@
                 </div>
 
                 @*  ссылка на скачивания текста *@
-                <div class="accordion-item mt-2 shadw">
+                <div class="accordion-item mt-2 block-shadow">
 
                     @* заголовок группы «Ссылки на скачивание текста» *@
                     <h2 id="headingLoadText" class="accordion-header">
@@ -1037,7 +1037,7 @@
                          aria-labelledby="headingLoadText"
                          data-bs-parent="#accordionAddArticle">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             <label asp-for="RefToWordDoc" class="@cssForLabel"></label>
 
@@ -1120,14 +1120,14 @@
             <div class="card-footer p-0 pb-2 mt-4">
 
                 <button type="submit"
-                        class="btn btn-outline-success mt-2 me-2 text-center shadw"
+                        class="btn btn-outline-success mt-2 me-2 text-center block-shadow"
                         title="Сохранить">
 
                     Сохранить
 
                 </button>
 
-                <a class="btn btn-outline-danger mt-2 shadw"
+                <a class="btn btn-outline-danger mt-2 block-shadow"
                    asp-area="Admin"
                    asp-controller="BooksAndArticles"
                    asp-action="Index"

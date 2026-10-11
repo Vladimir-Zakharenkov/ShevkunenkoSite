@@ -27,6 +27,10 @@ public class TextInfoModel
     [Display(Name = "Файл (txt) :")]
     public string TxtFileName { get; set; } = string.Empty;
 
+    #endregion
+
+    #region Размер файла TXT
+
     [Display(Name = "Размер файла (txt) :")]
     public int TxtFileSize { get; set; }
 
@@ -38,6 +42,10 @@ public class TextInfoModel
     [DisplayFormat(ConvertEmptyStringToNull = false)]
     [Display(Name = "Файл (html) :")]
     public string HtmlFileName { get; set; } = string.Empty;
+
+    #endregion
+
+    #region Размер файла HTML
 
     [Display(Name = "Размер файла (html) :")]
     public int HtmlFileSize { get; set; }

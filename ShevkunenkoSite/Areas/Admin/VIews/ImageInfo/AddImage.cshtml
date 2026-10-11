@@ -201,7 +201,7 @@
                     <div class="accordion" id="accordionAddImage">
 
                         @* Выбор картинок WEBP*@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             <h2 class="accordion-header" id="headingDescription">
                                 <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#WebpImage" aria-expanded="true" aria-controls="WebpImage">
@@ -211,7 +211,7 @@
 
                             <div id="WebpImage" class="accordion-collapse collapse" aria-labelledby="headingDescription" data-bs-parent="#accordionAddImage">
 
-                                <div class="accordion-body accordion-body-nointend text-center">
+                                <div class="accordion-body text-indent-0 text-center">
 
                                     @* Выбор картинки HD WEBP *@
                                     <div class="row g-2 justify-content-center">
@@ -333,7 +333,7 @@
                         </div>
 
                         @* Выбор картинок PNG*@
-                        <div class="accordion-item shadw">
+                        <div class="accordion-item block-shadow">
 
                             <h2 class="accordion-header" id="headingDescription">
                                 <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PngImage" aria-expanded="true" aria-controls="PngImage">
@@ -343,7 +343,7 @@
 
                             <div id="PngImage" class="accordion-collapse collapse" aria-labelledby="headingDescription" data-bs-parent="#accordionAddImage">
 
-                                <div class="accordion-body accordion-body-nointend text-center">
+                                <div class="accordion-body text-indent-0 text-center">
 
                                     @* Выбор картинки HD PNG *@
                                     <div class="row g-2 justify-content-center">
@@ -471,9 +471,9 @@
                     @* Сохранить картинку *@
                     <div class="card-footer p-0 mt-4">
 
-                        <button type="submit" class="btn btn-outline-success m-2 text-center shadw" title="добавить картинку">Добавить</button>
+                        <button type="submit" class="btn btn-outline-success m-2 text-center block-shadow" title="добавить картинку">Добавить</button>
 
-                        <a class="btn btn-outline-danger m-2 shadw"
+                        <a class="btn btn-outline-danger m-2 block-shadow"
                            asp-area="Admin"
                            asp-controller="ImageInfo"
                            asp-action="Index"

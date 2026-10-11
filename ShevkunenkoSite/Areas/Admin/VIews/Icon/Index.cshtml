@@ -3,7 +3,7 @@
 @{
     string trStyle = string.Empty;
 
-    string btnStyle = "btn px-1 py-0 m-1 shadw minwidth40px";
+    string btnStyle = "btn px-1 py-0 m-1 block-shadow minwidth40px";
 
     string delBtn = string.Empty;
 
@@ -59,7 +59,7 @@
     <a asp-area="Admin"
        asp-controller="IconType"
        asp-action="Index"
-       class="btn btn-outline-primary shadw py-1 me-5 minwidth100px"
+       class="btn btn-outline-primary block-shadow py-1 me-5 minwidth100px"
        title="типы иконок">
 
         Иконки
@@ -71,7 +71,7 @@
        asp-controller="Icon"
        asp-action="AddIcon"
        asp-route-iconId="@currentIcon.IconTypeModelId"
-       class="btn btn-outline-danger shadw py-1 minwidth100px"
+       class="btn btn-outline-danger block-shadow py-1 minwidth100px"
        title="добавить иконку">
 
         Добавить

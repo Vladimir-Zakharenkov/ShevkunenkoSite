@@ -276,7 +276,7 @@
                 <div class="accordion p-3" id="accordionEditImage">
 
                     @* Выбор картинок WEBM*@
-                    <div class="accordion-item mb-3 shadw">
+                    <div class="accordion-item mb-3 block-shadow">
 
                         <h2 class="accordion-header" id="headingDescription">
 
@@ -295,14 +295,14 @@
 
                         <div id="WebpImage" class="accordion-collapse collapse" aria-labelledby="headingDescription" data-bs-parent="#accordionEditImage">
 
-                            <div class="accordion-body accordion-body-nointend text-center">
+                            <div class="accordion-body text-indent-0 text-center">
 
                                 @* Картинка WebHD *@
                                 <div>
 
                                     @if (string.IsNullOrEmpty(Model.EditImage.WebImageHDFileName))
                                     {
-                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top m-2 shadw" icon-type="webimage" />
+                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top m-2 block-shadow" icon-type="webimage" />
 
                                         <p class="text-danger mb-2 fw-bolder">картинка WebHD отсутствует</p>
                                     }
@@ -310,7 +310,7 @@
                                     {
                                         <p class="text-success fs-6 fw-bolder">Картинка (@Model.EditImage.WebImageHDWidth px x @Model.EditImage.WebImageHDHeight px) / Размер @Model.EditImage.WebImageHDFileSize bytes</p>
 
-                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top m-2 shadw" icon-type="webhd" />
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top m-2 block-shadow" icon-type="webhd" />
 
                                         <p class="text_shadow mb-2">File: @Model.EditImage.ImagePath/@Model.EditImage.WebImageHDFileName</p>
                                     }
@@ -344,7 +344,7 @@
                                     @if (string.IsNullOrEmpty(Model.EditImage.WebImageFileName))
                                     {
                                         <vc:view-image image-id="@DataConfig.NoImage"
-                                                       css-class="card-img-top m-2 maxwidth400px shadw"
+                                                       css-class="card-img-top m-2 maxwidth400px block-shadow"
                                                        icon-type="webimage" />
 
                                         <p class="text-danger mb-2 fw-bolder">
@@ -358,7 +358,7 @@
                                         </p>
 
                                         <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
-                                                       css-class="card-img-top m-2 maxwidth400px shadw"
+                                                       css-class="card-img-top m-2 maxwidth400px block-shadow"
                                                        icon-type="webimage" />
 
                                         <p class="text_shadow mb-2">
@@ -408,7 +408,7 @@
                                     @if (string.IsNullOrEmpty(Model.EditImage.WebIconFileName))
                                     {
                                         <vc:view-image image-id="@DataConfig.NoImage"
-                                                       css-class="card-img-top m-2 shadw maxwidth300px"
+                                                       css-class="card-img-top m-2 block-shadow maxwidth300px"
                                                        icon-type="webicon300" />
 
                                         <p class="text-danger mb-2 fw-bolder">
@@ -422,7 +422,7 @@
                                         </p>
 
                                         <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
-                                                       css-class="card-img-top m-2 shadw maxwidth300px"
+                                                       css-class="card-img-top m-2 block-shadow maxwidth300px"
                                                        icon-type="webicon300" />
 
                                         <p class="text_shadow mb-2">
@@ -471,7 +471,7 @@
                                     @if (string.IsNullOrEmpty(Model.EditImage.WebIcon200FileName))
                                     {
                                         <vc:view-image image-id="@DataConfig.NoImage"
-                                                       css-class="card-img-top m-2 shadw"
+                                                       css-class="card-img-top m-2 block-shadow"
                                                        icon-type="webicon200" />
 
                                         <p class="text-danger mb-2 fw-bolder">
@@ -485,7 +485,7 @@
                                         </p>
 
                                         <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
-                                                       css-class="card-img-top m-2 shadw"
+                                                       css-class="card-img-top m-2 block-shadow"
                                                        icon-type="webicon200" />
 
                                         <p class="text_shadow mb-2">
@@ -534,7 +534,7 @@
                                     @if (string.IsNullOrEmpty(Model.EditImage.WebIcon100FileName))
                                     {
                                         <vc:view-image image-id="@DataConfig.NoImage"
-                                                       css-class="card-img-top m-2 shadw"
+                                                       css-class="card-img-top m-2 block-shadow"
                                                        icon-type="webicon100" />
 
                                         <p class="text-danger mb-2 fw-bolder">
@@ -548,7 +548,7 @@
                                         </p>
 
                                         <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
-                                                       css-class="card-img-top m-2 shadw"
+                                                       css-class="card-img-top m-2 block-shadow"
                                                        icon-type="webicon100" />
 
                                         <p class="text_shadow mb-2">
@@ -615,14 +615,14 @@
 
                         <div id="PngImage" class="accordion-collapse collapse" aria-labelledby="headingDescription" data-bs-parent="#accordionEditImage">
 
-                            <div class="accordion-body accordion-body-nointend text-center">
+                            <div class="accordion-body text-indent-0 text-center">
 
                                 @* Картинка HD *@
                                 <div>
 
                                     @if (string.IsNullOrEmpty(Model.EditImage.ImageHDFileName))
                                     {
-                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top m-2 shadw" icon-type="image" />
+                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top m-2 block-shadow" icon-type="image" />
 
                                         <p class="text-danger mb-2 fw-bolder">картинка HD отсутствует</p>
                                     }
@@ -630,7 +630,7 @@
                                     {
                                         <p class="text-success fs-6 fw-bolder">Картинка (@Model.EditImage.ImageHDWidth px x @Model.EditImage.ImageHDHeight px) / Размер @Model.EditImage.ImageHDFileSize bytes</p>
 
-                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top m-2 shadw" icon-type="image" />
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top m-2 block-shadow" icon-type="image" />
 
                                         <p class="text_shadow mb-2">File: @Model.EditImage.ImagePath/@Model.EditImage.ImageHDFileName</p>
                                     }
@@ -663,7 +663,7 @@
 
                                     @if (string.IsNullOrEmpty(Model.EditImage.ImageFileName))
                                     {
-                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top maxwidth80percent m-2 shadw" icon-type="image" />
+                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top maxwidth80percent m-2 block-shadow" icon-type="image" />
 
                                         <p class="text-danger mb-2 fw-bolder">картинка отсутствует</p>
                                     }
@@ -671,7 +671,7 @@
                                     {
                                         <p class="text-success fs-6 fw-bolder">Картинка (@Model.EditImage.ImageWidth px x @Model.EditImage.ImageHeight px) / Размер @Model.EditImage.ImageFileSize bytes</p>
 
-                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top maxwidth80percent m-2 shadw" icon-type="image" />
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top maxwidth80percent m-2 block-shadow" icon-type="image" />
 
                                         <p class="text_shadow mb-2">File: @Model.EditImage.ImagePath/@Model.EditImage.ImageFileName</p>
                                     }
@@ -704,7 +704,7 @@
 
                                     @if (string.IsNullOrEmpty(Model.EditImage.IconFileName))
                                     {
-                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top m-2 shadw" icon-type="icon300" />
+                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top m-2 block-shadow" icon-type="icon300" />
 
                                         <p class="text-danger mb-2 fw-bolder">иконка Icon300 отсутствует</p>
                                     }
@@ -712,7 +712,7 @@
                                     {
                                         <p class="text-success fs-6 fw-bolder">Картинка (@Model.EditImage.IconWidth px x @Model.EditImage.IconHeight px) / Размер @Model.EditImage.IconFileSize bytes</p>
 
-                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top m-2 shadw" icon-type="icon300" />
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top m-2 block-shadow" icon-type="icon300" />
 
                                         <p class="text_shadow mb-2">File: @Model.EditImage.ImagePath/@Model.EditImage.IconFileName</p>
                                     }
@@ -745,7 +745,7 @@
 
                                     @if (string.IsNullOrEmpty(Model.EditImage.Icon200FileName))
                                     {
-                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top m-2 shadw" icon-type="icon200" />
+                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top m-2 block-shadow" icon-type="icon200" />
 
                                         <p class="text-danger mb-2 fw-bolder">иконка Icon200 отсутствует</p>
                                     }
@@ -753,7 +753,7 @@
                                     {
                                         <p class="text-success fs-6 fw-bolder">Картинка (@Model.EditImage.Icon200Width px x @Model.EditImage.Icon200Height px) / Размер @Model.EditImage.Icon200FileSize bytes</p>
 
-                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top m-2 shadw" icon-type="icon200" />
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top m-2 block-shadow" icon-type="icon200" />
 
                                         <p class="text_shadow mb-2">File: @Model.EditImage.ImagePath/@Model.EditImage.Icon200FileName</p>
                                     }
@@ -786,7 +786,7 @@
 
                                     @if (string.IsNullOrEmpty(Model.EditImage.Icon100FileName))
                                     {
-                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top m-2 shadw" icon-type="icon100" />
+                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top m-2 block-shadow" icon-type="icon100" />
 
                                         <p class="text-danger mb-2 fw-bolder">иконка Icon100 отсутствует</p>
                                     }
@@ -794,7 +794,7 @@
                                     {
                                         <p class="text-success fs-6 fw-bolder">Картинка (@Model.EditImage.Icon100Width px x @Model.EditImage.Icon100Height px) / Размер @Model.EditImage.Icon100FileSize bytes</p>
 
-                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top m-2 shadw" icon-type="icon100" />
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top m-2 block-shadow" icon-type="icon100" />
 
                                         <p class="text_shadow mb-2">File: @Model.EditImage.ImagePath/@Model.EditImage.Icon100FileName</p>
                                     }
@@ -833,9 +833,9 @@
                 @* Сохранить - Отменить изменения *@
                 <div class="card-footer p-0 mt-2">
 
-                    <button type="submit" class="btn btn-outline-success m-2 text-center shadw" title="сохранить изменения">Сохранить</button>
+                    <button type="submit" class="btn btn-outline-success m-2 text-center block-shadow" title="сохранить изменения">Сохранить</button>
 
-                    <a class="btn btn-outline-danger m-2 shadw"
+                    <a class="btn btn-outline-danger m-2 block-shadow"
                        asp-area="Admin"
                        asp-controller="ImageInfo"
                        asp-action="Index"

@@ -127,10 +127,10 @@
 		<div id="accordionForAudioFile" class="accordion">
 
 			@* Параметры файла *@
-			<div class="accordion-item my-3 shadw">
+			<div class="accordion-item my-3 block-shadow">
 
 				@* Заголовок группы «параметры файла» *@
-				<h2 id="headingFileProperties" class="accordion-header shadw">
+				<h2 id="headingFileProperties" class="accordion-header block-shadow">
 
 					<button class="accordion-button collapsed py-0 stranicy"
 							type="button"
@@ -293,10 +293,10 @@
 			</div>
 
 			@* Ссылки на аудиофайл в интернете*@
-			<div class="accordion-item mb-3 shadw">
+			<div class="accordion-item mb-3 block-shadow">
 
 				@* Заголовок группы «текст аудиофайла» *@
-				<h2 id="headingRefToAudioFile" class="accordion-header shadw">
+				<h2 id="headingRefToAudioFile" class="accordion-header block-shadow">
 
 					<button class="accordion-button collapsed py-0 stranicy"
 							type="button"
@@ -325,7 +325,7 @@
 						{
 							<p class="fs-5 text-center text_shadow">@Model.InternetRefToAudioFile</p>
 
-							<a class="btn btn-outline-primary py-1 m-2 shadw"
+							<a class="btn btn-outline-primary py-1 m-2 block-shadow"
 							   href="@Model.InternetRefToAudioFile"
 							   onclick="this.target='_blank'"
 							   title="перейти по ссылки">
@@ -361,7 +361,7 @@
 						{
 							<p class="fs-5 text-center text_shadow">@Model.PodsterFmRefToAudioFile</p>
 
-							<a class="btn btn-outline-primary py-1 m-2 shadw"
+							<a class="btn btn-outline-primary py-1 m-2 block-shadow"
 							   href="@Model.PodsterFmRefToAudioFile"
 							   onclick="this.target='_blank'"
 							   title="перейти по ссылки">
@@ -397,7 +397,7 @@
 						{
 							<p class="fs-5 text-center text_shadow">@Model.YandexDiskRefToAudioFile</p>
 
-							<a class="btn btn-outline-primary py-1 m-2 shadw"
+							<a class="btn btn-outline-primary py-1 m-2 block-shadow"
 							   href="@Model.YandexDiskRefToAudioFile"
 							   onclick="this.target='_blank'"
 							   title="перейти по ссылки">
@@ -427,10 +427,10 @@
 			</div>
 
 			@* Плейер для аудиофайла*@
-			<div class="accordion-item mb-3 shadw">
+			<div class="accordion-item mb-3 block-shadow">
 
 				@* Заголовок группы «плейер для аудиофайла» *@
-				<h2 id="headingPlayerForAudioFile" class="accordion-header shadw">
+				<h2 id="headingPlayerForAudioFile" class="accordion-header block-shadow">
 
 					<button class="accordion-button collapsed py-0 stranicy"
 							type="button"
@@ -473,10 +473,10 @@
 			</div>
 
 			@* Текст аудиофайла *@
-			<div class="accordion-item mb-3 shadw">
+			<div class="accordion-item mb-3 block-shadow">
 
 				@* Заголовок группы «текст аудиофайла» *@
-				<h2 id="headingTextForAudioFile" class="accordion-header shadw">
+				<h2 id="headingTextForAudioFile" class="accordion-header block-shadow">
 
 					<button class="accordion-button collapsed py-0 stranicy"
 							type="button"
@@ -602,10 +602,10 @@
 			</div>
 
 			@* Аудиокнига - Номер файла по порядку *@
-			<div class="accordion-item my-3 shadw">
+			<div class="accordion-item my-3 block-shadow">
 
 				@* Заголовок группы «аудиокнига» *@
-				<h2 id="headingAudioBook" class="accordion-header shadw">
+				<h2 id="headingAudioBook" class="accordion-header block-shadow">
 
 					<button class="accordion-button collapsed py-0 stranicy"
 							type="button"
@@ -721,7 +721,7 @@
 								   asp-controller="BooksAndArticles"
 								   asp-action="DetailsBook"
 								   asp-route-bookId="@Model.AudioBookModel.BookForAudioBook.BooksAndArticlesModelId"
-								   class="d-block mx-auto mb-3 maxwidth300px shadw imageref"
+								   class="d-block mx-auto mb-3 maxwidth300px block-shadow imageref"
 								   title="информация о книге"
 								   onclick="this.target='_blank'">
 
@@ -762,7 +762,7 @@
 		<div class="card-footer mb-2">
 
 			@* Список аудиофайлов сайта *@
-			<a class="btn btn-outline-primary minwidth100px m-2 shadw"
+			<a class="btn btn-outline-primary minwidth100px m-2 block-shadow"
 			   asp-area="Admin"
 			   asp-controller="AudioInfo"
 			   asp-action="Index"
@@ -773,7 +773,7 @@
 			</a>
 
 			@* Изменить сведения об аудиофайле *@
-			<a class="btn btn-outline-success minwidth100px m-2 shadw"
+			<a class="btn btn-outline-success minwidth100px m-2 block-shadow"
 			   asp-area="Admin"
 			   asp-controller="AudioInfo"
 			   asp-action="EditAudioFile"
@@ -785,7 +785,7 @@
 			</a>
 
 			@* Удалить аудиофайл *@
-			<a class="btn btn-outline-danger minwidth100px m-2 shadw"
+			<a class="btn btn-outline-danger minwidth100px m-2 block-shadow"
 			   asp-area="Admin"
 			   asp-controller="AudioInfo"
 			   asp-action="DeleteAudioFile"

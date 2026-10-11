@@ -40,7 +40,7 @@
 <div class="row">
 
 	<div class="col-12 col-md-3">
-		<a class="btn btn-outline-danger shadw py-1 mt-2"
+		<a class="btn btn-outline-danger block-shadow py-1 mt-2"
 		   asp-area="Admin"
 		   asp-controller="TextInfo"
 		   asp-action="AddText"
@@ -60,7 +60,7 @@
 
 			<input type="text" class="d-inline-block align-middle mt-1 w-50" asp-for="SearchString" />
 
-			<input type="submit" class="btn btn-outline-success shadw py-1 me-md-3" value="Поиск" title="поиск текста" />
+			<input type="submit" class="btn btn-outline-success block-shadow py-1 me-md-3" value="Поиск" title="поиск текста" />
 
 		</form>
 
@@ -98,7 +98,7 @@
 @* Таблица данных *@
 <div class="row">
 
-	<div class="col m-1 shadw">
+	<div class="col m-1 block-shadow">
 
 		<div class="table-responsive">
 
@@ -129,7 +129,7 @@
 							@* Кнопки Информация - Изменить - Удалить*@
 							<td scope="col" class="col-3 col-sm-2 col-lg-3 col-xxl-2 align-content-center text-center">
 
-								<a class="btn btn-outline-primary p-1 m-1 shadw minwidth40px"
+								<a class="btn btn-outline-primary p-1 m-1 block-shadow minwidth40px"
 								   asp-area="Admin"
 								   asp-controller="TextInfo"
 								   asp-action="DetailsText"
@@ -140,7 +140,7 @@
 
 								</a>
 
-								<a class="btn btn-outline-success p-1 m-1 shadw minwidth40px"
+								<a class="btn btn-outline-success p-1 m-1 block-shadow minwidth40px"
 								   asp-area="Admin"
 								   asp-controller="TextInfo"
 								   asp-action="EditText"
@@ -151,7 +151,7 @@
 
 								</a>
 
-								<a class="btn btn-outline-danger p-1 m-1 shadw minwidth40px"
+								<a class="btn btn-outline-danger p-1 m-1 block-shadow minwidth40px"
 								   asp-area="Admin"
 								   asp-controller="TextInfo"
 								   asp-action="DeleteText"

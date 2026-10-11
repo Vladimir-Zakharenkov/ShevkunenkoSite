@@ -40,7 +40,7 @@
     @if (Model.BookOrArticle.UrlOfArticle != null)
     {
         <a href="@Model.BookOrArticle.UrlOfArticle"
-           class="@(Model.BookOrArticle.LogoOfArticleId != null ? "d-block maxwidth700px mx-auto shadw imageref" : "d-none")"
+           class="@(Model.BookOrArticle.LogoOfArticleId != null ? "d-block maxwidth700px mx-auto block-shadow imageref" : "d-none")"
            title="логотип издания"
            onclick="this.target='_blank'">
 
@@ -53,7 +53,7 @@
     else
     {
         <vc:view-image image-id="@Model.BookOrArticle.LogoOfArticleId"
-                       css-class="w-100 mx-auto maxwidth700px shadw @(Model.BookOrArticle.LogoOfArticleId != null ? "d-block" : "d-none")"
+                       css-class="w-100 mx-auto maxwidth700px block-shadow @(Model.BookOrArticle.LogoOfArticleId != null ? "d-block" : "d-none")"
                        icon-type="webimage" />
     }
 
@@ -94,7 +94,7 @@
                        onclick="this.target='_blank'">
 
                         <vc:view-image image-id="@item.ImageFileModelId"
-                                       css-class="my-2 w-100 shadw imageref"
+                                       css-class="my-2 w-100 block-shadow imageref"
                                        icon-type="webicon200" />
 
                     </a>
@@ -108,7 +108,7 @@
         }
 
         @* Блок статьи *@
-        <div class="col col-md-8 article_page mx-auto paragraph shadw @(Model.Scan == true ? "mt-4 overflow-y-auto overflow-x-hidden height1000" : "")" itemprop="articleBody text">
+        <div class="col col-md-8 article_page mx-auto paragraph block-shadow @(Model.Scan == true ? "mt-4 overflow-y-auto overflow-x-hidden height1000" : "")" itemprop="articleBody text">
 
             @* Инфо вверху страницы *@
             <div class="@(Model.Scan == true ? "d-none" : "d-flex mb-4 top_page d-print-none")">
@@ -126,7 +126,7 @@
                        title="скан статьи">
 
                         <vc:view-image image-id="123d2197-2305-41d5-5539-08dd63f54213"
-                                       css-class="maxwidth40px shadw imageref d-print-none"
+                                       css-class="maxwidth40px block-shadow imageref d-print-none"
                                        icon-type="webicon100" />
 
                     </a>
@@ -146,7 +146,7 @@
                        title="видео к статье">
 
                         <vc:view-image image-id="b386f45b-fc84-4748-bc75-08dd67cfc8ed"
-                                       css-class="maxwidth40px shadw imageref d-print-none"
+                                       css-class="maxwidth40px block-shadow imageref d-print-none"
                                        icon-type="webicon100" />
 
                     </a>
@@ -162,7 +162,7 @@
                        title="видео к статье">
 
                         <vc:view-image image-id="b386f45b-fc84-4748-bc75-08dd67cfc8ed"
-                                       css-class="maxwidth40px shadw imageref d-print-none"
+                                       css-class="maxwidth40px block-shadow imageref d-print-none"
                                        icon-type="webicon100" />
 
                     </a>
@@ -175,7 +175,7 @@
                        title="распечатать страницу">
 
                         <vc:view-image image-id="f271cf6f-a66e-4c55-9d5e-08dc1058c236"
-                                       css-class="maxwidth40px shadw imageref d-print-none"
+                                       css-class="maxwidth40px block-shadow imageref d-print-none"
                                        icon-type="webicon100" />
 
                     </a>
@@ -227,7 +227,7 @@
                        title="скан статьи">
 
                         <vc:view-image image-id="123d2197-2305-41d5-5539-08dd63f54213"
-                                       css-class="maxwidth40px shadw imageref d-print-none"
+                                       css-class="maxwidth40px block-shadow imageref d-print-none"
                                        icon-type="webicon100" />
 
                     </a>
@@ -245,7 +245,7 @@
                        title="видео к статье">
 
                         <vc:view-image image-id="b386f45b-fc84-4748-bc75-08dd67cfc8ed"
-                                       css-class="maxwidth40px shadw imageref d-print-none"
+                                       css-class="maxwidth40px block-shadow imageref d-print-none"
                                        icon-type="webicon100" />
 
                     </a>
@@ -261,7 +261,7 @@
                        title="видео к статье">
 
                         <vc:view-image image-id="b386f45b-fc84-4748-bc75-08dd67cfc8ed"
-                                       css-class="maxwidth40px shadw imageref d-print-none"
+                                       css-class="maxwidth40px block-shadow imageref d-print-none"
                                        icon-type="webicon100" />
 
                     </a>
@@ -274,7 +274,7 @@
                        title="распечатать страницу">
 
                         <vc:view-image image-id="f271cf6f-a66e-4c55-9d5e-08dc1058c236"
-                                       css-class="maxwidth40px shadw imageref d-print-none"
+                                       css-class="maxwidth40px block-shadow imageref d-print-none"
                                        icon-type="webicon100" />
 
                     </a>
@@ -303,7 +303,7 @@
                        onclick="this.target='_blank'">
 
                         <vc:view-image image-id="@item.ImageFileModelId"
-                                       css-class="my-2 w-100 shadw imageref"
+                                       css-class="my-2 w-100 block-shadow imageref"
                                        icon-type="webicon200" />
 
                     </a>
@@ -323,7 +323,7 @@
 
         @if (Model.PageNumber > 1 && Model.Scan != true)
         {
-            <a class="btn btn-outline-primary py-0 float-start shadw"
+            <a class="btn btn-outline-primary py-0 float-start block-shadow"
                asp-area=""
                asp-controller="Articles"
                asp-action="Article"
@@ -343,7 +343,7 @@
 
         @if (Model.Scan == true)
         {
-            <a class="@(Model.HtmlText == null ? "d-none" : "btn btn-outline-primary py-1 mx-auto shadw")"
+            <a class="@(Model.HtmlText == null ? "d-none" : "btn btn-outline-primary py-1 mx-auto block-shadow")"
                asp-area=""
                asp-controller="Articles"
                asp-action="Article"
@@ -360,7 +360,7 @@
 
         @if (Model.PageNumber < Model.BookOrArticle.NumberOfPages && Model.Scan != true)
         {
-            <a class="btn btn-outline-primary py-0 float-end shadw d-print-none"
+            <a class="btn btn-outline-primary py-0 float-end block-shadow d-print-none"
                asp-area=""
                asp-controller="Articles"
                asp-action="Article"

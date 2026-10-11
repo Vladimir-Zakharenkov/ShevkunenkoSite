@@ -64,7 +64,7 @@
 		<a asp-area="Admin"
 		   asp-controller="PageInfo"
 		   asp-action="AddPage"
-		   class="btn btn-outline-danger shadw py-1 mt-2 me-3 minwidth100px"
+		   class="btn btn-outline-danger block-shadow py-1 mt-2 me-3 minwidth100px"
 		   title="добавить страницу">
 
 			Добавить
@@ -77,7 +77,7 @@
 		   asp-action="Index"
 		   asp-route-searchString="@Model.SearchString"
 		   asp-route-pageCard="true"
-		   class="btn btn-outline-primary shadw py-1 mt-2 minwidth100px"
+		   class="btn btn-outline-primary block-shadow py-1 mt-2 minwidth100px"
 		   title="карточки страниц">
 
 			Иконки
@@ -102,7 +102,7 @@
 				   class="d-inline-block align-middle mt-1 w-50"
 				   type="text" />
 
-			<input class="btn btn-outline-success shadw py-1 me-md-3"
+			<input class="btn btn-outline-success block-shadow py-1 me-md-3"
 				   type="submit"
 				   value="Поиск"
 				   title="поиск страницы" />
@@ -118,7 +118,7 @@
 @* Таблица данных *@
 <div class="row">
 
-	<div class="col m-1 shadw">
+	<div class="col m-1 block-shadow">
 
 		<div class="table-responsive">
 
@@ -152,7 +152,7 @@
 								   asp-controller="PageInfo"
 								   asp-action="DetailsPage"
 								   asp-route-pageId="@pageInfo.PageInfoModelId"
-								   class="btn btn-outline-info px-1 py-0 m-1 shadw minwidth40px"
+								   class="btn btn-outline-info px-1 py-0 m-1 block-shadow minwidth40px"
 								   title="подробно">
 
 									Info
@@ -163,7 +163,7 @@
 								   asp-controller="PageInfo"
 								   asp-action="EditPage"
 								   asp-route-pageId="@pageInfo.PageInfoModelId"
-								   class="btn btn-outline-dark px-1 py-0 m-1 shadw minwidth40px"
+								   class="btn btn-outline-dark px-1 py-0 m-1 block-shadow minwidth40px"
 								   title="редактировать">
 
 									Edit
@@ -171,7 +171,7 @@
 								</a>
 
 								<a href="@Url.Content(pageInfo.PageFullPathWithData)"
-								   class="btn btn-outline-primary px-1 py-0 m-1 shadw minwidth40px"
+								   class="btn btn-outline-primary px-1 py-0 m-1 block-shadow minwidth40px"
 								   title="просмотр">
 
 									Run
@@ -182,7 +182,7 @@
 								   asp-controller="PageInfo"
 								   asp-action="DeletePage"
 								   asp-route-pageId="@pageInfo.PageInfoModelId"
-								   class="btn btn-outline-danger px-1 py-0 m-1 shadw minwidth40px"
+								   class="btn btn-outline-danger px-1 py-0 m-1 block-shadow minwidth40px"
 								   title="удалить">
 
 									Del

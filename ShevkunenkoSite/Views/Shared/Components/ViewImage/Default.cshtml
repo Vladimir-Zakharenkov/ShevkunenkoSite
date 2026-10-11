@@ -1,10 +1,10 @@
 ﻿@model ViewImageViewModel
 
 @{
-    string sitePath = "https://" + Context.Request.Host;
+    string sitePath = Context.Request.Scheme + "://" + Context.Request.Host;
 }
 
-<span class="d-flex col-auto rounded mt-0 shadw" itemscope itemtype="http://schema.org/ImageObject">
+<span class="d-flex col-auto rounded mt-0 block-shadow" itemscope itemtype="http://schema.org/ImageObject">
 
     <meta itemprop="name" content="@Model.ImageItem.ImageCaption" />
 
@@ -62,9 +62,9 @@
         }
         else
         {
-            <vc:view-image image-id="@DataConfig.NoImage"
-                           css-class=@Model.CssClass
-                           icon-type=@Model.IconType />
+            @* Вывод картинки NoImage *@
+            <partial name="_NoImagePartial"
+                     model='@Model.CssClass' />
         }
     }
     else if (Model.IconType == "image")
@@ -117,10 +117,9 @@
         }
         else
         {
-            <vc:view-image 
-                image-id="@DataConfig.NoImage"
-                css-class="@Model.CssClass"
-                icon-type="@Model.IconType" />
+            @* Вывод картинки NoImage *@
+            <partial name="_NoImagePartial"
+                     model='@Model.CssClass' />
         }
     }
     else if (Model.IconType == "webicon300")
@@ -141,7 +140,7 @@
             <meta itemprop="width" content="@Model.ImageItem.WebIconWidth" />
             <meta itemprop="height" content="@Model.ImageItem.WebIconHeight" />
 
-            <img class="maxwidth300px @Model.CssClass"
+            <img class="@Model.CssClass"
                  src="@Model.ImageItem.ImagePath/@Model.ImageItem.WebIconFileName"
                  asp-append-version="true"
                  alt="@Model.ImageItem.ImageAltTitle"
@@ -164,7 +163,7 @@
             <meta itemprop="width" content="@Model.ImageItem.IconWidth" />
             <meta itemprop="height" content="@Model.ImageItem.IconHeight" />
 
-            <img class="maxwidth300px @Model.CssClass"
+            <img class="@Model.CssClass"
                  src="@Model.ImageItem.ImagePath/@Model.ImageItem.IconFileName"
                  asp-append-version="true"
                  alt="@Model.ImageItem.ImageAltTitle"
@@ -173,10 +172,9 @@
         }
         else
         {
-            <vc:view-image 
-                image-id="@DataConfig.NoImage"
-                css-class="@Model.CssClass"
-                icon-type="@Model.IconType" />
+            @* Вывод картинки NoImage *@
+            <partial name="_NoImagePartial"
+                     model='@Model.CssClass' />
         }
     }
     else if (Model.IconType == "icon300")
@@ -229,10 +227,9 @@
         }
         else
         {
-            <vc:view-image 
-                image-id="@DataConfig.NoImage"
-                css-class="@Model.CssClass"
-                icon-type="@Model.IconType" />
+            @* Вывод картинки NoImage *@
+            <partial name="_NoImagePartial"
+                     model='@Model.CssClass' />
         }
     }
     else if (Model.IconType == "webicon200")
@@ -285,10 +282,9 @@
         }
         else
         {
-            <vc:view-image 
-                image-id="@DataConfig.NoImage"
-                css-class="@Model.CssClass"
-                icon-type="@Model.IconType" />
+            @* Вывод картинки NoImage *@
+            <partial name="_NoImagePartial"
+                     model='@Model.CssClass' />
         }
     }
     else if (Model.IconType == "icon200")
@@ -341,10 +337,9 @@
         }
         else
         {
-            <vc:view-image 
-                image-id="@DataConfig.NoImage"
-                css-class="@Model.CssClass"
-                icon-type="@Model.IconType" />
+            @* Вывод картинки NoImage *@
+            <partial name="_NoImagePartial"
+                     model='@Model.CssClass' />
         }
     }
     else if (Model.IconType == "webicon100")
@@ -358,7 +353,7 @@
             <meta itemprop="width" content="@Model.ImageItem.WebIcon100Width" />
             <meta itemprop="height" content="@Model.ImageItem.WebIcon100Height" />
 
-            <img class="maxwidth100px @Model.CssClass"
+            <img class="@Model.CssClass"
                  src="@Model.ImageItem.ImagePath/@Model.ImageItem.WebIcon100FileName"
                  asp-append-version="true"
                  alt="@Model.ImageItem.ImageAltTitle"
@@ -374,7 +369,7 @@
             <meta itemprop="width" content="@Model.ImageItem.Icon100Width" />
             <meta itemprop="height" content="@Model.ImageItem.Icon100Height" />
 
-            <img class="maxwidth100px @Model.CssClass"
+            <img class="@Model.CssClass"
                  src="@Model.ImageItem.ImagePath/@Model.ImageItem.Icon100FileName"
                  asp-append-version="true"
                  alt="@Model.ImageItem.ImageAltTitle"
@@ -383,10 +378,9 @@
         }
         else
         {
-            <vc:view-image 
-                image-id="@DataConfig.NoImage"
-                css-class="@Model.CssClass"
-                icon-type="@Model.IconType" />
+            @* Вывод картинки NoImage *@
+            <partial name="_NoImagePartial"
+                     model='@Model.CssClass' />
         }
     }
     else if (Model.IconType == "icon100")
@@ -425,10 +419,9 @@
         }
         else
         {
-            <vc:view-image 
-                image-id="@DataConfig.NoImage"
-                css-class="@Model.CssClass"
-                icon-type="@Model.IconType" />
+            @* Вывод картинки NoImage *@
+            <partial name="_NoImagePartial"
+                     model='@Model.CssClass' />
         }
     }
     else if (Model.IconType == "webhd")
@@ -481,10 +474,9 @@
         }
         else
         {
-            <vc:view-image 
-                image-id="@DataConfig.NoImage"
-                css-class="@Model.CssClass"
-                icon-type="@Model.IconType" />
+            @* Вывод картинки NoImage *@
+            <partial name="_NoImagePartial"
+                     model='@Model.CssClass' />
         }
     }
     else if (Model.IconType == "hd")
@@ -537,18 +529,16 @@
         }
         else
         {
-            <vc:view-image 
-                image-id="@DataConfig.NoImage"
-                css-class="@Model.CssClass"
-                icon-type="@Model.IconType" />
+            @* Вывод картинки NoImage *@
+            <partial name="_NoImagePartial"
+                     model='@Model.CssClass' />
         }
     }
     else
     {
-        <vc:view-image 
-            image-id="@DataConfig.NoImage"
-            css-class="@Model.CssClass"
-            icon-type="@Model.IconType" />
+        @* Вывод картинки NoImage *@
+        <partial name="_NoImagePartial"
+                 model='@Model.CssClass' />
     }
 
 </span>

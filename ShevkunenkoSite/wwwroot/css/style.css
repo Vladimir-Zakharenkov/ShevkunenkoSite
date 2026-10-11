@@ -12671,7 +12671,7 @@ body {
   -ms-hyphenate-limit-lines: 2; /* -webkit-hyphenate-limit-lines: 2; -moz-hyphenate-limit-lines: 2; -o-hyphenate-limit-lines: 2; hyphenate-limit-lines: 2;*/ /*запрет переноса последнего слова в абзаце */ /*-ms-hyphenate-limit-last: always; -webkit-hyphenate-limit-last: always; -moz-hyphenate-limit-last: always; -o-hyphenate-limit-last: always; hyphenate-limit-last: always;  hyphenate-limit-zone: 8% */
 }
 
-.shadw {
+.block-shadow {
   background: hsl(350, 54%, 98%);
   box-shadow: 0 15px 10px -10px hsla(350, 60%, 0%, 0.5), 0 1px 4px hsla(350, 60%, 0%, 0.3), 0 0 40px hsla(350, 60%, 0%, 0.1) inset;
   border-right: 1px ridge hsl(0, 0%, 40%);
@@ -12680,12 +12680,27 @@ body {
   border-left: 1px ridge hsl(0, 70%, 100%);
 }
 
-.shadw:after {
+.block-shadow:after {
   content: "";
   position: absolute;
   z-index: -2;
 }
 
+@media print {
+  .block-shadow {
+    background: none;
+    box-shadow: none;
+    border-right: none;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+  }
+  .block-shadow:after, .block-shadow:before {
+    content: none;
+    position: relative;
+    z-index: auto;
+  }
+}
 .lay1 {
   position: relative;
   background: hsl(0, 50%, 99%);
@@ -12702,23 +12717,6 @@ body {
   z-index: -2;
 }
 
-@media print {
-  .shadw {
-    background: none;
-    box-shadow: none;
-    border-right: none;
-    border-bottom: none;
-    border-top: none;
-    border-left: none;
-  }
-}
-@media print {
-  .shadw:after, .shadw:before {
-    content: none;
-    position: relative;
-    z-index: auto;
-  }
-}
 .adp90_img {
   width: 90%;
   border-radius: 1rem;
@@ -13006,7 +13004,7 @@ a:active, .dropdown:active {
   text-indent: 1.25rem;
 }
 
-.accordion-body-nointend {
+.text-indent-0 {
   text-indent: 0;
 }
 
@@ -13365,6 +13363,15 @@ li#yandex-search * {
   border-top: 1px solid hsl(0, 60%, 45%);
 }
 
+.nomstr {
+  white-space: nowrap;
+}
+
+.nomstr::before {
+  margin-right: 4px;
+  content: "страница ";
+}
+
 .charst::before {
   margin-right: 4px;
   content: "часть ";
@@ -13586,6 +13593,7 @@ li#yandex-search * {
 /* Боковые колонки — картинки */
 #picturesFromLeft,
 #picturesFromRight {
+  max-height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -13630,6 +13638,17 @@ li#yandex-search * {
 @media (min-width: 1400px) {
   .list-group {
     --chapter-label-width: 90px;
+  }
+}
+/* xs — по умолчанию */
+.max-width-40-60 {
+  max-width: 40px;
+}
+
+/* md: ≥768px */
+@media (min-width: 768px) {
+  .max-width-40-60 {
+    max-width: 60px;
   }
 }
 .note {

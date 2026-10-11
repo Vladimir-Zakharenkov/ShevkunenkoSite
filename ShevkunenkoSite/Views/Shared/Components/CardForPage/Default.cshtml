@@ -6,7 +6,7 @@
 
 <div class="col">
 
-    <div class="card shadw rounded-3 cardborder">
+    <div class="card block-shadow rounded-3 cardborder">
 
         @if (Context.Request.Path.ToString().Contains("details")
         || Context.Request.Path.ToString().Contains("update")
@@ -151,16 +151,16 @@
 
                     </span>
 
-                    <vc:view-image image-id="@Model.ImageFileModel!.ImageFileModelId" css-class="card-img-top shadw rounded-3" icon-type="webicon300" />
+                    <vc:view-image image-id="@Model.ImageFileModel!.ImageFileModelId" css-class="card-img-top block-shadow rounded-3" icon-type="webicon300" />
                 }
                 else
                 {
-                    <vc:view-image image-id="@Model.ImageFileModel!.ImageFileModelId" css-class="card-img-top shadw rounded-3" icon-type="webicon300" />
+                    <vc:view-image image-id="@Model.ImageFileModel!.ImageFileModelId" css-class="card-img-top block-shadow rounded-3" icon-type="webicon300" />
                 }
 
                 @if (!string.IsNullOrEmpty(Model.PageCardText))
                 {
-                    <div class="d-none d-md-block card-body p-0 mt-2 shadw cardBodyBg">
+                    <div class="d-none d-md-block card-body p-0 mt-2 block-shadow cardBodyBg">
 
                         <p class="card-title lh-1 fontadaptive my-1 mt-2">@Model.PageCardText</p>
 
@@ -302,16 +302,16 @@
 
                     </span>
 
-                    <vc:view-image image-id="@Model.ImageFileModel!.ImageFileModelId" css-class="card-img-top shadw rounded-3" icon-type="webicon300" />
+                    <vc:view-image image-id="@Model.ImageFileModel!.ImageFileModelId" css-class="card-img-top block-shadow rounded-3" icon-type="webicon300" />
                 }
                 else
                 {
-                    <vc:view-image image-id="@Model.ImageFileModel!.ImageFileModelId" css-class="card-img-top shadw rounded-3" icon-type="webicon300" />
+                    <vc:view-image image-id="@Model.ImageFileModel!.ImageFileModelId" css-class="card-img-top block-shadow rounded-3" icon-type="webicon300" />
                 }
 
                 @if (!string.IsNullOrEmpty(Model.PageCardText))
                 {
-                    <div class="d-none d-md-block card-body p-0 mt-2 shadw cardBodyBg">
+                    <div class="d-none d-md-block card-body p-0 mt-2 block-shadow cardBodyBg">
 
                         <p class="card-title lh-1 fontadaptive my-1 mt-2">@Model.PageCardText</p>
 

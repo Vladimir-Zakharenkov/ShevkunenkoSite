@@ -227,6 +227,7 @@
 /* Боковые колонки — картинки */
 #picturesFromLeft,
 #picturesFromRight {
+    max-height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -273,6 +274,20 @@
 @media (min-width: 1400px) {
     .list-group {
         --chapter-label-width: 90px;
+    }
+}
+// ------------------------------------------
+
+// Размер иконок текст, аудио, принтер
+/* xs — по умолчанию */
+.max-width-40-60 {
+    max-width: 40px;
+}
+
+/* md: ≥768px */
+@media (min-width: 768px) {
+    .max-width-40-60 {
+        max-width: 60px;
     }
 }
 // ------------------------------------------

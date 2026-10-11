@@ -6,7 +6,7 @@
 
 <div class="col">
 
-    <div class="card shadw rounded-3 cardborder" title="@Model.PageTitle">
+    <div class="card block-shadow rounded-3 cardborder" title="@Model.PageTitle">
 
         <a class="rounded-3" href="@Url.Content(Model.PageFullPathWithData)" title="@Model.PageTitle" itemprop="url">
 
@@ -140,16 +140,16 @@
 
                 </span>
 
-                <vc:view-image image-id="@Model.ImageFileModel!.ImageFileModelId" css-class="card-img-top shadw rounded-3" icon-type="webicon300" />
+                <vc:view-image image-id="@Model.ImageFileModel!.ImageFileModelId" css-class="card-img-top block-shadow rounded-3" icon-type="webicon300" />
             }
             else
             {
-                <vc:view-image image-id="@Model.ImageFileModel!.ImageFileModelId" css-class="card-img-top shadw rounded-3" icon-type="webicon300" />
+                <vc:view-image image-id="@Model.ImageFileModel!.ImageFileModelId" css-class="card-img-top block-shadow rounded-3" icon-type="webicon300" />
             }
 
             @if (!string.IsNullOrEmpty(Model.PageCardText))
             {
-                <div class="card-body p-0 mt-2 shadw cardBodyBg">
+                <div class="card-body p-0 mt-2 block-shadow cardBodyBg">
 
                     <p class="card-title lh-1 fontadaptive my-1 mt-2">@Model.PageCardText</p>
 

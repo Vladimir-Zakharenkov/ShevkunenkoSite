@@ -44,7 +44,7 @@ else
 <div class="row row-cols-2 text-start ps-1 ps-md-5">
 
     <div class="col-2">
-        <a class="btn btn-outline-danger px-2 py-1 shadw"
+        <a class="btn btn-outline-danger px-2 py-1 block-shadow"
            asp-area="Admin"
            asp-controller="TopicMovie"
            asp-action="AddTopicMovie"
@@ -58,7 +58,7 @@ else
         <form method="get" asp-area="Admin" asp-controller="TopicMovie" asp-action="Index">
 
             <input type="text" class="me-2" asp-for="TopicMovieSearchString" />
-            <input type="submit" value="Поиск" class="btn btn-outline-success py-1 mb-1 shadw" title="поиск тем" />
+            <input type="submit" value="Поиск" class="btn btn-outline-success py-1 mb-1 block-shadow" title="поиск тем" />
 
         </form>
 
@@ -91,7 +91,7 @@ else
 
 <div class="row">
 
-    <div class="col m-1 shadw">
+    <div class="col m-1 block-shadow">
 
         <div class="table-responsive">
 
@@ -121,7 +121,7 @@ else
                             <td scope="col" class="text-start text_shadow">@topic.TopicDescription</td>
 
                             <td scope="col" title="Информация">
-                                <a class="btn btn-outline-primary py-1 px-1 shadw"
+                                <a class="btn btn-outline-primary py-1 px-1 block-shadow"
                                    asp-area="Admin"
                                    asp-controller="TopicMovie"
                                    asp-action="DetailsTopicMovie"
@@ -132,7 +132,7 @@ else
                             </td>
 
                             <td scope="col" title="Редактировать">
-                                <a class="btn btn-outline-success py-1 px-1 shadw"
+                                <a class="btn btn-outline-success py-1 px-1 block-shadow"
                                    asp-area="Admin"
                                    asp-controller="TopicMovie"
                                    asp-action="EditTopicMovie"
@@ -143,7 +143,7 @@ else
                             </td>
 
                             <td scope="col" title="Удалить">
-                                <a class="btn btn-outline-danger py-1 px-1 shadw"
+                                <a class="btn btn-outline-danger py-1 px-1 block-shadow"
                                    asp-area="Admin"
                                    asp-controller="TopicMovie"
                                    asp-action="DeleteTopicMovie"
@@ -154,7 +154,7 @@ else
                             </td>
 
                             <td scope="col" title="Смотреть">
-                                <a class="btn btn-outline-primary py-1 px-1 shadw"
+                                <a class="btn btn-outline-primary py-1 px-1 block-shadow"
                                    asp-area=""
                                    asp-controller="AllVideo"
                                    asp-action="Index"

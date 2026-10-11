@@ -1,7 +1,7 @@
 ﻿@model ItemsListViewModel
 
 @{
-    string btn = "btn py-0 px-1 mb-2 ms-1 shadw width50px";
+    string btn = "btn py-0 px-1 mb-2 ms-1 block-shadow width50px";
 }
 
 @* Значение строки поиска *@
@@ -69,7 +69,7 @@
         <a asp-area="Admin"
            asp-controller="Films"
            asp-action="AddFilm"
-           class="btn btn-outline-danger shadw py-1 mt-2 me-3 minwidth100px"
+           class="btn btn-outline-danger block-shadow py-1 mt-2 me-3 minwidth100px"
            title="добавить фильм">
 
             Добавить
@@ -82,7 +82,7 @@
            asp-action="Index"
            asp-route-searchString="@Model.SearchString"
            asp-route-pageCard="true"
-           class="btn btn-outline-primary shadw py-1 mt-2 minwidth100px"
+           class="btn btn-outline-primary block-shadow py-1 mt-2 minwidth100px"
            title="иконки фильмов">
 
             Иконки
@@ -107,7 +107,7 @@
                    class="d-inline-block align-middle mt-1 w-50"
                    type="text" />
 
-            <input class="btn btn-outline-success shadw py-1 me-md-3"
+            <input class="btn btn-outline-success block-shadow py-1 me-md-3"
                    type="submit"
                    value="Поиск"
                    title="поиск фильмов" />

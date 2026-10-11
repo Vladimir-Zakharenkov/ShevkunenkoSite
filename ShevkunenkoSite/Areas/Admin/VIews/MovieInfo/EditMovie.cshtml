@@ -66,7 +66,7 @@
                     <div class="accordion" id="accordionEditMovie">
 
                         @* файл фильма *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* заголовок группы «файл фильма» *@
                             <h2 class="accordion-header" id="headingFilmFile">
@@ -78,7 +78,7 @@
                             <div id="FilmFile" class="accordion-collapse collapse" aria-labelledby="headingFilmFile" data-bs-parent="#accordionEditMovie">
 
                                 @* название файла фильма *@
-                                <div class="accordion-body accordion-body-nointend text-center">
+                                <div class="accordion-body text-indent-0 text-center">
 
                                     @if (Context.Request.Method == "GET")
                                     {
@@ -124,7 +124,7 @@
                         </div>
 
                         @* полная версия фильма *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* заголовок группы «полная версия фильма» *@
                             <h2 class="accordion-header" id="headingFullFilm">
@@ -176,7 +176,7 @@
                         </div>
 
                         @* страница фильма *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* заголовок группы «страница фильма» *@
                             <h2 class="accordion-header" id="headingFilmPage">
@@ -206,7 +206,7 @@
                         </div>
 
                         @* картинка фильма *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* заголовок группы «картинка фильма» *@
                             <h2 class="accordion-header" id="headingFilmImage">
@@ -223,7 +223,7 @@
                                     @if (Model.MovieItem.ImageFileModelId != null)
                                     {
                                         <vc:view-image image-id="@Model.MovieItem.ImageFileModelId"
-                                                       css-class="card-img-top m-2 width50percent shadw"
+                                                       css-class="card-img-top m-2 width50percent block-shadow"
                                                        icon-type="webimage" />
 
                                         if (!string.IsNullOrEmpty(Model.MovieItem.ImageFileModel?.WebImageFileName))
@@ -270,7 +270,7 @@
                         </div>
 
                         @* постер фильма *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* заголовок группы *@
                             <h2 class="accordion-header" id="headingFilmPoster">
@@ -287,7 +287,7 @@
                                     @if (Model.PosterForMovie != null)
                                     {
                                         <vc:view-image image-id="@Model.PosterForMovie.ImageFileModelId"
-                                                       css-class="card-img-top m-2 width50percent shadw"
+                                                       css-class="card-img-top m-2 width50percent block-shadow"
                                                        icon-type="webimage" />
 
                                         if (!string.IsNullOrEmpty(Model.PosterForMovie.WebImageFileName))
@@ -334,7 +334,7 @@
                         </div>
 
                         @* данные многосерийного фильма *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* заголовок группы *@
                             <h2 class="accordion-header" id="headingSeries">
@@ -345,7 +345,7 @@
 
                             <div id="FilmSeries" class="accordion-collapse collapse" aria-labelledby="headingSeries" data-bs-parent="#accordionEditMovie">
 
-                                <div class="accordion-body accordion-body-nointend text-center">
+                                <div class="accordion-body text-indent-0 text-center">
 
                                     @* текст поиска всех серий *@
                                     <div class="mb-3">
@@ -410,7 +410,7 @@
                                             <h2 class="fs-4 text_shadow mt-1">Картинка страницы серий</h2>
 
                                             <vc:view-image image-id="@Model.MovieItem.ImageForHeadSeriesId"
-                                                           css-class="card-img-top m-2 width50percent shadw"
+                                                           css-class="card-img-top m-2 width50percent block-shadow"
                                                            icon-type="webimage" />
 
                                             if (Model.MovieItem.ImageForHeadSeries is not null)
@@ -503,7 +503,7 @@
                         </div>
 
                         @* заголовок, описание, лента кадров *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* заголовок группы *@
                             <h2 class="accordion-header" id="headingDescription">
@@ -514,7 +514,7 @@
 
                             <div id="FilmDescription" class="accordion-collapse collapse" aria-labelledby="headingDescription" data-bs-parent="#accordionEditMovie">
 
-                                <div class="accordion-body accordion-body-nointend text-center">
+                                <div class="accordion-body text-indent-0 text-center">
 
                                     <label asp-for="MovieItem.MovieCaption" class="form-label text-primary fs-5"></label>
                                     <input id="MovieCaptionInput" class="form-control text-center" asp-for="MovieItem.MovieCaption" aria-describedby="MovieCaptionInputHelpBlock" />
@@ -585,7 +585,7 @@
                         </div>
 
                         @* даты фильма *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* заголовок группы *@
                             <h2 class="accordion-header" id="headingDate">
@@ -596,7 +596,7 @@
 
                             <div id="FilmDate" class="accordion-collapse collapse" aria-labelledby="headingDate" data-bs-parent="#accordionEditMovie">
 
-                                <div class="accordion-body accordion-body-nointend text-center">
+                                <div class="accordion-body text-indent-0 text-center">
 
                                     @* дата примьеры фильма *@
                                     <div class="row g-2 justify-content-center">
@@ -665,7 +665,7 @@
                         </div>
 
                         @* фильтры поиска *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* заголовок группы «Жанр, фильтры поиска, тема» *@
                             <h2 class="accordion-header" id="headingSearch">
@@ -676,7 +676,7 @@
 
                             <div id="Search" class="accordion-collapse collapse" aria-labelledby="headingSearch" data-bs-parent="#accordionEditMovie">
 
-                                <div class="accordion-body accordion-body-nointend text-center">
+                                <div class="accordion-body text-indent-0 text-center">
 
                                     @* жанр фильма *@
                                     <label asp-for="MovieItem.MovieGenre" class="col-form-label text-primary fs-5 me-2"></label>
@@ -756,7 +756,7 @@
                         </div>
 
                         @* ограничения по возрасту *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* заголовок группы «ограничения по возрасту» *@
                             <h2 class="accordion-header" id="headingRestrict">
@@ -767,7 +767,7 @@
 
                             <div id="Restrict" class="accordion-collapse collapse" aria-labelledby="headingRestrict" data-bs-parent="#accordionEditMovie">
 
-                                <div class="accordion-body accordion-body-nointend text-center">
+                                <div class="accordion-body text-indent-0 text-center">
 
                                     @* фильм для взрослых *@
                                     <label asp-for="MovieItem.MovieAdult" class="col-form-label text-primary fs-5 me-2"></label>
@@ -786,7 +786,7 @@
                         </div>
 
                         @* в списке фильмов сайта *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* заголовок группы «в списке фильмов сайта» *@
                             <h2 class="accordion-header" id="headingInMainLisst">
@@ -797,7 +797,7 @@
 
                             <div id="InMainList" class="accordion-collapse collapse" aria-labelledby="headingInMainList" data-bs-parent="#accordionEditMovie">
 
-                                <div class="accordion-body accordion-body-nointend text-center">
+                                <div class="accordion-body text-indent-0 text-center">
 
                                     <label asp-for="MovieItem.MovieInMainList" class="col-form-label text-primary fs-5 me-2"></label>
 
@@ -815,7 +815,7 @@
                         </div>
 
                         @* язык и субтитры фильма *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* заголовок группы «язык и субтитры фильма» *@
                             <h2 class="accordion-header" id="headingLanguage">
@@ -826,7 +826,7 @@
 
                             <div id="FilmLanguage" class="accordion-collapse collapse" aria-labelledby="headingLanguage" data-bs-parent="#accordionEditMovie">
 
-                                <div class="accordion-body accordion-body-nointend text-center">
+                                <div class="accordion-body text-indent-0 text-center">
 
                                     <div class="row g-2 justify-content-center">
 
@@ -930,7 +930,7 @@
                         </div>
 
                         @* съёмочная группа фильма *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* заголовок группы «съёмочная группа фильма» *@
                             <h2 class="accordion-header" id="headingFilmCrew">
@@ -941,7 +941,7 @@
 
                             <div id="FilmCrew" class="accordion-collapse collapse" aria-labelledby="headingFilmCrew" data-bs-parent="#accordionEditMovie">
 
-                                <div class="accordion-body accordion-body-nointend text-center">
+                                <div class="accordion-body text-indent-0 text-center">
 
                                     <div class="row g-2 justify-content-center">
 
@@ -1164,7 +1164,7 @@
                         </div>
 
                         @* ссылки на фильм *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* заголовок группы «ссылки на фильм» *@
                             <h2 class="accordion-header" id="headingRef">
@@ -1226,7 +1226,7 @@
                         </div>
 
                         @* ссылки на информацию о фильме *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* заголовок группы «ссылки на информацию» *@
                             <h2 class="accordion-header" id="headingInfoRef">
@@ -1267,7 +1267,7 @@
                         </div>
 
                         @* блоки ссылок под видео *@
-                        <div class="accordion-item shadw">
+                        <div class="accordion-item block-shadow">
 
                             @* заголовок группы «блоки ссылок под видео» *@
                             <h2 class="accordion-header" id="headingAddLinks">
@@ -1279,7 +1279,7 @@
                             <div id="accordionLinks" class="accordion-collapse collapse mt-2 ms-sm-2" aria-labelledby="headingInfoRef" data-bs-parent="#accordionEditMovie">
 
                                 @* Фотокарусель *@
-                                <div class="accordion-item mb-3 shadw mt-3 ms-5">
+                                <div class="accordion-item mb-3 block-shadow mt-3 ms-5">
 
                                     @* Заголовок группы «Фотокарусель» *@
                                     <h2 class="accordion-header" id="FotoCarousel">
@@ -1322,7 +1322,7 @@
                                 </div>
 
                                 @* Блок ссылок под видео 1 *@
-                                <div class="accordion-item mb-3 shadw ms-5">
+                                <div class="accordion-item mb-3 block-shadow ms-5">
 
                                     @* заголовок группы «Блок ссылок под видео 1» *@
                                     <h2 class="accordion-header" id="headingAddLinks1">
@@ -1458,7 +1458,7 @@
                                 </div>
 
                                 @* Блок ссылок под видео 2 *@
-                                <div class="accordion-item mb-3 shadw ms-5">
+                                <div class="accordion-item mb-3 block-shadow ms-5">
 
                                     @* заголовок группы «Блок ссылок под видео 2» *@
                                     <h2 class="accordion-header" id="headingAddLinks2">
@@ -1594,7 +1594,7 @@
                                 </div>
 
                                 @* Блок ссылок под видео 3 *@
-                                <div class="accordion-item mb-3 shadw ms-5">
+                                <div class="accordion-item mb-3 block-shadow ms-5">
 
                                     @* заголовок группы «Блок ссылок под видео 3» *@
                                     <h2 class="accordion-header" id="headingAddLinks3">
@@ -1730,7 +1730,7 @@
                                 </div>
 
                                 @* Статья о видео 1*@
-                                <div class="accordion-item mb-3 shadw ms-5">
+                                <div class="accordion-item mb-3 block-shadow ms-5">
 
                                     @* заголовок группы «Статья о видео 1» *@
                                     <h2 class="accordion-header" id="headingArticle1AboutMovie">
@@ -1801,9 +1801,9 @@
                     @* Сохранить - Отменить исправления *@
                     <div class="card-footer p-2">
 
-                        <button type="submit" class="btn btn-outline-success m-2 text-center shadw" title="сохранить изменения">Сохранить</button>
+                        <button type="submit" class="btn btn-outline-success m-2 text-center block-shadow" title="сохранить изменения">Сохранить</button>
 
-                        <a class="btn btn-outline-danger m-2 shadw"
+                        <a class="btn btn-outline-danger m-2 block-shadow"
                            asp-area="Admin"
                            asp-controller="MovieInfo"
                            asp-action="Index"

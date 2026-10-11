@@ -2,7 +2,7 @@
 
 <div class="col maxwidth300px rounded-3 cardborder my-2">
 
-    <div class="card shadw rounded-3" title="@Model.PageTitle">
+    <div class="card block-shadow rounded-3" title="@Model.PageTitle">
 
         @if (Model.OgType == "movie" && Model.MovieFile != null)
         {
@@ -36,19 +36,19 @@
                 @if (Model.ImageFileModel != null)
                 {
                     <vc:view-image image-id="@Model.ImageFileModel.ImageFileModelId"
-                                   css-class="card-img-top shadw rounded-3"
+                                   css-class="card-img-top block-shadow rounded-3"
                                    icon-type="webicon300" />
                 }
                 else
                 {
                     <vc:view-image image-id="@DataConfig.NoImage"
-                                   css-class="card-img-top shadw rounded-3"
+                                   css-class="card-img-top block-shadow rounded-3"
                                    icon-type="webicon300" />
                 }
 
                 @if (!string.IsNullOrEmpty(Model.PageCardText))
                 {
-                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 shadw cardBodyBg">
+                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mt-md-2 block-shadow cardBodyBg">
 
                         <p class="card-title p-0 mb-0 fw-medium fontadaptive">
 
@@ -71,19 +71,19 @@
                 @if (Model.ImageFileModel != null)
                 {
                     <vc:view-image image-id="@Model.ImageFileModel.ImageFileModelId"
-                                   css-class="card-img-top shadw rounded-3"
+                                   css-class="card-img-top block-shadow rounded-3"
                                    icon-type="webicon300" />
                 }
                 else
                 {
                     <vc:view-image image-id="@DataConfig.NoImage"
-                                   css-class="card-img-top shadw rounded-3"
+                                   css-class="card-img-top block-shadow rounded-3"
                                    icon-type="webicon300" />
                 }
 
                 @if (!string.IsNullOrEmpty(Model.PageCardText))
                 {
-                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mb-1 shadw cardBodyBg">
+                    <div class="d-none d-sm-block card-body rounded-2 p-0 mt-1 mb-1 block-shadow cardBodyBg">
 
                         <p class="card-title p-0 py-1 mb-0 fw-medium fontadaptive">
 

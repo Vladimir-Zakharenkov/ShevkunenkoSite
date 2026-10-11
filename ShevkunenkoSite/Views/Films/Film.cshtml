@@ -17,7 +17,7 @@
          model='(@Model.FilmCaption, "H1")' />
 
 @* Общий блок *@
-<div id="filmView" class="row bg-secondary-subtle py-2 shadw">
+<div id="filmView" class="row bg-secondary-subtle py-2 block-shadow">
 
     @* Кадры слева *@
     <div id="picturesFromLeft" class="d-none d-md-block col-md-2 ">
@@ -33,7 +33,7 @@
                title="@item.ImageAltTitle">
 
                 <vc:view-image image-id="@item.ImageFileModelId"
-                               css-class="my-2 w-100 shadw imageref"
+                               css-class="my-2 w-100 block-shadow imageref"
                                icon-type="webicon200" />
 
             </a>
@@ -42,11 +42,11 @@
     </div>
 
     @* Видео *@
-    <div id="blockForAllOptions" class="col-12 col-md-8 mb-3 shadw no-ads-zone">
+    <div id="blockForAllOptions" class="col-12 col-md-8 mb-3 block-shadow no-ads-zone">
 
         <div id="videoBlockRow" class="row">
 
-            <div id="videoBlockCols" class="col-12 p-0 p-sm-1 p-xl-2 shadw">
+            <div id="videoBlockCols" class="col-12 p-0 p-sm-1 p-xl-2 block-shadow">
 
                 @* Данные http://schema.org/VideoObject  *@
                 <partial name="_FilmSchemaOrgPartial" model="@Model" />
@@ -75,7 +75,8 @@
 
                         </video>
 
-                        <script src="https://vjs.zencdn.net/8.23.7/video.min.js"></script>
+                        @* <script src="https://vjs.zencdn.net/8.23.7/video.min.js"></script> *@
+                        <script src="~/js/8-23-7-video.js"></script>
 
                         <script>
                                                 var player = videojs('playerId', {
@@ -100,9 +101,9 @@
                 <div id="listUnderScreen" class="accordion mb-2 p-1">
 
                     @* Описание фильма *@
-                    <div id="aboutFilm" class="accordion-item shadw">
+                    <div id="aboutFilm" class="accordion-item block-shadow">
 
-                        <h2 id="headingAboutFilm" class="accordion-header shadw">
+                        <h2 id="headingAboutFilm" class="accordion-header block-shadow">
 
                             <button class="accordion-button collapsed p-1 stranicy"
                                     type="button"
@@ -141,9 +142,9 @@
                     </div>
 
                     @* Выбрать видеохостинг *@
-                    <div id="chooseHost" class="accordion-item shadw mt-3">
+                    <div id="chooseHost" class="accordion-item block-shadow mt-3">
 
-                        <h2 id="headingChooseHost" class="accordion-header shadw">
+                        <h2 id="headingChooseHost" class="accordion-header block-shadow">
 
                             <button class="accordion-button collapsed p-1 stranicy"
                                     type="button"
@@ -203,7 +204,7 @@
                              aria-labelledby="headingChooseHost"
                              data-bs-parent="#listUnderScreen">
 
-                            <div id="accordionBodyChooseHost" class="accordion-body accordion-body-nointend">
+                            <div id="accordionBodyChooseHost" class="accordion-body text-indent-0">
 
                                 <div id="hostOptions" class="row row-cols-3 g-1 g-sm-2 justify-content-center">
 
@@ -215,7 +216,7 @@
                                        asp-route-host="yt">
 
                                         <vc:view-image image-id="@DataConfig.YoutubeImage"
-                                                       css-class="col shadw imageref @(Context.Request.QueryString.ToString().Contains("yt", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
+                                                       css-class="col block-shadow imageref @(Context.Request.QueryString.ToString().Contains("yt", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
                                                        icon-type="webicon300" />
 
                                     </a>
@@ -228,7 +229,7 @@
                                        asp-route-host="vk">
 
                                         <vc:view-image image-id="@DataConfig.VkVideoImage"
-                                                       css-class="col shadw imageref @(Context.Request.QueryString.ToString().Contains("vk", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
+                                                       css-class="col block-shadow imageref @(Context.Request.QueryString.ToString().Contains("vk", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
                                                        icon-type="webicon300" />
 
                                     </a>
@@ -241,7 +242,7 @@
                                        asp-route-host="ml">
 
                                         <vc:view-image image-id="@DataConfig.MailRuVideoImage"
-                                                       css-class="col shadw imageref @(Context.Request.QueryString.ToString().Contains("ml", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
+                                                       css-class="col block-shadow imageref @(Context.Request.QueryString.ToString().Contains("ml", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
                                                        icon-type="webicon300" />
 
                                     </a>
@@ -254,7 +255,7 @@
                                        asp-route-host="ok">
 
                                         <vc:view-image image-id="@DataConfig.OkVideoImage"
-                                                       css-class="col shadw imageref @(Context.Request.QueryString.ToString().Contains("ok", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
+                                                       css-class="col block-shadow imageref @(Context.Request.QueryString.ToString().Contains("ok", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
                                                        icon-type="webicon300" />
 
                                     </a>
@@ -267,7 +268,7 @@
                                        asp-route-host="ss">
 
                                         <vc:view-image image-id="@DataConfig.AsusVideoImage"
-                                                       css-class="col shadw imageref @(Context.Request.QueryString.ToString().Contains("ss", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
+                                                       css-class="col block-shadow imageref @(Context.Request.QueryString.ToString().Contains("ss", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
                                                        icon-type="webicon300" />
 
                                     </a>
@@ -279,7 +280,7 @@
                                        asp-route-filmFileName="@Model.FilmFileName">
 
                                         <vc:view-image image-id="@DataConfig.DownloadFilmImage"
-                                                       css-class="col shadw imageref"
+                                                       css-class="col block-shadow imageref"
                                                        icon-type="webicon300" />
 
                                     </a>
@@ -293,9 +294,9 @@
                     </div>
 
                     @* Информация о фильме *@
-                    <div id="internerInfo" class="@((Model.FilmKinoTeatrRu != null || Model.FilmKinoPoisk != null || Model.FilmImbd != null) ? "accordion-item shadw mt-3" : "d-none")">
+                    <div id="internerInfo" class="@((Model.FilmKinoTeatrRu != null || Model.FilmKinoPoisk != null || Model.FilmImbd != null) ? "accordion-item block-shadow mt-3" : "d-none")">
 
-                        <h2 id="headingInternerInfo" class="accordion-header shadw">
+                        <h2 id="headingInternerInfo" class="accordion-header block-shadow">
 
                             <button class="accordion-button collapsed p-1 stranicy"
                                     type="button"
@@ -348,7 +349,7 @@
                                     <a onClick="this.target='_blank'" href="@Model.FilmKinoTeatrRu">
 
                                         <vc:view-image image-id="@DataConfig.KinoTeatrImage"
-                                                       css-class="col-12 shadw imageref"
+                                                       css-class="col-12 block-shadow imageref"
                                                        icon-type="webicon300" />
 
                                     </a>
@@ -357,7 +358,7 @@
                                     <a onClick="this.target='_blank'" href="@Model.FilmKinoPoisk">
 
                                         <vc:view-image image-id="@DataConfig.KinopoiskImage"
-                                                       css-class="col-12 shadw imageref"
+                                                       css-class="col-12 block-shadow imageref"
                                                        icon-type="webicon300" />
 
                                     </a>
@@ -366,7 +367,7 @@
                                     <a onClick="this.target='_blank'" href="@Model.FilmImbd">
 
                                         <vc:view-image image-id="@DataConfig.ImdbImage"
-                                                       css-class="col-12 shadw imageref"
+                                                       css-class="col-12 block-shadow imageref"
                                                        icon-type="webicon300" />
 
                                     </a>
@@ -380,9 +381,9 @@
                     </div>
 
                     @* Полная версия фильма *@
-                    <div id="fullVersion" class="@(Model.FullFilmId != null ? "accordion-item shadw mt-3" : "d-none")">
+                    <div id="fullVersion" class="@(Model.FullFilmId != null ? "accordion-item block-shadow mt-3" : "d-none")">
 
-                        <h2 id="headingfullVersion" class="accordion-header shadw">
+                        <h2 id="headingfullVersion" class="accordion-header block-shadow">
 
                             <button class="accordion-button collapsed p-1 stranicy"
                                     type="button"
@@ -419,7 +420,7 @@
                              aria-labelledby="headingfullVersion"
                              data-bs-parent="#listUnderScreen">
 
-                            <div id="accordionBodyFullVersion" class="accordion-body accordion-body-nointend bg-info mt-1">
+                            <div id="accordionBodyFullVersion" class="accordion-body text-indent-0 bg-info mt-1">
 
                                 <div id="accordionBodyFullVersion" class="accordion-body text-center">
 
@@ -437,10 +438,10 @@
                     </div>
 
                     @* Кадры фильма *@
-                    <div id="filmStills" class="@((Model.ListOfPictures != null && Model.ListOfPictures.Count > 0) ? "accordion-item shadw mt-3" : "d-none")">
+                    <div id="filmStills" class="@((Model.ListOfPictures != null && Model.ListOfPictures.Count > 0) ? "accordion-item block-shadow mt-3" : "d-none")">
 
                         @* заголовок группы «кадры фильма» *@
-                        <h2 id="headingfilmStills" class="accordion-header shadw">
+                        <h2 id="headingfilmStills" class="accordion-header block-shadow">
 
                             <button class="accordion-button collapsed p-1 stranicy"
                                     type="button"
@@ -503,7 +504,7 @@
                                                class="col w-auto rounded-3 text-center">
 
                                                 <vc:view-image image-id="@item.ImageFileModelId.ToString()"
-                                                               css-class="rounded-3 shadw imageref"
+                                                               css-class="rounded-3 block-shadow imageref"
                                                                icon-type="webicon100" />
                                             </a>
                                         }
@@ -539,7 +540,7 @@
                title="@item.ImageAltTitle">
 
                 <vc:view-image image-id="@item.ImageFileModelId"
-                               css-class="my-2 w-100 shadw imageref"
+                               css-class="my-2 w-100 block-shadow imageref"
                                icon-type="webicon200" />
 
             </a>

@@ -9,7 +9,7 @@ public class BooksAndArticlesModel
     [Key]
     [Display(Name = "Идентификатор :")]
     [Column("BooksArticlesId")]
-    public Guid BooksAndArticlesModelId { get; set; } = Guid.Empty;
+    public Guid BooksAndArticlesModelId { get; set; }
 
     #endregion
     
@@ -147,7 +147,7 @@ public class BooksAndArticlesModel
 
     #region Теги по содержанию книги (статьи)
 
-    [Required(ErrorMessage = "Добавте теги")]
+    [Required(ErrorMessage = "Добавьте теги")]
     [DisplayFormat(ConvertEmptyStringToNull = false)]
     [DataType(DataType.Text)]
     [Display(Name = "Теги по содержанию :")]

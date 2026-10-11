@@ -32,7 +32,7 @@
     @* Видео *@
     <div class="col-sm-12 col-md w-100 mb-3">
 
-        <div class="col-12 p-0 p-sm-1 p-xl-2 mb-3 shadw">
+        <div class="col-12 p-0 p-sm-1 p-xl-2 mb-3 block-shadow">
 
             @* Данные http://schema.org/VideoObject  *@
             <span itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
@@ -211,7 +211,7 @@
             <div id="movieDescription" class="accordion mt-4 mb-2 p-1">
 
                 @* Описание фильма *@
-                <div class="accordion-item shadw">
+                <div class="accordion-item block-shadow">
 
                     <h2 id="heading1" class="accordion-header">
                         <button class="accordion-button collapsed p-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
@@ -232,7 +232,7 @@
                 </div>
 
                 @* Выбрать видеохостинг *@
-                <div class="accordion-item shadw mt-3">
+                <div class="accordion-item block-shadow mt-3">
 
                     @* Заголовок вкладки*@
                     <h2 id="heading2" class="accordion-header">
@@ -271,7 +271,7 @@
 
                     <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#movieDescription">
 
-                        <div class="accordion-body accordion-body-nointend">
+                        <div class="accordion-body text-indent-0">
 
                             <div class="row row-cols-3 g-1 g-sm-2 justify-content-center">
 
@@ -283,7 +283,7 @@
                                    asp-route-videohosting="@Model.MovieFile.MovieYouTube">
 
                                     <vc:view-image image-id="454a9adb-58d7-4cd2-8b78-08db0babccab"
-                                                   css-class="col shadw imageref @(Context.Request.QueryString.ToString().Contains("youtube", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
+                                                   css-class="col block-shadow imageref @(Context.Request.QueryString.ToString().Contains("youtube", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
                                                    icon-type="webicon300" />
 
                                 </a>
@@ -296,7 +296,7 @@
                                    asp-route-videohosting="@Model.MovieFile.MovieVkVideo">
 
                                     <vc:view-image image-id="3dc5ea15-b873-4f01-b103-08db0baedb98"
-                                                   css-class="col shadw imageref @(Context.Request.QueryString.ToString().Contains("vk", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
+                                                   css-class="col block-shadow imageref @(Context.Request.QueryString.ToString().Contains("vk", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
                                                    icon-type="webicon300" />
 
                                 </a>
@@ -309,7 +309,7 @@
                                    asp-route-videohosting="@Model.MovieFile.MovieMailRuVideo">
 
                                     <vc:view-image image-id="1e1619fc-50a5-4afa-58ea-08db0bafe8f2"
-                                                   css-class="col shadw imageref @(Context.Request.QueryString.ToString().Contains("mail.", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
+                                                   css-class="col block-shadow imageref @(Context.Request.QueryString.ToString().Contains("mail.", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
                                                    icon-type="webicon300" />
 
                                 </a>
@@ -322,7 +322,7 @@
                                    asp-route-videohosting="@Model.MovieFile.MovieOkVideo">
 
                                     <vc:view-image image-id="78ea8336-1037-470b-d6dd-08db0bb1124f"
-                                                   css-class="col shadw imageref @(Context.Request.QueryString.ToString().Contains("ok.", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
+                                                   css-class="col block-shadow imageref @(Context.Request.QueryString.ToString().Contains("ok.", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
                                                    icon-type="webicon300" />
 
                                 </a>
@@ -335,7 +335,7 @@
                                    asp-route-videohosting="@Model.MovieFile.MovieContentUrl">
 
                                     <vc:view-image image-id="dedf73e6-ad9a-456b-d279-08db0c783914"
-                                                   css-class="col shadw imageref @(Context.Request.QueryString.ToString().Contains("sergeyshef.ru", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
+                                                   css-class="col block-shadow imageref @(Context.Request.QueryString.ToString().Contains("sergeyshef.ru", StringComparison.InvariantCultureIgnoreCase) ? "setimage_border" : string.Empty)"
                                                    icon-type="webicon300" />
 
                                 </a>
@@ -344,7 +344,7 @@
                                 <a onClick="this.target='_blank'" href="@Model.MovieFile.MovieYandexDiskVideo">
 
                                     <vc:view-image image-id="4c047241-d660-41fd-b7d5-08db0bad8e49"
-                                                   css-class="col shadw imageref"
+                                                   css-class="col block-shadow imageref"
                                                    icon-type="webicon300" />
 
                                 </a>
@@ -358,7 +358,7 @@
                 </div>
 
                 @* Информация о фильме *@
-                <div class="accordion-item shadw mt-3">
+                <div class="accordion-item block-shadow mt-3">
 
                     <h2 id="heading3" class="accordion-header">
                         <button class="accordion-button collapsed p-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="true" aria-controls="collapse3">
@@ -377,14 +377,14 @@
 
                     <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#movieDescription">
 
-                        <div class="accordion-body accordion-body-nointend">
+                        <div class="accordion-body text-indent-0">
 
                             <div class="row row-cols-3 g-1 g-sm-2 justify-content-center">
 
                                 <a onClick="this.target='_blank'" href="@Model.MovieFile.MovieKinoTeatrRu">
 
                                     <vc:view-image image-id="abe41ec7-67b5-4010-205f-08db0b95d168"
-                                                   css-class="col-12 shadw imageref"
+                                                   css-class="col-12 block-shadow imageref"
                                                    icon-type="webicon300" />
 
                                 </a>
@@ -392,7 +392,7 @@
                                 <a onClick="this.target='_blank'" href="@Model.MovieFile.MovieKinoPoisk">
 
                                     <vc:view-image image-id="31eec46d-5556-4cdb-67a7-08db0b99fb42"
-                                                   css-class="col-12 shadw imageref"
+                                                   css-class="col-12 block-shadow imageref"
                                                    icon-type="webicon300" />
 
                                 </a>
@@ -400,7 +400,7 @@
                                 <a onClick="this.target='_blank'" href="@Model.MovieFile.MovieImbd">
 
                                     <vc:view-image image-id="9923aec8-f82b-4032-00f2-08db0b9fc418"
-                                                   css-class="col-12 shadw imageref"
+                                                   css-class="col-12 block-shadow imageref"
                                                    icon-type="webicon300" />
 
                                 </a>
@@ -416,7 +416,7 @@
                 @* Статья, интервью и т.п. *@
                 @if (!string.IsNullOrEmpty(Model.ArticleAboutMovie1))
                 {
-                    <div class="accordion-item shadw mt-3">
+                    <div class="accordion-item block-shadow mt-3">
 
                         @* Заголовок вкладки статьи, интервью и т.п. *@
                         <h2 id="heading4" class="accordion-header">

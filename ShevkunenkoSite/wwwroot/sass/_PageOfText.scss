@@ -14,10 +14,10 @@
     padding: 3rem 2rem;
 }
 
-.descr p {
-    text-align: justify;
-    text-indent: 1.5rem;
-}
+    .descr p {
+        text-align: justify;
+        text-indent: 1.5rem;
+    }
 
 @media screen {
     .article_page {
@@ -44,10 +44,14 @@
     border-top: 1px solid hsla(0,60%,45%,1);
 }
 
-.nomstr::before {
-    margin-right: 4px;
-    content: "страница ";
+.nomstr {
+    white-space: nowrap;
 }
+
+    .nomstr::before {
+        margin-right: 4px;
+        content: "страница ";
+    }
 
 .charst::before {
     margin-right: 4px;

@@ -72,7 +72,7 @@
                class="">
 
                 <vc:view-image image-id="@item.ImageFileModelId"
-                               css-class="my-2 w-100 shadw imageref"
+                               css-class="my-2 w-100 block-shadow imageref"
                                icon-type="webicon200" />
 
             </a>
@@ -91,7 +91,7 @@
                asp-controller="Films"
                asp-action="EditFilm"
                asp-route-filmId="@Model.FilmFileModelId"
-               class="btn btn-outline-success py-1 px-0 m-2 shadw width80px"
+               class="btn btn-outline-success py-1 px-0 m-2 block-shadow width80px"
                title="изменить данные">
 
                 Изменить
@@ -103,7 +103,7 @@
                asp-controller="Films"
                asp-action="DeleteFilm"
                asp-route-filmId="@Model.FilmFileModelId"
-               class="btn btn-outline-danger py-1 px-0 m-2 shadw width80px"
+               class="btn btn-outline-danger py-1 px-0 m-2 block-shadow width80px"
                title="удалить фильм">
 
                 Удалить
@@ -114,7 +114,7 @@
             <a asp-area="Admin"
                asp-controller="Films"
                asp-action="Index"
-               class="btn btn-outline-primary py-1 px-0 m-2 shadw width80px"
+               class="btn btn-outline-primary py-1 px-0 m-2 block-shadow width80px"
                title="список фильмов">
 
                 Список
@@ -126,7 +126,7 @@
                asp-action="Film"
                asp-route-filmCaption="@Model.FilmCaption"
                asp-route-videoHosting="ss"
-               class="btn btn-outline-dark py-1 px-0 m-2 shadw width80px"
+               class="btn btn-outline-dark py-1 px-0 m-2 block-shadow width80px"
                title="смотреть">
 
                 Смотреть
@@ -139,7 +139,7 @@
         <div class="accordion" id="accordionDetailsFilm">
 
             @* Файл фильма *@
-            <div class="accordion-item mb-3 shadw">
+            <div class="accordion-item mb-3 block-shadow">
 
                 @* заголовок группы «файл фильма» *@
                 <h2 id="headingFilmFile" class="accordion-header">
@@ -163,7 +163,7 @@
                      data-bs-parent="#accordionDetailsFilm">
 
                     @* адрес файла на сайте *@
-                    <div class="accordion-body accordion-body-nointend text-center fontadaptive">
+                    <div class="accordion-body text-indent-0 text-center fontadaptive">
 
                         @if (Model.FilmContentUrl != null)
                         {
@@ -175,7 +175,7 @@
 
                                 <br />
 
-                                <a class="btn btn-outline-info py-1 px-2 m-3 text-center shadw"
+                                <a class="btn btn-outline-info py-1 px-2 m-3 text-center block-shadow"
                                    href="@Model.FilmContentUrl"
                                    onclick="this.target='_blank'"
                                    title="sergeyshef.ru"
@@ -211,7 +211,7 @@
             </div>
 
             @* Картинка фильма *@
-            <div class="accordion-item mb-3 shadw">
+            <div class="accordion-item mb-3 block-shadow">
 
                 @* заголовок группы «картинка фильма» *@
                 <h2 id="headingFilmImage" class="accordion-header">
@@ -234,10 +234,10 @@
                      aria-labelledby="headingFilmImage"
                      data-bs-parent="#accordionDetailsFilm">
 
-                    <div class="accordion-body accordion-body-nointend  text-center">
+                    <div class="accordion-body text-indent-0  text-center">
 
                         <vc:view-image image-id="@Model.FilmImageId"
-                                       css-class="card-img-top m-2 shadw maxwidth300px"
+                                       css-class="card-img-top m-2 block-shadow maxwidth300px"
                                        icon-type="webicon300" />
 
                         @if (Model.FilmImage != null && !string.IsNullOrEmpty(Model.FilmImage.WebImageFileName))
@@ -254,7 +254,7 @@
                             </p>
                         }
 
-                        <a class="btn btn-outline-primary py-1 my-3 shadw"
+                        <a class="btn btn-outline-primary py-1 my-3 block-shadow"
                            asp-area="Admin"
                            asp-controller="ImageInfo"
                            asp-action="DetailsImage"
@@ -279,7 +279,7 @@
             </div>
 
             @* Постер фильма *@
-            <div class="accordion-item  mb-3 shadw">
+            <div class="accordion-item  mb-3 block-shadow">
 
                 @* заголовок группы «постер фильма» *@
                 <h2 class="accordion-header" id="headingFilmPoster">
@@ -302,12 +302,12 @@
                      aria-labelledby="headingFilmPoster"
                      data-bs-parent="#accordionDetailsFilm">
 
-                    <div class="accordion-body accordion-body-nointend  text-center">
+                    <div class="accordion-body text-indent-0  text-center">
 
                         @if (Model.FilmPoster != null)
                         {
                             <vc:view-image image-id="@Model.FilmPosterId"
-                                           css-class="card-img-top m-2 w-75 shadw maxwidth300px"
+                                           css-class="card-img-top m-2 w-75 block-shadow maxwidth300px"
                                            icon-type="webicon300" />
 
                             @if (!string.IsNullOrEmpty(Model.FilmPoster.WebImageFileName))
@@ -323,7 +323,7 @@
                                 </p>
                             }
 
-                            <a class="btn btn-outline-primary py-1 my-3 shadw"
+                            <a class="btn btn-outline-primary py-1 my-3 block-shadow"
                                asp-area="Admin"
                                asp-controller="ImageInfo"
                                asp-action="DetailsImage"
@@ -357,7 +357,7 @@
             </div>
 
             @* Фильм для картинок слева и справа *@
-            <div class="@(Model.FilmForPictureId == null ? "d-none" : "accordion-item mb-3 shadw")">
+            <div class="@(Model.FilmForPictureId == null ? "d-none" : "accordion-item mb-3 block-shadow")">
 
                 @* заголовок группы «фильм для картинок слева и справа» *@
                 <h2 class="accordion-header" id="headingFilmForPicture">
@@ -380,7 +380,7 @@
                      aria-labelledby="headingFilmForPicture"
                      data-bs-parent="#accordionDetailsFilm">
 
-                    <div class="accordion-body accordion-body-nointend text-center">
+                    <div class="accordion-body text-indent-0 text-center">
 
                         @if (Model.FilmForPictureAround != null)
                         {
@@ -394,7 +394,7 @@
             </div>
 
             @* Многосерийный фильм *@
-            <div class="@(string.IsNullOrEmpty(Model.SeriesSearchFilter) ? "d-none" : "accordion-item mb-3 shadw")">
+            <div class="@(string.IsNullOrEmpty(Model.SeriesSearchFilter) ? "d-none" : "accordion-item mb-3 block-shadow")">
 
                 @* заголовок группы «многосерийный фильм» *@
                 <h2 id="headingFilmSeries" class="accordion-header">
@@ -417,7 +417,7 @@
                      aria-labelledby="headingFilmSeries"
                      data-bs-parent="#accordionDetailsFilm">
 
-                    <div class="accordion-body accordion-body-nointend text-center">
+                    <div class="accordion-body text-indent-0 text-center">
 
                         <p class="fs-5 mb-0">
 
@@ -464,7 +464,7 @@
             </div>
 
             @* Описание *@
-            <div class="accordion-item mb-3 shadw">
+            <div class="accordion-item mb-3 block-shadow">
 
                 @* заголовок группы «описание» *@
                 <h2 class="accordion-header" id="headingDescription">
@@ -487,7 +487,7 @@
                      aria-labelledby="headingDescription"
                      data-bs-parent="#accordionDetailsFilm">
 
-                    <div class="accordion-body accordion-body-nointend">
+                    <div class="accordion-body text-indent-0">
 
                         <div class="card-body mx-0 p-0">
 
@@ -570,7 +570,7 @@
             </div>
 
             @* Размер кадра *@
-            <div class="@((Model.FilmWidth == 0 && Model.FilmHeight == 0) ? "d-none" : "accordion-item mb-3 shadw")">
+            <div class="@((Model.FilmWidth == 0 && Model.FilmHeight == 0) ? "d-none" : "accordion-item mb-3 block-shadow")">
 
                 @* заголовок группы «размер кадра» *@
                 <h2 id="headingWidthHeight" class="accordion-header">
@@ -593,7 +593,7 @@
                      aria-labelledby="headingWidthHeight"
                      data-bs-parent="#accordionDetailsFilm">
 
-                    <div class="accordion-body accordion-body-nointend  text-center">
+                    <div class="accordion-body text-indent-0  text-center">
 
                         <ul class="list-group list-group-flush text-center">
 
@@ -621,7 +621,7 @@
             </div>
 
             @* Размер файла фильма *@
-            <div class="@(Model.FilmFileSize > 0 ? "accordion-item mb-3 shadw" : "d-none")">
+            <div class="@(Model.FilmFileSize > 0 ? "accordion-item mb-3 block-shadow" : "d-none")">
 
                 @* заголовок группы «размер файла фильма» *@
                 <h2 id="headingFileSize" class="accordion-header">
@@ -644,7 +644,7 @@
                      aria-labelledby="headingFileSize"
                      data-bs-parent="#accordionDetailsFilm">
 
-                    <div class="accordion-body accordion-body-nointend  text-center">
+                    <div class="accordion-body text-indent-0  text-center">
 
                         <ul class="list-group list-group-flush text-center">
 
@@ -672,7 +672,7 @@
             </div>
 
             @* Продолжительность фильма *@
-            <div class="@(Model.FilmDuration.Seconds != 0 ? "accordion-item mb-3 shadw" : "d-none")">
+            <div class="@(Model.FilmDuration.Seconds != 0 ? "accordion-item mb-3 block-shadow" : "d-none")">
 
                 @* заголовок группы «продолжительность» *@
                 <h2 id="headingDuration" class="accordion-header">
@@ -695,7 +695,7 @@
                      aria-labelledby="headingDuration"
                      data-bs-parent="#accordionDetailsFilm">
 
-                    <div class="accordion-body accordion-body-nointend text-center">
+                    <div class="accordion-body text-indent-0 text-center">
 
                         <ul class="list-group list-group-flush text-center">
 
@@ -723,7 +723,7 @@
             </div>
 
             @* Даты *@
-            <div class="accordion-item mb-3 shadw">
+            <div class="accordion-item mb-3 block-shadow">
 
                 @* заголовок группы «даты» *@
                 <h2 id="headingDate" class="accordion-header">
@@ -746,7 +746,7 @@
                      aria-labelledby="headingDate"
                      data-bs-parent="#accordionDetailsFilm">
 
-                    <div class="accordion-body accordion-body-nointend">
+                    <div class="accordion-body text-indent-0">
 
                         <div class="card-body mx-0 p-0">
 
@@ -808,7 +808,7 @@
             </div>
 
             @* Фильтры поиска *@
-            <div class="accordion-item mb-3 shadw">
+            <div class="accordion-item mb-3 block-shadow">
 
                 @* заголовок группы «фильтры поиска» *@
                 <h2 id="headingFilters" class="accordion-header">
@@ -831,7 +831,7 @@
                      aria-labelledby="headingFilters"
                      data-bs-parent="#accordionDetailsFilm">
 
-                    <div class="accordion-body accordion-body-nointend">
+                    <div class="accordion-body text-indent-0">
 
                         <div class="card-body mx-0 p-0">
 
@@ -899,7 +899,7 @@
             </div>
 
             @* Ограничения для просмотра *@
-            <div class="accordion-item mb-3 shadw">
+            <div class="accordion-item mb-3 block-shadow">
 
                 @* заголовок группы «ограничения» *@
                 <h2 id="headingRestrict" class="accordion-header">
@@ -922,7 +922,7 @@
                      aria-labelledby="headingRestrict"
                      data-bs-parent="#accordionDetailsFilm">
 
-                    <div class="accordion-body accordion-body-nointend">
+                    <div class="accordion-body text-indent-0">
 
                         <div class="card-body mx-0 p-0">
 
@@ -993,7 +993,7 @@
             </div>
 
             @* Язык фильма *@
-            <div class="accordion-item mb-3 shadw">
+            <div class="accordion-item mb-3 block-shadow">
 
                 @* заголовок группы «язык фильма» *@
                 <h2 id="headingLanguage" class="accordion-header">
@@ -1016,7 +1016,7 @@
                      aria-labelledby="headingLanguage"
                      data-bs-parent="#accordionDetailsFilm">
 
-                    <div class="accordion-body accordion-body-nointend">
+                    <div class="accordion-body text-indent-0">
 
                         <div class="card-body mx-0 p-0">
 
@@ -1089,7 +1089,7 @@
             </div>
 
             @* Съемочная группа *@
-            <div class="accordion-item mb-3 shadw">
+            <div class="accordion-item mb-3 block-shadow">
 
                 @* заголовок группы «съемочная группа» *@
                 <h2 id="headingFilmCrew" class="accordion-header">
@@ -1112,7 +1112,7 @@
                      aria-labelledby="headingFilmCrew"
                      data-bs-parent="#accordionDetailsFilm">
 
-                    <div class="accordion-body accordion-body-nointend">
+                    <div class="accordion-body text-indent-0">
 
                         <div class="card-body mx-0 p-0">
 
@@ -1325,7 +1325,7 @@
             </div>
 
             @* Ссылки на фильм *@
-            <div class="accordion-item mb-3 shadw">
+            <div class="accordion-item mb-3 block-shadow">
 
                 @* заголовок группы «ссылки на фильм» *@
                 <h2 id="headingRef" class="accordion-header">
@@ -1348,7 +1348,7 @@
                      aria-labelledby="headingRef"
                      data-bs-parent="#accordionDetailsFilm">
 
-                    <div class="accordion-body-nointend text-center fontadaptive">
+                    <div class="text-indent-0 text-center fontadaptive">
 
                         @* sergeyshef.ru *@
                         <p class="fs-5 mb-0">
@@ -1367,7 +1367,7 @@
 
                                 <br />
 
-                                <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
+                                <a class="btn btn-outline-primary py-0 px-2 m-2 block-shadow"
                                    href="@Model.FilmContentUrl"
                                    onclick="this.target='_blank'"
                                    title="sergeyshef.ru"
@@ -1411,7 +1411,7 @@
 
                                 <br />
 
-                                <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
+                                <a class="btn btn-outline-primary py-0 px-2 m-2 block-shadow"
                                    href="@Model.FilmYouTube"
                                    onclick="this.target='_blank'"
                                    title="youtube.com"
@@ -1455,7 +1455,7 @@
 
                                 <br />
 
-                                <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
+                                <a class="btn btn-outline-primary py-0 px-2 m-2 block-shadow"
                                    href="@Model.FilmVkVideo"
                                    onclick="this.target='_blank'"
                                    title="vk.ru"
@@ -1499,7 +1499,7 @@
 
                                 <br />
 
-                                <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
+                                <a class="btn btn-outline-primary py-0 px-2 m-2 block-shadow"
                                    href="@Model.FilmMailRuVideo"
                                    onclick="this.target='_blank'"
                                    title="mail.ru"
@@ -1543,7 +1543,7 @@
 
                                 <br />
 
-                                <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
+                                <a class="btn btn-outline-primary py-0 px-2 m-2 block-shadow"
                                    href="@Model.FilmOkVideo"
                                    onclick="this.target='_blank'"
                                    title="ok.ru"
@@ -1587,7 +1587,7 @@
 
                                 <br />
 
-                                <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
+                                <a class="btn btn-outline-primary py-0 px-2 m-2 block-shadow"
                                    href="@Model.FilmYandexDiskVideo"
                                    onclick="this.target='_blank'"
                                    title="disk.yandex.ru"
@@ -1619,7 +1619,7 @@
             </div>
 
             @* Ссылки на информацию *@
-            <div class="accordion-item mb-3 shadw">
+            <div class="accordion-item mb-3 block-shadow">
 
                 @* заголовок группы «ссылки на информацию» *@
                 <h2 id="headingInfoRef" class="accordion-header">
@@ -1642,7 +1642,7 @@
                      aria-labelledby="headingInfoRef"
                      data-bs-parent="#accordionDetailsFilm">
 
-                    <div class="accordion-body-nointend text-center fontadaptive">
+                    <div class="text-indent-0 text-center fontadaptive">
 
                         @* kino-teatr.ru *@
                         <p class="fs-5 mb-0">
@@ -1661,7 +1661,7 @@
 
                                 <br />
 
-                                <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
+                                <a class="btn btn-outline-primary py-0 px-2 m-2 block-shadow"
                                    href="@Model.FilmKinoTeatrRu"
                                    onclick="this.target='_blank'"
                                    title="kino-teatr.ru"
@@ -1705,7 +1705,7 @@
 
                                 <br />
 
-                                <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
+                                <a class="btn btn-outline-primary py-0 px-2 m-2 block-shadow"
                                    href="@Model.FilmKinoPoisk"
                                    onclick="this.target='_blank'"
                                    title="kinopoisk.ru"
@@ -1749,7 +1749,7 @@
 
                                 <br />
 
-                                <a class="btn btn-outline-primary py-0 px-2 m-2 shadw"
+                                <a class="btn btn-outline-primary py-0 px-2 m-2 block-shadow"
                                    href="@Model.FilmImbd"
                                    onclick="this.target='_blank'"
                                    title="imbd.com"
@@ -1790,7 +1790,7 @@
                asp-controller="Films"
                asp-action="EditFilm"
                asp-route-filmId="@Model.FilmFileModelId"
-               class="btn btn-outline-success py-1 px-0 m-2 shadw width80px"
+               class="btn btn-outline-success py-1 px-0 m-2 block-shadow width80px"
                title="изменить данные">
 
                 Изменить
@@ -1802,7 +1802,7 @@
                asp-controller="Films"
                asp-action="DeleteFilm"
                asp-route-filmId="@Model.FilmFileModelId"
-               class="btn btn-outline-danger py-1 px-0 m-2 shadw width80px"
+               class="btn btn-outline-danger py-1 px-0 m-2 block-shadow width80px"
                title="удалить фильм">
 
                 Удалить
@@ -1813,7 +1813,7 @@
             <a asp-area="Admin"
                asp-controller="Films"
                asp-action="Index"
-               class="btn btn-outline-primary py-1 px-0 m-2 shadw width80px"
+               class="btn btn-outline-primary py-1 px-0 m-2 block-shadow width80px"
                title="список фильмов">
 
                 Список
@@ -1825,7 +1825,7 @@
                asp-action="Film"
                asp-route-filmCaption="@Model.FilmCaption"
                asp-route-videoHosting="ss"
-               class="btn btn-outline-dark py-1 px-0 m-2 shadw width80px"
+               class="btn btn-outline-dark py-1 px-0 m-2 block-shadow width80px"
                title="смотреть">
 
                 Смотреть
@@ -1850,7 +1850,7 @@
                class="">
 
                 <vc:view-image image-id="@item.ImageFileModelId"
-                               css-class="my-2 w-100 shadw imageref"
+                               css-class="my-2 w-100 block-shadow imageref"
                                icon-type="webicon200" />
 
             </a>

@@ -61,7 +61,7 @@
 			<div id="accordionEditText" class="accordion">
 
 				@* папка файла *@
-				<div class="accordion-item mb-3 mt-2 shadw">
+				<div class="accordion-item mb-3 mt-2 block-shadow">
 
 					@* заголовок группы «Папка файла» *@
 					<h2 id="headingFolderForTxtHtmlFile" class="accordion-header">
@@ -84,7 +84,7 @@
 						 aria-labelledby="headingFolderForTxtHtmlFile"
 						 data-bs-parent="#accordionEditText">
 
-						<div class="accordion-body accordion-body-nointend text-center">
+						<div class="accordion-body text-indent-0 text-center">
 
 							<label asp-for="TxtFileName" class="@cssForLabel"></label>
 							<br class="d-lg-none" />
@@ -157,7 +157,7 @@
 				</div>
 
 				@* описание текста *@
-				<div class="accordion-item mb-3 mt-2 shadw">
+				<div class="accordion-item mb-3 mt-2 block-shadow">
 
 					@* заголовок группы «Описание текста» *@
 					<h2 id="headingTextDescription" class="accordion-header">
@@ -180,7 +180,7 @@
 						 aria-labelledby="headingTextDescription"
 						 data-bs-parent="#accordionEditText">
 
-						<div class="accordion-body accordion-body-nointend text-center">
+						<div class="accordion-body text-indent-0 text-center">
 
 							<label asp-for="TextDescription" class="@cssForLabel"></label>
 
@@ -206,7 +206,7 @@
 				</div>
 
 				@* книга (статья) - номер страницы *@
-				<div class="accordion-item mb-3 mt-2 shadw">
+				<div class="accordion-item mb-3 mt-2 block-shadow">
 
 					@* заголовок группы «Книга - Статья - Номер страницы» *@
 					<h2 id="headingBookForText" class="accordion-header">
@@ -229,7 +229,7 @@
 						 aria-labelledby="headingBookForText"
 						 data-bs-parent="#accordionEditText">
 
-						<div class="accordion-body accordion-body-nointend text-center">
+						<div class="accordion-body text-indent-0 text-center">
 
 							@* Книга*@
 							<div class="form-group mb-2">
@@ -287,7 +287,7 @@
 				</div>
 
 				@* текст без разметки *@
-				<div class="accordion-item mb-3 mt-2 shadw">
+				<div class="accordion-item mb-3 mt-2 block-shadow">
 
 					@* заголовок группы «Текст без разметки» *@
 					<h2 id="headingTextTxt" class="accordion-header">
@@ -310,7 +310,7 @@
 						 aria-labelledby="headingTextTxt"
 						 data-bs-parent="#accordionEditText">
 
-						<div class="accordion-body accordion-body-nointend text-center">
+						<div class="accordion-body text-indent-0 text-center">
 
 							<label asp-for="TxtFileName" class="col-form-label text-primary fs-5 me-2"></label>
 							<br class="d-sm-none" />
@@ -362,7 +362,7 @@
 				</div>
 
 				@* текст с разметкой *@
-				<div class="accordion-item mb-3 mt-2 shadw">
+				<div class="accordion-item mb-3 mt-2 block-shadow">
 
 					@* заголовок группы «Текст с разметкой» *@
 					<h2 id="headingTextHtml" class="accordion-header">
@@ -385,7 +385,7 @@
 						 aria-labelledby="headingTextHtml"
 						 data-bs-parent="#accordionEditText">
 
-						<div class="accordion-body accordion-body-nointend text-center">
+						<div class="accordion-body text-indent-0 text-center">
 
 							<label asp-for="HtmlFileName" class="col-form-label text-primary fs-5 me-2"></label>
 							<br class="d-sm-none" />
@@ -460,7 +460,7 @@
 				</div>
 
 				@* аудиофайл к тексту *@
-				<div class="accordion-item mb-3 mt-2 shadw">
+				<div class="accordion-item mb-3 mt-2 block-shadow">
 
 					@* заголовок группы «Аудиофайл к тексту» *@
 					<h2 id="headingAudioFileForText" class="accordion-header">
@@ -483,7 +483,7 @@
 						 aria-labelledby="headingAudioFileForText"
 						 data-bs-parent="#accordionEditText">
 
-						<div class="accordion-body accordion-body-nointend text-center">
+						<div class="accordion-body text-indent-0 text-center">
 
 							@* Аудиофайл *@
 							<div class="form-group mb-2">
@@ -523,14 +523,14 @@
 			@* Сохранить - Отменить *@
 			<div class="card-footer p-0 pb-2 mt-4 mx-auto maxwidth700px">
 
-				<button type="submit" class="btn btn-outline-success mt-2 me-2 text-center shadw"
+				<button type="submit" class="btn btn-outline-success mt-2 me-2 text-center block-shadow"
 						title="Сохранить">
 
 					Сохранить
 
 				</button>
 
-				<a class="btn btn-outline-danger mt-2 shadw"
+				<a class="btn btn-outline-danger mt-2 block-shadow"
 				   asp-area="Admin"
 				   asp-controller="TextInfo"
 				   asp-action="DetailsText"

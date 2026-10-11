@@ -54,7 +54,7 @@
             <div class="card-footer p-0 my-2">
 
                 @* Изменить *@
-                <a class="btn btn-outline-success py-1 m-2 shadw"
+                <a class="btn btn-outline-success py-1 m-2 block-shadow"
                    asp-area="Admin"
                    asp-controller="MovieInfo"
                    asp-action="EditMovie"
@@ -62,7 +62,7 @@
                    title="изменить данные">Изменить</a>
 
                 @* Удалить *@
-                <a class="btn btn-outline-danger py-1 m-2 shadw"
+                <a class="btn btn-outline-danger py-1 m-2 block-shadow"
                    asp-area="Admin"
                    asp-controller="MovieInfo"
                    asp-action="DeleteMovie"
@@ -70,7 +70,7 @@
                    title="удалить фильм">Удалить</a>
 
                 @* Список фильмов сайта *@
-                <a class="btn btn-outline-primary py-1 m-2 shadw"
+                <a class="btn btn-outline-primary py-1 m-2 block-shadow"
                    asp-area="Admin"
                    asp-controller="MovieInfo"
                    asp-action="Index" title="список фильмов">Список</a>
@@ -78,14 +78,14 @@
                 @* Страница фильма *@
                 @if (Model.MovieItem.PageInfoModel != null)
                 {
-                    <a class="btn btn-outline-dark py-1 m-2 shadw"
+                    <a class="btn btn-outline-dark py-1 m-2 block-shadow"
                        asp-area="Admin"
                        asp-controller="PageInfo"
                        asp-action="DetailsPage"
                        asp-route-pageId="@Model.MovieItem.PageInfoModelId"
                        title="данные страницы фильма">Страница</a>
 
-                    <a class="btn btn-outline-warning py-1 m-2 shadw"
+                    <a class="btn btn-outline-warning py-1 m-2 block-shadow"
                        href="@Url.Content(Model.MovieItem.PageInfoModel.PageFullPathWithData)"
                        title="страница фильма">Смотреть</a>
                 }
@@ -96,14 +96,14 @@
                 @* Страница серий *@
                 @if (Model.MovieItem.PageForMovieSeries != null)
                 {
-                    <a class="btn btn-outline-info py-1 m-2 shadw"
+                    <a class="btn btn-outline-info py-1 m-2 block-shadow"
                        asp-area="Admin"
                        asp-controller="PageInfo"
                        asp-action="DetailsPage"
                        asp-route-pageId="@Model.MovieItem.PageForMovieSeriesId"
                        title="данные страницы серий">Страница серий</a>
 
-                    <a class="btn btn-outline-success py-1 m-2 shadw"
+                    <a class="btn btn-outline-success py-1 m-2 block-shadow"
                        href="@Url.Content(Model.MovieItem.PageForMovieSeries.PageFullPathWithData)"
                        title="серии фильма">Серии</a>
                 }
@@ -114,7 +114,7 @@
                 @* Полная версия фильма *@
                 @if (Model.MovieItem.FullMovie != null)
                 {
-                    <a class="btn btn-outline-success py-1 m-2 shadw"
+                    <a class="btn btn-outline-success py-1 m-2 block-shadow"
                        asp-area="Admin"
                        asp-controller="PageInfo"
                        asp-action="DetailsPage"
@@ -123,7 +123,7 @@
 
                     @if (Model.MovieItem.FullMovie.PageInfoModel != null)
                     {
-                        <a class="btn btn-outline-primary py-1 m-2 shadw"
+                        <a class="btn btn-outline-primary py-1 m-2 block-shadow"
                            href="@Url.Content(Model.MovieItem.FullMovie.PageInfoModel.PageFullPathWithData)"
                            title="полная версия">Полный фильм</a>
                     }
@@ -135,7 +135,7 @@
             <div class="accordion" id="accordionDetailsMovie">
 
                 @* Файл фильма *@
-                <div class="accordion-item mb-3 shadw">
+                <div class="accordion-item mb-3 block-shadow">
 
                     @* заголовок группы «файл фильма» *@
                     <h2 class="accordion-header" id="headingFilmFile">
@@ -147,7 +147,7 @@
                     <div id="FilmFile" class="accordion-collapse collapse" aria-labelledby="headingFilmFile" data-bs-parent="#accordionDetailsMovie">
 
                         @* адрес файла на сайте *@
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             @if (!string.IsNullOrEmpty(Model.MovieItem.MovieFileName))
                             {
@@ -185,7 +185,7 @@
                 </div>
 
                 @* Картинка фильма *@
-                <div class="accordion-item mb-3 shadw">
+                <div class="accordion-item mb-3 block-shadow">
 
                     @* заголовок группы «картинка фильма» *@
                     <h2 class="accordion-header" id="headingFilmImage">
@@ -196,7 +196,7 @@
 
                     <div id="FilmImage" class="accordion-collapse collapse" aria-labelledby="headingFilmImage" data-bs-parent="#accordionDetailsMovie">
 
-                        <div class="accordion-body accordion-body-nointend  text-center">
+                        <div class="accordion-body text-indent-0  text-center">
 
                             @if (Model.MovieItem.ImageFileModelId != null)
                             {
@@ -207,7 +207,7 @@
                                 </p>
 
                                 <vc:view-image image-id="@Model.MovieItem.ImageFileModelId"
-                                               css-class="card-img-top m-2 w-auto shadw"
+                                               css-class="card-img-top m-2 w-auto block-shadow"
                                                icon-type="webimage" />
 
                                 @if (Model.MovieItem.ImageFileModel != null)
@@ -222,7 +222,7 @@
                                     }
                                 }
 
-                                <a class="btn btn-outline-primary py-1 my-3 shadw"
+                                <a class="btn btn-outline-primary py-1 my-3 block-shadow"
                                    asp-area="Admin"
                                    asp-controller="ImageInfo"
                                    asp-action="DetailsImage"
@@ -245,7 +245,7 @@
                 </div>
 
                 @* Постер фильма *@
-                <div class="accordion-item  mb-3 shadw">
+                <div class="accordion-item  mb-3 block-shadow">
 
                     @* заголовок группы «постер фильма» *@
                     <h2 class="accordion-header" id="headingFilmPoster">
@@ -256,7 +256,7 @@
 
                     <div id="FilmPoster" class="accordion-collapse collapse" aria-labelledby="headingFilmPoster" data-bs-parent="#accordionDetailsMovie">
 
-                        <div class="accordion-body accordion-body-nointend  text-center">
+                        <div class="accordion-body text-indent-0  text-center">
 
                             @if (Model.MovieItem.MoviePoster != null)
                             {
@@ -267,7 +267,7 @@
                                 </p>
 
                                 <vc:view-image image-id="@Model.MovieItem.MoviePosterId"
-                                               css-class="card-img-top m-2 w-75 shadw"
+                                               css-class="card-img-top m-2 w-75 block-shadow"
                                                icon-type="webimage" />
 
                                 @if (!string.IsNullOrEmpty(Model.MovieItem.MoviePoster.WebImageFileName))
@@ -279,7 +279,7 @@
                                     <p class="fs-5 mb-0 text_shadow">@Model.MovieItem.MoviePoster.ImagePath/@Model.MovieItem.MoviePoster.ImageFileName</p>
                                 }
 
-                                <a class="btn btn-outline-primary py-1 my-3 shadw"
+                                <a class="btn btn-outline-primary py-1 my-3 block-shadow"
                                    asp-area="Admin"
                                    asp-controller="ImageInfo"
                                    asp-action="DetailsImage"
@@ -302,7 +302,7 @@
                 </div>
 
                 @* Многосерийный фильм *@
-                <div class="@(Model.MovieItem.MovieTotalParts < 2 ? "d-none" : "accordion-item mb-3 shadw")">
+                <div class="@(Model.MovieItem.MovieTotalParts < 2 ? "d-none" : "accordion-item mb-3 block-shadow")">
 
                     @* заголовок группы «многосерийный фильм» *@
                     <h2 class="accordion-header" id="headingFilmSeries">
@@ -313,7 +313,7 @@
 
                     <div id="FilmSeries" class="accordion-collapse collapse" aria-labelledby="headingFilmSeries" data-bs-parent="#accordionDetailsMovie">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             <p class="fs-5 mb-0">
                                 <span class="fw-bold text-danger">Количество серий:</span>
@@ -347,7 +347,7 @@
                                 </p>
 
                                 <vc:view-image image-id="@Model.MovieItem.ImageForHeadSeriesId"
-                                               css-class="card-img-top m-2 w-75 shadw"
+                                               css-class="card-img-top m-2 w-75 block-shadow"
                                                icon-type="webimage" />
 
                                 @if (!string.IsNullOrEmpty(Model.MovieItem.ImageForHeadSeries.WebImageFileName))
@@ -363,7 +363,7 @@
                                     </p>
                                 }
 
-                                <a class="btn btn-outline-primary py-1 my-3 shadw"
+                                <a class="btn btn-outline-primary py-1 my-3 block-shadow"
                                    asp-area="Admin"
                                    asp-controller="ImageInfo"
                                    asp-action="DetailsImage"
@@ -405,7 +405,7 @@
                 </div>
 
                 @* Описание, лента кадров *@
-                <div class="accordion-item mb-3 shadw">
+                <div class="accordion-item mb-3 block-shadow">
 
                     @* заголовок группы «описание, лента кадров» *@
                     <h2 class="accordion-header" id="headingDescription">
@@ -416,7 +416,7 @@
 
                     <div id="FilmDescription" class="accordion-collapse collapse" aria-labelledby="headingDescription" data-bs-parent="#accordionDetailsMovie">
 
-                        <div class="accordion-body accordion-body-nointend">
+                        <div class="accordion-body text-indent-0">
 
                             <div class="card-body mx-0 p-0">
 
@@ -547,7 +547,7 @@
                 </div>
 
                 @* Размер кадра *@
-                <div class="@((Model.MovieItem.MovieWidth == 0 && Model.MovieItem.MovieHeight == 0) ? "d-none" : "accordion-item mb-3 shadw")">
+                <div class="@((Model.MovieItem.MovieWidth == 0 && Model.MovieItem.MovieHeight == 0) ? "d-none" : "accordion-item mb-3 block-shadow")">
 
                     @* заголовок группы «размер кадра» *@
                     <h2 class="accordion-header" id="headingWidthHeight">
@@ -558,7 +558,7 @@
 
                     <div id="WidthHeight" class="accordion-collapse collapse" aria-labelledby="headingWidthHeight" data-bs-parent="#accordionDetailsMovie">
 
-                        <div class="accordion-body accordion-body-nointend  text-center">
+                        <div class="accordion-body text-indent-0  text-center">
 
                             <ul class="list-group list-group-flush text-center">
 
@@ -586,7 +586,7 @@
                 </div>
 
                 @* Размер файла фильма *@
-                <div class="@(Model.MovieItem.MovieFileSize > 0 ? "accordion-item mb-3 shadw" : "d-none")">
+                <div class="@(Model.MovieItem.MovieFileSize > 0 ? "accordion-item mb-3 block-shadow" : "d-none")">
 
                     @* заголовок группы «размер файла фильма» *@
                     <h2 class="accordion-header" id="headingFileSize">
@@ -597,7 +597,7 @@
 
                     <div id="FileSize" class="accordion-collapse collapse" aria-labelledby="headingFileSize" data-bs-parent="#accordionDetailsMovie">
 
-                        <div class="accordion-body accordion-body-nointend  text-center">
+                        <div class="accordion-body text-indent-0  text-center">
 
                             <ul class="list-group list-group-flush text-center">
 
@@ -625,7 +625,7 @@
                 </div>
 
                 @* Продолжительность фильма *@
-                <div class="@(Model.MovieItem.MovieDuration.Seconds != 0 ? "accordion-item mb-3 shadw" : "d-none")">
+                <div class="@(Model.MovieItem.MovieDuration.Seconds != 0 ? "accordion-item mb-3 block-shadow" : "d-none")">
 
                     @* заголовок группы «продолжительность» *@
                     <h2 class="accordion-header" id="headingDuration">
@@ -636,7 +636,7 @@
 
                     <div id="Duration" class="accordion-collapse collapse" aria-labelledby="headingDuration" data-bs-parent="#accordionDetailsMovie">
 
-                        <div class="accordion-body accordion-body-nointend text-center">
+                        <div class="accordion-body text-indent-0 text-center">
 
                             <ul class="list-group list-group-flush text-center">
 
@@ -664,7 +664,7 @@
                 </div>
 
                 @* Даты *@
-                <div class="accordion-item mb-3 shadw">
+                <div class="accordion-item mb-3 block-shadow">
 
                     @* заголовок группы «даты» *@
                     <h2 class="accordion-header" id="headingDate">
@@ -675,7 +675,7 @@
 
                     <div id="Date" class="accordion-collapse collapse" aria-labelledby="headingDate" data-bs-parent="#accordionDetailsMovie">
 
-                        <div class="accordion-body accordion-body-nointend">
+                        <div class="accordion-body text-indent-0">
 
                             <div class="card-body mx-0 p-0">
 
@@ -737,7 +737,7 @@
                 </div>
 
                 @* Фильтры поиска *@
-                <div class="accordion-item mb-3 shadw">
+                <div class="accordion-item mb-3 block-shadow">
 
                     @* заголовок группы «фильтры поиска» *@
                     <h2 class="accordion-header" id="headingFilters">
@@ -748,7 +748,7 @@
 
                     <div id="Filters" class="accordion-collapse collapse" aria-labelledby="headingFilters" data-bs-parent="#accordionDetailsMovie">
 
-                        <div class="accordion-body accordion-body-nointend">
+                        <div class="accordion-body text-indent-0">
 
                             <div class="card-body mx-0 p-0">
 
@@ -824,7 +824,7 @@
                 </div>
 
                 @* Ограничения для просмотра *@
-                <div class="accordion-item mb-3 shadw">
+                <div class="accordion-item mb-3 block-shadow">
 
                     @* заголовок группы «ограничения» *@
                     <h2 class="accordion-header" id="headingRestrict">
@@ -835,7 +835,7 @@
 
                     <div id="Restrict" class="accordion-collapse collapse" aria-labelledby="headingRestrict" data-bs-parent="#accordionDetailsMovie">
 
-                        <div class="accordion-body accordion-body-nointend">
+                        <div class="accordion-body text-indent-0">
 
                             <div class="card-body mx-0 p-0">
 
@@ -906,7 +906,7 @@
                 </div>
 
                 @* Язык фильма *@
-                <div class="accordion-item mb-3 shadw">
+                <div class="accordion-item mb-3 block-shadow">
 
                     @* заголовок группы «язык фильма» *@
                     <h2 class="accordion-header" id="headingLanguage">
@@ -917,7 +917,7 @@
 
                     <div id="Language" class="accordion-collapse collapse" aria-labelledby="headingLanguage" data-bs-parent="#accordionDetailsMovie">
 
-                        <div class="accordion-body accordion-body-nointend">
+                        <div class="accordion-body text-indent-0">
 
                             <div class="card-body mx-0 p-0">
 
@@ -990,7 +990,7 @@
                 </div>
 
                 @* Съемочная группа *@
-                <div class="accordion-item mb-3 shadw">
+                <div class="accordion-item mb-3 block-shadow">
 
                     @* заголовок группы «съемочная группа» *@
                     <h2 class="accordion-header" id="headingFilmCrew">
@@ -1001,7 +1001,7 @@
 
                     <div id="FilmCrew" class="accordion-collapse collapse" aria-labelledby="headingFilmCrew" data-bs-parent="#accordionDetailsMovie">
 
-                        <div class="accordion-body accordion-body-nointend">
+                        <div class="accordion-body text-indent-0">
 
                             <div class="card-body mx-0 p-0">
 
@@ -1191,7 +1191,7 @@
                 </div>
 
                 @* Ссылки на фильм *@
-                <div class="accordion-item mb-3 shadw">
+                <div class="accordion-item mb-3 block-shadow">
 
                     @* заголовок группы «ссылки на фильм» *@
                     <h2 class="accordion-header" id="headingRef">
@@ -1231,7 +1231,7 @@
                                             @Model.MovieItem.MovieContentUrl
                                         </span>
                                         <br />
-                                        <a class="btn btn-outline-success py-1 m-2 shadw text-indent-0"
+                                        <a class="btn btn-outline-success py-1 m-2 block-shadow text-indent-0"
                                            href="@Model.MovieItem.MovieContentUrl"
                                            onclick="this.target='_blank'"
                                            title="sergeyshef.ru"
@@ -1263,7 +1263,7 @@
                                             @Model.MovieItem.MovieYouTube
                                         </span>
                                         <br />
-                                        <a class="btn btn-outline-success py-1 m-2 shadw text-indent-0"
+                                        <a class="btn btn-outline-success py-1 m-2 block-shadow text-indent-0"
                                            href="@Model.MovieItem.MovieYouTube"
                                            onclick="this.target='_blank'"
                                            title="youtube.com"
@@ -1295,7 +1295,7 @@
                                             @Model.MovieItem.MovieVkVideo
                                         </span>
                                         <br />
-                                        <a class="btn btn-outline-success py-1 m-2 shadw text-indent-0"
+                                        <a class="btn btn-outline-success py-1 m-2 block-shadow text-indent-0"
                                            href="@Model.MovieItem.MovieVkVideo"
                                            onclick="this.target='_blank'"
                                            title="vk.ru"
@@ -1327,7 +1327,7 @@
                                             @Model.MovieItem.MovieMailRuVideo
                                         </span>
                                         <br />
-                                        <a class="btn btn-outline-success py-1 m-2 shadw text-indent-0"
+                                        <a class="btn btn-outline-success py-1 m-2 block-shadow text-indent-0"
                                            href="@Model.MovieItem.MovieMailRuVideo"
                                            onclick="this.target='_blank'"
                                            title="mail.ru"
@@ -1359,7 +1359,7 @@
                                             @Model.MovieItem.MovieOkVideo
                                         </span>
                                         <br />
-                                        <a class="btn btn-outline-success py-1 m-2 shadw text-indent-0"
+                                        <a class="btn btn-outline-success py-1 m-2 block-shadow text-indent-0"
                                            href="@Model.MovieItem.MovieOkVideo"
                                            onclick="this.target='_blank'"
                                            title="ok.ru"
@@ -1391,7 +1391,7 @@
                                             @Model.MovieItem.MovieYandexDiskVideo
                                         </span>
                                         <br />
-                                        <a class="btn btn-outline-success py-1 m-2 shadw text-indent-0"
+                                        <a class="btn btn-outline-success py-1 m-2 block-shadow text-indent-0"
                                            href="@Model.MovieItem.MovieYandexDiskVideo"
                                            onclick="this.target='_blank'"
                                            title="disk.yandex.ru"
@@ -1411,7 +1411,7 @@
                 </div>
 
                 @* Ссылки на информацию *@
-                <div class="accordion-item mb-3 shadw">
+                <div class="accordion-item mb-3 block-shadow">
 
                     @* заголовок группы «ссылки на информацию» *@
                     <h2 class="accordion-header" id="headingInfoRef">
@@ -1437,7 +1437,7 @@
                                             @Model.MovieItem.MovieKinoTeatrRu
                                         </span>
                                         <br />
-                                        <a class="btn btn-outline-success py-1 m-2 shadw text-indent-0"
+                                        <a class="btn btn-outline-success py-1 m-2 block-shadow text-indent-0"
                                            href="@Model.MovieItem.MovieKinoTeatrRu"
                                            onclick="this.target='_blank'"
                                            title="kino-teatr.ru"
@@ -1457,7 +1457,7 @@
                                             @Model.MovieItem.MovieKinoPoisk
                                         </span>
                                         <br />
-                                        <a class="btn btn-outline-success py-1 m-2 shadw text-indent-0"
+                                        <a class="btn btn-outline-success py-1 m-2 block-shadow text-indent-0"
                                            href="@Model.MovieItem.MovieKinoPoisk"
                                            onclick="this.target='_blank'"
                                            title="kinopoisk.ru"
@@ -1477,7 +1477,7 @@
                                             @Model.MovieItem.MovieImbd
                                         </span>
                                         <br />
-                                        <a class="btn btn-outline-success py-1 m-2 shadw text-indent-0"
+                                        <a class="btn btn-outline-success py-1 m-2 block-shadow text-indent-0"
                                            href="@Model.MovieItem.MovieImbd"
                                            onclick="this.target='_blank'"
                                            title="imbd.com"
@@ -1499,7 +1499,7 @@
                 </div>
 
                 @* Группы ссылок под видео *@
-                <div class="accordion-item shadw">
+                <div class="accordion-item block-shadow">
 
                     @* Заголовок групп «ссылки под видео» *@
                     <h2 class="accordion-header" id="headingAddLinks">
@@ -1511,7 +1511,7 @@
                     <div id="accordionLinks" class="accordion-collapse collapse mt-2 ms-5" aria-labelledby="headingInfoRef" data-bs-parent="#accordionDetailsMovie">
 
                         @* Фотокарусель *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* Заголовок группы  «фотокарусель» *@
                             <h2 class="accordion-header" id="FotoCarousel">
@@ -1550,7 +1550,7 @@
                         </div>
 
                         @* Блок ссылок под видео 1 *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* Заголовок группы «ссылки под видео 1» *@
                             <h2 class="accordion-header" id="headingAddLinks1">
@@ -1562,7 +1562,7 @@
                             @* Группа ссылок 1 *@
                             <div id="AddLinks1" class="accordion-collapse collapse" aria-labelledby="headingAddLinks" data-bs-parent="#accordionLinks">
 
-                                <div class="accordion-body accordion-body-nointend text-center">
+                                <div class="accordion-body text-indent-0 text-center">
 
                                     @* Заголовок группы ссылок 1 *@
                                     <p class="fs-5 text-center text-primary">
@@ -1641,7 +1641,7 @@
                                                                                asp-controller="MovieInfo"
                                                                                asp-action="DetailsMovie"
                                                                                asp-route-movieid="@item.MovieFileModelId"
-                                                                               class="btn btn-outline-primary p-1 shadw"
+                                                                               class="btn btn-outline-primary p-1 block-shadow"
                                                                                title="информация о фильме">Info</a>
                                                                         </td>
                                                                     }
@@ -1685,7 +1685,7 @@
                         </div>
 
                         @* Блок ссылок под видео 2 *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* Заголовок группы ссылок 2 *@
                             <h2 class="accordion-header" id="headingAddLinks2">
@@ -1697,7 +1697,7 @@
                             @* Группа ссылок 2 *@
                             <div id="AddLinks2" class="accordion-collapse collapse" aria-labelledby="headingAddLinks" data-bs-parent="#accordionLinks">
 
-                                <div class="accordion-body accordion-body-nointend text-center">
+                                <div class="accordion-body text-indent-0 text-center">
 
                                     @* Заголовок группы ссылок 2 *@
                                     <p class="fs-5 text-center text-primary">
@@ -1776,7 +1776,7 @@
                                                                                asp-controller="MovieInfo"
                                                                                asp-action="DetailsMovie"
                                                                                asp-route-movieid="@item.MovieFileModelId"
-                                                                               class="btn btn-outline-primary p-1 shadw"
+                                                                               class="btn btn-outline-primary p-1 block-shadow"
                                                                                title="информация о фильме">Info</a>
                                                                         </td>
                                                                     }
@@ -1820,7 +1820,7 @@
                         </div>
 
                         @* Блок ссылок под видео 3 *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* Заголовок группы ссылок 3 *@
                             <h2 class="accordion-header" id="headingAddLinks3">
@@ -1832,7 +1832,7 @@
                             @* Группа ссылок 3 *@
                             <div id="AddLinks3" class="accordion-collapse collapse" aria-labelledby="headingAddLinks3" data-bs-parent="#accordionLinks">
 
-                                <div class="accordion-body accordion-body-nointend text-center">
+                                <div class="accordion-body text-indent-0 text-center">
 
                                     @* Заголовок группы ссылок 3 *@
                                     <p class="fs-5 text-center text-primary">
@@ -1911,7 +1911,7 @@
                                                                                asp-controller="MovieInfo"
                                                                                asp-action="DetailsMovie"
                                                                                asp-route-movieid="@item.MovieFileModelId"
-                                                                               class="btn btn-outline-primary p-1 shadw"
+                                                                               class="btn btn-outline-primary p-1 block-shadow"
                                                                                title="информация о фильме">Info</a>
                                                                         </td>
                                                                     }
@@ -1955,7 +1955,7 @@
                         </div>
 
                         @* Блок статьи о видео 1 *@
-                        <div class="accordion-item mb-3 shadw">
+                        <div class="accordion-item mb-3 block-shadow">
 
                             @* Заголовок группы « статья о видео 1» *@
                             <h2 class="accordion-header" id="headingArticle1AboutMovie">
@@ -2000,7 +2000,7 @@
             <div class="card-footer p-0 my-2">
 
                 @* Изменить *@
-                <a class="btn btn-outline-success py-1 m-2 shadw"
+                <a class="btn btn-outline-success py-1 m-2 block-shadow"
                    asp-area="Admin"
                    asp-controller="MovieInfo"
                    asp-action="EditMovie"
@@ -2008,7 +2008,7 @@
                    title="изменить данные">Изменить</a>
 
                 @* Удалить *@
-                <a class="btn btn-outline-danger py-1 m-2 shadw"
+                <a class="btn btn-outline-danger py-1 m-2 block-shadow"
                    asp-area="Admin"
                    asp-controller="MovieInfo"
                    asp-action="DeleteMovie"
@@ -2016,7 +2016,7 @@
                    title="удалить фильм">Удалить</a>
 
                 @* Список фильмов сайта *@
-                <a class="btn btn-outline-primary py-1 m-2 shadw"
+                <a class="btn btn-outline-primary py-1 m-2 block-shadow"
                    asp-area="Admin"
                    asp-controller="MovieInfo"
                    asp-action="Index" title="список фильмов">Список</a>
@@ -2024,14 +2024,14 @@
                 @* Страница фильма *@
                 @if (Model.MovieItem.PageInfoModel != null)
                 {
-                    <a class="btn btn-outline-dark py-1 m-2 shadw"
+                    <a class="btn btn-outline-dark py-1 m-2 block-shadow"
                        asp-area="Admin"
                        asp-controller="PageInfo"
                        asp-action="DetailsPage"
                        asp-route-pageId="@Model.MovieItem.PageInfoModelId"
                        title="данные страницы фильма">Страница</a>
 
-                    <a class="btn btn-outline-warning py-1 m-2 shadw"
+                    <a class="btn btn-outline-warning py-1 m-2 block-shadow"
                        href="@Url.Content(Model.MovieItem.PageInfoModel.PageFullPathWithData)"
                        title="страница фильма">Смотреть</a>
                 }
@@ -2042,14 +2042,14 @@
                 @* Страница серий *@
                 @if (Model.MovieItem.PageForMovieSeries != null)
                 {
-                    <a class="btn btn-outline-info py-1 m-2 shadw"
+                    <a class="btn btn-outline-info py-1 m-2 block-shadow"
                        asp-area="Admin"
                        asp-controller="PageInfo"
                        asp-action="DetailsPage"
                        asp-route-pageId="@Model.MovieItem.PageForMovieSeriesId"
                        title="данные страницы серий">Страница серий</a>
 
-                    <a class="btn btn-outline-success py-1 m-2 shadw"
+                    <a class="btn btn-outline-success py-1 m-2 block-shadow"
                        href="@Url.Content(Model.MovieItem.PageForMovieSeries.PageFullPathWithData)"
                        title="серии фильма">Серии</a>
                 }
@@ -2060,7 +2060,7 @@
                 @* Полная версия фильма *@
                 @if (Model.MovieItem.FullMovie != null)
                 {
-                    <a class="btn btn-outline-success py-1 m-2 shadw"
+                    <a class="btn btn-outline-success py-1 m-2 block-shadow"
                        asp-area="Admin"
                        asp-controller="PageInfo"
                        asp-action="DetailsPage"
@@ -2069,7 +2069,7 @@
 
                     @if (Model.MovieItem.FullMovie.PageInfoModel != null)
                     {
-                        <a class="btn btn-outline-primary py-1 m-2 shadw"
+                        <a class="btn btn-outline-primary py-1 m-2 block-shadow"
                            href="@Url.Content(Model.MovieItem.FullMovie.PageInfoModel.PageFullPathWithData)"
                            title="полная версия">Полный фильм</a>
                     }

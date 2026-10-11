@@ -59,7 +59,7 @@
 		<a asp-area="Admin"
 		   asp-controller="PageInfo"
 		   asp-action="AddPage"
-		   class="btn btn-outline-danger shadw py-1 mt-2 me-3 minwidth100px"
+		   class="btn btn-outline-danger block-shadow py-1 mt-2 me-3 minwidth100px"
 		   title="добавить страницу">
 
 			Добавить
@@ -70,7 +70,7 @@
 		   asp-controller="PageInfo"
 		   asp-action="Index"
 		   asp-route-pageCard="false"
-		   class="btn btn-outline-primary shadw py-1 mt-2 minwidth100px"
+		   class="btn btn-outline-primary block-shadow py-1 mt-2 minwidth100px"
 		   title="список страниц">
 
 			Список
@@ -96,7 +96,7 @@
 				   class="d-inline-block align-middle mt-1 w-50"
 				   type="text" />
 
-			<input class="btn btn-outline-success shadw py-1 me-md-3"
+			<input class="btn btn-outline-success block-shadow py-1 me-md-3"
 				   type="submit"
 				   value="Поиск"
 				   title="поиск страницы" />
@@ -116,13 +116,13 @@
 	{
 		<div class="col">
 
-			<div class="card h-100 me-1 mb-1 p-1 shadw borderforitem">
+			<div class="card h-100 me-1 mb-1 p-1 block-shadow borderforitem">
 
 				<vc:view-image image-id="@pageInfo.ImageFileModelId"
-							   css-class="card-img-top shadw rounded-3"
+							   css-class="card-img-top block-shadow rounded-3"
 							   icon-type="webicon300" />
 
-				<div class="card-body p-0 mt-2 shadw cardBodyBg">
+				<div class="card-body p-0 mt-2 block-shadow cardBodyBg">
 
 					@if (!string.IsNullOrEmpty(pageInfo.PageCardText))
 					{
@@ -143,7 +143,7 @@
 					   asp-controller="PageInfo"
 					   asp-action="DetailsPage"
 					   asp-route-pageId="@pageInfo.PageInfoModelId"
-					   class="btn btn-outline-info py-0 px-2 mb-1 ms-1 shadw"
+					   class="btn btn-outline-info py-0 px-2 mb-1 ms-1 block-shadow"
 					   title="подробно">
 
 						Info
@@ -154,7 +154,7 @@
 					   asp-controller="PageInfo"
 					   asp-action="EditPage"
 					   asp-route-pageId="@pageInfo.PageInfoModelId"
-					   class="btn btn-outline-dark py-0 px-2 mb-1 ms-1 shadw"
+					   class="btn btn-outline-dark py-0 px-2 mb-1 ms-1 block-shadow"
 					   title="редактировать">
 
 						Edit
@@ -162,7 +162,7 @@
 					</a>
 
 					<a href="@Url.Content(pageInfo.PageFullPathWithData)"
-					   class="btn btn-outline-primary py-0 px-2 mb-1 ms-1 shadw"
+					   class="btn btn-outline-primary py-0 px-2 mb-1 ms-1 block-shadow"
 					   title="просмотр">
 
 						Run
@@ -173,7 +173,7 @@
 					   asp-controller="PageInfo"
 					   asp-action="DeletePage"
 					   asp-route-pageId="@pageInfo.PageInfoModelId"
-					   class="btn btn-outline-danger py-0 px-2 mb-1 ms-1 shadw"
+					   class="btn btn-outline-danger py-0 px-2 mb-1 ms-1 block-shadow"
 					   title="удалить">
 
 						Del

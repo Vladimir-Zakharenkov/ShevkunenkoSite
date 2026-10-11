@@ -63,7 +63,7 @@
 		<a asp-area="Admin"
 		   asp-controller="ImageInfo"
 		   asp-action="AddImage"
-		   class="btn btn-outline-danger shadw py-1 mt-2 me-3 minwidth100px"
+		   class="btn btn-outline-danger block-shadow py-1 mt-2 me-3 minwidth100px"
 		   title="добавить картинку">
 
 			Добавить
@@ -76,7 +76,7 @@
 		   asp-action="Index"
 		   asp-route-searchString="@Model.SearchString"
 		   asp-route-pageCard="true"
-		   class="btn btn-outline-primary shadw py-1 mt-2 minwidth100px"
+		   class="btn btn-outline-primary block-shadow py-1 mt-2 minwidth100px"
 		   title="иконки картинок">
 
 			Иконки
@@ -101,7 +101,7 @@
 				   class="d-inline-block align-middle mt-1 w-50"
 				   type="text" />
 
-			<input class="btn btn-outline-success shadw py-1 me-md-3"
+			<input class="btn btn-outline-success block-shadow py-1 me-md-3"
 				   type="submit"
 				   value="Поиск"
 				   title="поиск картинки" />
@@ -117,7 +117,7 @@
 @* Таблица данных картинок *@
 <div class="row">
 
-	<div class="col m-1 shadw">
+	<div class="col m-1 block-shadow">
 
 		<div class="table-responsive">
 
@@ -223,7 +223,7 @@
 
 							<td scope="col" title="Информация">
 
-								<a class="btn btn-outline-primary py-1 px-1 shadw"
+								<a class="btn btn-outline-primary py-1 px-1 block-shadow"
 								   asp-area="Admin"
 								   asp-controller="ImageInfo"
 								   asp-action="DetailsImage"
@@ -236,7 +236,7 @@
 
 							<td scope="col" title="Редактировать">
 
-								<a class="btn btn-outline-success py-1 px-1 shadw"
+								<a class="btn btn-outline-success py-1 px-1 block-shadow"
 								   asp-area="Admin"
 								   asp-controller="ImageInfo"
 								   asp-action="EditImage"
@@ -250,7 +250,7 @@
 							</td>
 
 							<td scope="col" title="Удалить">
-								<a class="btn btn-outline-danger py-1 px-1 shadw"
+								<a class="btn btn-outline-danger py-1 px-1 block-shadow"
 								   asp-area="Admin"
 								   asp-controller="ImageInfo"
 								   asp-action="DeleteImage"

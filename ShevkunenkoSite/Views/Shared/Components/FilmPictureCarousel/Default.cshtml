@@ -13,7 +13,7 @@
     @* карусель 1*@
     <div class="col-4">
 
-        <div id="multipleItemCarousel1" class="carousel slide carousel-fade rounded-3 shadw" data-bs-ride="carousel" data-bs-interval="3000">
+        <div id="multipleItemCarousel1" class="carousel slide carousel-fade rounded-3 block-shadow" data-bs-ride="carousel" data-bs-interval="3000">
 
             <div class="carousel-inner">
 
@@ -21,7 +21,7 @@
                 {
                     @if (i == 1)
                     {
-                        <div class="carousel-item active p-0 p-sm-1 rounded-3 shadw borderforitem">
+                        <div class="carousel-item active p-0 p-sm-1 rounded-3 block-shadow borderforitem">
 
                             <a asp-area=""
                                asp-controller="Films"
@@ -30,10 +30,10 @@
                                asp-route-filmCaption="@Model.FilmCaption"
                                asp-route-pageNumber=@null
                                title="@picture.ImageAltTitle"
-                               class="">
+                               class="d-block w-100">
 
                                 <vc:view-image image-id=@picture.ImageFileModelId
-                                               css-class="d-block w-100 shadw"
+                                               css-class="d-block w-100 block-shadow"
                                                icon-type="webicon300" />
 
                             </a>
@@ -44,7 +44,7 @@
                     }
                     else
                     {
-                        <div class="carousel-item p-0 p-sm-1 rounded-3 shadw borderforitem">
+                        <div class="carousel-item p-0 p-sm-1 rounded-3 block-shadow borderforitem">
 
                             <a asp-area=""
                                asp-controller="Films"
@@ -56,7 +56,7 @@
                                class="">
 
                                 <vc:view-image image-id=@picture.ImageFileModelId
-                                               css-class="d-block w-100 shadw"
+                                               css-class="d-block w-100 block-shadow"
                                                icon-type="webicon300" />
 
                             </a>
@@ -74,7 +74,7 @@
     @* карусель 2*@
     <div class="col-4">
 
-        <div id="multipleItemCarousel2" class="carousel slide carousel-fade rounded-3 shadw" data-bs-ride="carousel" data-bs-interval="5000">
+        <div id="multipleItemCarousel2" class="carousel slide carousel-fade rounded-3 block-shadow" data-bs-ride="carousel" data-bs-interval="5000">
 
             <div class="carousel-inner">
 
@@ -82,7 +82,7 @@
                 {
                     @if (j == 1)
                     {
-                        <div class="carousel-item active p-0 p-sm-1 rounded-3 shadw borderforitem">
+                        <div class="carousel-item active p-0 p-sm-1 rounded-3 block-shadow borderforitem">
 
                             <a asp-area=""
                                asp-controller="Films"
@@ -94,7 +94,7 @@
                                class="">
 
                                 <vc:view-image image-id=@picture.ImageFileModelId
-                                               css-class="d-block w-100 shadw"
+                                               css-class="d-block w-100 block-shadow"
                                                icon-type="webicon300" />
 
                             </a>
@@ -105,7 +105,7 @@
                     }
                     else
                     {
-                        <div class="carousel-item p-0 p-sm-1 rounded-3 shadw borderforitem">
+                        <div class="carousel-item p-0 p-sm-1 rounded-3 block-shadow borderforitem">
 
                             <a asp-area=""
                                asp-controller="Films"
@@ -117,7 +117,7 @@
                                class="">
 
                                 <vc:view-image image-id=@picture.ImageFileModelId
-                                               css-class="d-block w-100 shadw"
+                                               css-class="d-block w-100 block-shadow"
                                                icon-type="webicon300" />
 
                             </a>
@@ -135,7 +135,7 @@
     @* карусель 3*@
     <div class="col-4">
 
-        <div id="multipleItemCarousel3" class="carousel slide carousel-fade rounded-3 shadw" data-bs-ride="carousel" data-bs-interval="4000">
+        <div id="multipleItemCarousel3" class="carousel slide carousel-fade rounded-3 block-shadow" data-bs-ride="carousel" data-bs-interval="4000">
 
             <div class="carousel-inner">
 
@@ -143,7 +143,7 @@
                 {
                     @if (k == 1)
                     {
-                        <div class="carousel-item active p-0 p-sm-1 rounded-3 shadw borderforitem">
+                        <div class="carousel-item active p-0 p-sm-1 rounded-3 block-shadow borderforitem">
 
                             <a asp-area=""
                                asp-controller="Films"
@@ -155,7 +155,7 @@
                                class="">
 
                                 <vc:view-image image-id=@picture.ImageFileModelId
-                                               css-class="d-block w-100 shadw"
+                                               css-class="d-block w-100 block-shadow"
                                                icon-type="webicon300" />
 
                             </a>
@@ -166,7 +166,7 @@
                     }
                     else
                     {
-                        <div class="carousel-item p-0 p-sm-1 rounded-3 shadw borderforitem">
+                        <div class="carousel-item p-0 p-sm-1 rounded-3 block-shadow borderforitem">
 
                             <a asp-area=""
                                asp-controller="Films"
@@ -178,7 +178,7 @@
                                class="">
 
                                 <vc:view-image image-id=@picture.ImageFileModelId
-                                               css-class="d-block w-100 shadw"
+                                               css-class="d-block w-100 block-shadow"
                                                icon-type="webicon300" />
 
                             </a>
