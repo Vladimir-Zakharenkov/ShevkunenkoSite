@@ -54,17 +54,19 @@
 </div>
 
 @* Кнопки «Добавить» - «Иконки» - Поиск картинок *@
-<div class="row mb-4">
+<div class="row mb-4 justify-content-center">
 
-    @* Добавить картинку - Иконки картинок *@
-    <div class="col-12 col-md-6 col-lg-4">
+    @* Кнопки «Добавить» - «Иконки» *@
+    <div class="col-12 col-md-6 col-lg-4 my-3">
 
         <a asp-area="Admin"
            asp-controller="ImageInfo"
            asp-action="AddImage"
-           class="btn btn-outline-danger block-shadow py-1 mt-2 me-3 minwidth100px"
+           class="btn btn-outline-danger block-shadow py-1 me-3 minwidth100px"
            title="добавить картинку">
+
             Добавить
+
         </a>
 
         <a asp-area="Admin"
@@ -72,15 +74,17 @@
            asp-action="Index"
            asp-route-searchString="@Model.SearchString"
            asp-route-pageCard="true"
-           class="btn btn-outline-primary block-shadow py-1 mt-2 minwidth100px"
+           class="btn btn-outline-primary block-shadow py-1 minwidth100px"
            title="иконки картинок">
+
             Иконки
+
         </a>
 
     </div>
 
-    @* Поиск картинок *@
-    <div class="col-12 col-md-6 col-lg-8 mb-2">
+    @* Форма поиска картинок *@
+    <div class="col-11 col-md-6 col-lg-7 px-2 py-1 mb-2">
 
         <form method="get"
               asp-area="Admin"
@@ -91,7 +95,7 @@
             <input type="hidden" name="pageCard" value="false" />
 
             <input asp-for="SearchString"
-                   class="d-inline-block align-middle mt-1 w-50"
+                   class="align-middle p-1 mt-1 w-50 border border-1 border-black block-shadow"
                    type="text" />
 
             <input class="btn btn-outline-success block-shadow py-1 me-md-3"
@@ -177,36 +181,48 @@
                             <td scope="col" class="d-none d-lg-table-cell text-start">@PickHeight(image)</td>
 
                             <td scope="col" title="Информация">
+
                                 <a class="btn btn-outline-primary py-1 px-1 block-shadow"
                                    asp-area="Admin"
                                    asp-controller="ImageInfo"
                                    asp-action="DetailsImage"
                                    asp-route-imageId="@image.ImageFileModelId"
                                    title="Информация о картинке">
+
                                     Info
+
                                 </a>
+
                             </td>
 
                             <td scope="col" title="Редактировать">
+
                                 <a class="btn btn-outline-success py-1 px-1 block-shadow"
                                    asp-area="Admin"
                                    asp-controller="ImageInfo"
                                    asp-action="EditImage"
                                    asp-route-imageId="@image.ImageFileModelId"
                                    title="Изменить картинку">
+
                                     Edit
+
                                 </a>
+
                             </td>
 
                             <td scope="col" title="Удалить">
+
                                 <a class="btn btn-outline-danger py-1 px-1 block-shadow"
                                    asp-area="Admin"
                                    asp-controller="ImageInfo"
                                    asp-action="DeleteImage"
                                    asp-route-imageId="@image.ImageFileModelId"
                                    title="Удалить картинку">
+
                                     Del
+
                                 </a>
+
                             </td>
 
                         </tr>
