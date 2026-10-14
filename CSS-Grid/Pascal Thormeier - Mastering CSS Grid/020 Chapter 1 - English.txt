@@ -1,0 +1,14 @@
+Currently, all columns are the same size. If we want one column twice the size of the other, we increase the value of that column to 2fr. For example, if we wish to have a 1/4 sidebar and 3/4 main content slot, we adjust the grid-template-column rule to 1fr 3fr. Then, if wanted to have a 1/6 header, 1/6 footer, and the other 2/3 (4/6 in a six-column layout) for the main content, we would use the grid-template-rows: 1fr 4fr 1fr rule.
+
+We see that the size of the grid rows and columns depends on the total number of free space units. If we think of a grid as 100% wide and 100% tall, we can calculate the size of each row and column as percentages. For example, in a layout with four columns of size 1fr, each column takes up 25% of the space.
+
+In a two-column layout with sizes 1fr and 3fr, however, the total number of free space units is 4, resulting in 1fr being 25% wide and 3fr equaling 75% width. The total number of fr units determines the size of each fr unit.
+
+Let’s adjust our example to this new layout:
+
+.container {  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr 4fr 1fr;
+}
+
+This won’t affect the assigned numbers (they just stay the same), but we can see that this has the desired effect when inspecting, as illustrated in the following screenshot:
