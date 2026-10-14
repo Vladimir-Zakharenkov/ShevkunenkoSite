@@ -1,0 +1,25 @@
+JavaScript dependencies, are available for all major operating systems too.
+
+To handle different versions of NodeJS, either a Docker setup or Node Version Manager (NVM) is recommended. We also require a modern browser that supports CSS Grid and offers grid tooling and a grid debugger. Having multiple browsers installed helps us to see the differences in the development tools and get used to them.
+
+If you are using the digital version of this book, we advise you to type the code yourself or access the code from the book’s GitHub repository (a link is available in the next section). Doing so will help you avoid any potential errors related to the copying and pasting of code.
+
+Download the example code files
+You can download the example code files for this book from GitHub at https://github.com/PacktPublishing/Mastering-CSS-Grid. If there’s an update to the code, it will be updated in the GitHub repository.
+
+We also have other code bundles from our rich catalog of books and videos available at https://github.com/PacktPublishing/. Check them out!
+
+Download the color images
+We also provide a PDF file that has color images of the screenshots and diagrams used in this book. You can download it here: https://packt.link/0FCcj.
+
+Conventions used
+There are a number of text conventions used throughout this book.
+
+Code in text: Indicates code words in text, database table names, folder names, filenames, file extensions, pathnames, dummy URLs, user input, and Twitter handles. Here is an example: “The total number of fr determines the size of each fr.”
+
+A block of code is set as follows:
+
+.container {  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr 4fr 1fr;
+}

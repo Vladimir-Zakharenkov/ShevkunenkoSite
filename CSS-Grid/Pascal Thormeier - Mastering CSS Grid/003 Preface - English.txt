@@ -1,0 +1,38 @@
+What this book covers
+
+Chapter 1, Understanding the Basic Rules and Structures for CSS Grid, covers the fundamentals, such as grid terminology, creating your first grids, arranging grid elements, and grid templates.
+
+Chapter 2, Project Introduction: What We’ll Work on and First Tasks, introduces the accompanying project that we will work on throughout the book.
+
+Chapter 3, Building Advanced Grid Layouts, introduces advanced features of CSS Grid, such as the row and column axes, how to align and justify grid content, and advanced grid templates.
+
+Chapter 4, Understanding and Creating Responsive and Fluid Grid Layouts, covers what responsive and fluid layouts are, what best practices exist, and how to build the layouts with CSS Grid.
+
+Chapter 5, Implementing Layouts With Flexbox and CSS Grid, explores the differences and similarities between CSS Grid and Flexbox and their specific use cases.
+
+Chapter 6, Benefits of Grid Layouts and When Not to Use Them, discusses the benefits and drawbacks of grid layouts related to design and usability and introduces alternative layout methods.
+
+Chapter 7, Polyfilling CSS Grid’s Missing Features, introduces PostCSS and JavaScript to implement missing features and better understand how they will work once introduced.
+
+Chapter 8, Grids in the Wild – How Frameworks Implement Grids, discusses the different approaches to the grids of eight different CSS frameworks while explaining how to implement standard use cases.
+
+Chapter 9, Quick Reference and Cheat Sheet, gives a condensed overview of all CSS Grid features, terminology, and the most important frameworks and offers code snippets for standard use cases.
+
+To get the most out of this book
+We recommend some knowledge of the basics and advanced CSS and JavaScript features, such as custom CSS properties or Promises. Knowing how Flexbox works is also recommended. A solid knowledge of HTML is assumed.
+
+Software/hardware covered in the book
+
+Operating system requirements
+
+CSS Grid
+
+Windows, macOS, or Linux
+
+Flexbox
+
+PostCSS
+
+JavaScript
+
+Since these technologies primarily run in the browser, they can be used on any operating system. NodeJS, used to execute some code snippets and create a web server for the accompanying project, and NPM, used to install

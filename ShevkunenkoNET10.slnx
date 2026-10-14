@@ -8,7 +8,12 @@
     <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/001 Preface - Russian.txt" />
     <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/002 Preface - English.txt" />
     <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/002 Preface - Russian.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/003 Preface - English.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/003 Preface - Russian.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/004 Preface - English.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/004 Preface - Russian.txt" />
   </Folder>
+  <Folder Name="/CSS-Grid/Pascal Thormeier - Mastering CSS Grid/Examples/" />
   <Folder Name="/Icons/">
     <File Path="icons.txt" />
   </Folder>

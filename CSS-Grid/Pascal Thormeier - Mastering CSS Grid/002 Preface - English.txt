@@ -16,5 +16,3 @@ Who this book is for
 This book is for aspiring (frontend) web developers who want to improve their layout skills and learn the ins and outs of this magnificent tool.
 
 This book may also benefit UX experts with a rudimentary knowledge of frontend development who want to learn an effective tool to create prototypes faster.
-
-What this book covers
