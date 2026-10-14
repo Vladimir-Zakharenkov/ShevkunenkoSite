@@ -401,7 +401,7 @@ public class BooksController(
 
                 var arrayOfItems = await allItems.ToArrayAsync();
 
-                photoAlbumView.AllImageFiles = arrayOfItems;
+                photoAlbumView.AllImageFiles = [.. arrayOfItems];
 
                 photoAlbumView.TotalItems = arrayOfItems.Length;
 
@@ -470,7 +470,7 @@ public class BooksController(
 
             var arrayOfItems = await allItems.ToArrayAsync();
 
-            photoAlbumView.AllImageFiles = arrayOfItems;
+            photoAlbumView.AllImageFiles = [.. arrayOfItems];
 
             photoAlbumView.TotalItems = arrayOfItems.Length;
 

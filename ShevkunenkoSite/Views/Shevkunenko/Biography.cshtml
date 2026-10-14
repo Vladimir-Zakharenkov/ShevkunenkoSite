@@ -1,11 +1,14 @@
 ﻿@model PageInfoModel
 
-<article class="paragraph fluid-font-size" itemprop="text">
+<span class="d-inline-block float-start me-4 width30percent">
 
-    <vc:view-image 
-        image-id="acc00dc9-0c64-4760-7975-08db00993399" 
-        css-class="rounded float-start me-2 width30percent" 
-        icon-type="webicon300" />
+    <vc:view-image image-id="acc00dc9-0c64-4760-7975-08db00993399"
+                   css-class=""
+                   icon-type="webicon" />
+
+</span>
+
+<article data-ap-blacklist class="paragraph fluid-font-size" itemprop="text">
 
     @Html.Raw(Model.TextOfPage)
 

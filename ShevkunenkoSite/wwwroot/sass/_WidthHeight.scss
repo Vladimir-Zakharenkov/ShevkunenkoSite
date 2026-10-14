@@ -97,6 +97,14 @@
     min-width: 180px;
 }
 
+@media (max-width: 370px) {
+    .width30percent {
+        width: 100%;
+        float: none !important;
+        margin: 0 0 1rem 0 !important;
+    }
+}
+
 .minwidth30px {
     min-width: 30px !important;
 }

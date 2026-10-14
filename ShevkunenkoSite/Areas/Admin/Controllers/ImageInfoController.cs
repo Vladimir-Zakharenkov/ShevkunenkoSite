@@ -15,31 +15,33 @@ public class ImageInfoController(
 
     #region Список картинок
 
-    public async Task<ViewResult> Index
+    public async Task<IActionResult> Index
         (
         string? searchString,
         int pageNumber = 1,
         bool pageCard = false
         )
     {
-        var allSiteImages = await imageContext.ImageFiles.ToListAsync();
+        // Серверная выборка: фильтр + сортировка + пагинация
+        IQueryable<ImageFileModel> query = imageContext.ImageFiles
+                                                        .AsNoTracking()
+                                                        .ImageSearch(searchString)
+                                                        .OrderBy(siteImage => siteImage.SortOfPicture);
 
-        if (!searchString.IsNullOrEmpty())
-        {
-            allSiteImages = [.. allSiteImages.ImageSearch(searchString).OrderBy(siteImage => siteImage.SortOfPicture)];
-        }
+        List<ImageFileModel> pageItems = await query
+                                            .Skip((pageNumber - 1) * DataConfig.NumberOfItemsPerPage)
+                                            .Take(DataConfig.NumberOfItemsPerPage)
+                                            .ToListAsync();
 
         #region Выбор представления - список или иконки
 
         ItemsListViewModel itemList = new()
         {
-            AllImageFiles = [.. allSiteImages
-                     .Skip((pageNumber - 1) * DataConfig.NumberOfItemsPerPage)
-                     .Take(DataConfig.NumberOfItemsPerPage)],
+            AllImageFiles = pageItems,
 
             #region Свойства PagingInfoViewModel
 
-            TotalItems = allSiteImages.Count,
+            TotalItems = await query.CountAsync(),
 
             ItemsPerPage = DataConfig.NumberOfItemsPerPage,
 
@@ -52,14 +54,9 @@ public class ImageInfoController(
             #endregion
         };
 
-        if (pageCard == false)
-        {
-            return View(itemList);
-        }
-        else
-        {
-            return View("IconList", itemList);
-        }
+        return pageCard == false
+            ? View(itemList)
+            : View("IconList", itemList);
 
         #endregion
     }

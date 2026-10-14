@@ -28,7 +28,7 @@ public class ItemsListViewModel : PagingInfoViewModel
 
     #region Картинки
 
-    public ImageFileModel[]? AllImageFiles { get; set; }
+    public List<ImageFileModel> AllImageFiles { get; set; } = [];
 
     #endregion
 

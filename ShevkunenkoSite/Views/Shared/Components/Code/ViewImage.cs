@@ -4,68 +4,66 @@ public class ViewImage(
     IImageFileRepository imageFileContext
     ) : ViewComponent
 {
-    readonly ViewImageViewModel viewImageViewModel = new();
+    private static readonly HashSet<string> AllowedIconTypes =
+    [
+        "webhd", "webimage", "webicon300", "webicon200", "webicon100",
+        "hd", "image", "icon300", "icon200", "icon100"
+    ];
 
     public async Task<IViewComponentResult> InvokeAsync(string? imageId, string? cssClass, string? iconType)
     {
+        ImageFileModel? image = null;
+
         #region Поиск картинки по GUID
 
-        if (Guid.TryParse(imageId, out Guid imageIdGuid)
-            & await imageFileContext.ImageFiles
-                .Where(img => img.ImageFileModelId == imageIdGuid)
-                .AnyAsync())
+        if (Guid.TryParse(imageId, out var guid))
         {
-            viewImageViewModel.ImageItem = await imageFileContext.ImageFiles.FirstAsync(img => img.ImageFileModelId == imageIdGuid);
+            image = await imageFileContext.ImageFiles
+                .FirstOrDefaultAsync(img => img.ImageFileModelId == guid);
         }
 
         #endregion
 
-        #region Поиск картинки по названию файла
+        #region Если по GUID не нашли, ищем по названию файла
 
-        else if (await imageFileContext.ImageFiles.Where(img => img.WebImageFileName == imageId || img.ImageFileName == imageId).AnyAsync())
-        {
-            viewImageViewModel.ImageItem = await imageFileContext.ImageFiles.FirstAsync(img => img.WebImageFileName == imageId || img.ImageFileName == imageId);
-        }
+        image ??= await imageFileContext.ImageFiles
+            .FirstOrDefaultAsync(img => img.WebImageFileName == imageId
+                                     || img.ImageFileName == imageId);
 
         #endregion
 
         #region Если ничего не найдено, выводим картинку NoImage
 
-        else
+        image ??= await imageFileContext.ImageFiles
+            .FirstOrDefaultAsync(img => img.ImageFileModelId == Guid.Parse(DataConfig.NoImage));
+
+        #endregion
+
+        #region Если не нашли NoImage
+
+        if (image is null)
         {
-            viewImageViewModel.ImageItem = await imageFileContext.ImageFiles.FirstAsync(img => img.ImageFileModelId == Guid.Parse(DataConfig.NoImage));
+            var noImageGuid = Guid.Parse(DataConfig.NoImage);
+
+            image = await imageFileContext.ImageFiles
+                .FirstOrDefaultAsync(img => img.ImageFileModelId == noImageGuid)
+                ?? throw new InvalidOperationException(
+                    $"Не найдено изображение NoImage с Id = {DataConfig.NoImage}");
         }
 
         #endregion
 
-        #region Размер и тип файла картинки
-
-        if (iconType == "webhd"
-                || iconType == "webimage"
-                || iconType == "webicon300"
-                || iconType == "webicon200"
-                || iconType == "webicon100"
-                || iconType == "hd"
-                || iconType == "image"
-                || iconType == "icon300"
-                || iconType == "icon200"
-                || iconType == "icon100")
+        var vm = new ViewImageViewModel
         {
-            viewImageViewModel.IconType = iconType;
-        }
-        else
-        {
-            viewImageViewModel.IconType = "webimage";
-        }
+            ImageItem = image,
+            IconType = iconType is not null && AllowedIconTypes.Contains(iconType) 
+                        ? iconType 
+                        : "webimage",
+            CssClass = string.IsNullOrEmpty(cssClass)
+                        ? "img-fluid w-100"
+                        : $"img-fluid w-100 {cssClass}"
+        };
 
-        #endregion
-
-        #region CSS для картинки
-
-        viewImageViewModel.CssClass = string.IsNullOrEmpty(cssClass)  ? "img-fluid w-100" : ($"img-fluid w-100 {cssClass}");
-
-        #endregion
-
-        return View(viewImageViewModel);
+        return View(vm);
     }
 }
