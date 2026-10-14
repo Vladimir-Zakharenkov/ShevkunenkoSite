@@ -1,0 +1,5 @@
+This part has the following chapters:
+
+• Chapter 1, Understanding the Basic Rules and Structures for CSS Grid
+• Chapter 2, Project Introduction: What We’ll Work on and First Tasks
+• Chapter 3, Building Advanced Grid Layouts
