@@ -22,6 +22,7 @@ JavaScript-зависимости, также доступны для всех �
 
 Блок кода оформляется следующим образом:
 
+
 .container {
   display: grid;
   grid-template-columns: 1fr 3fr;
