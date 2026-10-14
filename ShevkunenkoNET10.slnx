@@ -5,6 +5,9 @@
   <Folder Name="/CSS-Grid/" />
   <Folder Name="/CSS-Grid/Pascal Thormeier - Mastering CSS Grid/">
     <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/001 Preface - English.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/001 Preface - Russian.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/002 Preface - English.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/002 Preface - Russian.txt" />
   </Folder>
   <Folder Name="/Icons/">
     <File Path="icons.txt" />

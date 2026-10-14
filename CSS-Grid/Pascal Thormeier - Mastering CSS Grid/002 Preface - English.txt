@@ -1,0 +1,20 @@
+There are issues, however. The problems with table layouts and floating elements were manifold. First, they needed a large amount of boilerplate code and sometimes felt like pure magic. To correctly align floating elements, we must also consider all elements around them.
+
+Second, a table is a way of displaying data, not a layout tool. People were not nearly as aware of accessibility as they are today, and we still have room for improvement. When early screen readers encountered a table, they interpreted it as a table. And tables have data, not navigations.
+
+Flexbox solved many positioning problems. There were many tricks to center-align elements both vertically and horizontally. Some are still viable today. Flexbox simplified the task, and the code was much more straightforward. The intent of display: flex; justify-content: center; is much more explicit than the one of margin: 0 auto;.
+
+But what ultimately happened was that people – again – used Flexbox to create grid layouts almost immediately. Many frameworks offer a .container CSS class that applies Flexbox to the element and then works with column classes to achieve a horizontal grid. Vertical grids work with nested flexboxes. So, Flexbox is a layout tool, but we still needed to go one or two steps further for grids.
+
+With the release of CSS Grid, developers finally got what they had improvised since the inception of the World Wide Web – a working grid layout tool. Finally, we could build grids as they had been implemented in many other languages and frameworks for ages. For reference, the oldest occurrence of JavaFX’s GridPane I could find on the web is from 2003, almost 15 years before the production-readiness of CSS Grid.
+
+And with this, our little journey through the decades is over. Today, thanks to the deprecation of Microsoft’s Internet Explorer 11 in 2022, every significant browser fully supports CSS Grid. As a result, we can use it to finally live up to the fantastic designs UX experts come up with and use grids, instead of thinking about how we can make something behave like a grid.
+
+However, there is one use case for which we still need to go back to nested tables, floating elements, and non-Flexbox, non-CSS Grid layouts – email templates. Of course, there are solutions to that, too, but that’s a different story.
+
+Who this book is for
+This book is for aspiring (frontend) web developers who want to improve their layout skills and learn the ins and outs of this magnificent tool.
+
+This book may also benefit UX experts with a rudimentary knowledge of frontend development who want to learn an effective tool to create prototypes faster.
+
+What this book covers
