@@ -2,6 +2,10 @@
   <Folder Name="/Bootstrap/">
     <File Path="bootstrap-download.txt" />
   </Folder>
+  <Folder Name="/CSS-Grid/" />
+  <Folder Name="/CSS-Grid/Pascal Thormeier - Mastering CSS Grid/">
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/001 Preface - English.txt" />
+  </Folder>
   <Folder Name="/Icons/">
     <File Path="icons.txt" />
   </Folder>
@@ -17,9 +21,6 @@
   </Folder>
   <Folder Name="/MetaDataForMedia/">
     <Project Path="MetaDataForMedia/ConsoleApp1/ConsoleApp1.csproj" />
-  </Folder>
-  <Folder Name="/MicroSoft Tutorials/">
-    <Project Path="MicroSoft Tutorials/TodoApi/TodoApi.csproj" Id="b58716aa-fa5a-4033-b214-dd50505c88e7" />
   </Folder>
   <Folder Name="/Руководство по ASP.NET Core 10/" />
   <Folder Name="/Руководство по ASP.NET Core 10/Глава 02/">

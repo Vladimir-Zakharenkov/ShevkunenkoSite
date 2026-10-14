@@ -1,0 +1,25 @@
+Preface
+
+Hello, world! With this book, you hold a guide to a CSS feature that the entire frontend development community has longed for since the early days of HTML and CSS – CSS Grid. This book covers all of CSS Grid:
+
+• The basics
+• The advanced things
+• How grids can be used in design
+• When not to use grids at all
+• CSS Grid’s relation to its cousin Flexbox
+
+You will also find an exhaustive cheat sheet and quick reference at the end of the book.
+
+However, before we dive into the details, let me take you on a journey into the early 2000s, when I started to learn to program while still in high school.
+
+Back then, before the invention of smartphones – the first iPhone was released in June 2007 – we didn’t have much. CSS 2 was the current version, with CSS 2.1 not being released until 2011. CSS 2 was the version that brought us relative and absolute positioning, but we would not get the first version of Flexbox until 2015, and CSS Grid only in 2018.
+
+According to legend, the original purpose of HTML was to display scientific papers. In any case, scientific papers don’t need precise, fancy layouts. Instead, they need typography, such as headings and paragraphs, images, and tables.
+
+However, as soon as the World Wide Web took off, people did come up with fancy layouts, and they used the tools at hand. For example, if configured suitably, you can use a table to build something that resembles a grid layout. And that’s what we did – all the time, everywhere.
+
+At some point, people started using floating elements. This feature was initially intended to make text float around images and other objects, but it was more or less instantly used as a layout tool for entire websites.
+
+We defined a grid with the width of the elements and their position in a document. So, for example, a header would have a width of 100% and not be floating, whereas a sidebar with navigation would be considered a left-floating element or, at times, a right-floating one if you wanted your website to be unique.
+
+We slowly start to see a pattern here. In the early days, people used tools in ways they were not intended. There’s nothing wrong with that; that’s how innovation happens. A quote by the famous webcomic Saturday Morning Breakfast Cereal that I love even says that the “deep abiding goal of any engineer is to take a thing and make it do a thing it wasn’t meant to do.” And that’s fine!
