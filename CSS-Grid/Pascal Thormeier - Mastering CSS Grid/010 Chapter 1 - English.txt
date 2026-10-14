@@ -1,0 +1,6 @@
+First, we need to know what grids are and what their purpose is. In short, grids aim to arrange items in a consistent manner. Grids provide clarity about content structure and sizing and allow us to steer where things are placed. Grids provide structure.
+
+To achieve this understanding, we first have a look at some standard grid terminology, before creating our first CSS grid.
+
+Defining grid terminology
+We first need to establish some words we’ll use throughout the book. The following diagram will explain to us the most important terms:

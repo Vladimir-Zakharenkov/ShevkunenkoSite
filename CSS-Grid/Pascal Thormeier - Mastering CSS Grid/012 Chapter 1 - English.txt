@@ -1,0 +1,24 @@
+We see many different elements here, as follows:
+
+The grid is the whole structure. It consists of all arranged elements, the layout, and its attributes.
+A grid is made up of grid cells. These grid cells can have different sizes, depending on the row and column definitions we give the grid. A grid cell doesn’t necessarily have content.
+A grid has several grid lines. These are the lines that separate grid cells and make up the structure of the grid. They can be horizontal or vertical. In the diagram, three grid lines are marked: the two surrounding Column 1 and a single line between Row 1 and Row 2.
+These grid lines can become gaps. Gaps are also sometimes called gutters. Gaps are used to separate grid tracks and allow us to add white space between elements. Gaps between rows don’t have to be the same size as gaps between columns.
+Between two adjacent parallel grid lines, we see rows and columns of grid cells, also known as grid tracks or simply tracks. Two such tracks are marked in blue in the diagram: Row 5 and Column 1.
+When we place content within a grid, we speak of them as grid items. Grid items can be images, div tags, text nodes, or any other HTML element we want to place and arrange. A grid item can be seen in Row 1, Column 4 in the diagram.
+When we want to name specific groups of one or more cells, we speak of a grid area. Those grid areas are delimited by four grid lines and are, therefore, rectangles.
+With these terms, we now have a common language to use when we talk about grids. We’ll use these terms throughout the book when defining grids.
+
+Creating our first grid
+In many ways, CSS Grid behaves like Flexbox. It needs a grid container and elements to align. In most cases, such as general page layouts or when working with teaser elements to link to additional content, we use <div> elements. Teaser elements can be built with <article> elements, too. We don’t have to, though! When working with semantic HTML, we might as well use the elements that fit best: <main>, <aside>, <header>, <footer>, <nav>, and more.
+
+To start, let’s consider the following HTML structure. It resembles a standard Document Object Model (DOM) that we would use to structure any website and features most of the elements we would typically use when we develop a page’s layout:
+
+<div class="container">  <header><!-- Header with a logo, navigation, etc. -->
+    </header>
+  <aside><!—Partially related things like social buttons --
+   ></aside>
+  <main><!-- Main content, headings, teasers, etc. -->
+    </main>
+  <footer><!-- Footer with contact, FAQ, etc. --></footer>
+</div>

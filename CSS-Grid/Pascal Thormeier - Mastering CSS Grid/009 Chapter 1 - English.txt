@@ -1,0 +1,26 @@
+Chapter 1
+
+Understanding the Basic Rules and Structures for CSS Grid
+
+Welcome to the first chapter of this book titled Mastering CSS Grid. As the title suggests, this book helps us to become pros at this layout technique and learn about all its specialties and details. Throughout the book, we’ll work on various tasks using grid layouts in an overarching project called Awesome Analytics.
+
+In the first chapter of this book, we will start introducing you to CSS Grid. We must first establish its basic CSS rules to understand how the grid model works. To do that, we’ll look at how grids are structured and how we can visually represent them. We’ll learn about the CSS rules used to create grid layouts, how to combine them to achieve different arrangements, and how to use shortcut rules to shorten our code.
+
+A look at how the development tools of Google Chrome and other Chromium-based browsers visualize grids will help us understand how we can debug and understand existing grids. This chapter will not work with our overarching project just yet—we’ll first cover some theory.
+
+So, in this chapter, we will cover the following topics:
+
+Understanding the basic rules related to CSS Grid
+Using grid templates
+Grid flow
+Understanding special grid-related units, keywords, and functions
+Using shortcuts
+Technical requirements
+For this chapter, we’ll need roughly the same things as for most chapters, as follows:
+
+A modern browser that supports CSS Grid and offers grid debugging and a grid toolset
+An integrated development environment (IDE) or text editor, such as WebStorm, VS Code, or Vim, with HTML and CSS syntax highlighting
+Internet access is an advantage but not necessary
+We can find several of the code examples on GitHub in this repository: https://github.com/PacktPublishing/Mastering-CSS-Grid/tree/main/chapter1.
+
+All screenshots and examples have been made with a Chromium-based browser.

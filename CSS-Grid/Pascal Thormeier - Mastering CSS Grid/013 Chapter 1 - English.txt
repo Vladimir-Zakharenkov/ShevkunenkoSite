@@ -1,0 +1,36 @@
+We see four elements that we want to align in a grid, as follows:
+
+• A header that might contain a logo or navigation
+• An element that will contain content not directly related to the main page content
+• An element for the actual content
+• A footer that displays things such as contact details, information about the company, a link to the FAQ, and similar additional controls
+
+For ease of illustration, we will apply the following CSS upfront (the code has nothing to do with CSS Grid just yet and only serves illustration purposes):
+
+/* 01_page_layout.html,  Micro-resetting */body { padding: 0; margin: 0; }
+* { box-sizing: border-box; font-size: 25px; }
+/* Making things visible on the page */
+.container {
+  border: 2px solid #555;
+  padding: 8px;
+  min-height: 100vh;
+}
+header {
+  border: 2px solid #dd0808; /* Dark red */
+  background-color: #ff6666; /* Light red */
+}
+aside {
+  border: 2px solid #0ba7c6; /* Dark cyan */
+  background-color: #74ddf2; /* Light cyan */
+}
+main {
+  border: 2px solid #6f09e5; /* Dark purple */
+  background-color: #b880f7; /* Light purple */
+}
+footer {
+  border: 2px solid #c4be0d; /* Dark yellow */
+  background-color: #f7f380; /* Light yellow */
+}
+This CSS code will color our containers and ensure we can track which element goes where. When loaded up in a browser, this results in four colored stripes along the screen. That’s what we expected. After all, our DOM does not have any content.
+
+Things get interesting, though, when we add the following CSS code:

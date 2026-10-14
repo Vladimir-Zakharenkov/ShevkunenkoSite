@@ -1,0 +1,19 @@
+Arranging grid elements
+
+So far, CSS Grid has taken care of arranging things for us—in our example, it automatically created four rows because there were four elements, spaced them evenly, and placed them in the same order as they appeared in the DOM.
+
+However, often, we don’t want this, especially when wanting responsive layouts. For example, on a mobile, social media buttons might move to the bottom of the page and become sticky elements, whereas on a desktop they should stay in one place, such as the sidebar.
+
+To be able to move elements, we first need to state the number of grid rows and grid columns explicitly. We achieve this by using the grid-template-rows and grid-template-columns rules, which go into the container element and will pre-create a grid structure for us. We specify the number of grid columns and rows by providing their size, separated by spaces. The size may vary from row to row and column to column.
+
+The total number of grid cells may be larger than the total amount of elements we’d like to arrange. We can, for example, define a grid with three rows and three columns and only arrange five items within it—a case that’s common in galleries or news websites. The remaining grid cells remain empty.
+
+For the time being, let’s work with 1fr. fr is a unit that has been introduced to CSS with CSS Grid and works exclusively with grids. 1fr essentially means: Take one unit of free space for this grid element. We will discuss the fr unit later in this chapter. So, if we used it for grid rows, this means taking one unit of free space for this grid row. The same applies to columns too.
+
+Let’s change our example to a 2x3 grid of evenly spaced grid elements by applying the following CSS code to the container class:
+
+.container {  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+As we can see, we used 1fr twice in grid-template-columns, resulting in two equally sized columns, and three times in grid-template-rows, resulting in three equally sized rows. When inspected, Chrome shows us that it has now created a grid structure, as indicated in the following screenshot:

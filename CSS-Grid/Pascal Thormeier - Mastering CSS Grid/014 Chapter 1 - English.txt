@@ -1,0 +1,5 @@
+.container {  display: grid; /* Marks this class as a grid container */
+}
+When reloading, we see that CSS Grid has evenly distributed the four containers vertically. Since the outer <div> element has a fixed height, CSS will calculate the height of every element and rescale it to fit. Since we have not yet defined anything other than This is a grid, each element takes up the same amount of space:
+
+https://shevkunenko.site/admin-img/Mastering-CSS-Grid/Figure-1-2-Our-HTML-is-styled-and-displayed-as-a-grid.webp

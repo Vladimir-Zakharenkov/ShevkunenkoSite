@@ -1,0 +1,7 @@
+https://shevkunenko.site/admin-img/Mastering-CSS-Grid/Figure-1-4-Chrome-s-inspector-showing-us-our-2x3-grid.webp
+
+CSS Grid assigns integers to all grid lines for us to use as coordinates. These integers increase from left to right and top to bottom, starting at 1. When we think of the grid as a coordinate system, its origin is in the top-left corner. This allows us to place grid items starting from the top left to the bottom right.
+
+However, CSS Grid offers a second origin that lets us place items from the bottom-right to the top-left corner. It does so by also assigning negative integers to the same grid lines, starting at the bottom-right corner with -1.
+
+Our grid so far would receive the numbers illustrated here:

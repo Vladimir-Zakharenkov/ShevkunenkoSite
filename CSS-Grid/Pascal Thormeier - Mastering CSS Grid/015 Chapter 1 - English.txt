@@ -1,0 +1,7 @@
+CSS Grid has entirely taken over the placing and sizing of statically and relatively positioned elements within the grid. This, in turn, means that any other inline positioning method does not apply anymore. Any use of display: inline-block, display: table-cell, float, or vertical-align will have no effect. However, we can still use position: fixed, position: absolute, or position: sticky because the elements are not static anymore. Elements that have position: relative; attached to them can be moved around and are still affected by the grid.
+
+There’s also the possibility to define an inline grid by using display: inline-grid;. The main difference is that the grid container behaves like an inline container instead of a block container. Therefore, we now know that display: grid defines a grid that behaves like a block element.
+
+Let’s remove the colors briefly and see how the browser development tools indicate that we use a grid. Usually, Chrome shows grids with dashed lines. When we open the inspector and hover over the grid container in the Elements tab, we can see what we already knew from our color experiment. We can also click on the grid button that appears in the inspector to turn on grid debugging, which will show us the grid lines.
+
+In the following screenshot, we can see the full grid representation in Chrome’s development tools:

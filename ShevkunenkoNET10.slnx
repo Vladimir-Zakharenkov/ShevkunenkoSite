@@ -20,8 +20,33 @@
     <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/007 Part 1–Working with CSS Grid - Russian.txt" />
     <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/008 Part 1–Working with CSS Grid - English.txt" />
     <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/008 Part 1–Working with CSS Grid - Russian.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/009 Chapter 1 - English.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/009 Chapter 1 - Russian.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/010 Chapter 1 - English.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/010 Chapter 1 - Russian.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/011 Chapter 1 - English.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/011 Chapter 1 - Russian.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/012 Chapter 1 - English.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/012 Chapter 1 - Russian.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/013 Chapter 1 - English.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/013 Chapter 1 - Russian.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/014 Chapter 1 - English.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/014 Chapter 1 - Russian.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/015 Chapter 1 - English.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/015 Chapter 1 - Russian.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/016 Chapter 1 - English.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/016 Chapter 1 - Russian.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/017 Chapter 1 - English.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/017 Chapter 1 - Russian.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/018 Chapter 1 - English.txt" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/018 Chapter 1 - Russian.txt" />
   </Folder>
   <Folder Name="/CSS-Grid/Pascal Thormeier - Mastering CSS Grid/Examples/" />
+  <Folder Name="/CSS-Grid/Pascal Thormeier - Mastering CSS Grid/Examples/Сhapter 1/">
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/Examples/chapter1/01_page_layout.html" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/Examples/chapter1/02_first_grid.html" />
+    <File Path="CSS-Grid/Pascal Thormeier - Mastering CSS Grid/Examples/chapter1/03_arranging_grid_elements.html" />
+  </Folder>
   <Folder Name="/Icons/">
     <File Path="icons.txt" />
   </Folder>
