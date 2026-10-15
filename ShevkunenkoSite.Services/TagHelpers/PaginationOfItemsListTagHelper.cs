@@ -7,75 +7,84 @@ public class PaginationOfItemsListTagHelper(IUrlHelperFactory helperFactory) : T
     [HtmlAttributeNotBound]
     public ViewContext? ViewContext { get; set; }
 
-    public PagingInfoViewModel? Pagination { get; set; }
+    [HtmlAttributeName("pagination")]
+    public PagingInfoViewModel? Paging { get; set; }
 
-    public required string AlbumCaption { get; set; }
+    public string? AlbumCaption { get; set; }
+
+    private const string PhotoAlbumAction = "PhotoAlbum";
+    private const string FilmPhotoAlbumAction = "FilmPhotoAlbum";
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-        if (ViewContext != null && Pagination != null)
+        if (ViewContext is null || Paging is null || Paging.TotalPages <= 1)
         {
-            IUrlHelper urlHelper = helperFactory.GetUrlHelper(ViewContext);
+            output.SuppressOutput();
 
-            TagBuilder divForPagination = new("div");
-            divForPagination.AddCssClass("flex-wrap justify-content-center my-3 p-2 maxwidth90percent mx-auto");
+            return;
+        }
 
-            for (int i = 1; i <= Pagination.TotalPages; i++)
+        string actionName = ViewContext.ActionDescriptor?.RouteValues["action"]
+                    ?? ViewContext.RouteData.Values["action"]?.ToString()
+                    ?? string.Empty;
+
+        if (string.IsNullOrEmpty(actionName))
+        {
+            output.SuppressOutput();
+
+            return;
+        }
+
+        IUrlHelper urlHelper = helperFactory.GetUrlHelper(ViewContext);
+
+        output.Attributes.Clear();                 // убираем pagination="..." из финального HTML
+
+        output.Attributes.SetAttribute("class",
+            "d-flex flex-wrap justify-content-center my-3 p-2 mx-auto");
+
+        for (int i = 1; i <= Paging.TotalPages; i++)
+        {
+            TagBuilder newRef = new("a");
+
+            if (actionName == PhotoAlbumAction)
             {
-                TagBuilder newRef = new("a");
-
-                if (ViewContext.RouteData.Values.TryGetValue("action", out object? actionValue))
+                newRef.Attributes["href"] = urlHelper.Action(actionName,
+                new
                 {
-                    if (actionValue != null)
+                    albumCaption = AlbumCaption,
+                    pageNumber = i,
+                    imageId = string.Empty
+                });
+            }
+            else if (actionName == FilmPhotoAlbumAction)
+            {
+                newRef.Attributes["href"] = urlHelper.Action(actionName,
+                new
+                {
+                    filmCaption = AlbumCaption,
+                    pageNumber = i,
+                    imageId = string.Empty
+                });
+            }
+            else
+            {
+                newRef.Attributes["href"] = urlHelper.Action(actionName,
+                    new
                     {
-                        if (actionValue.ToString() == "PhotoAlbum")
-                        {
-                            newRef.Attributes["href"] = urlHelper.Action(actionValue.ToString(),
-                            new
-                            {
-                                albumCaption = AlbumCaption,
-                                pageNumber = i,
-                                imageId = string.Empty
-                            });
-
-                            newRef.Attributes["title"] = "страница " + i;
-                        }
-                        else if (actionValue.ToString() == "FilmPhotoAlbum")
-                        {
-                            newRef.Attributes["href"] = urlHelper.Action(actionValue.ToString(),
-                            new
-                            {
-                                filmCaption = AlbumCaption,
-                                pageNumber = i,
-                                imageId = string.Empty
-                            });
-
-                            newRef.Attributes["title"] = "страница " + i;
-                        }
-                        else
-                        {
-                            newRef.Attributes["href"] = urlHelper.Action(actionValue.ToString(),
-                                new
-                                {
-                                    searchString = ViewContext.HttpContext.Request.Query["searchString"].ToString() ?? string.Empty,
-                                    pageNumber = i,
-                                    pageCard = Pagination.PageCard
-                                });
-                        }
-
-                        newRef.Attributes["title"] = "страница " + i;
-                    }
-                }
-
-                newRef.AddCssClass("btn border border-1 border-secondary rounded ten width60px mx-2 my-1 py-0");
-                newRef.AddCssClass(i == Pagination.CurrentPage ? "btn-danger" : "btn-outline-dark");
-
-                newRef.InnerHtml.Append(i.ToString());
-
-                divForPagination.InnerHtml.AppendHtml(newRef);
+                        searchString = Paging.SearchString ?? string.Empty,
+                        pageNumber = i,
+                        pageCard = Paging.PageCard
+                    });
             }
 
-            output.Content.AppendHtml(divForPagination);
+            newRef.Attributes["title"] = $"страница {i}";
+
+            newRef.AddCssClass($"btn border border-1 border-secondary rounded ten width60px mx-2 my-1 py-0 " +
+                               $"{(i == Paging.CurrentPage ? "btn-danger" : "btn-outline-dark")}");
+
+            newRef.InnerHtml.Append(i.ToString());
+
+            output.Content.AppendHtml(newRef);
         }
     }
 }
