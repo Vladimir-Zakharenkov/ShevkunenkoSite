@@ -155,9 +155,9 @@
 
                                 <div class="container">
 
-                                    <div class="d-flex flex-wrap align-items-center justify-content-start gap-2">
+                                    <div class="d-flex flex-nowrap align-items-center justify-content-start gap-2 overflow-x-auto">
 
-                                        <span class="d-none d-sm-inline-block me-2">
+                                        <span class="d-none d-sm-inline-block me-2 flex-shrink-0 pb-1">
                                             Видео на :
                                         </span>
 
@@ -186,7 +186,7 @@
                                                        css-class="border border-secondary rounded @(Context.Request.QueryString.ToString().Contains("ss", StringComparison.InvariantCultureIgnoreCase) ? "border-danger" : string.Empty)"
                                                        icon-type="webicon100" />
 
-                                        @* YandexDisk *@
+                                        @* Скачать фильм *@
                                         <vc:view-image image-id="@DataConfig.DownloadFilmImage"
                                                        css-class="border border-secondary rounded"
                                                        icon-type="webicon100" />
@@ -307,7 +307,7 @@
 
                                 <div class="container">
 
-                                    <div class="d-flex flex-wrap align-items-center justify-content-start gap-2">
+                                    <div class="d-flex flex-nowrap align-items-center justify-content-start gap-2 overflow-x-auto">
 
                                         <span class="d-none d-sm-inline-block me-2">
                                             О фильме :
@@ -452,7 +452,7 @@
 
                                 <div class="container">
 
-                                    <div class="d-flex flex-wrap align-items-center justify-content-start gap-2">
+                                    <div class="d-flex flex-nowrap align-items-center justify-content-start gap-2 overflow-x-auto">
 
                                         <span class="d-none d-sm-inline-block me-2">
                                             Кадры фильма :

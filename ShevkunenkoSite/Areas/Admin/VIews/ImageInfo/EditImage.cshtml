@@ -1,8 +1,12 @@
 ﻿@model EditImageViewModel
 
-<h1 class="fs-3 text_shadow">Изменить данные картинки</h1>
+@{
+    string cssForLabel = "col-form-label text-primary fs-5 me-2 mb-2 py-0";
+    string cssForHelpBlock = "fs-6 form-text text-success mt-2";
+}
 
-<hr class="liniya w-75 my-3" />
+<partial name="_HeadingPartial"
+         model='("Изменить данные картинки", "h1")' />
 
 <div class="row">
 
@@ -21,202 +25,188 @@
             </div>
 
             <form method="post" enctype="multipart/form-data"
-                  class="card-body mx-0 p-0"
                   asp-area="Admin"
                   asp-controller="ImageInfo"
                   asp-action="EditImage">
 
                 @* Скрытые поля *@
-                <div>
-
-                    <input asp-for="EditImage.ImageFileModelId" type="hidden" />
-
-                    <input asp-for="EditImage.ImageFileName" type="hidden" />
-                    <input asp-for="EditImage.ImageFileSize" type="hidden" />
-                    <input asp-for="EditImage.ImageWidth" type="hidden" />
-                    <input asp-for="EditImage.ImageHeight" type="hidden" />
-                    <input asp-for="EditImage.ImageMimeType" type="hidden" />
-                    <input asp-for="EditImage.ImageFileNameExtension" type="hidden" />
-
-                    <input asp-for="EditImage.IconFileName" type="hidden" />
-                    <input asp-for="EditImage.IconFileSize" type="hidden" />
-                    <input asp-for="EditImage.IconWidth" type="hidden" />
-                    <input asp-for="EditImage.IconHeight" type="hidden" />
-                    <input asp-for="EditImage.IconMimeType" type="hidden" />
-                    <input asp-for="EditImage.IconFileNameExtension" type="hidden" />
-
-                    <input asp-for="EditImage.ImageHDFileName" type="hidden" />
-                    <input asp-for="EditImage.ImageHDFileSize" type="hidden" />
-                    <input asp-for="EditImage.ImageHDWidth" type="hidden" />
-                    <input asp-for="EditImage.ImageHDHeight" type="hidden" />
-                    <input asp-for="EditImage.ImageHDMimeType" type="hidden" />
-                    <input asp-for="EditImage.ImageHDNameExtension" type="hidden" />
-
-                    <input asp-for="EditImage.Icon200FileName" type="hidden" />
-                    <input asp-for="EditImage.Icon200FileSize" type="hidden" />
-                    <input asp-for="EditImage.Icon200Width" type="hidden" />
-                    <input asp-for="EditImage.Icon200Height" type="hidden" />
-                    <input asp-for="EditImage.Icon200MimeType" type="hidden" />
-                    <input asp-for="EditImage.Icon200FileNameExtension" type="hidden" />
-
-                    <input asp-for="EditImage.Icon100FileName" type="hidden" />
-                    <input asp-for="EditImage.Icon100FileSize" type="hidden" />
-                    <input asp-for="EditImage.Icon100Width" type="hidden" />
-                    <input asp-for="EditImage.Icon100Height" type="hidden" />
-                    <input asp-for="EditImage.Icon100MimeType" type="hidden" />
-                    <input asp-for="EditImage.Icon100FileNameExtension" type="hidden" />
-
-                    <input asp-for="EditImage.WebImageFileName" type="hidden" />
-                    <input asp-for="EditImage.WebImageFileSize" type="hidden" />
-                    <input asp-for="EditImage.WebImageWidth" type="hidden" />
-                    <input asp-for="EditImage.WebImageHeight" type="hidden" />
-                    <input asp-for="EditImage.WebImageMimeType" type="hidden" value="image/webp" />
-                    <input asp-for="EditImage.WebImageFileNameExtension" type="hidden" value="webp" />
-
-                    <input asp-for="EditImage.WebIconFileName" type="hidden" />
-                    <input asp-for="EditImage.WebIconFileSize" type="hidden" />
-                    <input asp-for="EditImage.WebIconWidth" type="hidden" />
-                    <input asp-for="EditImage.WebIconHeight" type="hidden" />
-                    <input asp-for="EditImage.WebIconMimeType" type="hidden" value="image/webp" />
-                    <input asp-for="EditImage.WebIconFileNameExtension" type="hidden" value="webp" />
-
-                    <input asp-for="EditImage.WebImageHDFileName" type="hidden" />
-                    <input asp-for="EditImage.WebImageHDFileSize" type="hidden" />
-                    <input asp-for="EditImage.WebImageHDWidth" type="hidden" />
-                    <input asp-for="EditImage.WebImageHDHeight" type="hidden" />
-                    <input asp-for="EditImage.WebImageHDMimeType" type="hidden" value="image/webp" />
-                    <input asp-for="EditImage.WebImageHDNameExtension" type="hidden" value="webp" />
-
-                    <input asp-for="EditImage.WebIcon200FileName" type="hidden" />
-                    <input asp-for="EditImage.WebIcon200FileSize" type="hidden" />
-                    <input asp-for="EditImage.WebIcon200Width" type="hidden" />
-                    <input asp-for="EditImage.WebIcon200Height" type="hidden" />
-                    <input asp-for="EditImage.WebIcon200MimeType" type="hidden" value="image/webp" />
-                    <input asp-for="EditImage.WebIcon200FileNameExtension" type="hidden" value="webp" />
-
-                    <input asp-for="EditImage.WebIcon100FileName" type="hidden" />
-                    <input asp-for="EditImage.WebIcon100FileSize" type="hidden" />
-                    <input asp-for="EditImage.WebIcon100Width" type="hidden" />
-                    <input asp-for="EditImage.WebIcon100Height" type="hidden" />
-                    <input asp-for="EditImage.WebIcon100MimeType" type="hidden" value="image/webp" />
-                    <input asp-for="EditImage.WebIcon100FileNameExtension" type="hidden" value="webp" />
-
-                </div>
+                <input asp-for="EditImage.ImageFileModelId" type="hidden" />
 
                 @* Заголовок картинки *@
-                <div>
+                <div class="mb-4">
 
-                    <label asp-for="EditImage.ImageCaption" class="form-label text-primary fs-5 fw-bold"></label>
+                    <label asp-for="EditImage.ImageCaption"
+                           class="@cssForLabel">
+                    </label>
 
-                    <input id="ImageCaptionInput" asp-for="EditImage.ImageCaption" class="form-control text-center" aria-describedby="ImageCaptionInputHelpBlock" />
+                    <input asp-for="EditImage.ImageCaption"
+                           class="form-control text-center mx-auto w-75"
+                           aria-describedby="ImageCaptionInputHelpBlock" />
 
-                    <div id="ImageCaptionInputHelpBlock" class="fs-6 form-text text-success">
-                        «caption» и «name» для Microdata -
+                    <div id="ImageCaptionInputHelpBlock"
+                         class="@cssForHelpBlock">
+
+                        <span>
+                            «caption» и «name» для Microdata -
+                        </span>
+
                         <br class="d-sm-none" />
-                        <span class="text-danger">обязательное поле</span>
-                    </div>
-                    <span asp-validation-for="EditImage.ImageCaption" class="text-danger"></span>
 
-                    <hr class="liniya" />
+                        <span class="text-danger">
+                            обязательное поле
+                        </span>
+
+                    </div>
+
+                    @if (Context.Request.Method == "POST")
+                    {
+                        <span asp-validation-for="EditImage.ImageCaption" class="text-danger"></span>
+                    }
 
                 </div>
 
                 @* Описание картинки *@
-                <div>
+                <div class="mb-4">
 
-                    <label asp-for="EditImage.ImageDescription" class="form-label text-primary fs-5 fw-bold"></label>
+                    <label asp-for="EditImage.ImageDescription"
+                           class="@cssForLabel">
+                    </label>
 
-                    <textarea id="ImageDescriptionInput"
-                              class="form-control text-center"
-                              asp-for="EditImage.ImageDescription"
+                    <textarea asp-for="EditImage.ImageDescription"
+                              class="form-control mx-auto w-75"
                               rows="3"
                               aria-describedby="ImageDescriptionInputHelpBlock">
                     </textarea>
 
-                    <div id="ImageDescriptionInputHelpBlock" class="fs-6 form-text text-success">
-                        «description» для Microdata -
+                    <div id="ImageDescriptionInputHelpBlock"
+                         class="@cssForHelpBlock">
+
+                        <span>
+                            «description» для Microdata -
+                        </span>
+
                         <br class="d-sm-none" />
-                        <span class="text-danger">обязательное поле</span>
+
+                        <span class="text-danger">
+                            обязательное поле
+                        </span>
+
                     </div>
 
-                    <span asp-validation-for="EditImage.ImageDescription" class="text-danger"></span>
-
-                    <hr class="liniya" />
+                    @if (Context.Request.Method == "POST")
+                    {
+                        <span asp-validation-for="EditImage.ImageDescription" class="text-danger"></span>
+                    }
 
                 </div>
 
                 @* «alt» и «title» для картинки *@
-                <div>
+                <div class="mb-4">
 
-                    <label asp-for="EditImage.ImageAltTitle" class="form-label text-primary fs-5 fw-bold"></label>
+                    <label asp-for="EditImage.ImageAltTitle"
+                           class="@cssForLabel">
+                    </label>
 
-                    <input id="ImageAltTitleInput" asp-for="EditImage.ImageAltTitle" class="form-control text-center" aria-describedby="ImageAltTitleInputHelpBlock" />
+                    <input asp-for="EditImage.ImageAltTitle"
+                           class="form-control mx-auto w-50"
+                           aria-describedby="ImageAltTitleInputHelpBlock" />
 
-                    <div id="ImageAltTitleInputHelpBlock" class="fs-6 form-text text-success">
-                        «alt» и «title» для тега «img» -
+                    <div id="ImageAltTitleInputHelpBlock"
+                         class="@cssForHelpBlock">
+
+                        <span>
+                            «alt» и «title» для тега «img» -
+                        </span>
+
                         <br class="d-sm-none" />
-                        <span class="text-danger">обязательное поле</span>
+
+                        <span class="text-danger">
+                            обязательное поле
+                        </span>
+
                     </div>
 
-                    <span asp-validation-for="EditImage.ImageAltTitle" class="text-danger"></span>
-
-                    <hr class="liniya" />
+                    @if (Context.Request.Method == "POST")
+                    {
+                        <span asp-validation-for="EditImage.ImageAltTitle" class="text-danger"></span>
+                    }
 
                 </div>
 
                 @* Фильтр поиска картинки в базе данных *@
-                <div>
+                <div class="mb-4">
 
-                    <label class="form-label text-primary fs-5 fw-bold"
-                           asp-for="EditImage.SearchFilter">
+                    <label asp-for="EditImage.SearchFilter"
+                           class="@cssForLabel">
                     </label>
 
-                    @* текущие фильтры для картинки *@
+                    @* Текущие фильтры для картинки *@
                     <div class="maxwidthcontent mx-auto justify-content-lg-start mb-3">
 
                         @foreach (var tag in Model.EditImage.SearchFilter.Split(',', StringSplitOptions.RemoveEmptyEntries))
                         {
-                            <p class="fs-6 text-start text_shadow"># @tag</p>
+                            <p class="fs-5 text-start text_shadow">
+
+                                # @tag
+
+                            </p>
                         }
 
                     </div>
 
-                    <textarea id="SearchFilterInput"
+                    <textarea asp-for="EditImage.SearchFilter"
                               class="form-control"
                               rows="6"
-                              asp-for="EditImage.SearchFilter"
                               aria-describedby="SearchFilterInputHelpBlock">
                     </textarea>
 
-                    <div id="SearchFilterInputHelpBlock" class="fs-6 form-text text-success">
-                        <span>фильтры поиска</span>
+                    <div id="SearchFilterInputHelpBlock"
+                         class="@cssForHelpBlock">
+
+                        <span>
+                            фильтры поиска картинки
+                        </span>
+
+                        <br />
+
+                        <span>
+                            (ввод через запятую)
+                        </span>
+
                     </div>
 
-                    <span asp-validation-for="EditImage.SearchFilter" class="text-danger"></span>
-
-                    <hr class="liniya" />
+                    @if (Context.Request.Method == "POST")
+                    {
+                        <span asp-validation-for="EditImage.SearchFilter" class="text-danger"></span>
+                    }
 
                 </div>
 
                 @* Порядок сортировки картинки *@
-                <div class="row g-2 justify-content-center mb-2">
+                <div class="row g-2 justify-content-center mb-4">
 
                     <div class="col-auto">
-                        <label class="form-label text-primary fs-5 fw-bold"
-                               asp-for="EditImage.SortOfPicture">
+
+                        <label asp-for="EditImage.SortOfPicture"
+                               class="@cssForLabel">
                         </label>
+
                     </div>
 
                     <div class="col-auto">
-                        <input id="SortOfPictureInput"
+
+                        <input asp-for="EditImage.SortOfPicture"
                                class="form-control text-center"
-                               asp-for="EditImage.SortOfPicture"
                                aria-describedby="SortOfPictureInputHelpBlock" />
+
                     </div>
 
-                    <div id="SortOfPictureInputHelpBlock" class="form-text">
+                    <div id="SortOfPictureInputHelpBlock"
+                         class="@cssForHelpBlock">
 
-                        <span class="fs-6 text-success">индекс сортировки</span>
+                        <span>
+                            индекс сортировки
+                        </span>
 
                     </div>
 
@@ -225,168 +215,185 @@
                         <span asp-validation-for="EditImage.SortOfPicture" class="text-danger"></span>
                     }
 
-                    <hr class="w-50 mx-auto" />
-
                 </div>
 
                 @* Каталог картинки *@
-                <div>
+                <div class="mb-4">
 
                     <p class="mb-3">
-                        <span class="fs-5 text-primary fw-bold">Текущий каталог: </span>
+
+                        <span class="@cssForLabel">
+                            Текущий каталог:
+                        </span>
+
                         <br class="d-sm-none" />
-                        <span class="fs-5 text_shadow">@Model.EditImage.ImagePath</span>
+
+                        <span class="fs-5 text_shadow">
+                            @Model.EditImage.ImagePath
+                        </span>
+
                     </p>
 
-                    <label asp-for="EditImage.ImagePath" class="form-label text-primary fs-5 fw-bold"></label>
+                    <label asp-for="EditImage.ImagePath"
+                           class="@cssForLabel">
+                    </label>
 
-                    <select class="w-75" asp-for="EditImage.ImagePath"
+                    <select asp-for="EditImage.ImagePath"
                             asp-items="Model.ImageDirectories"
+                            class="w-50"
                             aria-describedby="ImagePathInputHelpBlock">
 
-                        <option selected value="@Model.EditImage.ImagePath">@Model.EditImage.ImagePath.Substring(8)</option>
+                        @if (!Model.ImageDirectories.Any(d => d.Value == Model.EditImage.ImagePath))
+                        {
+                            <option value="@Model.EditImage.ImagePath">
+                                @System.IO.Path.GetFileName(Model.EditImage.ImagePath) (текущий)
+                            </option>
+                        }
 
                     </select>
 
-                    <div id="ImagePathInputHelpBlock" class="fs-6 form-text text-success mb-3">
-                        выбрать каталог картинки
+                    <div id="ImagePathInputHelpBlock"
+                         class="@cssForHelpBlock">
+
+                        <span>
+                            выбрать каталог картинки
+                        </span>
+
                         <br class="d-sm-none" />
-                        (в каталоге «images»)
+
+                        <span>
+                            (в каталоге «images»)
+                        </span>
+
                     </div>
 
-                    @* Новый каталог для картинки *@
-                    <div class="row g-2 justify-content-center">
-                        <div class="col-auto">
-                            <label asp-for="NewImagePath" class="form-label text-primary fs-5 fw-bold"></label>
-                        </div>
-                        <div class="col-auto">
-                            <input id="NewImagePathInput" asp-for="NewImagePath" class="form-control text-center" aria-describedby="NewImagePathInputHelpBlock" />
-                        </div>
-                        <div id="NewImagePathInputHelpBlock" class="fs-6 form-text text-success">
-                            <span>добавить новый каталог </span>
-                            <br class="d-sm-none" />
-                            <span>(в каталог «images»)</span>
-                        </div>
-                        <span asp-validation-for="NewImagePath" class="text-danger"></span>
+                </div>
+
+                @* Новый каталог для картинки *@
+                <div class="row g-2 justify-content-center">
+
+                    <div class="col-auto">
+
+                        <label asp-for="NewImagePath"
+                               class="@cssForLabel">
+                        </label>
+
                     </div>
+
+                    <div class="col-auto">
+
+                        <input asp-for="NewImagePath"
+                               class="form-control text-center"
+                               aria-describedby="NewImagePathInputHelpBlock" />
+
+                    </div>
+
+                    <div id="NewImagePathInputHelpBlock"
+                         class="@cssForHelpBlock">
+
+                        <span>
+                            добавить новый каталог
+                        </span>
+
+                        <br class="d-sm-none" />
+
+                        <span>
+                            (в каталог «images»)
+                        </span>
+
+                    </div>
+
+                    @if (Context.Request.Method == "POST")
+                    {
+                        <span asp-validation-for="NewImagePath" class="text-danger"></span>
+                    }
 
                 </div>
 
                 @* Выбор картинок *@
                 <div class="accordion p-3" id="accordionEditImage">
 
-                    @* Выбор картинок WEBM*@
+                    @* Выбор картинок WEBP*@
                     <div class="accordion-item mb-3 block-shadow">
 
-                        <h2 class="accordion-header" id="headingDescription">
+                        <h2 id="webpHeading" class="accordion-header block-shadow">
 
                             <button class="accordion-button collapsed py-0 stranicy"
                                     type="button"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#WebpImage"
-                                    aria-expanded="true"
+                                    aria-expanded="false"
                                     aria-controls="WebpImage">
 
-                                <span class="form-label fs-5">Формат WEBP :</span>
+                                <span class="form-label fs-5">
+                                    Формат WEBP :
+                                </span>
 
                             </button>
 
                         </h2>
 
-                        <div id="WebpImage" class="accordion-collapse collapse" aria-labelledby="headingDescription" data-bs-parent="#accordionEditImage">
+                        <div id="WebpImage"
+                             class="accordion-collapse collapse"
+                             aria-labelledby="webpHeading"
+                             data-bs-parent="#accordionEditImage">
 
                             <div class="accordion-body text-indent-0 text-center">
 
                                 @* Картинка WebHD *@
-                                <div>
+                                <div class="mb-3">
 
                                     @if (string.IsNullOrEmpty(Model.EditImage.WebImageHDFileName))
                                     {
-                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top m-2 block-shadow" icon-type="webimage" />
-
-                                        <p class="text-danger mb-2 fw-bolder">картинка WebHD отсутствует</p>
-                                    }
-                                    else
-                                    {
-                                        <p class="text-success fs-6 fw-bolder">Картинка (@Model.EditImage.WebImageHDWidth px x @Model.EditImage.WebImageHDHeight px) / Размер @Model.EditImage.WebImageHDFileSize bytes</p>
-
-                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top m-2 block-shadow" icon-type="webhd" />
-
-                                        <p class="text_shadow mb-2">File: @Model.EditImage.ImagePath/@Model.EditImage.WebImageHDFileName</p>
-                                    }
-
-                                    <div class="row g-2 justify-content-center">
-                                        <div class="col-auto">
-                                            <label asp-for="WebImageHDFormFile" class="form-label text-primary fs-5"></label>
-                                        </div>
-                                        <div class="col-auto">
-                                            <input id="WebImageHDFormFileInput" asp-for="WebImageHDFormFile" class="form-control" aria-describedby="WebImageHDFormFileInputHelpBlock" />
-                                        </div>
-                                        <div id="WebImageHDFormFileInputHelpBlock" class="fs-6 form-text text-success">
-                                            <span>выбрать файл</span>
-                                        </div>
-                                        <span asp-validation-for="WebImageHDFormFile" class="text-danger"></span>
-                                    </div>
-
-                                    @if (!string.IsNullOrEmpty(Model.EditImage.WebImageHDFileName))
-                                    {
-                                        <label asp-for="DeleteWebImageHD" class="col-form-label text-danger fs-5 me-2"></label>
-                                        <input id="WebImageHDDeleteInput" asp-for="DeleteWebImageHD" class="form-check-input fs-5 align-text-bottom" />
-                                    }
-
-                                    <hr class="liniya" />
-
-                                </div>
-
-                                @* Картинка Web *@
-                                <div>
-
-                                    @if (string.IsNullOrEmpty(Model.EditImage.WebImageFileName))
-                                    {
                                         <vc:view-image image-id="@DataConfig.NoImage"
-                                                       css-class="card-img-top m-2 maxwidth400px block-shadow"
+                                                       css-class="card-img-top m-2 block-shadow"
                                                        icon-type="webimage" />
 
-                                        <p class="text-danger mb-2 fw-bolder">
-                                            картинка WebImage отсутствует
+                                        <p class="fs-5 text-danger my-3">
+
+                                            картинка WebHD отсутствует
+
                                         </p>
                                     }
                                     else
                                     {
-                                        <p class="text-success fs-6 fw-bolder">
-                                            Картинка (@Model.EditImage.WebImageWidth px x @Model.EditImage.WebImageHeight px) / Размер @Model.EditImage.WebImageFileSize bytes
+                                        <p class="text-success fs-6 mb-2 mt-3">
+
+                                            Картинка (@Model.EditImage.WebImageHDWidth px x @Model.EditImage.WebImageHDHeight px) / Размер @Model.EditImage.WebImageHDFileSize bytes
+
                                         </p>
 
                                         <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
-                                                       css-class="card-img-top m-2 maxwidth400px block-shadow"
-                                                       icon-type="webimage" />
+                                                       css-class="card-img-top m-2 block-shadow"
+                                                       icon-type="webhd" />
 
-                                        <p class="text_shadow mb-2">
-                                            File: @Model.EditImage.ImagePath/@Model.EditImage.WebImageFileName
+                                        <p class="text_shadow fs-5 my-3">
+
+                                            File: @Model.EditImage.ImagePath/@Model.EditImage.WebImageHDFileName
+
                                         </p>
                                     }
 
-                                    <div class="row g-2 justify-content-center">
+                                    <div class="row g-2 justify-content-center mb-3">
 
                                         <div class="col-auto">
 
-                                            <label for="WebImageFormFileInput"
-                                                   asp-for="WebImageFormFile"
-                                                   class="form-label text-primary fs-5">
+                                            <label asp-for="WebImageHDFormFile"
+                                                   class="@cssForLabel">
                                             </label>
 
                                         </div>
 
                                         <div class="col-auto">
 
-                                            <input id="WebImageFormFileInput"
-                                                   asp-for="WebImageFormFile"
+                                            <input asp-for="WebImageHDFormFile"
                                                    class="form-control"
-                                                   aria-describedby="WebImageFormFileInputHelpBlock" />
+                                                   aria-describedby="WebImageHDFormFileInputHelpBlock" />
 
                                         </div>
 
-                                        <div id="WebImageFormFileInputHelpBlock" class="fs-6 form-text text-success">
+                                        <div id="WebImageHDFormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
 
                                             <span>
                                                 выбрать файл
@@ -394,39 +401,131 @@
 
                                         </div>
 
-                                        <span asp-validation-for="WebImageFormFile" class="text-danger"></span>
+                                        @if (Context.Request.Method == "POST")
+                                        {
+                                            <span asp-validation-for="WebImageHDFormFile" class="text-danger"></span>
+                                        }
 
                                     </div>
 
-                                    <hr class="liniya" />
+                                    @if (!string.IsNullOrEmpty(Model.EditImage.WebImageHDFileName))
+                                    {
+                                        <label asp-for="DeleteWebImageHD"
+                                               class="@cssForLabel">
+                                        </label>
+
+                                        <input asp-for="DeleteWebImageHD"
+                                               class="form-check-input fs-5 align-text-bottom" />
+                                    }
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="WebImageHDFormFile" class="text-danger"></span>
+                                    }
 
                                 </div>
 
-                                @* Иконка Web300 *@
-                                <div>
+                                @* Картинка Web *@
+                                <div class="mb-3">
 
-                                    @if (string.IsNullOrEmpty(Model.EditImage.WebIconFileName))
+                                    @if (string.IsNullOrEmpty(Model.EditImage.WebImageFileName))
                                     {
                                         <vc:view-image image-id="@DataConfig.NoImage"
-                                                       css-class="card-img-top m-2 block-shadow maxwidth300px"
-                                                       icon-type="webicon300" />
+                                                       css-class=""
+                                                       icon-type="webimage" />
 
-                                        <p class="text-danger mb-2 fw-bolder">
-                                            иконка WebIcon300 отсутствует
+                                        <p class="fs-5 text-danger my-3">
+
+                                            картинка WebImage отсутствует
+
                                         </p>
                                     }
                                     else
                                     {
-                                        <p class="text-success fs-6 fw-bolder">
-                                            Картинка (@Model.EditImage.WebIconWidth px x @Model.EditImage.WebIconHeight px) / Размер @Model.EditImage.WebIconFileSize bytes
+                                        <p class="text-success fs-6 mb-2 mt-3">
+
+                                            Картинка (@Model.EditImage.WebImageWidth px x @Model.EditImage.WebImageHeight px) / Размер @Model.EditImage.WebImageFileSize bytes
+
                                         </p>
 
                                         <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
-                                                       css-class="card-img-top m-2 block-shadow maxwidth300px"
+                                                       css-class="maxwidth600px"
+                                                       icon-type="webimage" />
+
+                                        <p class="text_shadow fs-5 my-3">
+
+                                            File: @Model.EditImage.ImagePath/@Model.EditImage.WebImageFileName
+
+                                        </p>
+                                    }
+
+                                    <div class="row g-2 justify-content-center">
+
+                                        <div class="col-auto">
+
+                                            <label asp-for="WebImageFormFile"
+                                                   class="@cssForLabel">
+                                            </label>
+
+                                        </div>
+
+                                        <div class="col-auto">
+
+                                            <input asp-for="WebImageFormFile"
+                                                   class="form-control"
+                                                   aria-describedby="WebImageFormFileInputHelpBlock" />
+
+                                        </div>
+
+                                        <div id="WebImageFormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="WebImageFormFile" class="text-danger"></span>
+                                    }
+
+                                </div>
+
+                                @* Иконка Web300 *@
+                                <div class="mb-3">
+
+                                    @if (string.IsNullOrEmpty(Model.EditImage.WebIconFileName))
+                                    {
+                                        <vc:view-image image-id="@DataConfig.NoImage"
+                                                       css-class=""
+                                                       icon-type="webimage" />
+
+                                        <p class="fs-5 text-danger my-3">
+
+                                            иконка WebIcon300 отсутствует
+
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-success fs-6 mb-2 mt-3">
+
+                                            Картинка (@Model.EditImage.WebIconWidth px x @Model.EditImage.WebIconHeight px) / Размер @Model.EditImage.WebIconFileSize bytes
+
+                                        </p>
+
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
+                                                       css-class="maxwidth300px"
                                                        icon-type="webicon300" />
 
-                                        <p class="text_shadow mb-2">
+                                        <p class="text_shadow fs-5 my-3">
+
                                             File: @Model.EditImage.ImagePath/@Model.EditImage.WebIconFileName
+
                                         </p>
                                     }
 
@@ -435,21 +534,21 @@
                                         <div class="col-auto">
 
                                             <label asp-for="WebIconFormFile"
-                                                   class="form-label text-primary fs-5">
+                                                   class="@cssForLabel">
                                             </label>
 
                                         </div>
 
                                         <div class="col-auto">
 
-                                            <input id="WebIconFormFileInput"
-                                                   asp-for="WebIconFormFile"
+                                            <input asp-for="WebIconFormFile"
                                                    class="form-control"
                                                    aria-describedby="WebIconFormFileInputHelpBlock" />
 
                                         </div>
 
-                                        <div id="WebIconFormFileInputHelpBlock" class="fs-6 form-text text-success">
+                                        <div id="WebIconFormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
 
                                             <span>
                                                 выбрать файл
@@ -457,39 +556,46 @@
 
                                         </div>
 
-                                        <span asp-validation-for="WebIconFormFile" class="text-danger"></span>
-
                                     </div>
 
-                                    <hr class="liniya" />
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="WebIconFormFile" class="text-danger"></span>
+                                    }
 
                                 </div>
 
                                 @* Иконка Web200 *@
-                                <div>
+                                <div class="mb-3">
 
                                     @if (string.IsNullOrEmpty(Model.EditImage.WebIcon200FileName))
                                     {
                                         <vc:view-image image-id="@DataConfig.NoImage"
-                                                       css-class="card-img-top m-2 block-shadow"
-                                                       icon-type="webicon200" />
+                                                       css-class=""
+                                                       icon-type="webimage" />
 
-                                        <p class="text-danger mb-2 fw-bolder">
+                                        <p class="fs-5 text-danger my-3">
+
                                             иконка WebIcon200 отсутствует
+
                                         </p>
                                     }
                                     else
                                     {
-                                        <p class="text-success fs-6 fw-bolder">
+                                        <p class="text-success fs-6 mb-2 mt-3">
+
                                             Картинка (@Model.EditImage.WebIcon200Width px x @Model.EditImage.WebIcon200Height px) / Размер @Model.EditImage.WebIcon200FileSize bytes
+
                                         </p>
 
                                         <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
-                                                       css-class="card-img-top m-2 block-shadow"
+                                                       css-class="maxwidth200px"
                                                        icon-type="webicon200" />
 
-                                        <p class="text_shadow mb-2">
+                                        <p class="text_shadow fs-5 my-3">
+
                                             File: @Model.EditImage.ImagePath/@Model.EditImage.WebIcon200FileName
+
                                         </p>
                                     }
 
@@ -498,21 +604,21 @@
                                         <div class="col-auto">
 
                                             <label asp-for="WebIcon200FormFile"
-                                                   class="form-label text-primary fs-5">
+                                                   class="@cssForLabel">
                                             </label>
 
                                         </div>
 
                                         <div class="col-auto">
 
-                                            <input id="WebIcon200FormFileInput"
-                                                   asp-for="WebIcon200FormFile"
+                                            <input asp-for="WebIcon200FormFile"
                                                    class="form-control"
                                                    aria-describedby="WebIcon200FormFileInputHelpBlock" />
 
                                         </div>
 
-                                        <div id="WebIcon200FormFileInputHelpBlock" class="fs-6 form-text text-success">
+                                        <div id="WebIcon200FormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
 
                                             <span>
                                                 выбрать файл
@@ -520,11 +626,12 @@
 
                                         </div>
 
-                                        <span asp-validation-for="WebIcon200FormFile" class="text-danger"></span>
-
                                     </div>
 
-                                    <hr class="liniya" />
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="WebIcon200FormFile" class="text-danger"></span>
+                                    }
 
                                 </div>
 
@@ -534,25 +641,31 @@
                                     @if (string.IsNullOrEmpty(Model.EditImage.WebIcon100FileName))
                                     {
                                         <vc:view-image image-id="@DataConfig.NoImage"
-                                                       css-class="card-img-top m-2 block-shadow"
-                                                       icon-type="webicon100" />
+                                                       css-class=""
+                                                       icon-type="webimage" />
 
-                                        <p class="text-danger mb-2 fw-bolder">
+                                        <p class="fs-5 text-danger my-3 fw-bolder">
+
                                             иконка WebIcon100 отсутствует
+
                                         </p>
                                     }
                                     else
                                     {
-                                        <p class="text-success fs-6 fw-bolder">
+                                        <p class="text-success fs-6 mb-2 mt-3">
+
                                             Картинка (@Model.EditImage.WebIcon100Width px x @Model.EditImage.WebIcon100Height px) / Размер @Model.EditImage.WebIcon100FileSize bytes
+
                                         </p>
 
                                         <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
-                                                       css-class="card-img-top m-2 block-shadow"
+                                                       css-class="maxwidth100px"
                                                        icon-type="webicon100" />
 
-                                        <p class="text_shadow mb-2">
+                                        <p class="text_shadow fs-5 my-3">
+
                                             File: @Model.EditImage.ImagePath/@Model.EditImage.WebIcon100FileName
+
                                         </p>
                                     }
 
@@ -561,21 +674,21 @@
                                         <div class="col-auto">
 
                                             <label asp-for="WebIcon100FormFile"
-                                                   class="form-label text-primary fs-5">
+                                                   class="@cssForLabel">
                                             </label>
 
                                         </div>
 
                                         <div class="col-auto">
 
-                                            <input id="WebIcon100FormFileInput"
-                                                   asp-for="WebIcon100FormFile"
+                                            <input asp-for="WebIcon100FormFile"
                                                    class="form-control"
                                                    aria-describedby="WebIcon100FormFileInputHelpBlock" />
 
                                         </div>
 
-                                        <div id="WebIcon100FormFileInputHelpBlock" class="fs-6 form-text text-success">
+                                        <div id="WebIcon100FormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
 
                                             <span>
                                                 выбрать файл
@@ -583,9 +696,12 @@
 
                                         </div>
 
-                                        <span asp-validation-for="@Model.WebIcon100FormFile" class="text-danger"></span>
-
                                     </div>
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="WebIcon100FormFile" class="text-danger"></span>
+                                    }
 
                                 </div>
 
@@ -596,229 +712,429 @@
                     </div>
 
                     @* Выбор картинок PNG*@
-                    <div class="accordion-item">
+                    <div class="accordion-item block-shadow">
 
-                        <h2 class="accordion-header" id="headingDescription">
+                        <h2 id="pngHeading" class="accordion-header">
 
                             <button class="accordion-button collapsed py-0 stranicy"
                                     type="button"
                                     data-bs-toggle="collapse"
                                     data-bs-target="#PngImage"
-                                    aria-expanded="true"
+                                    aria-expanded="false"
                                     aria-controls="PngImage">
 
-                                <span class="form-label fs-5">Формат PNG :</span>
+                                <span class="form-label fs-5">
+                                    Формат PNG :
+                                </span>
 
                             </button>
 
                         </h2>
 
-                        <div id="PngImage" class="accordion-collapse collapse" aria-labelledby="headingDescription" data-bs-parent="#accordionEditImage">
+                        <div id="PngImage"
+                             class="accordion-collapse collapse"
+                             aria-labelledby="pngHeading"
+                             data-bs-parent="#accordionEditImage">
 
                             <div class="accordion-body text-indent-0 text-center">
 
                                 @* Картинка HD *@
-                                <div>
+                                <div class="mb-3">
 
                                     @if (string.IsNullOrEmpty(Model.EditImage.ImageHDFileName))
                                     {
-                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top m-2 block-shadow" icon-type="image" />
+                                        <vc:view-image image-id="@DataConfig.NoImage"
+                                                       css-class=""
+                                                       icon-type="webimage" />
 
-                                        <p class="text-danger mb-2 fw-bolder">картинка HD отсутствует</p>
+                                        <p class="fs-5 text-danger my-3">
+
+                                            картинка HD отсутствует
+
+                                        </p>
                                     }
                                     else
                                     {
-                                        <p class="text-success fs-6 fw-bolder">Картинка (@Model.EditImage.ImageHDWidth px x @Model.EditImage.ImageHDHeight px) / Размер @Model.EditImage.ImageHDFileSize bytes</p>
+                                        <p class="text-success fs-6 mb-2 mt-3">
 
-                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top m-2 block-shadow" icon-type="image" />
+                                            Картинка (@Model.EditImage.ImageHDWidth px x @Model.EditImage.ImageHDHeight px) / Размер @Model.EditImage.ImageHDFileSize bytes
 
-                                        <p class="text_shadow mb-2">File: @Model.EditImage.ImagePath/@Model.EditImage.ImageHDFileName</p>
+                                        </p>
+
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
+                                                       css-class=""
+                                                       icon-type="hd" />
+
+                                        <p class="text_shadow fs-5 my-3">
+
+                                            File: @Model.EditImage.ImagePath/@Model.EditImage.ImageHDFileName
+
+                                        </p>
                                     }
 
                                     <div class="row g-2 justify-content-center">
+
                                         <div class="col-auto">
-                                            <label asp-for="ImageHDFormFile" class="form-label text-primary fs-5"></label>
+
+                                            <label asp-for="ImageHDFormFile"
+                                                   class="@cssForLabel">
+                                            </label>
+
                                         </div>
+
                                         <div class="col-auto">
-                                            <input id="ImageHDFormFileInput" asp-for="ImageHDFormFile" class="form-control" aria-describedby="ImageHDFormFileInputHelpBlock" />
+
+                                            <input asp-for="ImageHDFormFile"
+                                                   class="form-control"
+                                                   aria-describedby="ImageHDFormFileInputHelpBlock" />
+
                                         </div>
-                                        <div id="ImageHDFormFileInputHelpBlock" class="fs-6 form-text text-success">
-                                            <span>выбрать файл</span>
+
+                                        <div id="ImageHDFormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл
+                                            </span>
+
                                         </div>
-                                        <span asp-validation-for="ImageHDFormFile" class="text-danger"></span>
+
                                     </div>
 
                                     @if (!string.IsNullOrEmpty(Model.EditImage.ImageHDFileName))
                                     {
-                                        <label asp-for="DeleteImageHD" class="col-form-label text-danger fs-5 me-2"></label>
-                                        <input id="ImageHDDeleteInput" asp-for="DeleteImageHD" class="form-check-input fs-5 align-text-bottom" />
+                                        <label asp-for="DeleteImageHD"
+                                               class="@cssForLabel">
+                                        </label>
+
+                                        <input asp-for="DeleteImageHD"
+                                               class="form-check-input fs-5 align-text-bottom" />
                                     }
 
-                                    <hr class="liniya" />
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="ImageHDFormFile" class="text-danger"></span>
+                                    }
 
                                 </div>
 
-                                @* Картинка *@
-                                <div>
+                                @* Картинка 720 *@
+                                <div class="mb-3">
 
                                     @if (string.IsNullOrEmpty(Model.EditImage.ImageFileName))
                                     {
-                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top maxwidth80percent m-2 block-shadow" icon-type="image" />
+                                        <vc:view-image image-id="@DataConfig.NoImage"
+                                                       css-class="maxwidth600px"
+                                                       icon-type="image" />
 
-                                        <p class="text-danger mb-2 fw-bolder">картинка отсутствует</p>
+                                        <p class="fs-5 text-danger my-3">
+
+                                            картинка отсутствует
+
+                                        </p>
                                     }
                                     else
                                     {
-                                        <p class="text-success fs-6 fw-bolder">Картинка (@Model.EditImage.ImageWidth px x @Model.EditImage.ImageHeight px) / Размер @Model.EditImage.ImageFileSize bytes</p>
+                                        <p class="text-success fs-6 mb-2 mt-3">
 
-                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top maxwidth80percent m-2 block-shadow" icon-type="image" />
+                                            Картинка (@Model.EditImage.ImageWidth px x @Model.EditImage.ImageHeight px) / Размер @Model.EditImage.ImageFileSize bytes
 
-                                        <p class="text_shadow mb-2">File: @Model.EditImage.ImagePath/@Model.EditImage.ImageFileName</p>
+                                        </p>
+
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
+                                                       css-class="maxwidth600px"
+                                                       icon-type="image" />
+
+                                        <p class="text_shadow fs-5 my-3">
+
+                                            File: @Model.EditImage.ImagePath/@Model.EditImage.ImageFileName
+
+                                        </p>
                                     }
 
                                     <div class="row g-2 justify-content-center">
+
                                         <div class="col-auto">
-                                            <label asp-for="ImageFormFile" class="form-label text-primary fs-5"></label>
+
+                                            <label asp-for="ImageFormFile"
+                                                   class="@cssForLabel">
+                                            </label>
+
                                         </div>
+
                                         <div class="col-auto">
-                                            <input id="ImageFormFileInput" asp-for="ImageFormFile" class="form-control" aria-describedby="ImageFormFileInputHelpBlock" />
+
+                                            <input asp-for="ImageFormFile"
+                                                   class="form-control"
+                                                   aria-describedby="ImageFormFileInputHelpBlock" />
+
                                         </div>
-                                        <div id="ImageFormFileInputHelpBlock" class="fs-6 form-text text-success">
-                                            <span>выбрать файл</span>
+
+                                        <div id="ImageFormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл
+                                            </span>
+
                                         </div>
-                                        <span asp-validation-for="ImageFormFile" class="text-danger"></span>
+
                                     </div>
 
                                     @if (!string.IsNullOrEmpty(Model.EditImage.ImageFileName))
                                     {
-                                        <label asp-for="DeleteImage" class="col-form-label text-danger fs-5 me-2"></label>
-                                        <input id="ImageDeleteInput" asp-for="DeleteImage" class="form-check-input fs-5 align-text-bottom" />
+                                        <label asp-for="DeleteImage"
+                                               class="@cssForLabel">
+                                        </label>
+
+                                        <input asp-for="DeleteImage"
+                                               class="form-check-input fs-5 align-text-bottom" />
                                     }
 
-                                    <hr class="liniya" />
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="ImageFormFile" class="text-danger"></span>
+                                    }
 
                                 </div>
 
                                 @* Иконка 300 *@
-                                <div>
+                                <div class="mb-3">
 
                                     @if (string.IsNullOrEmpty(Model.EditImage.IconFileName))
                                     {
-                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top m-2 block-shadow" icon-type="icon300" />
+                                        <vc:view-image image-id="@DataConfig.NoImage"
+                                                       css-class=""
+                                                       icon-type="icon300" />
 
-                                        <p class="text-danger mb-2 fw-bolder">иконка Icon300 отсутствует</p>
+                                        <p class="fs-5 text-danger my-3">
+
+                                            иконка icon300 отсутствует
+
+                                        </p>
                                     }
                                     else
                                     {
-                                        <p class="text-success fs-6 fw-bolder">Картинка (@Model.EditImage.IconWidth px x @Model.EditImage.IconHeight px) / Размер @Model.EditImage.IconFileSize bytes</p>
+                                        <p class="text-success fs-6 mb-2 mt-3">
 
-                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top m-2 block-shadow" icon-type="icon300" />
+                                            Картинка (@Model.EditImage.IconWidth px x @Model.EditImage.IconHeight px) / Размер @Model.EditImage.IconFileSize bytes
 
-                                        <p class="text_shadow mb-2">File: @Model.EditImage.ImagePath/@Model.EditImage.IconFileName</p>
+                                        </p>
+
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
+                                                       css-class=""
+                                                       icon-type="icon300" />
+
+                                        <p class="text_shadow fs-5 my-3">
+
+                                            File: @Model.EditImage.ImagePath/@Model.EditImage.IconFileName
+
+                                        </p>
                                     }
 
                                     <div class="row g-2 justify-content-center">
+
                                         <div class="col-auto">
-                                            <label for="IconFormFileInput" asp-for="IconFormFile" class="form-label text-primary fs-5"></label>
+
+                                            <label asp-for="IconFormFile"
+                                                   class="@cssForLabel">
+                                            </label>
+
                                         </div>
+
                                         <div class="col-auto">
-                                            <input id="IconFormFileInput" asp-for="IconFormFile" class="form-control" aria-describedby="IconFormFileInputHelpBlock" />
+
+                                            <input asp-for="IconFormFile"
+                                                   class="form-control"
+                                                   aria-describedby="IconFormFileInputHelpBlock" />
+
                                         </div>
-                                        <div id="IconFormFileInputHelpBlock" class="fs-6 form-text text-success">
-                                            <span>выбрать файл</span>
+
+                                        <div id="IconFormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл
+                                            </span>
+
                                         </div>
-                                        <span asp-validation-for="IconFormFile" class="text-danger"></span>
+
                                     </div>
 
                                     @if (!string.IsNullOrEmpty(Model.EditImage.IconFileName))
                                     {
-                                        <label asp-for="DeleteIcon" class="col-form-label text-danger fs-5 me-2"></label>
-                                        <input id="IconDeleteInput" asp-for="DeleteIcon" class="form-check-input fs-5 align-text-bottom" />
+                                        <label asp-for="DeleteIcon"
+                                               class="@cssForLabel">
+                                        </label>
+
+                                        <input asp-for="DeleteIcon"
+                                               class="form-check-input fs-5 align-text-bottom" />
                                     }
 
-                                    <hr class="liniya" />
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="IconFormFile" class="text-danger"></span>
+                                    }
 
                                 </div>
 
                                 @* Иконка 200 *@
-                                <div>
+                                <div class="mb-3">
 
                                     @if (string.IsNullOrEmpty(Model.EditImage.Icon200FileName))
                                     {
-                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top m-2 block-shadow" icon-type="icon200" />
+                                        <vc:view-image image-id="@DataConfig.NoImage"
+                                                       css-class=""
+                                                       icon-type="icon200" />
 
-                                        <p class="text-danger mb-2 fw-bolder">иконка Icon200 отсутствует</p>
+                                        <p class="fs-5 text-danger my-3">
+
+                                            иконка icon200 отсутствует
+
+                                        </p>
                                     }
                                     else
                                     {
-                                        <p class="text-success fs-6 fw-bolder">Картинка (@Model.EditImage.Icon200Width px x @Model.EditImage.Icon200Height px) / Размер @Model.EditImage.Icon200FileSize bytes</p>
+                                        <p class="text-success fs-6 mb-2 mt-3">
 
-                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top m-2 block-shadow" icon-type="icon200" />
+                                            Картинка (@Model.EditImage.Icon200Width px x @Model.EditImage.Icon200Height px) / Размер @Model.EditImage.Icon200FileSize bytes
 
-                                        <p class="text_shadow mb-2">File: @Model.EditImage.ImagePath/@Model.EditImage.Icon200FileName</p>
+                                        </p>
+
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
+                                                       css-class=""
+                                                       icon-type="icon200" />
+
+                                        <p class="text_shadow fs-5 my-3">
+
+                                            File: @Model.EditImage.ImagePath/@Model.EditImage.Icon200FileName
+
+                                        </p>
                                     }
 
                                     <div class="row g-2 justify-content-center">
+
                                         <div class="col-auto">
-                                            <label for="Icon200FormFileInput" asp-for="Icon200FormFile" class="form-label text-primary fs-5"></label>
+
+                                            <label asp-for="Icon200FormFile"
+                                                   class="@cssForLabel">
+                                            </label>
+
                                         </div>
+
                                         <div class="col-auto">
-                                            <input id="Icon200FormFileInput" asp-for="Icon200FormFile" class="form-control" aria-describedby="Icon200FormFileInputHelpBlock" />
+
+                                            <input asp-for="Icon200FormFile"
+                                                   class="form-control"
+                                                   aria-describedby="Icon200FormFileInputHelpBlock" />
+
                                         </div>
-                                        <div id="Icon200FormFileInputHelpBlock" class="fs-6 form-text text-success">
-                                            <span>выбрать файл</span>
+
+                                        <div id="Icon200FormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл
+                                            </span>
+
                                         </div>
-                                        <span asp-validation-for="Icon200FormFile" class="text-danger"></span>
+
                                     </div>
 
                                     @if (!string.IsNullOrEmpty(Model.EditImage.Icon200FileName))
                                     {
-                                        <label asp-for="DeleteIcon200" class="col-form-label text-danger fs-5 me-2"></label>
-                                        <input id="Icon200DeleteInput" asp-for="DeleteIcon200" class="form-check-input fs-5 align-text-bottom" />
+                                        <label asp-for="DeleteIcon200"
+                                               class="col-form-label text-danger fs-5 me-2">
+                                        </label>
+
+                                        <input asp-for="DeleteIcon200"
+                                               class="form-check-input fs-5 align-text-bottom" />
                                     }
 
-                                    <hr class="liniya" />
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="Icon200FormFile" class="text-danger"></span>
+                                    }
 
                                 </div>
 
-                                @* Иконка 200 *@
+                                @* Иконка 100 *@
                                 <div>
 
                                     @if (string.IsNullOrEmpty(Model.EditImage.Icon100FileName))
                                     {
-                                        <vc:view-image image-id="@DataConfig.NoImage" css-class="card-img-top m-2 block-shadow" icon-type="icon100" />
+                                        <vc:view-image image-id="@DataConfig.NoImage"
+                                                       css-class=""
+                                                       icon-type="icon100" />
 
-                                        <p class="text-danger mb-2 fw-bolder">иконка Icon100 отсутствует</p>
+                                        <p class="fs-5 text-danger my-3">
+
+                                            иконка icon100 отсутствует
+
+                                        </p>
                                     }
                                     else
                                     {
-                                        <p class="text-success fs-6 fw-bolder">Картинка (@Model.EditImage.Icon100Width px x @Model.EditImage.Icon100Height px) / Размер @Model.EditImage.Icon100FileSize bytes</p>
+                                        <p class="text-success fs-6 mb-2 mt-3">
 
-                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId" css-class="card-img-top m-2 block-shadow" icon-type="icon100" />
+                                            Картинка (@Model.EditImage.Icon100Width px x @Model.EditImage.Icon100Height px) / Размер @Model.EditImage.Icon100FileSize bytes
 
-                                        <p class="text_shadow mb-2">File: @Model.EditImage.ImagePath/@Model.EditImage.Icon100FileName</p>
+                                        </p>
+
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
+                                                       css-class=""
+                                                       icon-type="icon100" />
+
+                                        <p class="text_shadow fs-5 my-3">
+
+                                            File: @Model.EditImage.ImagePath/@Model.EditImage.Icon100FileName
+
+                                        </p>
                                     }
 
                                     <div class="row g-2 justify-content-center">
+
                                         <div class="col-auto">
-                                            <label for="Icon100FormFileInput" asp-for="Icon100FormFile" class="form-label text-primary fs-5"></label>
+
+                                            <label asp-for="Icon100FormFile"
+                                                   class="@cssForLabel">
+                                            </label>
+
                                         </div>
+
                                         <div class="col-auto">
-                                            <input id="Icon100FormFileInput" asp-for="Icon100FormFile" class="form-control" aria-describedby="Icon100FormFileInputHelpBlock" />
+
+                                            <input asp-for="Icon100FormFile"
+                                                   class="form-control"
+                                                   aria-describedby="Icon100FormFileInputHelpBlock" />
+
                                         </div>
-                                        <div id="Icon100FormFileInputHelpBlock" class="fs-6 form-text text-success">
-                                            <span>выбрать файл</span>
+
+                                        <div id="Icon100FormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл
+                                            </span>
+
                                         </div>
-                                        <span asp-validation-for="@Model.Icon100FormFile" class="text-danger"></span>
+
                                     </div>
 
                                     @if (!string.IsNullOrEmpty(Model.EditImage.Icon100FileName))
                                     {
-                                        <label asp-for="DeleteIcon100" class="col-form-label text-danger fs-5 me-2"></label>
-                                        <input id="Icon100DeleteInput" asp-for="DeleteIcon100" class="form-check-input fs-5 align-text-bottom" />
+                                        <label asp-for="DeleteIcon100"
+                                               class="@cssForLabel">
+                                        </label>
+
+                                        <input asp-for="DeleteIcon100"
+                                               class="form-check-input fs-5 align-text-bottom" />
                                     }
 
-                                    <hr class="liniya" />
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="Icon100FormFile" class="text-danger"></span>
+                                    }
 
                                 </div>
 
@@ -831,16 +1147,26 @@
                 </div>
 
                 @* Сохранить - Отменить изменения *@
-                <div class="card-footer p-0 mt-2">
+                <div class="card-footer p-0 mt-2 border-0">
 
-                    <button type="submit" class="btn btn-outline-success m-2 text-center block-shadow" title="сохранить изменения">Сохранить</button>
+                    <button type="submit"
+                            class="btn btn-outline-success m-2 text-center minwidth100px block-shadow"
+                            title="сохранить изменения">
 
-                    <a class="btn btn-outline-danger m-2 block-shadow"
-                       asp-area="Admin"
+                        Сохранить
+
+                    </button>
+
+                    <a asp-area="Admin"
                        asp-controller="ImageInfo"
                        asp-action="Index"
-                       asp-route-iconlist="false"
-                       title="отменить изменения">Отмена</a>
+                       asp-route-pageCard="false"
+                       class="btn btn-outline-danger m-2 minwidth100px block-shadow"
+                       title="отменить изменения">
+
+                        Отмена
+
+                    </a>
 
                 </div>
 

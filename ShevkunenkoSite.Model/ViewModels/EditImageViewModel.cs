@@ -4,12 +4,7 @@ public class EditImageViewModel
 {
     public ImageFileModel EditImage { get; set; } = new();
 
-    public List<SelectListItem> ImageDirectories { get; set; } = new([.. Directory.GetDirectories(Directory.GetCurrentDirectory() + "\\wwwroot\\images", "*", SearchOption.AllDirectories)
-        .Select(a => new SelectListItem
-        {
-            Value = a[(Directory.GetDirectories(Directory.GetCurrentDirectory() + "\\wwwroot\\images")[0].IndexOf("images") + 7)..].Replace('\\', '/'),
-            Text = a[(Directory.GetDirectories(Directory.GetCurrentDirectory() + "\\wwwroot\\images")[0].IndexOf("images") + 7)..].Replace('\\', '/')
-        })]);
+    public List<SelectListItem> ImageDirectories { get; set; } = BuildImageDirectoryItems();
 
     #region Задать новый каталог
 
@@ -78,4 +73,25 @@ public class EditImageViewModel
 
     [Display(Name = "Удалить иконку 100 px :")]
     public bool DeleteIcon100 { get; set; } = false;
+
+    // Метод формирует SelectLIst из каталогов внутри каталога «images»
+    private static List<SelectListItem> BuildImageDirectoryItems()
+    {
+        string imagesRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+
+        if (!Directory.Exists(imagesRoot))
+        {
+            return [];
+        }
+
+        string basePath = imagesRoot.Replace('\\', '/') + "/";
+
+        return [.. Directory
+        .GetDirectories(imagesRoot, "*", SearchOption.AllDirectories)
+        .Select(dir => dir.Replace('\\', '/'))
+        .Select(full => full.StartsWith(basePath)
+            ? full[basePath.Length..]
+            : full)
+        .Select(rel => new SelectListItem { Value = rel, Text = rel })];
+    }
 }

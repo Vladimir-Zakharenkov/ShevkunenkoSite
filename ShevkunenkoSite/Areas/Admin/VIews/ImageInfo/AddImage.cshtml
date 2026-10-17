@@ -1,8 +1,12 @@
 ﻿@model EditImageViewModel
 
-<h1 class="fs-3 text_shadow">Добавить картинку</h1>
+@{
+    string cssForLabel = "col-form-label text-primary fs-5 me-2 mb-2 py-0";
+    string cssForHelpBlock = "fs-6 form-text text-success mt-2";
+}
 
-<hr class="liniya" />
+<partial name="_HeadingPartial"
+         model='("Добавить картинку", "h1")' />
 
 <div class="row">
 
@@ -19,124 +23,180 @@
 
                     <input asp-for="EditImage.ImageFileModelId" type="hidden" />
 
-                    @* все ошибки ввода данных *@
+                    @* Все ошибки ввода данных *@
                     @if (Context.Request.Method == "POST")
                     {
                         <div asp-validation-summary="All" class="text-danger border border-top-0 border-danger mb-3"></div>
                     }
 
                     @* Заголовок картинки *@
-                    <div>
+                    <div class="mb-4">
 
-                        <label asp-for="EditImage.ImageCaption" class="form-label text-primary fs-5 fw-bold"></label>
+                        <label asp-for="EditImage.ImageCaption"
+                               class="@cssForLabel">
+                        </label>
 
-                        <input id="ImageCaptionInput" class="form-control text-center" asp-for="EditImage.ImageCaption" aria-describedby="ImageCaptionInputHelpBlock" />
+                        <input asp-for="EditImage.ImageCaption"
+                               id="ImageCaptionInput"
+                               class="form-control text-center mx-auto w-75"
+                               aria-describedby="ImageCaptionInputHelpBlock" />
 
-                        <div id="ImageCaptionInputHelpBlock" class="form-text">
+                        <div id="ImageCaptionInputHelpBlock"
+                             class="@cssForHelpBlock">
 
-                            <span class="fs-6 text-success">«caption» и «name» для Microdata - </span>
+                            <span>
+                                «caption» и «name» для Microdata -
+                            </span>
+
                             <br class="d-md-none" />
-                            <span class="fs-6 text-danger">обязательное поле</span>
+
+                            <span class="text-danger">
+                                обязательное поле
+                            </span>
 
                         </div>
 
-                        <span asp-validation-for="EditImage.ImageCaption" class="text-danger"></span>
-
-                        <hr class="w-50 mx-auto" />
+                        @if (Context.Request.Method == "POST")
+                        {
+                            <span asp-validation-for="EditImage.ImageCaption" class="text-danger"></span>
+                        }
 
                     </div>
 
                     @* Описание картинки *@
-                    <div>
+                    <div class="mb-4">
 
-                        <label class="form-label text-primary fs-5 fw-bold" asp-for="EditImage.ImageDescription"></label>
+                        <label asp-for="EditImage.ImageDescription"
+                               class="@cssForLabel">
+                        </label>
 
-                        <textarea id="ImageDescriptionInput" class="form-control text-center"
-                                  asp-for="EditImage.ImageDescription"
+                        <textarea asp-for="EditImage.ImageDescription"
+                                  class="form-control mx-auto w-75"
                                   rows="3"
                                   aria-describedby="ImageDescriptionInputHelpBlock">
                         </textarea>
 
-                        <div id="ImageDescriptionInputHelpBlock" class="form-text">
+                        <div id="ImageDescriptionInputHelpBlock"
+                             class="@cssForHelpBlock">
 
-                            <span class="fs-6 text-success">«description» для Microdata  - </span>
+                            <span>
+                                «description» для Microdata  -
+                            </span>
+
                             <br class="d-md-none" />
-                            <span class="fs-6 text-danger">обязательное поле</span>
+
+                            <span class="text-danger">
+                                обязательное поле
+                            </span>
+
                             <br />
-                            <span class="fs-6 text-success">(по умолчанию равно «caption»)</span>
+
+                            <span>
+                                (по умолчанию равно «caption»)
+                            </span>
 
                         </div>
 
-                        <span asp-validation-for="EditImage.ImageDescription" class="text-danger"></span>
-
-                        <hr class="w-50 mx-auto" />
+                        @if (Context.Request.Method == "POST")
+                        {
+                            <span asp-validation-for="EditImage.ImageDescription" class="text-danger"></span>
+                        }
 
                     </div>
 
                     @* «alt» и «title» для картинки *@
-                    <div>
+                    <div class="mb-4">
 
-                        <label class="form-label text-primary fs-5 fw-bold" asp-for="EditImage.ImageAltTitle"></label>
+                        <label asp-for="EditImage.ImageAltTitle"
+                               class="@cssForLabel">
+                        </label>
 
-                        <input id="ImageAltTitleInput" class="form-control text-center" asp-for="EditImage.ImageAltTitle" aria-describedby="ImageAltTitleInputHelpBlock" />
+                        <input asp-for="EditImage.ImageAltTitle"
+                               class="form-control mx-auto w-50"
+                               aria-describedby="ImageAltTitleInputHelpBlock" />
 
-                        <div id="ImageAltTitleInputHelpBlock" class="form-text">
+                        <div id="ImageAltTitleInputHelpBlock"
+                             class="@cssForHelpBlock">
 
-                            <span class="fs-6 text-success">«alt» и «title» для тэга «img»</span>
+                            <span>
+                                «alt» и «title» для тэга «img»
+                            </span>
+
                             <br />
-                            <span class="fs-6 text-success">(по умолчанию равно «caption»)</span>
+
+                            <span>
+                                (по умолчанию равно «caption»)
+                            </span>
 
                         </div>
 
-                        <span asp-validation-for="EditImage.ImageAltTitle" class="text-danger"></span>
-
-                        <hr class="w-50 mx-auto" />
+                        @if (Context.Request.Method == "POST")
+                        {
+                            <span asp-validation-for="EditImage.ImageAltTitle" class="text-danger"></span>
+                        }
 
                     </div>
 
                     @* Фильтр поиска картинки в базе данных *@
-                    <div>
+                    <div class="mb-4">
 
-                        <label class="form-label text-primary fs-5 fw-bold" asp-for="EditImage.SearchFilter"></label>
+                        <label asp-for="EditImage.SearchFilter"
+                               class="@cssForLabel">
+                        </label>
 
-                        <textarea id="SearchFilterInput" class="form-control text-center"
-                                  asp-for="EditImage.SearchFilter"
-                                  rows="1"
+                        <textarea asp-for="EditImage.SearchFilter"
+                                  class="form-control mx-auto w-75"
+                                  rows="2"
                                   aria-describedby="SearchFilterInputHelpBlock">
                         </textarea>
 
-                        <div id="SearchFilterInputHelpBlock" class="form-text">
+                        <div id="SearchFilterInputHelpBlock"
+                             class="@cssForHelpBlock">
 
-                            <span class="fs-6 text-success">фильтры поиска картинки</span>
+                            <span>
+                                фильтры поиска картинки
+                            </span>
+
+                            <br />
+
+                            <span>
+                                (ввод через запятую)
+                            </span>
 
                         </div>
 
-                        <span asp-validation-for="EditImage.SearchFilter" class="text-danger"></span>
-
-                        <hr class="w-50 mx-auto" />
+                        @if (Context.Request.Method == "POST")
+                        {
+                            <span asp-validation-for="EditImage.SearchFilter" class="text-danger"></span>
+                        }
 
                     </div>
 
                     @* Порядок сортировки картинки *@
-                    <div class="row g-2 justify-content-center mb-2">
+                    <div class="row g-2 justify-content-center mb-4">
 
                         <div class="col-auto">
-                            <label class="form-label text-primary fs-5 fw-bold"
-                                   asp-for="EditImage.SortOfPicture">
+
+                            <label asp-for="EditImage.SortOfPicture"
+                                   class="@cssForLabel">
                             </label>
+
                         </div>
 
                         <div class="col-auto">
-                            <input id="SortOfPictureInput"
-                                   class="form-control text-center"
-                                   asp-for="EditImage.SortOfPicture"
-                                   value="0"
+
+                            <input asp-for="EditImage.SortOfPicture"
+                                   class="form-control text-center w-50"
                                    aria-describedby="SortOfPictureInputHelpBlock" />
+
                         </div>
 
-                        <div id="SortOfPictureInputHelpBlock" class="form-text">
+                        <div id="SortOfPictureInputHelpBlock"
+                             class="@cssForHelpBlock">
 
-                            <span class="fs-6 text-success">индекс сортировки</span>
+                            <span>
+                                индекс сортировки
+                            </span>
 
                         </div>
 
@@ -145,163 +205,244 @@
                             <span asp-validation-for="EditImage.SortOfPicture" class="text-danger"></span>
                         }
 
-                        <hr class="w-50 mx-auto" />
-
                     </div>
 
                     @* Каталог картинки *@
-                    <div>
+                    <div class="mb-4">
 
-                        <label class="form-label text-primary fs-5 fw-bold" asp-for="EditImage.ImagePath"></label>
+                        <label asp-for="EditImage.ImagePath"
+                               class="@cssForLabel">
+                        </label>
 
-                        <select class="w-75" asp-for="EditImage.ImagePath"
+                        <select asp-for="EditImage.ImagePath"
                                 asp-items="Model.ImageDirectories"
+                                class="w-50"
                                 aria-describedby="ImagePathInputHelpBlock">
 
-                            <option selected value="/images">Выберите каталог</option>
+                            <option selected value="">Выберите каталог</option>
 
                         </select>
 
-                        <div id="ImagePathInputHelpBlock" class="form-text">
+                        <div id="ImagePathInputHelpBlock"
+                             class="@cssForHelpBlock">
 
-                            <span class="fs-6 text-success">выбрать каталог картинки</span>
+                            <span>
+                                выбрать каталог картинки
+                            </span>
+
                             <br />
-                            <span class="fs-6 text-success">(по умолчанию «images»)</span>
+
+                            <span>
+                                (по умолчанию «images»)
+                            </span>
 
                         </div>
-
-                        <hr class="w-50 mx-auto" />
 
                     </div>
 
                     @* Новый каталог для картинки *@
-                    <div class="row g-2 justify-content-center">
+                    <div class="row g-2 justify-content-center mb-3">
 
                         <div class="col-auto">
-                            <label class="form-label text-primary fs-5 fw-bold" asp-for="NewImagePath"></label>
+
+                            <label asp-for="NewImagePath"
+                                   class="@cssForLabel">
+
+                            </label>
+
                         </div>
 
                         <div class="col-auto">
-                            <input id="NewImagePathInput" class="form-control text-center" asp-for="NewImagePath" aria-describedby="NewImagePathInputHelpBlock" />
-                        </div>
 
-                        <div id="NewImagePathInputHelpBlock" class="form-text">
-
-                            <span class="fs-6 text-success">новый каталог для картинки</span>
+                            <input asp-for="NewImagePath"
+                                   class="form-control text-center"
+                                   aria-describedby="NewImagePathInputHelpBlock" />
 
                         </div>
 
-                        <span asp-validation-for="NewImagePath" class="text-danger"></span>
+                        <div id="NewImagePathInputHelpBlock"
+                             class="@cssForHelpBlock">
 
-                        <hr class="w-50 mx-auto" />
+                            <span>
+                                новый каталог для картинки
+                            </span>
+
+                        </div>
+
+                        @if (Context.Request.Method == "POST")
+                        {
+                            <span asp-validation-for="NewImagePath" class="text-danger"></span>
+                        }
 
                     </div>
 
                     @* Выбор картинок *@
-                    <div class="accordion" id="accordionAddImage">
+                    <div id="accordionAddImage" class="accordion">
 
                         @* Выбор картинок WEBP*@
                         <div class="accordion-item mb-3 block-shadow">
 
-                            <h2 class="accordion-header" id="headingDescription">
-                                <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#WebpImage" aria-expanded="true" aria-controls="WebpImage">
-                                    <span class="form-label fs-5">Формат WEBP :</span>
+                            <h2 id="webHeadingDescription" class="accordion-header block-shadow">
+
+                                <button class="accordion-button collapsed py-0 stranicy"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#WebpImage"
+                                        aria-expanded="false"
+                                        aria-controls="WebpImage">
+
+                                    <span class="form-label fs-5">
+                                        Формат WEBP :
+                                    </span>
+
                                 </button>
+
                             </h2>
 
-                            <div id="WebpImage" class="accordion-collapse collapse" aria-labelledby="headingDescription" data-bs-parent="#accordionAddImage">
+                            <div id="WebpImage"
+                                 class="accordion-collapse collapse"
+                                 aria-labelledby="webHeadingDescription"
+                                 data-bs-parent="#accordionAddImage">
 
                                 <div class="accordion-body text-indent-0 text-center">
 
                                     @* Выбор картинки HD WEBP *@
-                                    <div class="row g-2 justify-content-center">
+                                    <div class="row g-2 justify-content-center mt-2 mb-4">
 
                                         <div class="col-auto">
-                                            <label class="form-label text-primary fs-5" asp-for="WebImageHDFormFile"></label>
+
+                                            <label asp-for="WebImageHDFormFile"
+                                                   class="@cssForLabel">
+                                            </label>
+
                                         </div>
 
                                         <div class="col-auto">
-                                            <input id="WebImageHDFormFileInput" class="form-control" asp-for="WebImageHDFormFile" aria-describedby="WebImageHDFormFileInputHelpBlock" />
-                                        </div>
 
-                                        <div id="WebImageHDFormFileInputHelpBlock" class="form-text">
-
-                                            <span class="fs-6 text-success">выбрать файл</span>
+                                            <input asp-for="WebImageHDFormFile"
+                                                   class="form-control"
+                                                   aria-describedby="WebImageHDFormFileInputHelpBlock" />
 
                                         </div>
 
-                                        <span asp-validation-for="WebImageHDFormFile" class="text-danger"></span>
+                                        <div id="WebImageHDFormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
 
-                                        <hr class="w-50 mx-auto" />
+                                            <span>
+                                                выбрать файл WEBP - HD
+                                            </span>
+
+                                        </div>
+
+                                        @if (Context.Request.Method == "POST")
+                                        {
+                                            <span asp-validation-for="WebImageHDFormFile" class="text-danger"></span>
+                                        }
 
                                     </div>
 
                                     @* Выбор картинки WEBP 720 px *@
-                                    <div class="row g-2 justify-content-center">
+                                    <div class="row g-2 justify-content-center mb-4">
 
                                         <div class="col-auto">
-                                            <label class="form-label text-primary fs-5" asp-for="WebImageFormFile"></label>
+
+                                            <label asp-for="WebImageFormFile"
+                                                   class="@cssForLabel">
+                                            </label>
+
                                         </div>
 
                                         <div class="col-auto">
-                                            <input id="WebImageFormFileInput" class="form-control" asp-for="WebImageFormFile" aria-describedby="WebImageFormFileInputHelpBlock" />
-                                        </div>
 
-                                        <div id="WebImageFormFileInputHelpBlock" class="form-text">
-
-                                            <span class="fs-6 text-success">выбрать файл</span>
+                                            <input asp-for="WebImageFormFile"
+                                                   class="form-control"
+                                                   aria-describedby="WebImageFormFileInputHelpBlock" />
 
                                         </div>
 
-                                        <span asp-validation-for="WebImageFormFile" class="text-danger"></span>
+                                        <div id="WebImageFormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
 
-                                        <hr class="w-50 mx-auto" />
+                                            <span>
+                                                выбрать файл WEBP - 720 px
+                                            </span>
+
+                                        </div>
+
+                                        @if (Context.Request.Method == "POST")
+                                        {
+                                            <span asp-validation-for="WebImageFormFile" class="text-danger"></span>
+                                        }
 
                                     </div>
 
                                     @* Выбор картинки WEBP 300 px *@
-                                    <div class="row g-2 justify-content-center">
+                                    <div class="row g-2 justify-content-center mb-4">
 
                                         <div class="col-auto">
-                                            <label asp-for="WebIconFormFile" class="form-label text-primary fs-5"></label>
+
+                                            <label asp-for="WebIconFormFile"
+                                                   class="@cssForLabel">
+                                            </label>
+
                                         </div>
 
                                         <div class="col-auto">
-                                            <input id="WebIconFormFileInput" asp-for="WebIconFormFile" class="form-control" aria-describedby="WebIconFormFileInputHelpBlock" />
-                                        </div>
 
-                                        <div id="WebIconFormFileInputHelpBlock" class="form-text">
-
-                                            <span class="fs-6 text-success">выбрать файл</span>
+                                            <input asp-for="WebIconFormFile"
+                                                   class="form-control"
+                                                   aria-describedby="WebIconFormFileInputHelpBlock" />
 
                                         </div>
 
-                                        <span asp-validation-for="WebIconFormFile" class="text-danger"></span>
+                                        <div id="WebIconFormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
 
-                                        <hr class="w-50 mx-auto" />
+                                            <span>
+                                                выбрать файл WEBP - 300 px
+                                            </span>
+
+                                        </div>
+
+                                        @if (Context.Request.Method == "POST")
+                                        {
+                                            <span asp-validation-for="WebIconFormFile" class="text-danger"></span>
+                                        }
 
                                     </div>
 
                                     @* Выбор картинки WEBP 200 px *@
-                                    <div class="row g-2 justify-content-center">
+                                    <div class="row g-2 justify-content-center mb-4">
 
                                         <div class="col-auto">
-                                            <label asp-for="WebIcon200FormFile" class="form-label text-primary fs-5"></label>
+
+                                            <label asp-for="WebIcon200FormFile"
+                                                   class="@cssForLabel">
+                                            </label>
+
                                         </div>
 
                                         <div class="col-auto">
-                                            <input id="WebIcon200FormFileInput" asp-for="WebIcon200FormFile" class="form-control" aria-describedby="WebIcon200FormFileInputHelpBlock" />
-                                        </div>
 
-                                        <div id="WebIcon200FormFileInputHelpBlock" class="form-text">
-
-                                            <span class="fs-6 text-success">выбрать файл</span>
+                                            <input asp-for="WebIcon200FormFile"
+                                                   class="form-control"
+                                                   aria-describedby="WebIcon200FormFileInputHelpBlock" />
 
                                         </div>
 
-                                        <span asp-validation-for="WebIcon200FormFile" class="text-danger"></span>
+                                        <div id="WebIcon200FormFileInputHelpBlock" 
+                                            class="@cssForHelpBlock">
 
-                                        <hr class="w-50 mx-auto" />
+                                            <span>
+                                                выбрать файл WEBP - 200 px
+                                            </span>
+
+                                        </div>
+
+                                        @if (Context.Request.Method == "POST")
+                                        {
+                                            <span asp-validation-for="WebIcon200FormFile" class="text-danger"></span>
+                                        }
 
                                     </div>
 
@@ -309,20 +450,34 @@
                                     <div class="row g-2 justify-content-center">
 
                                         <div class="col-auto">
-                                            <label class="form-label text-primary fs-5" asp-for="WebIcon100FormFile"></label>
+
+                                            <label asp-for="WebIcon100FormFile" 
+                                            class="@cssForLabel">
+                                        </label>
+
                                         </div>
 
                                         <div class="col-auto">
-                                            <input id="WebIcon100FormFileInput" asp-for="WebIcon100FormFile" class="form-control" aria-describedby="WebIcon100FormFileInputHelpBlock" />
-                                        </div>
 
-                                        <div id="WebIcon100FormFileInputHelpBlock" class="form-text">
-
-                                            <span class="fs-6 text-success">выбрать файл</span>
+                                            <input asp-for="WebIcon100FormFile"
+                                                   class="form-control"
+                                                   aria-describedby="WebIcon100FormFileInputHelpBlock" />
 
                                         </div>
 
-                                        <span asp-validation-for="WebIcon100FormFile" class="text-danger"></span>
+                                        <div id="WebIcon100FormFileInputHelpBlock" 
+                                            class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл WEBP - 100 px
+                                            </span>
+
+                                        </div>
+
+                                        @if (Context.Request.Method == "POST")
+                                        {
+                                            <span asp-validation-for="WebIcon100FormFile" class="text-danger"></span>
+                                        }
 
                                     </div>
 
@@ -335,105 +490,167 @@
                         @* Выбор картинок PNG*@
                         <div class="accordion-item block-shadow">
 
-                            <h2 class="accordion-header" id="headingDescription">
-                                <button class="accordion-button collapsed py-0 stranicy" type="button" data-bs-toggle="collapse" data-bs-target="#PngImage" aria-expanded="true" aria-controls="PngImage">
-                                    <span class="form-label fs-5">Формат PNG :</span>
+                            <h2 id="pngHeadingDescription" class="accordion-header block-shadow">
+
+                                <button class="accordion-button collapsed py-0 stranicy"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#PngImage"
+                                        aria-expanded="false"
+                                        aria-controls="PngImage">
+
+                                    <span class="form-label fs-5">
+                                        Формат PNG :
+                                    </span>
+
                                 </button>
+
                             </h2>
 
-                            <div id="PngImage" class="accordion-collapse collapse" aria-labelledby="headingDescription" data-bs-parent="#accordionAddImage">
+                            <div id="PngImage"
+                                 class="accordion-collapse collapse"
+                                 aria-labelledby="pngHeadingDescription"
+                                 data-bs-parent="#accordionAddImage">
 
                                 <div class="accordion-body text-indent-0 text-center">
 
                                     @* Выбор картинки HD PNG *@
-                                    <div class="row g-2 justify-content-center">
+                                    <div class="row g-2 justify-content-center mt-2 mb-4">
 
                                         <div class="col-auto">
-                                            <label class="form-label text-primary fs-5" asp-for="ImageHDFormFile"></label>
+
+                                            <label asp-for="ImageHDFormFile" 
+                                            class="@cssForLabel">
+                                        </label>
+
                                         </div>
 
                                         <div class="col-auto">
-                                            <input id="ImageHDFormFileInput" class="form-control" asp-for="ImageHDFormFile" aria-describedby="ImageHDFormFileInputHelpBlock" />
-                                        </div>
 
-                                        <div id="ImageHDFormFileInputHelpBlock" class="form-text">
-
-                                            <span class="fs-6 text-success">выбрать файл</span>
+                                            <input asp-for="ImageHDFormFile"
+                                                   class="form-control"
+                                                   aria-describedby="ImageHDFormFileInputHelpBlock" />
 
                                         </div>
 
-                                        <span asp-validation-for="ImageHDFormFile" class="text-danger"></span>
+                                        <div id="ImageHDFormFileInputHelpBlock" 
+                                            class="@cssForHelpBlock">
 
-                                        <hr class="w-50 mx-auto" />
+                                            <span>
+                                                выбрать файл PNG - HD
+                                            </span>
+
+                                        </div>
+
+                                        @if (Context.Request.Method == "POST")
+                                        {
+                                            <span asp-validation-for="ImageHDFormFile" class="text-danger"></span>
+                                        }
 
                                     </div>
 
                                     @* Выбор картинки PNG 720 px *@
-                                    <div class="row g-2 justify-content-center">
+                                    <div class="row g-2 justify-content-center mb-4">
 
                                         <div class="col-auto">
-                                            <label class="form-label text-primary fs-5" asp-for="ImageFormFile"></label>
+
+                                            <label asp-for="ImageFormFile" 
+                                            class="@cssForLabel">
+                                        </label>
+
                                         </div>
 
                                         <div class="col-auto">
-                                            <input id="ImageFormFileInput" class="form-control" asp-for="ImageFormFile" aria-describedby="ImageFormFileInputHelpBlock" />
-                                        </div>
 
-                                        <div id="ImageFormFileInputHelpBlock" class="form-text">
-
-                                            <span class="fs-6 text-success">выбрать файл</span>
+                                            <input asp-for="ImageFormFile"
+                                                   class="form-control"
+                                                   aria-describedby="ImageFormFileInputHelpBlock" />
 
                                         </div>
 
-                                        <span asp-validation-for="ImageFormFile" class="text-danger"></span>
+                                        <div id="ImageFormFileInputHelpBlock" 
+                                            class="@cssForHelpBlock">
 
-                                        <hr class="w-50 mx-auto" />
+                                            <span>
+                                                выбрать файл PNG - 720 px
+                                            </span>
+
+                                        </div>
+
+                                        @if (Context.Request.Method == "POST")
+                                        {
+                                            <span asp-validation-for="ImageFormFile" class="text-danger"></span>
+                                        }
 
                                     </div>
 
                                     @* Выбор картинки PNG 300 px *@
-                                    <div class="row g-2 justify-content-center">
+                                    <div class="row g-2 justify-content-center mb-4">
 
                                         <div class="col-auto">
-                                            <label class="form-label text-primary fs-5" asp-for="IconFormFile"></label>
+
+                                            <label asp-for="IconFormFile" 
+                                            class="@cssForLabel">
+                                        </label>
+
                                         </div>
 
                                         <div class="col-auto">
-                                            <input id="IconFormFileInput" class="form-control" asp-for="IconFormFile" aria-describedby="IconFormFileInputHelpBlock" />
-                                        </div>
 
-                                        <div id="IconFormFileInputHelpBlock" class="form-text">
-
-                                            <span class="fs-6 text-success">выбрать файл</span>
+                                            <input asp-for="IconFormFile"
+                                                   class="form-control"
+                                                   aria-describedby="IconFormFileInputHelpBlock" />
 
                                         </div>
 
-                                        <span asp-validation-for="IconFormFile" class="text-danger"></span>
+                                        <div id="IconFormFileInputHelpBlock" 
+                                            class="@cssForHelpBlock">
 
-                                        <hr class="w-50 mx-auto" />
+                                            <span>
+                                                выбрать файл PNG - 300 px
+                                            </span>
+
+                                        </div>
+
+                                        @if (Context.Request.Method == "POST")
+                                        {
+                                            <span asp-validation-for="IconFormFile" class="text-danger"></span>
+                                        }
 
                                     </div>
 
                                     @* Выбор картинки PNG 200 px *@
-                                    <div class="row g-2 justify-content-center">
+                                    <div class="row g-2 justify-content-center mb-4">
 
                                         <div class="col-auto">
-                                            <label class="form-label text-primary fs-5" asp-for="Icon200FormFile"></label>
+
+                                            <label asp-for="Icon200FormFile" 
+                                            class="@cssForLabel">
+                                        </label>
+
                                         </div>
 
                                         <div class="col-auto">
-                                            <input id="Icon200FormFileInput" class="form-control" asp-for="Icon200FormFile" aria-describedby="Icon200FormFileInputHelpBlock" />
-                                        </div>
 
-                                        <div id="Icon200FormFileInputHelpBlock" class="form-text">
-
-                                            <span class="fs-6 text-success">выбрать файл</span>
+                                            <input asp-for="Icon200FormFile"
+                                                   class="form-control"
+                                                   aria-describedby="Icon200FormFileInputHelpBlock" />
 
                                         </div>
 
-                                        <span asp-validation-for="Icon200FormFile" class="text-danger"></span>
+                                        <div id="Icon200FormFileInputHelpBlock" 
+                                            class="@cssForHelpBlock">
 
-                                        <hr class="w-50 mx-auto" />
+                                            <span>
+                                                выбрать файл PNG - 200 px
+                                            </span>
+
+                                        </div>
+
+                                        @if (Context.Request.Method == "POST")
+                                        {
+                                            <span asp-validation-for="Icon200FormFile" class="text-danger"></span>
+                                        }
 
                                     </div>
 
@@ -441,22 +658,34 @@
                                     <div class="row g-2 justify-content-center">
 
                                         <div class="col-auto">
-                                            <label class="form-label text-primary fs-5" asp-for="Icon100FormFile"></label>
+
+                                            <label asp-for="Icon100FormFile" 
+                                            class="@cssForLabel">
+                                        </label>
+
                                         </div>
 
                                         <div class="col-auto">
-                                            <input id="Icon100FormFileInput" class="form-control" asp-for="Icon100FormFile" aria-describedby="Icon100FormFileInputHelpBlock" />
-                                        </div>
 
-                                        <div id="Icon100FormFileInputHelpBlock" class="form-text">
-
-                                            <span class="fs-6 text-success">выбрать файл</span>
+                                            <input asp-for="Icon100FormFile"
+                                                   class="form-control"
+                                                   aria-describedby="Icon100FormFileInputHelpBlock" />
 
                                         </div>
 
-                                        <span asp-validation-for="Icon100FormFile" class="text-danger"></span>
+                                        <div id="Icon100FormFileInputHelpBlock" 
+                                            class="@cssForHelpBlock">
 
-                                        <hr class="w-50 mx-auto" />
+                                            <span>
+                                                выбрать файл PNG - 100 px
+                                            </span>
+
+                                        </div>
+
+                                        @if (Context.Request.Method == "POST")
+                                        {
+                                            <span asp-validation-for="Icon100FormFile" class="text-danger"></span>
+                                        }
 
                                     </div>
 
@@ -469,17 +698,25 @@
                     </div>
 
                     @* Сохранить картинку *@
-                    <div class="card-footer p-0 mt-4">
+                    <div class="card-footer p-0 mt-4 border-0">
 
-                        <button type="submit" class="btn btn-outline-success m-2 text-center block-shadow" title="добавить картинку">Добавить</button>
+                        <button type="submit"
+                                class="btn btn-outline-success m-2 text-center minwidth100px block-shadow"
+                                title="добавить картинку">
 
-                        <a class="btn btn-outline-danger m-2 block-shadow"
-                           asp-area="Admin"
+                            Добавить
+
+                        </button>
+
+                        <a asp-area="Admin"
                            asp-controller="ImageInfo"
                            asp-action="Index"
-                           asp-route-iconlist="false"
+                           asp-route-pageCard="false"
+                           class="btn btn-outline-danger m-2 block-shadow minwidth100px"
                            title="не сохранять">
+
                             Отмена
+
                         </a>
 
                     </div>

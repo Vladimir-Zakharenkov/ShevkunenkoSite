@@ -68,6 +68,10 @@
     max-width: max-content;
 }
 
+.maxwidth15percent {
+    max-width: 15%;
+}
+
 .maxwidth28percent {
     max-width: 28%;
 }
@@ -149,6 +153,11 @@
     max-width: 80px !important;
 }
 
+img.maxwidth80px {
+    max-width: 80px;
+    height: auto;
+}
+
 .maxwidth100px {
     max-width: 100px;
 }
@@ -164,7 +173,6 @@
 .maxwidth400px {
     max-width: 400px;
 }
-
 
 .maxwidth600px {
     max-width: 600px;

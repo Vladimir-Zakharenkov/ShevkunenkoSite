@@ -13449,6 +13449,10 @@ li#yandex-search * {
   max-width: max-content;
 }
 
+.maxwidth15percent {
+  max-width: 15%;
+}
+
 .maxwidth28percent {
   max-width: 28%;
 }
@@ -13527,6 +13531,11 @@ li#yandex-search * {
 
 .maxwidth80px {
   max-width: 80px !important;
+}
+
+img.maxwidth80px {
+  max-width: 80px;
+  height: auto;
 }
 
 .maxwidth100px {
@@ -13691,4 +13700,7 @@ li#yandex-search * {
   .fotoplenka {
     display: none;
   }
+}
+.carousel-item > a {
+  display: block;
 }

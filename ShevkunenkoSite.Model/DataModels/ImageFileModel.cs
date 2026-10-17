@@ -1,4 +1,6 @@
-﻿namespace ShevkunenkoSite.Models.DataModels;
+﻿using ShevkunenkoSite.Services.Attributes;
+
+namespace ShevkunenkoSite.Models.DataModels;
 
 public class ImageFileModel
 {
@@ -13,7 +15,8 @@ public class ImageFileModel
 
     #region Название и описание
 
-    [Required(ErrorMessage = "Введите название картинки")]
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Введите название картинки")]
+    [NotWhitespace(ErrorMessage = "Название не может состоять только из пробелов")]
     [DataType(DataType.Text)]
     [MaxLength(60, ErrorMessage = "{0} не должно содержать больше {1} символов")]
     [Display(Name = "Название картинки :")]
@@ -43,7 +46,7 @@ public class ImageFileModel
 
     [DataType(DataType.Text)]
     [Display(Name = "Каталог картинки :")]
-    public string ImagePath { get; set; } = "images";
+    public string ImagePath { get; set; } = "/images";
 
     #endregion
 

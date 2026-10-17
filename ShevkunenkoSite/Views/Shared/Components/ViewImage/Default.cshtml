@@ -9,7 +9,7 @@
     var thumbnailUrl = Model.GetThumbnailUrl();
 }
 
-<span class="d-flex col-auto rounded mt-0 block-shadow"
+<div class="d-flex justify-content-center align-items-center rounded"
       itemscope itemtype="http://schema.org/ImageObject">
 
     <meta itemprop="name" content="@Model.ImageItem.ImageCaption" />
@@ -23,7 +23,7 @@
         <meta itemprop="width" content="@data.Width" />
         <meta itemprop="height" content="@data.Height" />
 
-        <img class="@Model.CssClass text-indent-0"
+        <img class="text-indent-0 rounded-3 block-shadow @Model.CssClass"
              src="@contentUrl"
              asp-append-version="true"
              alt="@Model.ImageItem.ImageAltTitle"
@@ -36,4 +36,5 @@
     {
         <partial name="_NoImagePartial" model="@Model.CssClass" />
     }
-</span>
+
+</div>

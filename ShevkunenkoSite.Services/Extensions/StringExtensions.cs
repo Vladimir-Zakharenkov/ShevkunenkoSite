@@ -22,4 +22,5 @@ public static class StringExtensions
 
     public static string SpaceToDash(this string s) =>
         string.IsNullOrWhiteSpace(s) ? string.Empty : s.Replace(' ', '-');
+
 }

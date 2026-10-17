@@ -1,194 +1,179 @@
 ﻿@model ItemsListViewModel
 
+<partial name="_HeadingPartial"
+         model='("Картинки сайта", "h1")' />
+
 @* Значение строки поиска *@
 <div>
 
-	@if (!String.IsNullOrEmpty(Model.SearchString))
-	{
-		<div class="row mb-0">
-			<p class="col-12 fs-5 text-primary">
-				Поиск по строке: <span class="text-black text_shadow">@Model.SearchString</span>
-			</p>
-		</div>
-	}
+    @if (!string.IsNullOrEmpty(Model.SearchString))
+    {
+        <div class="row mb-0">
+
+            <p class="col-12 fs-3 text-primary">
+
+                Поиск по строке:
+
+                <span class="text-black text_shadow">
+                    @Model.SearchString
+                </span>
+
+            </p>
+
+        </div>
+    }
 
 </div>
 
 @* Количество картинок *@
-<div>
+<div class="text-center mb-0">
 
-	@if (Model.TotalItems == 0)
-	{
-		<div class="row">
+    <p class="fs-3 text-primary mb-0">
 
-			<div class="col text-center p-2">
+        Количество изображений:&nbsp;
 
-				<p class="fs-5 text_shadow mb-0">
-					В базе данных нет картинок
-				</p>
+        <span class="text-black text_shadow">
+            @Model.TotalItems
+        </span>
+    </p>
 
-			</div>
-
-		</div>
-	}
-	else
-	{
-		<div class="row">
-
-			<div class="col-12 text-center mb-0">
-
-				<p class="fs-5 text-primary mb-0">
-					Количество изображений:&nbsp;
-					<span class="text-black text_shadow">
-						@Model.TotalItems
-					</span>
-				</p>
-
-			</div>
-
-		</div>
-	}
-
-	<hr class="liniya" />
+    <hr class="w-50 liniya" />
 
 </div>
 
-@* Добавить картинку - Таблица - Поиск картинок *@
-<div class="row">
+@* Кнопки «Добавить» - «Таблица» - Поиск картинок *@
+<div class="row mb-4 justify-content-center">
 
-	@* Добавить картинку - Таблица картинок *@
-	<div class="col-12 col-md-6 col-lg-4">
+    @* Кнопки «Добавить» - «Таблица» *@
+    <div class="col-12 col-md-6 col-lg-4 my-3">
 
-		@* Добавить картинку *@
-		<a asp-area="Admin"
-		   asp-controller="ImageInfo"
-		   asp-action="AddImage"
-		   class="btn btn-outline-danger block-shadow py-1 mt-2 me-3 minwidth100px"
-		   title="добавить картинку">
+        <a asp-area="Admin"
+           asp-controller="ImageInfo"
+           asp-action="AddImage"
+           class="btn btn-outline-danger block-shadow py-1 me-3 minwidth100px"
+           title="добавить картинку">
 
-			Добавить
+            Добавить
 
-		</a>
+        </a>
 
-		@* Иконки картинок *@
-		<a asp-area="Admin"
-		   asp-controller="ImageInfo"
-		   asp-action="Index"
-		   asp-route-searchString="@Model.SearchString"
-		   asp-route-pageCard="false"
-		   class="btn btn-outline-primary block-shadow py-1 mt-2 minwidth100px"
-		   title="таблица картинок">
+        <a asp-area="Admin"
+           asp-controller="ImageInfo"
+           asp-action="Index"
+           asp-route-searchString="@Model.SearchString"
+           asp-route-pageCard="false"
+           asp-route-pageNumber="@Model.CurrentPage"
+           class="btn btn-outline-primary block-shadow py-1 minwidth100px"
+           title="иконки картинок">
 
-			Таблица
+            Таблица
 
-		</a>
+        </a>
 
-	</div>
+    </div>
 
-	<hr class="col-12 w-75 mt-3 d-md-none mx-auto" />
+    @* Форма поиска картинок *@
+    <div class="col-11 col-md-6 col-lg-7 px-2 py-1 mb-2">
 
-	@* Поиск картинок *@
-	<div class="col-12 col-md-6 col-lg-8 mb-2">
+        <form method="get"
+              asp-area="Admin"
+              asp-controller="ImageInfo"
+              asp-action="Index"
+              class="text-center text-md-end mt-md-2">
 
-		<form method="get"
-			  asp-area="Admin"
-			  asp-controller="ImageInfo"
-			  asp-action="Index"
-			  asp-route-pageCard="true"
-			  class="text-center text-md-end mt-md-2">
+            <input type="hidden" name="pageCard" value="true" />
 
-			<input asp-for="PageCard" type="hidden" value="true" />
+            <input type="text" name="searchString" value="@Model.SearchString"
+                   class="align-middle p-1 mt-1 w-50 border border-1 border-black block-shadow" />
 
-			<input asp-for="SearchString"
-				   class="d-inline-block align-middle mt-1 w-50"
-				   type="text" />
+            <input class="btn btn-outline-success block-shadow py-1 me-md-3"
+                   type="submit"
+                   value="Поиск"
+                   title="поиск картинки" />
 
-			<input class="btn btn-outline-success block-shadow py-1 me-md-3"
-				   type="submit"
-				   value="Поиск"
-				   title="поиск картинки" />
+        </form>
 
-		</form>
-
-	</div>
-
-	<hr class="liniya" />
+    </div>
 
 </div>
 
 @* Иконки картинок сайта *@
 <div class="row row-cols-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-7 row-cols-xxl-8 g-2 justify-content-center">
 
-	@foreach (var image in Model.AllImageFiles ?? Enumerable.Empty<ImageFileModel>())
-	{
-		<div class="col">
+    @foreach (var image in Model.AllImageFiles)
+    {
+        <div class="col">
 
-			<div class="card h-100 me-1 m-1 p-1 pb-0 block-shadow borderforitem">
+            <div class="card h-100 me-1 m-1 p-1 pb-0 block-shadow borderforitem">
 
-				<a asp-area="Admin"
-				   asp-controller="ImageInfo"
-				   asp-action="DetailsImage"
-				   asp-route-imageid="@image.ImageFileModelId"
-				   title="иконка картинки">
+                <a asp-area="Admin"
+                   asp-controller="ImageInfo"
+                   asp-action="DetailsImage"
+                   asp-route-imageId="@image.ImageFileModelId"
+                   title="иконка картинки">
 
-					<vc:view-image image-id="@image.ImageFileModelId"
-								   css-class="card-img-top block-shadow"
-								   icon-type="icon300" />
+                    <vc:view-image image-id="@image.ImageFileModelId"
+                                   css-class="card-img-top block-shadow"
+                                   icon-type="icon300" />
 
-				</a>
+                </a>
 
-				<div class="card-footer px-0 text-muted">
+                <div class="card-footer px-0 text-muted mt-auto">
 
-					<hr class="liniya minwidth50px" />
-					
-					<div class="pt-2 minwidth50px mx-auto justify-content-center">
+                    <div class="col-12">
 
-						<a asp-area="Admin"
-						   asp-controller="ImageInfo"
-						   asp-action="DetailsImage"
-						   asp-route-imageId="@image.ImageFileModelId"
-						   class="btn btn-outline-info py-0 px-0 px-sm-2 ms-1 mb-1 block-shadow minwidth50px"
-						   title="инфо о картинке">
+                        <hr class="liniya minwidth50px" />
 
-							Info
+                    </div>
 
-						</a>
+                    <div class="pt-2 minwidth50px mx-auto">
 
-						<a asp-area="Admin"
-						   asp-controller="ImageInfo"
-						   asp-action="EditImage"
-						   asp-route-imageId="@image.ImageFileModelId"
-						   class="btn btn-outline-dark py-0 px-0 px-sm-2 ms-1 mb-1 block-shadow minwidth50px"
-						   title="редактировать">
+                        <a asp-area="Admin"
+                           asp-controller="ImageInfo"
+                           asp-action="DetailsImage"
+                           asp-route-imageId="@image.ImageFileModelId"
+                           class="btn btn-outline-info py-0 px-0 px-sm-2 ms-1 mb-0 block-shadow minwidth50px"
+                           title="инфо о картинке">
 
-							Edit
+                            Info
 
-						</a>
+                        </a>
 
-						<a asp-area="Admin"
-						   asp-controller="ImageInfo"
-						   asp-action="DeleteImage"
-						   asp-route-imageId="@image.ImageFileModelId"
-						   class="btn btn-outline-danger py-0 px-0 px-sm-2 ms-1 mb-1 block-shadow minwidth50px"
-						   title="удалить">
+                        <a asp-area="Admin"
+                           asp-controller="ImageInfo"
+                           asp-action="EditImage"
+                           asp-route-imageId="@image.ImageFileModelId"
+                           class="d-none d-sm-inline-block btn btn-outline-dark py-0 px-0 px-sm-2 ms-1 mb-0 block-shadow minwidth50px"
+                           title="редактировать">
 
-							Del
+                            Edit
 
-						</a>
+                        </a>
 
-					</div>
+                        <a asp-area="Admin"
+                           asp-controller="ImageInfo"
+                           asp-action="DeleteImage"
+                           asp-route-imageId="@image.ImageFileModelId"
+                           class="d-none d-xxl-inline-block btn btn-outline-danger py-0 px-0 px-sm-2 ms-1 mb-1 block-shadow minwidth50px"
+                           title="удалить">
 
-				</div>
+                            Del
 
-			</div>
+                        </a>
 
-		</div>
-	}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
 
 </div>
 
 @* Разбивка на страницы *@
 @if (Model.TotalItems > DataConfig.NumberOfItemsPerPage)
 {
-	<div pagination="@Model"></div>
+    <div pagination="@Model"></div>
 }
