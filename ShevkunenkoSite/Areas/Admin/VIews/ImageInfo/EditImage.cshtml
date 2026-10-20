@@ -220,6 +220,7 @@
                 @* Каталог картинки *@
                 <div class="mb-4">
 
+                    @* Текущий каталог *@
                     <p class="mb-3">
 
                         <span class="@cssForLabel">
@@ -346,7 +347,7 @@
                                     @if (string.IsNullOrEmpty(Model.EditImage.WebImageHDFileName))
                                     {
                                         <vc:view-image image-id="@DataConfig.NoImage"
-                                                       css-class="card-img-top m-2 block-shadow"
+                                                       css-class=""
                                                        icon-type="webimage" />
 
                                         <p class="fs-5 text-danger my-3">
@@ -364,7 +365,7 @@
                                         </p>
 
                                         <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
-                                                       css-class="card-img-top m-2 block-shadow"
+                                                       css-class=""
                                                        icon-type="webhd" />
 
                                         <p class="text_shadow fs-5 my-3">

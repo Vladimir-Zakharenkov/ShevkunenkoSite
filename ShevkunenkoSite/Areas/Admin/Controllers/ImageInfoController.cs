@@ -9,12 +9,12 @@ public class ImageInfoController(
     public ImageFileModel? ImageItem { get; set; }
 
     private readonly record struct ImageMetadata(
-    string FileName,
-    string Extension,
-    string MimeType,
-    uint FileSize,
-    uint Width,
-    uint Height);
+            string FileName,
+            string Extension,
+            string MimeType,
+            uint FileSize,
+            uint Width,
+            uint Height);
 
     private static readonly (string Name, Func<EditImageViewModel, IFormFile?> Selector)[] UploadFields =
 [
@@ -84,422 +84,125 @@ public class ImageInfoController(
 
     public async Task<IActionResult> DetailsImage(Guid? imageId, string? imageIcon)
     {
-        if (imageId.HasValue && await imageContext.ImageFiles.Where(i => i.ImageFileModelId == imageId).AnyAsync())
-        {
-            ImageItem = await imageContext.ImageFiles.FirstAsync(i => i.ImageFileModelId == imageId);
+        DetailsImageIconViewModel detailsView = new();
 
-            bool fileExists = true;
+        if (!imageId.HasValue) return RedirectToAction(nameof(Index));
 
-            string buttonInfoStyle = "btn btn-outline-primary py-1 px-1 block-shadow";
+        var image = await imageContext.ImageFiles
+            .AsNoTracking()
+            .FirstOrDefaultAsync(i => i.ImageFileModelId == imageId);
 
-            string webImageButtonInfostyle = buttonInfoStyle;
-            string imageButtonInfostyle = buttonInfoStyle;
-            string webhdButtonInfostyle = buttonInfoStyle;
-            string hdButtonInfostyle = buttonInfoStyle;
-            string icon300ButtonInfostyle = buttonInfoStyle;
-            string webIcon300ButtonInfostyle = buttonInfoStyle;
-            string icon200ButtonInfostyle = buttonInfoStyle;
-            string webIcon200ButtonInfostyle = buttonInfoStyle;
-            string icon100ButtonInfostyle = buttonInfoStyle;
-            string webIcon100ButtonInfostyle = buttonInfoStyle;
-
-            string fileName = string.Empty;
-
-            #region Проверка наличия файлов в каталоге
-
-            if (!string.IsNullOrEmpty(ImageItem.WebImageFileName))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.WebImageFileName));
-
-                if (!imageFile.Exists)
-                {
-                    webImageButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
-                }
-            }
-
-            if (!string.IsNullOrEmpty(ImageItem.ImageFileName))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.ImageFileName));
-
-                if (!imageFile.Exists)
-                {
-                    imageButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
-                }
-            }
-
-            if (!string.IsNullOrEmpty(ImageItem.WebImageHDFileName))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.WebImageHDFileName));
-
-                if (!imageFile.Exists)
-                {
-                    webhdButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
-                }
-            }
-
-            if (!string.IsNullOrEmpty(ImageItem.ImageHDFileName))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.ImageHDFileName));
-
-                if (!imageFile.Exists)
-                {
-                    hdButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
-                }
-            }
-
-            if (!string.IsNullOrEmpty(ImageItem.WebIconFileName))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.WebIconFileName));
-
-                if (!imageFile.Exists)
-                {
-                    webIcon300ButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
-                }
-            }
-
-            if (!string.IsNullOrEmpty(ImageItem.IconFileName))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.IconFileName));
-
-                if (!imageFile.Exists)
-                {
-                    icon300ButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
-                }
-            }
-
-            if (!string.IsNullOrEmpty(ImageItem.WebIcon200FileName))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.WebIcon200FileName));
-
-                if (!imageFile.Exists)
-                {
-                    webIcon200ButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
-                }
-            }
-
-            if (!string.IsNullOrEmpty(ImageItem.Icon200FileName))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.Icon200FileName));
-
-                if (!imageFile.Exists)
-                {
-                    icon200ButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
-                }
-            }
-
-            if (!string.IsNullOrEmpty(ImageItem.WebIcon100FileName))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.WebIcon100FileName));
-
-                if (!imageFile.Exists)
-                {
-                    webIcon100ButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
-                }
-            }
-
-            if (!string.IsNullOrEmpty(ImageItem.Icon100FileName))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.Icon100FileName));
-
-                if (!imageFile.Exists)
-                {
-                    icon100ButtonInfostyle = "btn btn-outline-danger py-1 px-1 block-shadow";
-                }
-            }
-
-            #endregion
-
-            if (imageIcon == "webimage" & !string.IsNullOrEmpty(ImageItem.WebImageFileName))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.WebImageFileName));
-
-                if (imageFile.Exists)
-                {
-                    fileExists = true;
-                }
-                else
-                {
-                    fileExists = false;
-                }
-
-                DetailsImageIconViewModel iconView = new()
-                {
-                    ImageItem = ImageItem,
-                    IconType = imageIcon,
-                    FileExists = fileExists,
-                    FileName = ImageItem.WebImageFileName,
-                    WebImageButtonInfostyle = webImageButtonInfostyle
-                };
-
-                return View(iconView);
-            }
-            else if ((imageIcon == "image" & !string.IsNullOrEmpty(ImageItem.ImageFileName)))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.ImageFileName));
-
-                if (imageFile.Exists)
-                {
-                    fileExists = true;
-                }
-                else
-                {
-                    fileExists = false;
-                }
-
-                DetailsImageIconViewModel iconView = new()
-                {
-                    ImageItem = ImageItem,
-                    IconType = imageIcon,
-                    FileExists = fileExists,
-                    FileName = ImageItem.WebImageFileName,
-                    ImageButtonInfostyle = imageButtonInfostyle
-                };
-
-                return View(iconView);
-            }
-            else if ((imageIcon == "webhd" & !string.IsNullOrEmpty(ImageItem.WebImageHDFileName)))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.WebImageHDFileName!));
-
-                if (imageFile.Exists)
-                {
-                    fileExists = true;
-                }
-                else
-                {
-                    fileExists = false;
-                }
-
-                DetailsImageIconViewModel iconView = new()
-                {
-                    ImageItem = ImageItem,
-                    IconType = imageIcon,
-                    FileExists = fileExists,
-                    FileName = ImageItem.WebImageFileName,
-                    WebhdButtonInfostyle = webhdButtonInfostyle
-                };
-
-                return View(iconView);
-            }
-            else if ((imageIcon == "hd" & !string.IsNullOrEmpty(ImageItem.ImageHDFileName)))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.ImageHDFileName!));
-
-                if (imageFile.Exists)
-                {
-                    fileExists = true;
-                }
-                else
-                {
-                    fileExists = false;
-                }
-
-                DetailsImageIconViewModel iconView = new()
-                {
-                    ImageItem = ImageItem,
-                    IconType = imageIcon,
-                    FileExists = fileExists,
-                    FileName = ImageItem.WebImageFileName,
-                    HdButtonInfostyle = hdButtonInfostyle
-                };
-
-                return View(iconView);
-            }
-            else if ((imageIcon == "webicon300" & !string.IsNullOrEmpty(ImageItem.WebIconFileName)))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.WebIconFileName));
-
-                if (imageFile.Exists)
-                {
-                    fileExists = true;
-                }
-                else
-                {
-                    fileExists = false;
-                }
-
-                DetailsImageIconViewModel iconView = new()
-                {
-                    ImageItem = ImageItem,
-                    IconType = imageIcon,
-                    FileExists = fileExists,
-                    FileName = ImageItem.WebImageFileName,
-                    WebIcon300ButtonInfostyle = webIcon300ButtonInfostyle
-                };
-
-                return View(iconView);
-            }
-            else if ((imageIcon == "icon300" & !string.IsNullOrEmpty(ImageItem.IconFileName)))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.IconFileName!));
-
-                if (imageFile.Exists)
-                {
-                    fileExists = true;
-                }
-                else
-                {
-                    fileExists = false;
-                }
-
-                DetailsImageIconViewModel iconView = new()
-                {
-                    ImageItem = ImageItem,
-                    IconType = imageIcon,
-                    FileExists = fileExists,
-                    FileName = ImageItem.WebImageFileName,
-                    Icon300ButtonInfostyle = icon300ButtonInfostyle
-                };
-
-                return View(iconView);
-            }
-            else if ((imageIcon == "webicon200" & !string.IsNullOrEmpty(ImageItem.WebIcon200FileName)))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.WebIcon200FileName));
-
-                if (imageFile.Exists)
-                {
-                    fileExists = true;
-                }
-                else
-                {
-                    fileExists = false;
-                }
-
-                DetailsImageIconViewModel iconView = new()
-                {
-                    ImageItem = ImageItem,
-                    IconType = imageIcon,
-                    FileExists = fileExists,
-                    FileName = ImageItem.WebImageFileName,
-                    WebIcon200ButtonInfostyle = webIcon200ButtonInfostyle
-                };
-
-                return View(iconView);
-            }
-            else if ((imageIcon == "icon200" & !string.IsNullOrEmpty(ImageItem.Icon200FileName)))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.Icon200FileName!));
-
-                if (imageFile.Exists)
-                {
-                    fileExists = true;
-                }
-                else
-                {
-                    fileExists = false;
-                }
-
-                DetailsImageIconViewModel iconView = new()
-                {
-                    ImageItem = ImageItem,
-                    IconType = imageIcon,
-                    FileExists = fileExists,
-                    FileName = ImageItem.WebImageFileName,
-                    Icon200ButtonInfostyle = icon200ButtonInfostyle
-                };
-
-                return View(iconView);
-            }
-            else if ((imageIcon == "webicon100" & !string.IsNullOrEmpty(ImageItem.WebIcon100FileName)))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.WebIcon100FileName));
-
-                if (imageFile.Exists)
-                {
-                    fileExists = true;
-                }
-                else
-                {
-                    fileExists = false;
-                }
-
-                DetailsImageIconViewModel iconView = new()
-                {
-                    ImageItem = ImageItem,
-                    IconType = imageIcon,
-                    FileExists = fileExists,
-                    FileName = ImageItem.WebImageFileName,
-                    WebIcon100ButtonInfostyle = webIcon100ButtonInfostyle
-                };
-
-                return View(iconView);
-            }
-            else if ((imageIcon == "icon100" & !string.IsNullOrEmpty(ImageItem.Icon100FileName)))
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.Icon100FileName!));
-
-                if (imageFile.Exists)
-                {
-                    fileExists = true;
-                }
-                else
-                {
-                    fileExists = false;
-                }
-
-                DetailsImageIconViewModel iconView = new()
-                {
-                    ImageItem = ImageItem,
-                    IconType = imageIcon,
-                    FileExists = fileExists,
-                    FileName = ImageItem.WebImageFileName,
-                    Icon100ButtonInfostyle = icon100ButtonInfostyle
-                };
-
-                return View(iconView);
-            }
-            else
-            {
-                FileInfo imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.WebImageFileName));
-
-                if (!imageFile.Exists)
-                {
-                    fileExists = false;
-                }
-
-                if (!fileExists)
-                {
-                    imageFile = new(Path.Combine(Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", ImageItem.ImagePath)).Replace('\\', '/'), ImageItem.ImageFileName));
-
-                    if (!imageFile.Exists)
-                    {
-                        fileExists = false;
-
-                        fileName = ImageItem.ImageFileName;
-                    }
-                    else
-                    {
-                        fileExists = true;
-                    }
-                }
-
-                DetailsImageIconViewModel iconView = new()
-                {
-                    ImageItem = ImageItem,
-                    FileName = fileName,
-                    FileExists = fileExists,
-                    WebImageButtonInfostyle = webImageButtonInfostyle,
-                    ImageButtonInfostyle = imageButtonInfostyle,
-                    WebhdButtonInfostyle = webhdButtonInfostyle,
-                    HdButtonInfostyle = hdButtonInfostyle,
-                    Icon300ButtonInfostyle = icon300ButtonInfostyle,
-                    WebIcon300ButtonInfostyle = webIcon300ButtonInfostyle,
-                    Icon200ButtonInfostyle = icon200ButtonInfostyle,
-                    WebIcon200ButtonInfostyle = webIcon200ButtonInfostyle,
-                    Icon100ButtonInfostyle = icon100ButtonInfostyle,
-                    WebIcon100ButtonInfostyle = webIcon100ButtonInfostyle
-                };
-
-                return View(iconView);
-            }
-        }
-        else
+        if (image == null)
         {
             return RedirectToAction(nameof(Index));
         }
-    }
+        else
+        {
+            detailsView.ImageItem = image;
+        }
 
+        #region Определяем тип иконки в запросе
+
+        string[] allowedIcons =
+                [
+                    "webhd", "hd", "webimage", "image",
+                    "webicon300", "icon300", "webicon200", "icon200",
+                    "webicon100", "icon100"
+                ];
+
+        detailsView.IconType = allowedIcons.Contains(imageIcon, StringComparer.OrdinalIgnoreCase)
+                                ? allowedIcons.First(i => i.Equals(imageIcon, StringComparison.OrdinalIgnoreCase))
+                                : "webimage";
+
+        #endregion
+
+        #region Определяем каталог картинки
+
+        // Проверяем, что итоговый путь начинается с корня wwwroot
+        string wwwRoot = Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot"))
+                     .Replace('\\', '/');
+
+        string fullPath = Path.GetFullPath(Path.Join(wwwRoot, image.ImagePath)).Replace('\\', '/');
+
+        if (!fullPath.Equals(wwwRoot, StringComparison.OrdinalIgnoreCase) &&
+            !fullPath.StartsWith(wwwRoot + "/", StringComparison.OrdinalIgnoreCase))
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Проверка, что итоговый путь начинается с корня wwwroot
+        // (альтернативный вариант — Path.GetRelativePath + проверка "..", не используется)
+        //string relative = Path.GetRelativePath(wwwRoot, fullPath);
+        //if (relative.StartsWith("..") || Path.IsPathRooted(relative))
+        //    return RedirectToAction(nameof(Index));
+
+        #endregion
+
+        #region Определяем, css для ViewImage соответствует выбранному imageIcon
+
+        string? cssForImage = detailsView.IconType switch
+        {
+            "webimage" => "maxwidth600px",
+            "image" => "maxwidth600px",
+            "webhd" => "maxwidth800px",
+            "hd" => "maxwidth800px",
+            "webicon300" => "maxwidth300px",
+            "icon300" => "maxwidth300px",
+            "webicon200" => "maxwidth200px",
+            "icon200" => "maxwidth200px",
+            "webicon100" => "maxwidth100px",
+            "icon100" => "maxwidth100px",
+            _ => null
+        };
+
+        detailsView.CurrentCss = cssForImage;
+
+        #endregion
+
+        #region Определяем, какой файл соответствует выбранному imageIcon
+
+        string? fileForIcon = detailsView.IconType switch
+        {
+            "webimage" => image.WebImageFileName,
+            "image" => image.ImageFileName,
+            "webhd" => image.WebImageHDFileName,
+            "hd" => image.ImageHDFileName,
+            "webicon300" => image.WebIconFileName,
+            "icon300" => image.IconFileName,
+            "webicon200" => image.WebIcon200FileName,
+            "icon200" => image.Icon200FileName,
+            "webicon100" => image.WebIcon100FileName,
+            "icon100" => image.Icon100FileName,
+            _ => null
+        };
+
+        #endregion
+
+        #region Проверяем наличие файла в каталоге
+
+        if (!string.IsNullOrEmpty(fileForIcon))
+        {
+            detailsView.FileName = fileForIcon;
+            detailsView.FileExists = System.IO.File.Exists(Path.Join(fullPath, fileForIcon));
+        }
+
+        // Отдельно — проверка остальных 10 файлов, чтобы установить красный стиль для отсутствующих,
+        // даже если они не выбраны (это нужно для таблицы в представлении)
+        ApplyIfFileMissing(image.WebImageFileName, fullPath, () => detailsView.WebImageButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.ImageFileName, fullPath, () => detailsView.ImageButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.WebImageHDFileName, fullPath, () => detailsView.WebhdButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.ImageHDFileName, fullPath, () => detailsView.HdButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.WebIconFileName, fullPath, () => detailsView.WebIcon300ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.IconFileName, fullPath, () => detailsView.Icon300ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.WebIcon200FileName, fullPath, () => detailsView.WebIcon200ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.Icon200FileName, fullPath, () => detailsView.Icon200ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.WebIcon100FileName, fullPath, () => detailsView.WebIcon100ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.Icon100FileName, fullPath, () => detailsView.Icon100ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+
+        #endregion
+
+        return View(detailsView);
+    }
 
     #endregion
 
@@ -929,16 +632,20 @@ public class ImageInfoController(
                     Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", imageUpdate.ImagePath)
                             ).Replace('\\', '/');
 
-        string imagePath = imageItem.EditImage.ImagePath?.Trim('/') ?? string.Empty;
+        string imagePath = imageItem.EditImage.ImagePath?.TrimEnd('/') ?? string.Empty;
 
-        imageUpdate.ImagePath = string.IsNullOrEmpty(imagePath) || imagePath == "images"
+        imageUpdate.ImagePath = string.IsNullOrEmpty(imagePath) || imagePath == "/images"
             ? "/images"
-            : "/images/" + imagePath;
+            : $"{imagePath}";
+
+        #region Ввод нового каталога
 
         if (!string.IsNullOrWhiteSpace(imageItem.NewImagePath))
         {
             imageUpdate.ImagePath = "/images/" + imageItem.NewImagePath.Trim('/');
         }
+
+        #endregion
 
         string path = Path.GetFullPath(
                     Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", imageUpdate.ImagePath)
@@ -959,8 +666,8 @@ public class ImageInfoController(
             {
                 if (string.IsNullOrEmpty(fileName)) return;
 
-                FileInfo oldFile = new(Path.Combine(oldPath, fileName));
-                FileInfo newFile = new(Path.Combine(path, fileName));
+                FileInfo oldFile = new(Path.Join(oldPath, fileName));
+                FileInfo newFile = new(Path.Join(path, fileName));
 
                 if (oldFile.Exists)
                 {
@@ -1005,8 +712,6 @@ public class ImageInfoController(
         ClearUnusedFormFields(imageItem);
 
         #endregion
-
-
 
         #region Запись новых файлов + обновление метаданных
 
@@ -1675,11 +1380,11 @@ public class ImageInfoController(
         string fieldName)
     {
         // 1. Копируем файл, если его ещё нет в целевом каталоге
-        FileInfo target = new(Path.Combine(path, file.FileName));
+        FileInfo target = new(Path.Join(path, file.FileName));
 
         if (!target.Exists)
         {
-            string copyPath = Path.Combine(path, file.FileName).Replace('\\', '/');
+            string copyPath = Path.Join(path, file.FileName).Replace('\\', '/');
 
             using FileStream stream = new(copyPath, FileMode.Create);
             await file.CopyToAsync(stream);
@@ -1687,7 +1392,7 @@ public class ImageInfoController(
 
         // 2. Читаем метаданные
         IReadOnlyList<MetadataExtractor.Directory> directories =
-            ImageMetadataReader.ReadMetadata(Path.Combine(path, file.FileName));
+            ImageMetadataReader.ReadMetadata(Path.Join(path, file.FileName));
 
         string? fileName = null;
         string? extension = null;
@@ -1817,10 +1522,10 @@ public class ImageInfoController(
     {
         if (string.IsNullOrEmpty(oldFileName)) return;
 
-        FileInfo oldFile = new(Path.Combine(path, oldFileName));
+        FileInfo oldFile = new(Path.Join(path, oldFileName));
         if (!oldFile.Exists) return;
 
-        string backupDir = Path.Combine(Path.GetTempPath(), "ShevkunenkoSite_Backups");
+        string backupDir = Path.Join(Path.GetTempPath(), "ShevkunenkoSite_Backups");
         if (!System.IO.Directory.Exists(backupDir))
         {
             System.IO.Directory.CreateDirectory(backupDir);
@@ -1831,7 +1536,7 @@ public class ImageInfoController(
 
         string backupName = $"{baseName}-save-{DateTime.Now:dd-MM-yyyy-HH-mm-ss}{extension}";
 
-        System.IO.File.Move(oldFile.FullName, Path.Combine(backupDir, backupName), overwrite: true);
+        System.IO.File.Move(oldFile.FullName, Path.Join(backupDir, backupName), overwrite: true);
     }
 
     /// <summary>
@@ -1864,12 +1569,26 @@ public class ImageInfoController(
     {
         if (string.IsNullOrEmpty(fileName)) return;
 
-        FileInfo file = new(Path.Combine(path, fileName));
+        FileInfo file = new(Path.Join(path, fileName));
 
         if (file.Exists)
         {
             file.Delete();
         }
+    }
+
+    /// <summary>
+    /// Если файл существует в каталоге fullPath — ничего не делай; если его нет — выполнить onMissing 
+    /// </summary>
+    private static void ApplyIfFileMissing(string? fileName, string directory, Action onMissing)
+    {
+        string? safeName = Path.GetFileName(fileName);
+
+        if (string.IsNullOrWhiteSpace(safeName)) return;
+
+        string fullPath = Path.Join(directory, safeName);
+
+        if (!System.IO.File.Exists(fullPath)) onMissing();
     }
 
     #endregion

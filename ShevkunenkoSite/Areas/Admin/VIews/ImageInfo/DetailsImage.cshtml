@@ -1,476 +1,482 @@
 ﻿@model DetailsImageIconViewModel
 
-@if (Model.IconType == null || Model.IconType == "webimage" || Model.IconType == "image")
-{
-    <h1>
-        <span class="fs-3 text_shadow">Параметры картинки</span>
-    </h1>
-}
-else if (Model.IconType.Contains("web"))
-{
-    <h1>
-        <span class="fs-3  text-primary">Иконка</span> <span class="fs-4 text_shadow">(@Model.IconType)</span><br />
-        <span class="fs-5 text-primary">файла</span> <span class="fs-5 text_shadow">@Model.ImageItem.WebImageFileName</span>
-    </h1>
-}
-else
-{
-    <h1>
-        <span class="fs-3 text-primary">Иконка</span> <span class="fs-4 text_shadow">(@Model.IconType)</span><br />
-        <span class="fs-5 text-primary">файла</span> <span class="fs-5 text_shadow">@Model.ImageItem.ImageFileName</span>
-    </h1>
+@{
+    string? heading = $"Картинка - {Model.IconType}";
+    string cssForLabel = "col-form-label text-primary fs-5 me-2 mb-2 py-0";
+    string cssForHelpBlock = "fs-6 form-text text-success mt-2";
 }
 
-
-<hr class="liniya" />
+<partial name="_HeadingPartial" model='($"{heading}", "h1")' />
 
 <div class="row">
 
-    <div class="col col-lg-9 col-xl-8 col-xxl-7 d-block mx-auto px-2">
+    <div class="col col-lg-9 col-xl-8 col-xxl-7 mx-auto px-2">
 
-        <div class="card p-2 mt-4">
+        
+        <vc:view-image image-id="@Model.ImageItem.ImageFileModelId"
+                       css-class="@Model.CurrentCss"
+                       icon-type="@Model.IconType" />
 
-            <div class="card-body mx-0 p-0">
+        <p class="fs-5 my-2">
 
-                <ul class="list-group list-group-flush text-center">
+            <span class="text-primary">
+                Каталог:
+            </span>
 
-                    <li class="list-group-item">
+            <br />
 
-                        <span class="fw-bold fs-5 text-primary">ImageFileModelId :</span>
-                        <br />
-                        <span id="ImageItemID" class="fs-5 text_shadow">@Model.ImageItem.ImageFileModelId</span>
-                        <br />
-                        <span id="ImageItemIDHelpBlock" class="fs-6 form-text text-success">
-                            идентификатор в базе данных (GUID)
-                        </span>
+            <span class="text_shadow">
+                @Model.ImageItem.ImagePath
+            </span>
 
-                    </li>
+        </p>
 
-                    <li class="list-group-item">
+        <p class="fs-5">
 
-                        <span class="fw-bold fs-5 text-primary">ImageCaption :</span>
-                        <br />
-                        <span id="ImageItemCaption" class="fs-5 text_shadow">@Model.ImageItem.ImageCaption</span>
-                        <br />
-                        <span id="ImageItemCaptionHelpBlock" class="fs-6 form-text text-success">
-                            «caption» и «name» для Microdata
-                        </span>
+            <span class="text-primary">
+                Файл :
+            </span>
 
-                    </li>
+            <br />
 
-                    <li class="list-group-item">
+            <span class="text_shadow">
+                @Model.FileName
+            </span>
 
-                        <span class="fw-bold fs-5 text-primary">ImageItemDescription :</span>
-                        <br />
-                        <span id="ImageItemDescription" class="fs-5 text_shadow">@Model.ImageItem.ImageDescription</span>
-                        <br />
-                        <span id="ImageItemDescriptionHelpBlock" class="fs-6 form-text text-success">
-                            «description» для Microdata
-                        </span>
-
-                    </li>
-
-                    <li class="list-group-item">
-
-                        <span class="fw-bold fs-5 text-primary">ImageItemAltTitle :</span>
-                        <br />
-                        <span id="ImageItemAltTitle" class="fs-5 text_shadow">@Model.ImageItem.ImageAltTitle</span>
-                        <br />
-                        <span id="ImageItemAltTitleHelpBlock" class="fs-6 form-text text-success">
-                            «alt» и «title» для тега «img»
-                        </span>
-
-                    </li>
-
-                    <li class="list-group-item">
-
-                        <span class="fw-bold fs-5 text-primary">SearchFilter&nbsp;:</span>
-                        <br />
-
-                        @if (!string.IsNullOrEmpty(Model.ImageItem.SearchFilter))
-                        {
-                            <div class="border border-1 border-secondary p-2 fs-5 text_shadow">
-                                @Model.ImageItem.SearchFilter<br />
-                            </div>
-
-                            <span class="fs-6 form-text text-success">
-                                фильтр поиска
-                            </span>
-                        }
-                        else
-                        {
-                            <span class="fs-6 form-text text-success">
-                                фильтр поиска не задан
-                            </span>
-                        }
-
-                    </li>
-
-                    <li class="list-group-item">
-
-                        <span class="fw-bold fs-5 text-primary">SortOfPicture&nbsp;:</span>
-                        <br />
-
-                        <span class="fs-5 text_shadow">
-                            @Model.ImageItem.SortOfPicture
-                        </span>
-                        <br />
-
-                        <span class="fs-6 form-text text-success">
-                            индекс сортировки
-                        </span>
-
-                    </li>
-
-                </ul>
-
-            </div>
-
-            <hr class="w-50 mx-auto" />
-
-            @if (Model.FileExists)
+            @if (!string.IsNullOrEmpty(Model.FileName) && !Model.FileExists)
             {
-                <vc:view-image image-id="@Model.ImageItem.ImageFileModelId"
-                               css-class="mx-auto my-2 block-shadow maxwidth300px"
-                               icon-type="@Model.IconType" />
+                <br />
 
-                <p>
-                    <span class="fw-bold fs-5 text-primary">Каталог: </span>
-                    <span class="fs-5 text_shadow">@Model.ImageItem.ImagePath</span>
-                </p>
+                <span class="text-danger fw-bold">
+                    (файл не найден на диске)
+                </span>
+            }
+
+        </p>
+
+        <hr class="w-50 my-3 mx-auto" />
+
+        @* GUID картинки *@
+        <label asp-for="ImageItem.ImageFileModelId"
+               class="@cssForLabel">
+        </label>
+
+        <p class="mb-4">
+
+            <span class="fs-5 text_shadow">
+                @Model.ImageItem.ImageFileModelId
+            </span>
+
+            <br />
+
+            <span class="@cssForHelpBlock">
+                идентификатор в базе данных (GUID)
+            </span>
+
+        </p>
+
+        @* Заголовок картинки *@
+        <label asp-for="ImageItem.ImageCaption"
+               class="@cssForLabel">
+        </label>
+
+        <p class="mb-4">
+
+            <span class="fs-5 text_shadow">
+                @Model.ImageItem.ImageCaption
+            </span>
+
+            <br />
+
+            <span class="@cssForHelpBlock">
+                «caption» и «name» для Microdata
+            </span>
+
+        </p>
+
+        @* Описание картинки *@
+        <label asp-for="ImageItem.ImageDescription"
+               class="@cssForLabel">
+        </label>
+
+        <p class="mb-4">
+
+            <span class="fs-5 text_shadow">
+                @Model.ImageItem.ImageDescription
+            </span>
+
+            <br />
+
+            <span class="@cssForHelpBlock">
+                «description» для Microdata
+            </span>
+
+        </p>
+
+        @* Теги «alt» и «title» *@
+        <label asp-for="ImageItem.ImageAltTitle"
+               class="@cssForLabel">
+        </label>
+
+        <p class="mb-4">
+
+            <span class="fs-5 text_shadow">
+                @Model.ImageItem.ImageAltTitle
+            </span>
+
+            <br />
+
+            <span class="@cssForHelpBlock">
+                «alt» и «title» для тега «img»
+            </span>
+
+        </p>
+
+        @* Фильтр поиска картинки в базе данных *@
+        <label asp-for="ImageItem.SearchFilter"
+               class="@cssForLabel">
+        </label>
+
+        <div class="maxwidthcontent mx-auto mb-4">
+
+            @if (!string.IsNullOrEmpty(Model.ImageItem.SearchFilter))
+            {
+                @foreach (var tag in Model.ImageItem.SearchFilter.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    <p class="fs-5 text-start text_shadow">
+
+                        # @tag
+
+                    </p>
+                }
+
+                <span class="@cssForHelpBlock">
+                    фильтры поиска
+                </span>
             }
             else
             {
-                <p class="fw-bold fs-4">
-                    <span class="text-danger">Файл </span>
-                    <span class="text_shadow">@Model.FileName </span>
-                    <span class="text-danger">не найден</span>
-                </p>
-                <p>
-                    <span class="fw-bold fs-5 text-primary">Каталог: </span>
-                    <span class="fs-5 text_shadow">@Model.ImageItem.ImagePath</span>
-                </p>
+                <span class="fs-6 form-text text-success">
+                    фильтр поиска не задан
+                </span>
             }
 
-            <div class="card-footer p-2 my-2">
+        </div>
 
-                <a class="btn btn-outline-success p-1 m-2 block-shadow"
-                   asp-area="Admin"
-                   asp-controller="ImageInfo"
-                   asp-action="EditImage"
-                   asp-route-imageId="@Model.ImageItem.ImageFileModelId"
-                   title="Изменить картинку">
-                    Изменить
-                </a>
+        @* Индекс сортировки *@
+        <label asp-for="ImageItem.SortOfPicture"
+               class="@cssForLabel">
+        </label>
 
-                <a class="btn btn-outline-danger p-1 px-2 m-2 block-shadow"
-                   asp-area="Admin"
-                   asp-controller="ImageInfo"
-                   asp-action="DeleteImage"
-                   asp-route-imageId="@Model.ImageItem.ImageFileModelId"
-                   title="Удалить картинку">
-                    Удалить
-                </a>
+        <p class="mb-4">
 
-                @if (Model.IconType == null || Model.IconType == "image" || Model.IconType == "webimage")
-                {
-                    <a class="btn btn btn-outline-primary p-1 px-3 m-2 block-shadow"
-                       asp-area="Admin"
-                       asp-controller="ImageInfo"
-                       asp-action="Index"
-                           asp-route-pageCard="false"
-                       title="список картинок">
-                        Список
-                    </a>
+            <span class="fs-5 text_shadow">
+                @Model.ImageItem.SortOfPicture
+            </span>
 
-                    <a class="btn btn btn-outline-info p-1 m-2 block-shadow"
-                       asp-area="Admin"
-                       asp-controller="ImageInfo"
-                       asp-action="Index"
-                       asp-route-pageCard="true"
-                       title="иконки картинок">
-                        Картинки
-                    </a>
-                }
-                else
-                {
-                    if (Model.IconType.Contains("web"))
-                    {
-                        <a class="btn btn btn-outline-info p-1 m-2 block-shadow"
-                           asp-area="Admin"
-                           asp-controller="ImageInfo"
-                           asp-action="DetailsImage"
-                           asp-route-imageId="@Model.ImageItem.ImageFileModelId"
-                           asp-route-imageIcon="webimage"
-                           title="картинка Web">
-                            Картинка WEB
-                        </a>
+            <br />
 
-                    }
-                    else
-                    {
-                        <a class="btn btn btn-outline-info p-1 m-2 block-shadow"
-                           asp-area="Admin"
-                           asp-controller="ImageInfo"
-                           asp-action="DetailsImage"
-                           asp-route-imageId="@Model.ImageItem.ImageFileModelId"
-                           asp-route-imageIcon="image"
-                           title="картинка PNG">
-                            Картинка PNG
-                        </a>
-                    }
-                }
+            <span class="@cssForHelpBlock">
+                индекс сортировки
+            </span>
 
-            </div>
+        </p>
 
-            <div class="row">
+        @* Кнопки действий *@
+        <div class="border border-1 border-info-subtle border-bottom-0 border-start-0 border-end-0 pt-2 my-4">
 
-                <div class="col m-1 block-shadow">
+            <a asp-area="Admin"
+               asp-controller="ImageInfo"
+               asp-action="EditImage"
+               asp-route-imageId="@Model.ImageItem.ImageFileModelId"
+               class="btn btn-outline-success p-1 m-2 block-shadow minwidth100px"
+               title="изменить картинку">
 
-                    <div class="table-responsive">
+                Изменить
 
-                        <table class="table table-sm table-hover caption-top align-middle">
+            </a>
 
-                            <thead>
+            <a asp-area="Admin"
+               asp-controller="ImageInfo"
+               asp-action="DeleteImage"
+               asp-route-imageId="@Model.ImageItem.ImageFileModelId"
+               class="btn btn-outline-danger p-1 m-2 block-shadow minwidth100px"
+               title="удалить картинку">
 
-                                <tr>
-                                    <th scope="col" class="text-start">&nbsp;</th>
-                                    <th scope="col" class="text-start text_shadow">File</th>
-                                    <th scope="col" class="d-none d-md-table-cell text-start text-primary">Size (bytes)</th>
-                                    <th scope="col" class="d-none d-md-table-cell text-start">W (px)</th>
-                                    <th scope="col" class="d-none d-md-table-cell text-start">H (px)</th>
-                                    <th scope="col" class="text-start">&nbsp;</th>
+                Удалить
+
+            </a>
+
+            <a asp-area="Admin"
+               asp-controller="ImageInfo"
+               asp-action="Index"
+               asp-route-pageCard="false"
+               class="btn btn btn-outline-primary p-1 m-2 block-shadow minwidth100px"
+               title="список картинок">
+
+                Список
+
+            </a>
+
+            <a asp-area="Admin"
+               asp-controller="ImageInfo"
+               asp-action="Index"
+               asp-route-pageCard="true"
+               class="btn btn btn-outline-info p-1 m-2 block-shadow minwidth100px"
+               title="иконки картинок">
+
+                Картинки
+
+            </a>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col m-1 block-shadow">
+
+                <div class="table-responsive">
+
+                    <table class="table table-sm table-hover caption-top align-middle">
+
+                        <thead>
+
+                            <tr>
+                                <th scope="col" class="text-start">&nbsp;</th>
+                                <th scope="col" class="text-start text_shadow">File</th>
+                                <th scope="col" class="d-none d-md-table-cell text-start text-primary">Size (bytes)</th>
+                                <th scope="col" class="d-none d-md-table-cell text-start">W (px)</th>
+                                <th scope="col" class="d-none d-md-table-cell text-start">H (px)</th>
+                                <th scope="col" class="text-start">&nbsp;</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @if (!string.IsNullOrEmpty(Model.ImageItem.ImageHDFileName))
+                            {
+                                <tr class="text-start @(Model.IconType == "hd" ? "table-primary" : "")">
+                                    <td scope="col" class="text-start text-danger fw-bolder">PictureHD</td>
+                                    <td scope="col" class="text-start text_shadow">@Model.ImageItem.ImageHDFileName</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.ImageHDFileSize</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.ImageHDWidth</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.ImageHDHeight</td>
+                                    <td scope="col">
+                                        <a class="@Model.HdButtonInfostyle"
+                                           asp-area="Admin"
+                                           asp-controller="ImageInfo"
+                                           asp-action="DetailsImage"
+                                           asp-route-imageId="@Model.ImageItem.ImageFileModelId"
+                                           asp-route-imageIcon="hd"
+                                           title="Информация о иконке HD PNG">
+                                            Info
+                                        </a>
+                                    </td>
                                 </tr>
+                            }
 
-                            </thead>
+                            @if (!string.IsNullOrEmpty(Model.ImageItem.ImageFileName))
+                            {
+                                <tr class="text-start @(Model.IconType == "image" ? "table-primary" : "")">
+                                    <td scope="col" class="text-start text-danger fw-bolder">Picture</td>
+                                    <td scope="col" class="text-start text_shadow">@Model.ImageItem.ImageFileName</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.ImageFileSize</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.ImageWidth</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.ImageHeight</td>
+                                    <td scope="col">
+                                        <a class="@Model.ImageButtonInfostyle"
+                                           asp-area="Admin"
+                                           asp-controller="ImageInfo"
+                                           asp-action="DetailsImage"
+                                           asp-route-imageId="@Model.ImageItem.ImageFileModelId"
+                                           asp-route-imageIcon="image"
+                                           title="Информация о картинке PNG">
+                                            Info
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
 
-                            <tbody>
+                            @if (!string.IsNullOrEmpty(Model.ImageItem.IconFileName))
+                            {
+                                <tr class="text-start @(Model.IconType == "icon300" ? "table-primary" : "")">
+                                    <td scope="col" class="text-start text-danger fw-bolder">Icon300</td>
+                                    <td scope="col" class="text-start text_shadow">@Model.ImageItem.IconFileName</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.IconFileSize</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.IconWidth</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.IconHeight</td>
+                                    <td scope="col">
+                                        <a class="@Model.Icon300ButtonInfostyle"
+                                           asp-area="Admin"
+                                           asp-controller="ImageInfo"
+                                           asp-action="DetailsImage"
+                                           asp-route-imageId="@Model.ImageItem.ImageFileModelId"
+                                           asp-route-imageIcon="icon300"
+                                           title="Информация о иконке 300 PNG">
+                                            Info
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
 
-                                @if (!string.IsNullOrEmpty(Model.ImageItem.ImageFileName))
-                                {
-                                    <tr class="text-start @(Model.IconType == "image" ? "table-primary" : "")">
-                                        <td scope="col" class="text-start text-danger fw-bolder">Picture</td>
-                                        <td scope="col" class="text-start text_shadow">@Model.ImageItem.ImageFileName</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.ImageFileSize</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.ImageWidth</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.ImageHeight</td>
-                                        <td scope="col">
-                                            <a class="@Model.ImageButtonInfostyle"
-                                               asp-area="Admin"
-                                               asp-controller="ImageInfo"
-                                               asp-action="DetailsImage"
-                                               asp-route-imageId="@Model.ImageItem.ImageFileModelId"
-                                               asp-route-imageIcon="image"
-                                               title="Информация о картинке PNG">
-                                                Info
-                                            </a>
-                                        </td>
-                                    </tr>
-                                }
+                            @if (!string.IsNullOrEmpty(Model.ImageItem.Icon200FileName))
+                            {
+                                <tr class="text-start @(Model.IconType == "icon200" ? "table-primary" : "")">
+                                    <td scope="col" class="text-start text-danger fw-bolder">Icon200</td>
+                                    <td scope="col" class="text-start text_shadow">@Model.ImageItem.Icon200FileName</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.Icon200FileSize</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.Icon200Width</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.Icon200Height</td>
+                                    <td scope="col">
+                                        <a class="@Model.Icon200ButtonInfostyle"
+                                           asp-area="Admin"
+                                           asp-controller="ImageInfo"
+                                           asp-action="DetailsImage"
+                                           asp-route-imageId="@Model.ImageItem.ImageFileModelId"
+                                           asp-route-imageIcon="icon200"
+                                           title="Информация о иконке 200 PNG">
+                                            Info
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
 
-                                @if (!string.IsNullOrEmpty(Model.ImageItem.ImageHDFileName))
-                                {
-                                    <tr class="text-start @(Model.IconType == "hd" ? "table-primary" : "")">
-                                        <td scope="col" class="text-start text-danger fw-bolder">PictureHD</td>
-                                        <td scope="col" class="text-start text_shadow">@Model.ImageItem.ImageHDFileName</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.ImageHDFileSize</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.ImageHDWidth</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.ImageHDHeight</td>
-                                        <td scope="col">
-                                            <a class="@Model.HdButtonInfostyle"
-                                               asp-area="Admin"
-                                               asp-controller="ImageInfo"
-                                               asp-action="DetailsImage"
-                                               asp-route-imageId="@Model.ImageItem.ImageFileModelId"
-                                               asp-route-imageIcon="hd"
-                                               title="Информация о иконке HD PNG">
-                                                Info
-                                            </a>
-                                        </td>
-                                    </tr>
-                                }
+                            @if (!string.IsNullOrEmpty(Model.ImageItem.Icon100FileName))
+                            {
+                                <tr class="text-start @(Model.IconType == "icon100" ? "table-primary" : "")">
+                                    <td scope="col" class="text-start text-danger fw-bolder">Icon100</td>
+                                    <td scope="col" class="text-start text_shadow">@Model.ImageItem.Icon100FileName</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.Icon100FileSize</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.Icon100Width</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.Icon100Height</td>
+                                    <td scope="col">
+                                        <a class="@Model.Icon100ButtonInfostyle"
+                                           asp-area="Admin"
+                                           asp-controller="ImageInfo"
+                                           asp-action="DetailsImage"
+                                           asp-route-imageId="@Model.ImageItem.ImageFileModelId"
+                                           asp-route-imageIcon="icon100"
+                                           title="Информация о иконке 100 PNG">
+                                            Info
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
 
-                                @if (!string.IsNullOrEmpty(Model.ImageItem.IconFileName))
-                                {
-                                    <tr class="text-start @(Model.IconType == "icon300" ? "table-primary" : "")">
-                                        <td scope="col" class="text-start text-danger fw-bolder">Icon300</td>
-                                        <td scope="col" class="text-start text_shadow">@Model.ImageItem.IconFileName</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.IconFileSize</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.IconWidth</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.IconHeight</td>
-                                        <td scope="col">
-                                            <a class="@Model.Icon300ButtonInfostyle"
-                                               asp-area="Admin"
-                                               asp-controller="ImageInfo"
-                                               asp-action="DetailsImage"
-                                               asp-route-imageId="@Model.ImageItem.ImageFileModelId"
-                                               asp-route-imageIcon="icon300"
-                                               title="Информация о иконке 300 PNG">
-                                                Info
-                                            </a>
-                                        </td>
-                                    </tr>
-                                }
+                            @if (!string.IsNullOrEmpty(Model.ImageItem.WebImageHDFileName))
+                            {
+                                <tr class="text-start @(Model.IconType == "webhd" ? "table-primary" : "")">
+                                    <td scope="col" class="text-start text-success fw-bolder">WebHD</td>
+                                    <td scope="col" class="text-start text_shadow">@Model.ImageItem.WebImageHDFileName</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.WebImageHDFileSize</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebImageHDWidth</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebImageHDHeight</td>
+                                    <td scope="col">
+                                        <a class="@Model.WebhdButtonInfostyle"
+                                           asp-area="Admin"
+                                           asp-controller="ImageInfo"
+                                           asp-action="DetailsImage"
+                                           asp-route-imageId="@Model.ImageItem.ImageFileModelId"
+                                           asp-route-imageIcon="webhd"
+                                           title="Информация о иконке HD WEB">
+                                            Info
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
 
-                                @if (!string.IsNullOrEmpty(Model.ImageItem.Icon200FileName))
-                                {
-                                    <tr class="text-start @(Model.IconType == "icon200" ? "table-primary" : "")">
-                                        <td scope="col" class="text-start text-danger fw-bolder">Icon200</td>
-                                        <td scope="col" class="text-start text_shadow">@Model.ImageItem.Icon200FileName</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.Icon200FileSize</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.Icon200Width</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.Icon200Height</td>
-                                        <td scope="col">
-                                            <a class="@Model.Icon200ButtonInfostyle"
-                                               asp-area="Admin"
-                                               asp-controller="ImageInfo"
-                                               asp-action="DetailsImage"
-                                               asp-route-imageId="@Model.ImageItem.ImageFileModelId"
-                                               asp-route-imageIcon="icon200"
-                                               title="Информация о иконке 200 PNG">
-                                                Info
-                                            </a>
-                                        </td>
-                                    </tr>
-                                }
+                            @if (!string.IsNullOrEmpty(Model.ImageItem.WebImageFileName))
+                            {
+                                <tr class="text-start @(Model.IconType == "webimage" ? "table-primary" : "")">
+                                    <td scope="col" class="text-start text-success fw-bolder">WebPicture</td>
+                                    <td scope="col" class="text-start text_shadow">@Model.ImageItem.WebImageFileName</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.WebImageFileSize</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebImageWidth</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebImageHeight</td>
+                                    <td scope="col">
+                                        <a class="@Model.WebImageButtonInfostyle"
+                                           asp-area="Admin"
+                                           asp-controller="ImageInfo"
+                                           asp-action="DetailsImage"
+                                           asp-route-imageId="@Model.ImageItem.ImageFileModelId"
+                                           asp-route-imageIcon="webimage"
+                                           title="Информация картинке WEB">
+                                            Info
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
 
-                                @if (!string.IsNullOrEmpty(Model.ImageItem.Icon100FileName))
-                                {
-                                    <tr class="text-start @(Model.IconType == "icon100" ? "table-primary" : "")">
-                                        <td scope="col" class="text-start text-danger fw-bolder">Icon100</td>
-                                        <td scope="col" class="text-start text_shadow">@Model.ImageItem.Icon100FileName</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.Icon100FileSize</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.Icon100Width</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.Icon100Height</td>
-                                        <td scope="col">
-                                            <a class="@Model.Icon100ButtonInfostyle"
-                                               asp-area="Admin"
-                                               asp-controller="ImageInfo"
-                                               asp-action="DetailsImage"
-                                               asp-route-imageId="@Model.ImageItem.ImageFileModelId"
-                                               asp-route-imageIcon="icon100"
-                                               title="Информация о иконке 100 PNG">
-                                                Info
-                                            </a>
-                                        </td>
-                                    </tr>
-                                }
+                            @if (!string.IsNullOrEmpty(Model.ImageItem.WebIconFileName))
+                            {
+                                <tr class="text-start @(Model.IconType == "webicon300" ? "table-primary" : "")">
+                                    <td scope="col" class="text-start text-success fw-bolder">WebIcon300</td>
+                                    <td scope="col" class="text-start text_shadow">@Model.ImageItem.WebIconFileName</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.WebIconFileSize</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebIconWidth</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebIconHeight</td>
+                                    <td scope="col">
+                                        <a class="@Model.WebIcon300ButtonInfostyle"
+                                           asp-area="Admin"
+                                           asp-controller="ImageInfo"
+                                           asp-action="DetailsImage"
+                                           asp-route-imageId="@Model.ImageItem.ImageFileModelId"
+                                           asp-route-imageIcon="webicon300"
+                                           title="Информация о иконке 300 WEB">
+                                            Info
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
 
-                                @if (!string.IsNullOrEmpty(Model.ImageItem.WebImageFileName))
-                                {
-                                    <tr class="text-start @(Model.IconType == "webimage" ? "table-primary" : "")">
-                                        <td scope="col" class="text-start text-success fw-bolder">WebPicture</td>
-                                        <td scope="col" class="text-start text_shadow">@Model.ImageItem.WebImageFileName</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.WebImageFileSize</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebImageWidth</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebImageHeight</td>
-                                        <td scope="col">
-                                            <a class="@Model.WebImageButtonInfostyle"
-                                               asp-area="Admin"
-                                               asp-controller="ImageInfo"
-                                               asp-action="DetailsImage"
-                                               asp-route-imageId="@Model.ImageItem.ImageFileModelId"
-                                               asp-route-imageIcon="webimage"
-                                               title="Информация картинке WEB">
-                                                Info
-                                            </a>
-                                        </td>
-                                    </tr>
-                                }
+                            @if (!string.IsNullOrEmpty(Model.ImageItem.WebIcon200FileName))
+                            {
+                                <tr class="text-start @(Model.IconType == "webicon200" ? "table-primary" : "")">
+                                    <td scope="col" class="text-start text-success fw-bolder">WebIcon200</td>
+                                    <td scope="col" class="text-start text_shadow">@Model.ImageItem.WebIcon200FileName</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.WebIcon200FileSize</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebIcon200Width</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebIcon200Height</td>
+                                    <td scope="col">
+                                        <a class="@Model.WebIcon200ButtonInfostyle"
+                                           asp-area="Admin"
+                                           asp-controller="ImageInfo"
+                                           asp-action="DetailsImage"
+                                           asp-route-imageId="@Model.ImageItem.ImageFileModelId"
+                                           asp-route-imageIcon="webicon200"
+                                           title="Информация о иконке 200 WEB">
+                                            Info
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
 
-                                @if (!string.IsNullOrEmpty(Model.ImageItem.WebImageHDFileName))
-                                {
-                                    <tr class="text-start @(Model.IconType == "webhd" ? "table-primary" : "")">
-                                        <td scope="col" class="text-start text-success fw-bolder">WebHD</td>
-                                        <td scope="col" class="text-start text_shadow">@Model.ImageItem.WebImageHDFileName</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.WebImageHDFileSize</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebImageHDWidth</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebImageHDHeight</td>
-                                        <td scope="col">
-                                            <a class="@Model.WebhdButtonInfostyle"
-                                               asp-area="Admin"
-                                               asp-controller="ImageInfo"
-                                               asp-action="DetailsImage"
-                                               asp-route-imageId="@Model.ImageItem.ImageFileModelId"
-                                               asp-route-imageIcon="webhd"
-                                               title="Информация о иконке HD WEB">
-                                                Info
-                                            </a>
-                                        </td>
-                                    </tr>
-                                }
+                            @if (!string.IsNullOrEmpty(Model.ImageItem.WebIcon100FileName))
+                            {
+                                <tr class="text-start @(Model.IconType == "webicon100" ? "table-primary" : "")">
+                                    <td scope="col" class="text-start text-success fw-bolder">WebIcon100</td>
+                                    <td scope="col" class="text-start text_shadow">@Model.ImageItem.WebIcon100FileName</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.WebIcon100FileSize</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebIcon100Width</td>
+                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebIcon100Height</td>
+                                    <td scope="col">
+                                        <a class="@Model.WebIcon100ButtonInfostyle"
+                                           asp-area="Admin"
+                                           asp-controller="ImageInfo"
+                                           asp-action="DetailsImage"
+                                           asp-route-imageId="@Model.ImageItem.ImageFileModelId"
+                                           asp-route-imageIcon="webicon100"
+                                           title="Информация о иконке 100 WEB">
+                                            Info
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
 
-                                @if (!string.IsNullOrEmpty(Model.ImageItem.WebIconFileName))
-                                {
-                                    <tr class="text-start @(Model.IconType == "webicon300" ? "table-primary" : "")">
-                                        <td scope="col" class="text-start text-success fw-bolder">WebIcon300</td>
-                                        <td scope="col" class="text-start text_shadow">@Model.ImageItem.WebIconFileName</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.WebIconFileSize</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebIconWidth</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebIconHeight</td>
-                                        <td scope="col">
-                                            <a class="@Model.WebIcon300ButtonInfostyle"
-                                               asp-area="Admin"
-                                               asp-controller="ImageInfo"
-                                               asp-action="DetailsImage"
-                                               asp-route-imageId="@Model.ImageItem.ImageFileModelId"
-                                               asp-route-imageIcon="webicon300"
-                                               title="Информация о иконке 300 WEB">
-                                                Info
-                                            </a>
-                                        </td>
-                                    </tr>
-                                }
+                        </tbody>
 
-                                @if (!string.IsNullOrEmpty(Model.ImageItem.WebIcon200FileName))
-                                {
-                                    <tr class="text-start @(Model.IconType == "webicon200" ? "table-primary" : "")">
-                                        <td scope="col" class="text-start text-success fw-bolder">WebIcon200</td>
-                                        <td scope="col" class="text-start text_shadow">@Model.ImageItem.WebIcon200FileName</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.WebIcon200FileSize</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebIcon200Width</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebIcon200Height</td>
-                                        <td scope="col">
-                                            <a class="@Model.WebIcon200ButtonInfostyle"
-                                               asp-area="Admin"
-                                               asp-controller="ImageInfo"
-                                               asp-action="DetailsImage"
-                                               asp-route-imageId="@Model.ImageItem.ImageFileModelId"
-                                               asp-route-imageIcon="webicon200"
-                                               title="Информация о иконке 200 WEB">
-                                                Info
-                                            </a>
-                                        </td>
-                                    </tr>
-                                }
-
-                                @if (!string.IsNullOrEmpty(Model.ImageItem.WebIcon100FileName))
-                                {
-                                    <tr class="text-start @(Model.IconType == "webicon100" ? "table-primary" : "")">
-                                        <td scope="col" class="text-start text-success fw-bolder">WebIcon100</td>
-                                        <td scope="col" class="text-start text_shadow">@Model.ImageItem.WebIcon100FileName</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.WebIcon100FileSize</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebIcon100Width</td>
-                                        <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebIcon100Height</td>
-                                        <td scope="col">
-                                            <a class="@Model.WebIcon100ButtonInfostyle"
-                                               asp-area="Admin"
-                                               asp-controller="ImageInfo"
-                                               asp-action="DetailsImage"
-                                               asp-route-imageId="@Model.ImageItem.ImageFileModelId"
-                                               asp-route-imageIcon="webicon100"
-                                               title="Информация о иконке 100 WEB">
-                                                Info
-                                            </a>
-                                        </td>
-                                    </tr>
-                                }
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
+                    </table>
 
                 </div>
 
