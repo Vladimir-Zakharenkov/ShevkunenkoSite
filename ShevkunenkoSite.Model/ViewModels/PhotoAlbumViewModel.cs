@@ -16,7 +16,7 @@ public class PhotoAlbumViewModel : ItemsListViewModel
 
     #region Список объектов
 
-    public IEnumerable<ImageFileModel> ItemsOnPage { get; set; } = [];
+    public ImageFileModel[] ItemsOnPage { get; set; } = [];
 
     #endregion
 

@@ -1,14 +1,11 @@
 ﻿@model PhotoAlbumViewModel
 
-@{
-    int i = 0;
-}
-
+@* Заголовок *@
 <div class="row bg-secondary-subtle block-shadow mb-3 mx-0">
 
     <h1 class="col h2 text_shadow mb-0 py-1">
 
-        @Model.CaptionOfAlbum.Replace("--", " ").ToUpper()
+        @Model.CaptionOfAlbum.Replace("--", " ").ToUpperInvariant()
 
         @if (Model.NoteForCaptionOfAlbum != null)
         {
@@ -26,28 +23,24 @@
 @* Просмотр страницы альбома *@
 @if (Model.AlbumOrPhoto)
 {
-    <div class="row row-cols-3 row-cols-lg-4 row-cols-xxl-6 g-2 justify-content-center">
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 row-cols-xxl-6 g-2 justify-content-center mb-3">
 
         @foreach (var imageItem in Model.ItemsOnPage)
         {
-            <div class="col">
+            <div class="col p-sm-1 p-0 rounded-3 block-shadow borderforitem">
 
-                <div class="card h-100 me-1 mb-1 p-0 p-sm-1 block-shadow borderforitem">
+                <a asp-area=""
+                   asp-controller="Films"
+                   asp-action="FilmPhotoAlbum"
+                   asp-route-filmCaption="@Model.CaptionOfAlbum"
+                   asp-route-imageId="@imageItem.ImageFileModelId"
+                   title="смотреть фото">
 
-                    <a asp-area=""
-                       asp-controller="Films"
-                       asp-action="FilmPhotoAlbum"
-                       asp-route-filmCaption="@Model.CaptionOfAlbum"
-                       asp-route-imageId="@imageItem.ImageFileModelId"
-                       title="смотреть фото">
+                    <vc:view-image image-id="@imageItem.ImageFileModelId"
+                                   css-class=""
+                                   icon-type="webicon300" />
 
-                        <vc:view-image image-id="@imageItem.ImageFileModelId"
-                                       css-class="card-img-top block-shadow"
-                                       icon-type="webicon300" />
-
-                    </a>
-
-                </div>
+                </a>
 
             </div>
         }
@@ -61,13 +54,19 @@ else
 
         <div class="col col-lg-11 col-xl-10 maxwidth900px">
 
-            <div id="fotoAlbumCarousel" class="carousel slide carousel-dark rounded-3 pb-5 block-shadow">
+            <div id="fotoAlbumCarousel" class="carousel slide carousel-dark rounded-3 pb-0 pb-sm-1 pb-lg-2 pb-xl-3 block-shadow">
 
-                <div class="carousel-indicators pb-5">
+                <div class="carousel-indicators pb-0 pb-sm-2 pb-lg-3 pb-xl-4">
 
-                    @for (int k = 0; k < Model.ItemsOnPage.Count(); k++)
+                    @{
+                        var items = Model.ItemsOnPage;
+                    }
+
+                    @for (int k = 0; k < items.Length; k++)
                     {
-                        if (Model.CurrentImageId == Model.ItemsOnPage.ToArray()[k].ImageFileModelId)
+                        var picture = items[k];
+
+                        if (Model.CurrentImageId == picture.ImageFileModelId)
                         {
                             <button type="button"
                                     data-bs-target="#fotoAlbumCarousel"
@@ -76,7 +75,7 @@ else
                                     aria-current="true"
                                     aria-label="Фото @k">
 
-                                <vc:view-image image-id="@Model.ItemsOnPage.ToArray()[k].ImageFileModelId"
+                                <vc:view-image image-id="@picture.ImageFileModelId"
                                                css-class="d-block mx-auto imageref p-0"
                                                icon-type="" />
 
@@ -90,7 +89,7 @@ else
                                     class="width9percent"
                                     aria-label="Фото @k">
 
-                                <vc:view-image image-id="@Model.ItemsOnPage.ToArray()[k].ImageFileModelId"
+                                <vc:view-image image-id="@picture.ImageFileModelId"
                                                css-class="d-block mx-auto imageref p-0"
                                                icon-type="" />
                             </button>
@@ -101,14 +100,14 @@ else
 
                 <div class="carousel-inner pb-5">
 
-                    @foreach (var picture in Model.ItemsOnPage ?? Enumerable.Empty<ImageFileModel>())
+                    @foreach (var picture in Model.ItemsOnPage)
                     {
                         @if (Model.CurrentImageId == picture.ImageFileModelId)
                         {
                             <div class="carousel-item active p-1 rounded-3 block-shadow">
 
                                 <vc:view-image image-id=@picture.ImageFileModelId
-                                               css-class="d-block mx-auto block-shadow"
+                                               css-class="d-block mx-auto"
                                                icon-type="" />
 
                                 <p class="d-none d-md-block fs-4 mt-3 text_shadow maxwidth700px mx-auto">
@@ -122,28 +121,49 @@ else
                             <div class="carousel-item p-1 rounded-3 block-shadow">
 
                                 <vc:view-image image-id=@picture.ImageFileModelId
-                                               css-class="d-block mx-auto block-shadow"
+                                               css-class="d-block mx-auto"
                                                icon-type="" />
 
                                 <p class="d-none d-md-block fs-4 mt-3 text_shadow maxwidth700px mx-auto">
+
                                     @picture.ImageDescription
+
                                 </p>
 
                             </div>
                         }
-
-                        i++;
                     }
 
                 </div>
 
-                <button class="carousel-control-prev" type="button" data-bs-target="#fotoAlbumCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
+                <button class="carousel-control-prev"
+                        type="button"
+                        data-bs-target="#fotoAlbumCarousel"
+                        data-bs-slide="prev">
+
+                    <span class="carousel-control-prev-icon" aria-hidden="true">
+
+                    </span>
+
+                    <span class="visually-hidden">
+                        Previous
+                    </span>
+
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#fotoAlbumCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
+
+                <button class="carousel-control-next"
+                        type="button"
+                        data-bs-target="#fotoAlbumCarousel"
+                        data-bs-slide="next">
+
+                    <span class="carousel-control-next-icon" aria-hidden="true">
+
+                    </span>
+
+                    <span class="visually-hidden">
+                        Next
+                    </span>
+
                 </button>
 
             </div>
@@ -153,19 +173,18 @@ else
     </div>
 }
 
-
 @* Страницы альбома *@
-<div class="row p-2 m-2">
+<h2 class="text_shadow fs-3 p-0 mt-2">
 
-    <h2 class="text_shadow fs-3 mb-0">страницы альбома</h2>
+    страницы альбома
 
-    <div pagination="@Model"
-         album-caption="@Model.CaptionOfAlbum"
-         data-toggle="buttons"
-         role="group"
-         aria-label="фотоальбом">
-    </div>
+</h2>
 
+<div pagination="@Model"
+     album-caption="@Model.CaptionOfAlbum"
+     data-toggle="buttons"
+     role="group"
+     aria-label="фотоальбом">
 </div>
 
 <vc:film-picture-carousel caption-for-picture-carousel="@Model.CaptionOfAlbum" />
