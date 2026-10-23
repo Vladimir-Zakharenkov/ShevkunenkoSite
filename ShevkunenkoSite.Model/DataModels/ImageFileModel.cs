@@ -17,6 +17,7 @@ public class ImageFileModel
 
     [Required(AllowEmptyStrings = false, ErrorMessage = "Введите название картинки")]
     [NotWhitespace(ErrorMessage = "Название не может состоять только из пробелов")]
+    [DisplayFormat(ConvertEmptyStringToNull = true)]
     [DataType(DataType.Text)]
     [MaxLength(60, ErrorMessage = "{0} не должно содержать больше {1} символов")]
     [Display(Name = "Название картинки :")]
@@ -26,8 +27,9 @@ public class ImageFileModel
 
     #region Описание
 
-    [Required(AllowEmptyStrings = true)]
-    [DisplayFormat(ConvertEmptyStringToNull = false)]
+    [Required(AllowEmptyStrings = false)]
+    [NotWhitespace(ErrorMessage = "Описание не может состоять только из пробелов")]
+    [DisplayFormat(ConvertEmptyStringToNull = true)]
     [DataType(DataType.Text)]
     [MaxLength(300, ErrorMessage = "{0} не должно содержать больше {1} символов")]
     [Display(Name = "Описание картинки :")]
@@ -38,7 +40,8 @@ public class ImageFileModel
     #region Теги  «alt» и «title»
 
     [Required(AllowEmptyStrings = false)]
-    [DisplayFormat(ConvertEmptyStringToNull = false)]
+    [NotWhitespace(ErrorMessage = "Описание не может состоять только из пробелов")]
+    [DisplayFormat(ConvertEmptyStringToNull = true)]
     [DataType(DataType.Text)]
     [MaxLength(60, ErrorMessage = "{0} не должно содержать больше {1} символов")]
     [Display(Name = "Свойства «alt» и «title» :")]
@@ -48,6 +51,9 @@ public class ImageFileModel
 
     #region Каталог картинки
 
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Введите название картинки")]
+    [NotWhitespace(ErrorMessage = "Название не может состоять только из пробелов")]
+    [DisplayFormat(ConvertEmptyStringToNull = true)]
     [DataType(DataType.Text)]
     [Display(Name = "Каталог картинки :")]
     public string ImagePath { get; set; } = "/images";
