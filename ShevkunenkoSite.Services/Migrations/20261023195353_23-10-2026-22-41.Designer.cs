@@ -12,8 +12,8 @@ using ShevkunenkoSite.Services;
 namespace ShevkunenkoSite.Services.Migrations
 {
     [DbContext(typeof(SiteDbContext))]
-    [Migration("20260925162432_25-0-2026-07-53")]
-    partial class _25020260753
+    [Migration("20261023195353_23-10-2026-22-41")]
+    partial class _231020262241
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -625,7 +625,7 @@ namespace ShevkunenkoSite.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("ImageFileSize")
+                    b.Property<long?>("ImageFileSize")
                         .HasColumnType("bigint");
 
                     b.Property<string>("ImageHDFileName")
@@ -646,7 +646,7 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Property<long?>("ImageHDWidth")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("ImageHeight")
+                    b.Property<long?>("ImageHeight")
                         .HasColumnType("bigint");
 
                     b.Property<string>("ImageMimeType")
@@ -657,11 +657,10 @@ namespace ShevkunenkoSite.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("ImageWidth")
+                    b.Property<long?>("ImageWidth")
                         .HasColumnType("bigint");
 
                     b.Property<string>("SearchFilter")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SortOfPicture")
@@ -671,102 +670,188 @@ namespace ShevkunenkoSite.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WebIcon100FileNameExtension")
+                    b.Property<string>("WebIcon100FileNameAI")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("WebIcon100FileSize")
+                    b.Property<string>("WebIcon100FileNameExtension")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WebIcon100FileNameExtensionAI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("WebIcon100FileSize")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("WebIcon100Height")
+                    b.Property<long?>("WebIcon100FileSizeAI")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("WebIcon100Height")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("WebIcon100HeightAI")
                         .HasColumnType("bigint");
 
                     b.Property<string>("WebIcon100MimeType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("WebIcon100Width")
+                    b.Property<string>("WebIcon100MimeTypeAI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("WebIcon100Width")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("WebIcon100WidthAI")
                         .HasColumnType("bigint");
 
                     b.Property<string>("WebIcon200FileName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WebIcon200FileNameExtension")
+                    b.Property<string>("WebIcon200FileNameAI")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("WebIcon200FileSize")
+                    b.Property<string>("WebIcon200FileNameExtension")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WebIcon200FileNameExtensionAI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("WebIcon200FileSize")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("WebIcon200Height")
+                    b.Property<long?>("WebIcon200FileSizeAI")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("WebIcon200Height")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("WebIcon200HeightAI")
                         .HasColumnType("bigint");
 
                     b.Property<string>("WebIcon200MimeType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("WebIcon200Width")
+                    b.Property<string>("WebIcon200MimeTypeAI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("WebIcon200Width")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("WebIcon200WidthAI")
                         .HasColumnType("bigint");
 
                     b.Property<string>("WebIconFileName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WebIconFileNameExtension")
+                    b.Property<string>("WebIconFileNameAI")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("WebIconFileSize")
+                    b.Property<string>("WebIconFileNameExtension")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WebIconFileNameExtensionAI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("WebIconFileSize")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("WebIconHeight")
+                    b.Property<long?>("WebIconFileSizeAI")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("WebIconHeight")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("WebIconHeightAI")
                         .HasColumnType("bigint");
 
                     b.Property<string>("WebIconMimeType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("WebIconWidth")
+                    b.Property<string>("WebIconMimeTypeAI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("WebIconWidth")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("WebIconWidthAI")
                         .HasColumnType("bigint");
 
                     b.Property<string>("WebImageFileName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WebImageFileNameExtension")
+                    b.Property<string>("WebImageFileNameAI")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("WebImageFileSize")
+                    b.Property<string>("WebImageFileNameExtension")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WebImageFileNameExtensionAI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("WebImageFileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("WebImageFileSizeAI")
                         .HasColumnType("bigint");
 
                     b.Property<string>("WebImageHDFileName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("WebImageHDFileSize")
+                    b.Property<string>("WebImageHDFileNameAI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("WebImageHDFileSize")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("WebImageHDHeight")
+                    b.Property<int?>("WebImageHDFileSizeAI")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("WebImageHDHeight")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("WebImageHDHeightAI")
                         .HasColumnType("bigint");
 
                     b.Property<string>("WebImageHDMimeType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("WebImageHDMimeTypeAI")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("WebImageHDNameExtension")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("WebImageHDWidth")
+                    b.Property<string>("WebImageHDNameExtensionAI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("WebImageHDWidth")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("WebImageHeight")
+                    b.Property<long?>("WebImageHDWidthAI")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("WebImageHeight")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("WebImageHeightAI")
                         .HasColumnType("bigint");
 
                     b.Property<string>("WebImageMimeType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("WebImageWidth")
+                    b.Property<string>("WebImageMimeTypeAI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("WebImageWidth")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("WebImageWidthAI")
                         .HasColumnType("bigint");
 
                     b.HasKey("ImageFileModelId");

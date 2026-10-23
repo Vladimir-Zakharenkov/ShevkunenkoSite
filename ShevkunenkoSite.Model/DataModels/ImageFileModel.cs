@@ -13,7 +13,7 @@ public class ImageFileModel
 
     #endregion
 
-    #region Название и описание
+    #region Название
 
     [Required(AllowEmptyStrings = false, ErrorMessage = "Введите название картинки")]
     [NotWhitespace(ErrorMessage = "Название не может состоять только из пробелов")]
@@ -21,6 +21,10 @@ public class ImageFileModel
     [MaxLength(60, ErrorMessage = "{0} не должно содержать больше {1} символов")]
     [Display(Name = "Название картинки :")]
     public string ImageCaption { get; set; } = string.Empty;
+
+    #endregion
+
+    #region Описание
 
     [Required(AllowEmptyStrings = true)]
     [DisplayFormat(ConvertEmptyStringToNull = false)]
@@ -33,7 +37,7 @@ public class ImageFileModel
 
     #region Теги  «alt» и «title»
 
-    [Required(AllowEmptyStrings = true)]
+    [Required(AllowEmptyStrings = false)]
     [DisplayFormat(ConvertEmptyStringToNull = false)]
     [DataType(DataType.Text)]
     [MaxLength(60, ErrorMessage = "{0} не должно содержать больше {1} символов")]
@@ -52,11 +56,10 @@ public class ImageFileModel
 
     #region Фильтры поиска
 
-    [Required(AllowEmptyStrings = true)]
-    [DisplayFormat(ConvertEmptyStringToNull = false)]
+    [DisplayFormat(ConvertEmptyStringToNull = true)]
     [DataType(DataType.MultilineText)]
     [Display(Name = "Фильтры поиска: ")]
-    public string SearchFilter { get; set; } = string.Empty;
+    public string? SearchFilter { get; set; }
 
     #endregion
 
@@ -113,15 +116,15 @@ public class ImageFileModel
 
     [DataType(DataType.Text)]
     [Display(Name = "Размер файла картинки HD (WebP) :")]
-    public uint? WebImageHDFileSizeAI { get; set; } = 0;
+    public int? WebImageHDFileSizeAI { get; set; }
 
     [Display(Name = "Ширина картинки HD (WebP) в px :")]
     [Range(0, 4000)]
-    public uint? WebImageHDWidthAI { get; set; } = 0;
+    public int? WebImageHDWidthAI { get; set; } = 0;
 
     [Display(Name = "Высота картинки HD (WebP) в px :")]
     [Range(0, 4000)]
-    public uint? WebImageHDHeightAI { get; set; } = 0;
+    public int? WebImageHDHeightAI { get; set; } = 0;
 
     #endregion
 

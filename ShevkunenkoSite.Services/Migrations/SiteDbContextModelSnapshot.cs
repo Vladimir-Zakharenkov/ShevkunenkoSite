@@ -658,7 +658,6 @@ namespace ShevkunenkoSite.Services.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("SearchFilter")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SortOfPicture")
@@ -807,14 +806,14 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Property<long?>("WebImageHDFileSize")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("WebImageHDFileSizeAI")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("WebImageHDFileSizeAI")
+                        .HasColumnType("int");
 
                     b.Property<long?>("WebImageHDHeight")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("WebImageHDHeightAI")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("WebImageHDHeightAI")
+                        .HasColumnType("int");
 
                     b.Property<string>("WebImageHDMimeType")
                         .HasColumnType("nvarchar(max)");
@@ -831,8 +830,8 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Property<long?>("WebImageHDWidth")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("WebImageHDWidthAI")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("WebImageHDWidthAI")
+                        .HasColumnType("int");
 
                     b.Property<long?>("WebImageHeight")
                         .HasColumnType("bigint");
