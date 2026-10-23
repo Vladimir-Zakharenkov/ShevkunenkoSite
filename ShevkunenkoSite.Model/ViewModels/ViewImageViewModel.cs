@@ -1,6 +1,4 @@
-﻿using ShevkunenkoSite.Models.DataModels;
-
-namespace ShevkunenkoSite.Views.Shared.Components.Code;
+﻿namespace ShevkunenkoSite.Models.ViewModels;
 
 public class ViewImageViewModel
 {
@@ -124,6 +122,7 @@ public class ViewImageViewModel
     public string? GetThumbnailUrl()
     {
         var data = GetImageData();
+
         var name = string.IsNullOrEmpty(data.ThumbnailFileName)
             ? data.ContentFileName
             : data.ThumbnailFileName;
