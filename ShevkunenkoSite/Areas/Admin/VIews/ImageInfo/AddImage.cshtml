@@ -10,23 +10,23 @@
 
 <div class="row">
 
-    <div class="col col-lg-9 col-xl-7 col-xxl-6 d-block mx-auto px-2">
+    <div class="col col-lg-9 col-xl-7 col-xxl-6 mx-auto px-2 border border-1">
 
-        <div class="card p-2 mt-4">
+        <div class="p-2 mt-4">
 
-            <div class="card-body mx-0 p-0">
+            <div class="mx-0 p-0">
 
                 <form method="post" enctype="multipart/form-data"
                       asp-area="Admin"
                       asp-controller="ImageInfo"
                       asp-action="AddImage">
 
-                    <input asp-for="EditImage.ImageFileModelId" type="hidden" />
-
                     @* Все ошибки ввода данных *@
                     @if (Context.Request.Method == "POST")
                     {
-                        <div asp-validation-summary="All" class="text-danger border border-top-0 border-danger mb-3"></div>
+                        <div asp-validation-summary="All"
+                             class="text-danger border border-top-0 border-danger mb-3">
+                        </div>
                     }
 
                     @* Заголовок картинки *@
@@ -37,7 +37,6 @@
                         </label>
 
                         <input asp-for="EditImage.ImageCaption"
-                               id="ImageCaptionInput"
                                class="form-control text-center mx-auto w-75"
                                aria-describedby="ImageCaptionInputHelpBlock" />
 
@@ -55,11 +54,6 @@
                             </span>
 
                         </div>
-
-                        @if (Context.Request.Method == "POST")
-                        {
-                            <span asp-validation-for="EditImage.ImageCaption" class="text-danger"></span>
-                        }
 
                     </div>
 
@@ -97,11 +91,6 @@
 
                         </div>
 
-                        @if (Context.Request.Method == "POST")
-                        {
-                            <span asp-validation-for="EditImage.ImageDescription" class="text-danger"></span>
-                        }
-
                     </div>
 
                     @* «alt» и «title» для картинки *@
@@ -129,11 +118,6 @@
                             </span>
 
                         </div>
-
-                        @if (Context.Request.Method == "POST")
-                        {
-                            <span asp-validation-for="EditImage.ImageAltTitle" class="text-danger"></span>
-                        }
 
                     </div>
 
@@ -165,11 +149,6 @@
 
                         </div>
 
-                        @if (Context.Request.Method == "POST")
-                        {
-                            <span asp-validation-for="EditImage.SearchFilter" class="text-danger"></span>
-                        }
-
                     </div>
 
                     @* Порядок сортировки картинки *@
@@ -186,7 +165,7 @@
                         <div class="col-auto">
 
                             <input asp-for="EditImage.SortOfPicture"
-                                   class="form-control text-center w-50"
+                                   class="form-control text-center maxwidth100px"
                                    aria-describedby="SortOfPictureInputHelpBlock" />
 
                         </div>
@@ -200,11 +179,6 @@
 
                         </div>
 
-                        @if (Context.Request.Method == "POST")
-                        {
-                            <span asp-validation-for="EditImage.SortOfPicture" class="text-danger"></span>
-                        }
-
                     </div>
 
                     @* Каталог картинки *@
@@ -216,11 +190,8 @@
 
                         <select asp-for="EditImage.ImagePath"
                                 asp-items="Model.ImageDirectories"
-                                class="w-50"
+                                class="form-select w-50 mx-auto"
                                 aria-describedby="ImagePathInputHelpBlock">
-
-                            <option selected value="">Выберите каталог</option>
-
                         </select>
 
                         <div id="ImagePathInputHelpBlock"
@@ -268,11 +239,6 @@
                             </span>
 
                         </div>
-
-                        @if (Context.Request.Method == "POST")
-                        {
-                            <span asp-validation-for="NewImagePath" class="text-danger"></span>
-                        }
 
                     </div>
 
@@ -334,11 +300,6 @@
 
                                         </div>
 
-                                        @if (Context.Request.Method == "POST")
-                                        {
-                                            <span asp-validation-for="WebImageHDFormFile" class="text-danger"></span>
-                                        }
-
                                     </div>
 
                                     @* Выбор картинки WEBP 720 px *@
@@ -368,11 +329,6 @@
                                             </span>
 
                                         </div>
-
-                                        @if (Context.Request.Method == "POST")
-                                        {
-                                            <span asp-validation-for="WebImageFormFile" class="text-danger"></span>
-                                        }
 
                                     </div>
 
@@ -404,11 +360,6 @@
 
                                         </div>
 
-                                        @if (Context.Request.Method == "POST")
-                                        {
-                                            <span asp-validation-for="WebIconFormFile" class="text-danger"></span>
-                                        }
-
                                     </div>
 
                                     @* Выбор картинки WEBP 200 px *@
@@ -430,19 +381,14 @@
 
                                         </div>
 
-                                        <div id="WebIcon200FormFileInputHelpBlock" 
-                                            class="@cssForHelpBlock">
+                                        <div id="WebIcon200FormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
 
                                             <span>
                                                 выбрать файл WEBP - 200 px
                                             </span>
 
                                         </div>
-
-                                        @if (Context.Request.Method == "POST")
-                                        {
-                                            <span asp-validation-for="WebIcon200FormFile" class="text-danger"></span>
-                                        }
 
                                     </div>
 
@@ -451,9 +397,9 @@
 
                                         <div class="col-auto">
 
-                                            <label asp-for="WebIcon100FormFile" 
-                                            class="@cssForLabel">
-                                        </label>
+                                            <label asp-for="WebIcon100FormFile"
+                                                   class="@cssForLabel">
+                                            </label>
 
                                         </div>
 
@@ -465,19 +411,14 @@
 
                                         </div>
 
-                                        <div id="WebIcon100FormFileInputHelpBlock" 
-                                            class="@cssForHelpBlock">
+                                        <div id="WebIcon100FormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
 
                                             <span>
                                                 выбрать файл WEBP - 100 px
                                             </span>
 
                                         </div>
-
-                                        @if (Context.Request.Method == "POST")
-                                        {
-                                            <span asp-validation-for="WebIcon100FormFile" class="text-danger"></span>
-                                        }
 
                                     </div>
 
@@ -519,9 +460,9 @@
 
                                         <div class="col-auto">
 
-                                            <label asp-for="ImageHDFormFile" 
-                                            class="@cssForLabel">
-                                        </label>
+                                            <label asp-for="ImageHDFormFile"
+                                                   class="@cssForLabel">
+                                            </label>
 
                                         </div>
 
@@ -533,19 +474,14 @@
 
                                         </div>
 
-                                        <div id="ImageHDFormFileInputHelpBlock" 
-                                            class="@cssForHelpBlock">
+                                        <div id="ImageHDFormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
 
                                             <span>
                                                 выбрать файл PNG - HD
                                             </span>
 
                                         </div>
-
-                                        @if (Context.Request.Method == "POST")
-                                        {
-                                            <span asp-validation-for="ImageHDFormFile" class="text-danger"></span>
-                                        }
 
                                     </div>
 
@@ -554,9 +490,9 @@
 
                                         <div class="col-auto">
 
-                                            <label asp-for="ImageFormFile" 
-                                            class="@cssForLabel">
-                                        </label>
+                                            <label asp-for="ImageFormFile"
+                                                   class="@cssForLabel">
+                                            </label>
 
                                         </div>
 
@@ -568,19 +504,14 @@
 
                                         </div>
 
-                                        <div id="ImageFormFileInputHelpBlock" 
-                                            class="@cssForHelpBlock">
+                                        <div id="ImageFormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
 
                                             <span>
                                                 выбрать файл PNG - 720 px
                                             </span>
 
                                         </div>
-
-                                        @if (Context.Request.Method == "POST")
-                                        {
-                                            <span asp-validation-for="ImageFormFile" class="text-danger"></span>
-                                        }
 
                                     </div>
 
@@ -589,9 +520,9 @@
 
                                         <div class="col-auto">
 
-                                            <label asp-for="IconFormFile" 
-                                            class="@cssForLabel">
-                                        </label>
+                                            <label asp-for="IconFormFile"
+                                                   class="@cssForLabel">
+                                            </label>
 
                                         </div>
 
@@ -603,19 +534,14 @@
 
                                         </div>
 
-                                        <div id="IconFormFileInputHelpBlock" 
-                                            class="@cssForHelpBlock">
+                                        <div id="IconFormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
 
                                             <span>
                                                 выбрать файл PNG - 300 px
                                             </span>
 
                                         </div>
-
-                                        @if (Context.Request.Method == "POST")
-                                        {
-                                            <span asp-validation-for="IconFormFile" class="text-danger"></span>
-                                        }
 
                                     </div>
 
@@ -624,9 +550,9 @@
 
                                         <div class="col-auto">
 
-                                            <label asp-for="Icon200FormFile" 
-                                            class="@cssForLabel">
-                                        </label>
+                                            <label asp-for="Icon200FormFile"
+                                                   class="@cssForLabel">
+                                            </label>
 
                                         </div>
 
@@ -638,19 +564,14 @@
 
                                         </div>
 
-                                        <div id="Icon200FormFileInputHelpBlock" 
-                                            class="@cssForHelpBlock">
+                                        <div id="Icon200FormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
 
                                             <span>
                                                 выбрать файл PNG - 200 px
                                             </span>
 
                                         </div>
-
-                                        @if (Context.Request.Method == "POST")
-                                        {
-                                            <span asp-validation-for="Icon200FormFile" class="text-danger"></span>
-                                        }
 
                                     </div>
 
@@ -659,9 +580,9 @@
 
                                         <div class="col-auto">
 
-                                            <label asp-for="Icon100FormFile" 
-                                            class="@cssForLabel">
-                                        </label>
+                                            <label asp-for="Icon100FormFile"
+                                                   class="@cssForLabel">
+                                            </label>
 
                                         </div>
 
@@ -673,19 +594,14 @@
 
                                         </div>
 
-                                        <div id="Icon100FormFileInputHelpBlock" 
-                                            class="@cssForHelpBlock">
+                                        <div id="Icon100FormFileInputHelpBlock"
+                                             class="@cssForHelpBlock">
 
                                             <span>
                                                 выбрать файл PNG - 100 px
                                             </span>
 
                                         </div>
-
-                                        @if (Context.Request.Method == "POST")
-                                        {
-                                            <span asp-validation-for="Icon100FormFile" class="text-danger"></span>
-                                        }
 
                                     </div>
 
@@ -730,3 +646,20 @@
     </div>
 
 </div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const newPath = document.getElementById('NewImagePath');
+        const select = document.getElementById('EditImage_ImagePath');
+
+        if (!newPath || !select) return;
+
+        newPath.addEventListener('input', function() {
+            if (this.value.trim() !== '') {
+                select.value = '/images';  // или первое значение
+            }
+        });
+    });
+
+</script>

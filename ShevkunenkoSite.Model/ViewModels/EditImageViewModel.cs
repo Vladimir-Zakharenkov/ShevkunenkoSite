@@ -4,15 +4,19 @@ public class EditImageViewModel
 {
     public ImageFileModel EditImage { get; set; } = new();
 
-    public List<SelectListItem> ImageDirectories { get; set; } = BuildImageDirectoryItems();
+    #region Ленивая загрузка списка каталогов
+
+    private List<SelectListItem>? _imageDirectories;
+
+    public List<SelectListItem> ImageDirectories =>
+        _imageDirectories ??= BuildImageDirectoryItems();
+
+    #endregion
 
     #region Задать новый каталог
 
-    [Required(AllowEmptyStrings = true)]
-    [DisplayFormat(ConvertEmptyStringToNull = false)]
-    [DataType(DataType.Text)]
     [Display(Name = "Новый каталог :")]
-    public string NewImagePath { get; set; } = string.Empty;
+    public string? NewImagePath { get; set; }
 
     #endregion
 
@@ -75,6 +79,7 @@ public class EditImageViewModel
     public bool DeleteIcon100 { get; set; } = false;
 
     #region Метод формирует SelectLIst из каталогов внутри каталога «images»
+
     private static List<SelectListItem> BuildImageDirectoryItems()
     {
         string imagesRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");

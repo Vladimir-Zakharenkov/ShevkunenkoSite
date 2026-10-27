@@ -1,11 +1,16 @@
-﻿namespace ShevkunenkoSite.Areas.Admin.Controllers;
+﻿using System.Text.RegularExpressions;
+
+namespace ShevkunenkoSite.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize]
-public class ImageInfoController(
+public partial class ImageInfoController(
     IImageFileRepository imageContext,
     IBooksAndArticlesRepository bookContext) : Controller
 {
+    [GeneratedRegex(@"^[a-zA-Z0-9_\-]+$")]
+    private static partial Regex ImagePathRegex();
+
     public ImageFileModel? ImageItem { get; set; }
 
     private readonly record struct ImageMetadata(
@@ -225,9 +230,20 @@ public class ImageInfoController(
             return View(imageItem);
         }
 
+        #region Проверка, что выбран хотя бы один файл для загрузки
+
+        if (UploadFields.All(f => f.Selector(imageItem) is null))
+        {
+            ModelState.AddModelError(string.Empty, "Загрузите хотя бы один файл");
+
+            return View(imageItem);
+        }
+
+        #endregion
+
         #region Обрезка Caption + защита от пустой строки
 
-        imageItem.EditImage.ImageCaption = imageItem.EditImage.ImageCaption.Trim();
+        imageItem.EditImage.ImageCaption = imageItem.EditImage.ImageCaption?.Trim() ?? string.Empty;
 
         if (string.IsNullOrEmpty(imageItem.EditImage.ImageCaption))
         {
@@ -242,6 +258,15 @@ public class ImageInfoController(
 
         if (!ValidateWebpFiles(imageItem))
         {
+            return View(imageItem);
+        }
+
+        // Картинка WebP 720 px должна быть обязательно
+        if (imageItem.WebImageFormFile is null)
+        {
+            ModelState.AddModelError(nameof(imageItem.WebImageFormFile),
+                "Для добавления картинки требуется файл WebP 720 px (основной)");
+
             return View(imageItem);
         }
 
@@ -265,7 +290,9 @@ public class ImageInfoController(
 
         #region Фильтр поиска
 
-        imageItem.EditImage.SearchFilter = imageItem.EditImage.SearchFilter.Trim();
+        imageItem.EditImage.SearchFilter = string.IsNullOrWhiteSpace(imageItem.EditImage.SearchFilter)
+                ? null
+                : imageItem.EditImage.SearchFilter.Trim();
 
         #endregion
 
@@ -277,14 +304,23 @@ public class ImageInfoController(
             ? "/images"
             : "/images/" + imagePath;
 
+        #endregion
+
+        #region Ввод нового каталога
+
         if (!string.IsNullOrWhiteSpace(imageItem.NewImagePath))
         {
-            imageItem.EditImage.ImagePath = "/images/" + imageItem.NewImagePath.Trim('/');
-        }
+            string newPath = imageItem.NewImagePath.Trim('/');
 
-        string path = Path.GetFullPath(
-                            Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", imageItem.EditImage.ImagePath)
-                                ).Replace('\\', '/');
+            if (!ImagePathRegex().IsMatch(newPath))
+            {
+                ModelState.AddModelError(nameof(imageItem.NewImagePath),
+                    "Имя каталога может содержать только буквы, цифры, «_» и «-»");
+                return View(imageItem);
+            }
+
+            imageItem.EditImage.ImagePath = "/images/" + newPath;
+        }
 
         #endregion
 
@@ -306,6 +342,35 @@ public class ImageInfoController(
 
         #endregion
 
+        #region Проверяем, что итоговый путь начинается с корня wwwroot
+
+        // ✅ проверка ПОСЛЕ применения NewImagePath
+        string wwwRoot = Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot"))
+                             .Replace('\\', '/');
+
+        string fullPath = Path.GetFullPath(Path.Join(wwwRoot, imageItem.EditImage.ImagePath))
+                              .Replace('\\', '/');
+
+        if (!fullPath.Equals(wwwRoot, StringComparison.OrdinalIgnoreCase) &&
+            !fullPath.StartsWith(wwwRoot + "/", StringComparison.OrdinalIgnoreCase))
+        {
+            ModelState.AddModelError(nameof(imageItem.EditImage.ImagePath),
+                    $"Формат каталога «{imageItem.EditImage.ImagePath}» указан не верно");
+
+            return View(imageItem);
+        }
+
+        string path = fullPath;
+
+        if (System.IO.Directory.Exists(path) && !string.IsNullOrWhiteSpace(imageItem.NewImagePath))
+        {
+            ModelState.AddModelError(nameof(imageItem.NewImagePath), $"Каталог «{imageItem.NewImagePath}» уже существует");
+
+            return View(imageItem);
+        }
+
+        #endregion
+
         #region Очистка полей для незагруженных IFormFile
 
         ClearUnusedFormFields(imageItem);
@@ -313,13 +378,6 @@ public class ImageInfoController(
         #endregion
 
         #region Создание нового каталога
-
-        if (System.IO.Directory.Exists(path) && !string.IsNullOrWhiteSpace(imageItem.NewImagePath))
-        {
-            ModelState.AddModelError("NewImagePath", $"Каталог «{imageItem.NewImagePath}» уже существует");
-
-            return View(imageItem);
-        }
 
         if (!System.IO.Directory.Exists(path))
         {
@@ -569,7 +627,7 @@ public class ImageInfoController(
 
         #region Заголовок картинки
 
-        imageItem.EditImage.ImageCaption = imageItem.EditImage.ImageCaption.Trim();
+        imageItem.EditImage.ImageCaption = imageItem.EditImage.ImageCaption?.Trim() ?? string.Empty;
 
         if (string.IsNullOrEmpty(imageItem.EditImage.ImageCaption))
         {
@@ -614,7 +672,10 @@ public class ImageInfoController(
 
         #region Фильтр поиска
 
-        imageUpdate.SearchFilter = imageItem.EditImage.SearchFilter.Trim();
+        if (!string.IsNullOrEmpty(imageItem.EditImage.SearchFilter))
+        {
+            imageUpdate.SearchFilter = imageItem.EditImage.SearchFilter.Trim();
+        }
 
         #endregion
 
@@ -1207,13 +1268,15 @@ public class ImageInfoController(
         {
             for (int j = i + 1; j < files.Count; j++)
             {
-                if (files[i].File!.FileName == files[j].File!.FileName)
+                if (string.Equals(files[i].File!.FileName, files[j].File!.FileName,
+                          StringComparison.OrdinalIgnoreCase))
                 {
                     string msg = $"Выбран один и тот же файл «{files[i].File!.FileName}» " +
                                  $"для полей {files[i].Name} и {files[j].Name}";
 
                     ModelState.AddModelError(files[i].Name, msg);
                     ModelState.AddModelError(files[j].Name, msg);
+
                     ok = false;
                 }
             }
@@ -1379,20 +1442,47 @@ public class ImageInfoController(
         Action<ImageMetadata> assign,
         string fieldName)
     {
-        // 1. Копируем файл, если его ещё нет в целевом каталоге
-        FileInfo target = new(Path.Join(path, file.FileName));
-
-        if (!target.Exists)
+        // Проверяем файл на «0»
+        if (file.Length == 0)
         {
-            string copyPath = Path.Join(path, file.FileName).Replace('\\', '/');
+            ModelState.AddModelError(fieldName, $"Файл «{file.FileName}» пуст");
 
-            using FileStream stream = new(copyPath, FileMode.Create);
-            await file.CopyToAsync(stream);
+            return false;
         }
 
+        // 1. Копируем файл, если его ещё нет в целевом каталоге
+        string targetPath = Path.Join(path, file.FileName);
+
+        FileInfo target = new(targetPath);
+
+        bool wasExisting = target.Exists;
+
+        if (wasExisting)
+        {
+            BackupOldFile(path, file.FileName);  // переместит в %TEMP%/ShevkunenkoSite_Backups
+        }
+
+        using FileStream stream = new(targetPath, FileMode.Create);
+
+        await file.CopyToAsync(stream);
+
         // 2. Читаем метаданные
-        IReadOnlyList<MetadataExtractor.Directory> directories =
-            ImageMetadataReader.ReadMetadata(Path.Join(path, file.FileName));
+        IReadOnlyList<MetadataExtractor.Directory> directories;
+        try
+        {
+            directories = ImageMetadataReader.ReadMetadata(targetPath);
+        }
+        catch (Exception ex)
+        {
+            if (!wasExisting)
+            {
+                try { System.IO.File.Delete(targetPath); } catch { /* ignore */ }
+            }
+
+            ModelState.AddModelError(fieldName, $"Не удалось прочитать метаданные файла «{file.FileName}»: {ex.Message}");
+
+            return false;
+        }
 
         string? fileName = null;
         string? extension = null;
@@ -1438,42 +1528,42 @@ public class ImageInfoController(
         if (string.IsNullOrWhiteSpace(fileName))
         {
             ModelState.AddModelError(fieldName,
-                $"Не определить имя файла «{file.FileName}»");
+                $"Не удалось определить имя файла «{file.FileName}»");
             return false;
         }
 
         if (string.IsNullOrWhiteSpace(extension))
         {
             ModelState.AddModelError(fieldName,
-                $"Не определить расширение файла «{file.FileName}»");
+                $"Не удалось определить расширение файла «{file.FileName}»");
             return false;
         }
 
         if (string.IsNullOrWhiteSpace(mimeType))
         {
             ModelState.AddModelError(fieldName,
-                $"Не определить MIME файла «{file.FileName}»");
+                $"Не удалось определить MIME файла «{file.FileName}»");
             return false;
         }
 
         if (fileSize is null or 0)
         {
             ModelState.AddModelError(fieldName,
-                $"Не определить размер файла «{file.FileName}»");
+                $"Не удалось определить размер файла «{file.FileName}»");
             return false;
         }
 
         if (width is null or 0)
         {
             ModelState.AddModelError(fieldName,
-                $"Не определить ширину файла «{file.FileName}»");
+                $"Не удалось определить ширину файла «{file.FileName}»");
             return false;
         }
 
         if (height is null or 0)
         {
             ModelState.AddModelError(fieldName,
-                $"Не определить высоту файла «{file.FileName}»");
+                $"Не удалось определить высоту файла «{file.FileName}»");
             return false;
         }
 

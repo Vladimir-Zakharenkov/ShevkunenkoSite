@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ShevkunenkoSite.Services.Attributes;
+﻿namespace ShevkunenkoSite.Models.ValidationAttributes;
 
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
 public sealed class NotWhitespaceAttribute : ValidationAttribute
