@@ -119,9 +119,9 @@ public partial class ImageInfoController(
 
         string[] allowedIcons =
                 [
-                    "webhd", "hd", "webimage", "image",
-                    "webicon300", "icon300", "webicon200", "icon200",
-                    "webicon100", "icon100"
+                    "webhd",  "webimage", "webicon300", "webicon200","webicon100",
+                    "webhdAI",  "webimageAI", "webicon300AI", "webicon200AI","webicon100AI",
+                    "hd", "image", "icon300", "icon200", "icon100"
                 ];
 
         detailsView.IconType = allowedIcons.Contains(imageIcon, StringComparer.OrdinalIgnoreCase)
@@ -156,15 +156,20 @@ public partial class ImageInfoController(
 
         string? cssForImage = detailsView.IconType switch
         {
-            "webimage" => "maxwidth600px",
-            "image" => "maxwidth600px",
             "webhd" => "maxwidth800px",
-            "hd" => "maxwidth800px",
+            "webimage" => "maxwidth600px",
             "webicon300" => "maxwidth300px",
-            "icon300" => "maxwidth300px",
             "webicon200" => "maxwidth200px",
-            "icon200" => "maxwidth200px",
             "webicon100" => "maxwidth100px",
+            "webhdAI" => "maxwidth800px",
+            "webimageAI" => "maxwidth600px",
+            "webicon300AI" => "maxwidth300px",
+            "webicon200AI" => "maxwidth200px",
+            "webicon100AI" => "maxwidth100px",
+            "hd" => "maxwidth800px",
+            "image" => "maxwidth600px",
+            "icon300" => "maxwidth300px",
+            "icon200" => "maxwidth200px",
             "icon100" => "maxwidth100px",
             _ => null
         };
@@ -177,15 +182,20 @@ public partial class ImageInfoController(
 
         string? fileForIcon = detailsView.IconType switch
         {
-            "webimage" => image.WebImageFileName,
-            "image" => image.ImageFileName,
             "webhd" => image.WebImageHDFileName,
-            "hd" => image.ImageHDFileName,
+            "webimage" => image.WebImageFileName,
             "webicon300" => image.WebIconFileName,
-            "icon300" => image.IconFileName,
             "webicon200" => image.WebIcon200FileName,
-            "icon200" => image.Icon200FileName,
             "webicon100" => image.WebIcon100FileName,
+            "webhdAI" => image.WebImageHDFileNameAI,
+            "webimageAI" => image.WebImageFileNameAI,
+            "webicon300AI" => image.WebIconFileNameAI,
+            "webicon200AI" => image.WebIcon200FileNameAI,
+            "webicon100AI" => image.WebIcon100FileNameAI,
+            "hd" => image.ImageHDFileName,
+            "image" => image.ImageFileName,
+            "icon300" => image.IconFileName,
+            "icon200" => image.Icon200FileName,
             "icon100" => image.Icon100FileName,
             _ => null
         };
@@ -202,17 +212,25 @@ public partial class ImageInfoController(
 
         // Отдельно — проверка остальных 10 файлов, чтобы установить красный стиль для отсутствующих,
         // даже если они не выбраны (это нужно для таблицы в представлении)
-        ApplyIfFileMissing(image.WebImageFileName, fullPath, () => detailsView.WebImageButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
-        ApplyIfFileMissing(image.ImageFileName, fullPath, () => detailsView.ImageButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        // WEBP
         ApplyIfFileMissing(image.WebImageHDFileName, fullPath, () => detailsView.WebhdButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
-        ApplyIfFileMissing(image.ImageHDFileName, fullPath, () => detailsView.HdButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.WebImageFileName, fullPath, () => detailsView.WebImageButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
         ApplyIfFileMissing(image.WebIconFileName, fullPath, () => detailsView.WebIcon300ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
-        ApplyIfFileMissing(image.IconFileName, fullPath, () => detailsView.Icon300ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
         ApplyIfFileMissing(image.WebIcon200FileName, fullPath, () => detailsView.WebIcon200ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
-        ApplyIfFileMissing(image.Icon200FileName, fullPath, () => detailsView.Icon200ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
         ApplyIfFileMissing(image.WebIcon100FileName, fullPath, () => detailsView.WebIcon100ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        // WEBP AI
+        ApplyIfFileMissing(image.WebImageHDFileNameAI, fullPath, () => detailsView.WebhdAIButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.WebImageFileNameAI, fullPath, () => detailsView.WebImageAIButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.WebIconFileNameAI, fullPath, () => detailsView.WebIcon300AIButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.WebIcon200FileNameAI, fullPath, () => detailsView.WebIcon200AIButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.WebIcon100FileNameAI, fullPath, () => detailsView.WebIcon100AIButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        // PNG
+        ApplyIfFileMissing(image.ImageHDFileName, fullPath, () => detailsView.HdButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.ImageFileName, fullPath, () => detailsView.ImageButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.IconFileName, fullPath, () => detailsView.Icon300ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
+        ApplyIfFileMissing(image.Icon200FileName, fullPath, () => detailsView.Icon200ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
         ApplyIfFileMissing(image.Icon100FileName, fullPath, () => detailsView.Icon100ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
-
+        
         #endregion
 
         return View(detailsView);
