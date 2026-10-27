@@ -95,19 +95,13 @@ public class ImageFileModel
 
     #region AutoFillWebImage (webp 720 px)
 
-    [Required(AllowEmptyStrings = false, ErrorMessage = "Введите имя файла 720 px (Webp)")]
-    [NotWhitespace(ErrorMessage = "Имя файла не может состоять только из пробелов")]
     [Display(Name = "Файл картинки (WebP) :")]
     public string WebImageFileName { get; set; } = string.Empty;
 
-    [Required(AllowEmptyStrings = false, ErrorMessage = "Введите расширение картинки")]
-    [NotWhitespace(ErrorMessage = "Расширение файла не может состоять только из пробелов")]
     [DataType(DataType.Text)]
     [Display(Name = "Расширение файла картинки 720 px (WebP) :")]
     public string WebImageFileNameExtension { get; set; } = "webp";
 
-    [Required(AllowEmptyStrings = false, ErrorMessage = "Введите MimeType файла картинки 720 px (Webp)")]
-    [NotWhitespace(ErrorMessage = "MimeType файла картинки не может состоять только из пробелов")]
     [DataType(DataType.Text)]
     [Display(Name = "MimeType файла картинки 720 px (WebP) :")]
     public string WebImageMimeType { get; set; } = "image/webp";
@@ -128,19 +122,13 @@ public class ImageFileModel
 
     #region AutoFillWebIcon300 (webp 300 px)
 
-    [Required(AllowEmptyStrings = false, ErrorMessage = "Введите имя файла иконки 300 px (Webp)")]
-    [NotWhitespace(ErrorMessage = "Имя файла не может состоять только из пробелов")]
     [Display(Name = "Файл иконки 300 px (WebP) :")]
     public string WebIconFileName { get; set; } = string.Empty;
 
-    [Required(AllowEmptyStrings = false, ErrorMessage = "Введите расширение файла иконки 300 px (Webp)")]
-    [NotWhitespace(ErrorMessage = "Расширение файла не может состоять только из пробелов")]
     [DataType(DataType.Text)]
     [Display(Name = "Расширение файла иконки 300 px (WebP) :")]
     public string WebIconFileNameExtension { get; set; } = "webp";
 
-    [Required(AllowEmptyStrings = false, ErrorMessage = "Введите MimeType файла иконки 300 px (Webp)")]
-    [NotWhitespace(ErrorMessage = "MimeType файла не может состоять только из пробелов")]
     [DataType(DataType.Text)]
     [Display(Name = "MimeType файла иконки 300 px (WebP) :")]
     public string WebIconMimeType { get; set; } = "image/webp";
@@ -161,19 +149,13 @@ public class ImageFileModel
 
     #region AutoFillWebIcon200 (webp 200 px)
 
-    [Required(AllowEmptyStrings = false, ErrorMessage = "Введите имя файла иконки 200 px (WebP)")]
-    [NotWhitespace(ErrorMessage = "Имя файла не может состоять только из пробелов")]
     [Display(Name = "Файл иконки 200 px (WebP) :")]
     public string WebIcon200FileName { get; set; } = string.Empty;
 
-    [Required(AllowEmptyStrings = false, ErrorMessage = "Введите расширение файла иконки 200 px (WebP)")]
-    [NotWhitespace(ErrorMessage = "Расширение файла не может состоять только из пробелов")]
     [DataType(DataType.Text)]
     [Display(Name = "Расширение файла иконки 200 px (WebP) :")]
     public string WebIcon200FileNameExtension { get; set; } = "webp";
 
-    [Required(AllowEmptyStrings = false, ErrorMessage = "Введите MimeType файла иконки 200 px (WebP)")]
-    [NotWhitespace(ErrorMessage = "MimeType файла иконки не может состоять только из пробелов")]
     [DataType(DataType.Text)]
     [Display(Name = "MimeType файла иконки 200 px (WebP) :")]
     public string WebIcon200MimeType { get; set; } = "image/webp";
@@ -194,19 +176,13 @@ public class ImageFileModel
 
     #region AutoFillWebIcon100 (webp 100 px)
 
-    [Required(AllowEmptyStrings = false, ErrorMessage = "Введите имя файла иконки 100 px (WebP)")]
-    [NotWhitespace(ErrorMessage = "Имя файла не может состоять только из пробелов")]
     [Display(Name = "Файл иконки 100 px (WebP) :")]
     public string WebIcon100FileName { get; set; } = string.Empty;
 
-    [Required(AllowEmptyStrings = false, ErrorMessage = "Введите расширение файла иконки 100 px (WebP)")]
-    [NotWhitespace(ErrorMessage = "Расширение файла не может состоять только из пробелов")]
     [DataType(DataType.Text)]
     [Display(Name = "Расширение файла иконки 100 px (WebP) :")]
     public string WebIcon100FileNameExtension { get; set; } = "webp";
 
-    [Required(AllowEmptyStrings = false, ErrorMessage = "Введите MimeType файла иконки 100 px (WebP)")]
-    [NotWhitespace(ErrorMessage = "MimeType файла иконки не может состоять только из пробелов")]
     [DataType(DataType.Text)]
     [Display(Name = "MimeType файла иконки 100 px (WebP) :")]
     public string WebIcon100MimeType { get; set; } = "image/webp";

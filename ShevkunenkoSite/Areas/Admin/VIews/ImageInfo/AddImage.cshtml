@@ -328,6 +328,13 @@
                                                 выбрать файл WEBP - 720 px
                                             </span>
 
+                                            <br class="d-md-none" />
+
+                                            <span class="text-danger">
+                                                <span class="d-none d-md-inline-block"> - </span>
+                                                выбрать обязательно
+                                            </span>
+
                                         </div>
 
                                     </div>
@@ -356,6 +363,13 @@
 
                                             <span>
                                                 выбрать файл WEBP - 300 px
+                                            </span>
+
+                                            <br class="d-md-none" />
+
+                                            <span class="text-danger">
+                                                <span class="d-none d-md-inline-block"> - </span>
+                                                выбрать обязательно
                                             </span>
 
                                         </div>
@@ -388,6 +402,13 @@
                                                 выбрать файл WEBP - 200 px
                                             </span>
 
+                                            <br class="d-md-none" />
+
+                                            <span class="text-danger">
+                                                <span class="d-none d-md-inline-block"> - </span>
+                                                выбрать обязательно
+                                            </span>
+
                                         </div>
 
                                     </div>
@@ -416,6 +437,197 @@
 
                                             <span>
                                                 выбрать файл WEBP - 100 px
+                                            </span>
+
+                                            <br class="d-md-none" />
+
+                                            <span class="text-danger">
+                                                <span class="d-none d-md-inline-block"> - </span>
+                                                выбрать обязательно
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        @* Выбор картинок AI (WebP) *@
+                        <div class="accordion-item mb-3 block-shadow">
+
+                            <h2 id="aiHeadingDescription" class="accordion-header block-shadow">
+
+                                <button class="accordion-button collapsed py-0 stranicy"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#AiImage"
+                                        aria-expanded="false"
+                                        aria-controls="AiImage">
+
+                                    <span class="form-label fs-5">
+                                        Формат AI (WebP) :
+                                    </span>
+
+                                </button>
+
+                            </h2>
+
+                            <div id="AiImage"
+                                 class="accordion-collapse collapse"
+                                 aria-labelledby="aiHeadingDescription"
+                                 data-bs-parent="#accordionAddImage">
+
+                                <div class="accordion-body text-indent-0 text-center">
+
+                                    @* Выбор картинки HD WEBP AI *@
+                                    <div class="row g-2 justify-content-center mt-2 mb-4">
+
+                                        <div class="col-auto">
+
+                                            <label asp-for="WebImageHDFormFileAI"
+                                                   class="@cssForLabel">
+                                            </label>
+
+                                        </div>
+
+                                        <div class="col-auto">
+
+                                            <input asp-for="WebImageHDFormFileAI"
+                                                   class="form-control"
+                                                   aria-describedby="WebImageHDFormFileAIInputHelpBlock" />
+
+                                        </div>
+
+                                        <div id="WebImageHDFormFileAIInputHelpBlock"
+                                             class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл WEBP - HD (AI)
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    @* Выбор картинки WEBP 720 px AI *@
+                                    <div class="row g-2 justify-content-center mb-4">
+
+                                        <div class="col-auto">
+
+                                            <label asp-for="WebImageFormFileAI"
+                                                   class="@cssForLabel">
+
+                                            </label>
+
+                                        </div>
+
+                                        <div class="col-auto">
+
+                                            <input asp-for="WebImageFormFileAI"
+                                                   class="form-control"
+                                                   aria-describedby="WebImageFormFileAIInputHelpBlock" />
+
+                                        </div>
+
+                                        <div id="WebImageFormFileAIInputHelpBlock"
+                                             class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл WEBP - 720 px (AI)
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    @* Выбор картинки WEBP 300 px AI *@
+                                    <div class="row g-2 justify-content-center mb-4">
+
+                                        <div class="col-auto">
+
+                                            <label asp-for="WebIconFormFileAI"
+                                                   class="@cssForLabel">
+                                            </label>
+
+                                        </div>
+
+                                        <div class="col-auto">
+
+                                            <input asp-for="WebIconFormFileAI"
+                                                   class="form-control"
+                                                   aria-describedby="WebIconFormFileAIInputHelpBlock" />
+
+                                        </div>
+
+                                        <div id="WebIconFormFileAIInputHelpBlock"
+                                             class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл WEBP - 300 px (AI)
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    @* Выбор картинки WEBP 200 px AI *@
+                                    <div class="row g-2 justify-content-center mb-4">
+
+                                        <div class="col-auto">
+
+                                            <label asp-for="WebIcon200FormFileAI"
+                                                   class="@cssForLabel">
+                                            </label>
+
+                                        </div>
+
+                                        <div class="col-auto">
+
+                                            <input asp-for="WebIcon200FormFileAI"
+                                                   class="form-control"
+                                                   aria-describedby="WebIcon200FormFileAIInputHelpBlock" />
+
+                                        </div>
+
+                                        <div id="WebIcon200FormFileAIInputHelpBlock"
+                                             class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл WEBP - 200 px (AI)
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    @* Выбор картинки WEBP 100 px AI *@
+                                    <div class="row g-2 justify-content-center">
+
+                                        <div class="col-auto">
+
+                                            <label asp-for="WebIcon100FormFileAI"
+                                                   class="@cssForLabel">
+                                            </label>
+
+                                        </div>
+
+                                        <div class="col-auto">
+
+                                            <input asp-for="WebIcon100FormFileAI"
+                                                   class="form-control"
+                                                   aria-describedby="WebIcon100FormFileAIInputHelpBlock" />
+
+                                        </div>
+
+                                        <div id="WebIcon100FormFileAIInputHelpBlock"
+                                             class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл WEBP - 100 px (AI)
                                             </span>
 
                                         </div>

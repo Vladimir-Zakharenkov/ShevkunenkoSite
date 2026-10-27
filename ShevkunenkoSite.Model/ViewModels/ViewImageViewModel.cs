@@ -6,6 +6,7 @@ public class ViewImageViewModel
 
     /// <summary>
     /// Тип иконки: webhd, webimage, webicon300, webicon200, webicon100,
+    /// webhdAI, webimageAI, webicon300AI, webicon200AI, webicon100AI,
     /// hd, image, icon300, icon200, icon100.
     /// </summary>
     public string IconType { get; set; } = "webimage";
@@ -31,76 +32,110 @@ public class ViewImageViewModel
 
         return IconType switch
         {
-            // ------- webimage (Web → Image) -------
-            "webimage" => FirstAvailable(
-                (Empty(i.WebImageFileName), Empty(i.WebIconFileName),
-                 i.WebImageWidth, i.WebImageHeight),
-                (Empty(i.ImageFileName), Empty(i.IconFileName),
-                 i.ImageWidth, i.ImageHeight)),
-
-            // ------- image (Image → Web) -------
-            "image" => FirstAvailable(
-                (Empty(i.ImageFileName), Empty(i.IconFileName),
-                 i.ImageWidth, i.ImageHeight),
-                (Empty(i.WebImageFileName), Empty(i.WebIconFileName),
-                 i.WebImageWidth, i.WebImageHeight)),
-
-            // ------- webicon300 (Web 300 → Icon 300) -------
-            "webicon300" => FirstAvailable(
-                (Empty(i.WebIconFileName), Empty(i.WebIcon200FileName),
-                 i.WebIconWidth, i.WebIconHeight),
-                (Empty(i.IconFileName), Empty(i.Icon200FileName),
-                 i.IconWidth, i.IconHeight)),
-
-            // ------- icon300 (Icon 300 → Web 300) -------
-            "icon300" => FirstAvailable(
-                (Empty(i.IconFileName), Empty(i.Icon200FileName),
-                 i.IconWidth, i.IconHeight),
-                (Empty(i.WebIconFileName), Empty(i.WebIcon200FileName),
-                 i.WebIconWidth, i.WebIconHeight)),
-
-            // ------- webicon200 (Web 200 → Icon 200) -------
-            "webicon200" => FirstAvailable(
-                (Empty(i.WebIcon200FileName), Empty(i.WebIcon100FileName),
-                 i.WebIcon200Width, i.WebIcon200Height),
-                (Empty(i.Icon200FileName), Empty(i.Icon100FileName),
-                 i.Icon200Width, i.Icon200Height)),
-
-            // ------- icon200 (Icon 200 → Web 200) -------
-            "icon200" => FirstAvailable(
-                (Empty(i.Icon200FileName), Empty(i.Icon100FileName),
-                 i.Icon200Width, i.Icon200Height),
-                (Empty(i.WebIcon200FileName), Empty(i.WebIcon100FileName),
-                 i.WebIcon200Width, i.WebIcon200Height)),
-
-            // ------- webicon100 (Web 100 → Icon 100) -------
-            "webicon100" => FirstAvailable(
-                (Empty(i.WebIcon100FileName), null,
-                 i.WebIcon100Width, i.WebIcon100Height),
-                (Empty(i.Icon100FileName), null,
-                 i.Icon100Width, i.Icon100Height)),
-
-            // ------- icon100 (Icon 100 → Web 100) -------
-            "icon100" => FirstAvailable(
-                (Empty(i.Icon100FileName), null,
-                 i.Icon100Width, i.Icon100Height),
-                (Empty(i.WebIcon100FileName), null,
-                 i.WebIcon100Width, i.WebIcon100Height)),
-
-            // ------- webhd (WebHD → ImageHD) -------
+            // ------- webhd (WebImage HD → ImageHD) -------
             "webhd" => FirstAvailable(
                 (Empty(i.WebImageHDFileName), Empty(i.WebImageFileName),
                  i.WebImageHDWidth, i.WebImageHDHeight),
                 (Empty(i.ImageHDFileName), Empty(i.ImageFileName),
                  i.ImageHDWidth, i.ImageHDHeight)),
 
-            // ------- hd (ImageHD → WebHD) -------
+            // ------- hd (ImageHD → WebImageHD) -------
             "hd" => FirstAvailable(
                 (Empty(i.ImageHDFileName), Empty(i.ImageFileName),
                  i.ImageHDWidth, i.ImageHDHeight),
                 (Empty(i.WebImageHDFileName), Empty(i.WebImageFileName),
                  i.WebImageHDWidth, i.WebImageHDHeight)),
 
+            // ------- webhdAI (WebImageHDAI → WebImageHD) -------
+            "webhdAI" => FirstAvailable(
+                (Empty(i.WebImageHDFileNameAI), Empty(i.WebImageFileNameAI),
+                 i.WebImageHDWidthAI, i.WebImageHDHeightAI),
+                (Empty(i.WebImageHDFileName), Empty(i.WebImageFileName),
+                 i.WebImageHDWidth, i.WebImageHDHeight)),
+
+            // ------- webimage (WebImage → Image) -------
+            "webimage" => FirstAvailable(
+                (Empty(i.WebImageFileName), Empty(i.WebIconFileName),
+                 i.WebImageWidth, i.WebImageHeight),
+                (Empty(i.ImageFileName), Empty(i.IconFileName),
+                 i.ImageWidth, i.ImageHeight)),
+
+            // ------- image (Image → WebImage) -------
+            "image" => FirstAvailable(
+                (Empty(i.ImageFileName), Empty(i.IconFileName),
+                 i.ImageWidth, i.ImageHeight),
+                (Empty(i.WebImageFileName), Empty(i.WebIconFileName),
+                 i.WebImageWidth, i.WebImageHeight)),
+
+            // ------- webimageAI (WebImageAI → WebImage) -------
+            "webimageAI" => FirstAvailable(
+                (Empty(i.WebImageFileNameAI), Empty(i.WebIconFileNameAI),
+                 i.WebImageWidthAI, i.WebImageHeightAI),
+                (Empty(i.WebImageFileName), Empty(i.WebIconFileName),
+                 i.WebImageWidth, i.WebImageHeight)),
+
+            // ------- webicon300 (WebIcon 300 → Icon 300) -------
+            "webicon300" => FirstAvailable(
+                (Empty(i.WebIconFileName), Empty(i.WebIcon200FileName),
+                 i.WebIconWidth, i.WebIconHeight),
+                (Empty(i.IconFileName), Empty(i.Icon200FileName),
+                 i.IconWidth, i.IconHeight)),
+
+            // ------- icon300 (Icon 300 → WebIcon 300) -------
+            "icon300" => FirstAvailable(
+                (Empty(i.IconFileName), Empty(i.Icon200FileName),
+                 i.IconWidth, i.IconHeight),
+                (Empty(i.WebIconFileName), Empty(i.WebIcon200FileName),
+                 i.WebIconWidth, i.WebIconHeight)),
+
+            // ------- webicon300AI (WebIconAI 300 → WebIcon 300) -------
+            "webicon300AI" => FirstAvailable(
+                (Empty(i.WebIconFileNameAI), Empty(i.WebIcon200FileNameAI),
+                 i.WebIconWidthAI, i.WebIconHeightAI),
+                (Empty(i.WebIconFileName), Empty(i.WebIcon200FileName),
+                 i.WebIconWidth, i.WebIconHeight)),
+
+            // ------- webicon200 (WebIcon 200 → Icon 200) -------
+            "webicon200" => FirstAvailable(
+                (Empty(i.WebIcon200FileName), Empty(i.WebIcon100FileName),
+                 i.WebIcon200Width, i.WebIcon200Height),
+                (Empty(i.Icon200FileName), Empty(i.Icon100FileName),
+                 i.Icon200Width, i.Icon200Height)),
+
+            // ------- icon200 (Icon 200 → WebIcon 200) -------
+            "icon200" => FirstAvailable(
+                (Empty(i.Icon200FileName), Empty(i.Icon100FileName),
+                 i.Icon200Width, i.Icon200Height),
+                (Empty(i.WebIcon200FileName), Empty(i.WebIcon100FileName),
+                 i.WebIcon200Width, i.WebIcon200Height)),
+
+            // ------- webicon200AI (WebIconAI 200 → WebIcon 200) -------
+            "webicon200AI" => FirstAvailable(
+                (Empty(i.WebIcon200FileNameAI), Empty(i.WebIcon100FileNameAI),
+                 i.WebIcon200WidthAI, i.WebIcon200HeightAI),
+                (Empty(i.WebIcon200FileName), Empty(i.WebIcon100FileName),
+                 i.WebIcon200Width, i.WebIcon200Height)),
+
+            // ------- webicon100 (WebIcon 100 → Icon 100) -------
+            "webicon100" => FirstAvailable(
+                (Empty(i.WebIcon100FileName), null,
+                 i.WebIcon100Width, i.WebIcon100Height),
+                (Empty(i.Icon100FileName), null,
+                 i.Icon100Width, i.Icon100Height)),
+
+            // ------- icon100 (Icon 100 → WebIcon 100) -------
+            "icon100" => FirstAvailable(
+                (Empty(i.Icon100FileName), null,
+                 i.Icon100Width, i.Icon100Height),
+                (Empty(i.WebIcon100FileName), null,
+                 i.WebIcon100Width, i.WebIcon100Height)),
+
+            // ------- webicon100AI (WebIconAI 100 → WebIcon 100) -------
+            "webicon100AI" => FirstAvailable(
+                (Empty(i.WebIcon100FileNameAI), null,
+                 i.WebIcon100WidthAI, i.WebIcon100HeightAI),
+                (Empty(i.WebIcon100FileName), null,
+                 i.WebIcon100Width, i.WebIcon100Height)),
             _ => (null, null, null, null)
         };
     }
@@ -111,6 +146,7 @@ public class ViewImageViewModel
     public string? GetContentUrl()
     {
         var name = GetImageData().ContentFileName;
+
         return string.IsNullOrEmpty(name)
             ? null
             : $"{ImageItem.ImagePath}/{name}";
@@ -150,6 +186,7 @@ public class ViewImageViewModel
                 continue;
 
             var thumb = string.IsNullOrEmpty(c.thumb) ? c.main : c.thumb;
+
             return (c.main, thumb, c.width, c.height);
         }
 

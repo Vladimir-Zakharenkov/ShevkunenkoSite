@@ -7,6 +7,7 @@ public class ViewImage(
     private static readonly HashSet<string> AllowedIconTypes =
     [
         "webhd", "webimage", "webicon300", "webicon200", "webicon100",
+        "webhdAI", "webimageAI", "webicon300AI", "webicon200AI", "webicon100AI",
         "hd", "image", "icon300", "icon200", "icon100"
     ];
 
@@ -28,7 +29,8 @@ public class ViewImage(
 
         image ??= await imageFileContext.ImageFiles
             .FirstOrDefaultAsync(img => img.WebImageFileName == imageId
-                                     || img.ImageFileName == imageId);
+                                     || img.ImageFileName == imageId 
+                                     || img.WebImageFileNameAI == imageId);
 
         #endregion
 
