@@ -12,7 +12,11 @@ public class PaginationOfItemsListTagHelper(IUrlHelperFactory helperFactory) : T
 
     public string? AlbumCaption { get; set; }
 
+    [HtmlAttributeName("show-ai")]
+    public bool? ShowAI { get; set; }
+
     private const string PhotoAlbumAction = "PhotoAlbum";
+
     private const string FilmPhotoAlbumAction = "FilmPhotoAlbum";
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -20,7 +24,6 @@ public class PaginationOfItemsListTagHelper(IUrlHelperFactory helperFactory) : T
         if (ViewContext is null || Paging is null || Paging.TotalPages <= 1)
         {
             output.SuppressOutput();
-
             return;
         }
 
@@ -31,16 +34,15 @@ public class PaginationOfItemsListTagHelper(IUrlHelperFactory helperFactory) : T
         if (string.IsNullOrEmpty(actionName))
         {
             output.SuppressOutput();
-
             return;
         }
 
         IUrlHelper urlHelper = helperFactory.GetUrlHelper(ViewContext);
 
-        output.Attributes.Clear();                 // убираем pagination="..." из финального HTML
+        output.Attributes.Clear();
 
         output.Attributes.SetAttribute("class",
-            "d-flex flex-wrap justify-content-center my-3 p-2 mx-auto");
+            "d-flex flex-wrap justify-content-center p-2 mx-auto");
 
         for (int i = 1; i <= Paging.TotalPages; i++)
         {
@@ -49,22 +51,24 @@ public class PaginationOfItemsListTagHelper(IUrlHelperFactory helperFactory) : T
             if (actionName == PhotoAlbumAction)
             {
                 newRef.Attributes["href"] = urlHelper.Action(actionName,
-                new
-                {
-                    albumCaption = AlbumCaption,
-                    pageNumber = i,
-                    imageId = string.Empty
-                });
+                    new
+                    {
+                        albumCaption = AlbumCaption,
+                        pageNumber = i,
+                        imageId = string.Empty
+                    });
             }
             else if (actionName == FilmPhotoAlbumAction)
             {
+                // ✅ Сохраняем showAI в ссылке, чтобы режим не сбрасывался
                 newRef.Attributes["href"] = urlHelper.Action(actionName,
-                new
-                {
-                    filmCaption = AlbumCaption,
-                    pageNumber = i,
-                    imageId = string.Empty
-                });
+                    new
+                    {
+                        filmCaption = AlbumCaption,
+                        pageNumber = i,
+                        imageId = string.Empty,
+                        showAI = ShowAI ?? true
+                    });
             }
             else
             {

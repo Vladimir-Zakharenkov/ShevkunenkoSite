@@ -103,7 +103,8 @@ public class FilmsController
 
             // Картинки с фильтром == название фильма + #film-album#
             var listOfPictures = from m in imageContext.ImageFiles
-               .Where(p => p.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
+               .Where(p => p.SearchFilter != null &&
+                           p.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
                                  select m;
 
             filmItem.ListOfPictures = [.. listOfPictures];
@@ -128,11 +129,13 @@ public class FilmsController
 
                 // Картинки с фильтром == название фильма + #film-album#
                 if (await imageContext.ImageFiles
-                    .Where(img => img.SearchFilter.Contains(filmItem.FilmForPictureAround.FilmCaption + "#film-album#"))
+                    .Where(img => img.SearchFilter != null &&
+                                  img.SearchFilter.Contains(filmItem.FilmForPictureAround.FilmCaption + "#film-album#"))
                     .AnyAsync())
                 {
                     listOfPictures = from m in imageContext.ImageFiles
-                       .Where(p => p.SearchFilter.Contains(filmItem.FilmForPictureAround.FilmCaption + "#film-album#"))
+                       .Where(p => p.SearchFilter != null &&
+                                   p.SearchFilter.Contains(filmItem.FilmForPictureAround.FilmCaption + "#film-album#"))
                                      select m;
 
                     filmItem.ListOfPictures = [.. listOfPictures];
@@ -183,14 +186,24 @@ public class FilmsController
 
     #endregion
 
-    #region Кадры фильма
+    #region Альбом из кадров фильма
 
+    /// <summary>
+    /// Альбом из кадров фильма
+    /// </summary>
     [HttpGet]
-    public async Task<IActionResult> FilmPhotoAlbum(Guid? imageId, string? filmCaption, int pageNumber = 1)
+    public async Task<IActionResult> FilmPhotoAlbum(
+        Guid? imageId,
+        string? filmCaption,
+        int pageNumber = 1,
+        bool showAI = true)
     {
         #region Инициализация PhotoAlbumViewModel
 
-        PhotoAlbumViewModel photoAlbumView = new();
+        PhotoAlbumViewModel photoAlbumView = new()
+        {
+            ShowAI = showAI
+        };
 
         #endregion
 
@@ -210,7 +223,8 @@ public class FilmsController
         }
 
         bool hasPictures = await imageContext.ImageFiles
-            .Where(img => img.SearchFilter.Contains(filmCaption + album))
+            .Where(img => img.SearchFilter != null &&
+                          img.SearchFilter.Contains(filmCaption + album))
             .AnyAsync();
 
         if (!hasPictures)
@@ -250,8 +264,17 @@ public class FilmsController
 
             #endregion
 
-            if (imageItem.SearchFilter.Contains((filmCaption + album), StringComparison.OrdinalIgnoreCase))
+            if (imageItem.SearchFilter is not null &&
+                imageItem.SearchFilter.Contains(filmCaption + album, StringComparison.OrdinalIgnoreCase))
             {
+                // ✅ Есть ли у текущей картинки AI-варианты
+                photoAlbumView.CurrentImageHasAI =
+                    !string.IsNullOrEmpty(imageItem.WebImageFileNameAI) ||
+                    !string.IsNullOrEmpty(imageItem.WebImageHDFileNameAI) ||
+                    !string.IsNullOrEmpty(imageItem.WebIconFileNameAI) ||
+                    !string.IsNullOrEmpty(imageItem.WebIcon200FileNameAI) ||
+                    !string.IsNullOrEmpty(imageItem.WebIcon100FileNameAI);
+
                 #region Определение заголовка и подзаголовка альбома
 
                 var (caption, noteText) = ParseAlbumFilter(imageItem.SearchFilter, album, note);
@@ -270,9 +293,10 @@ public class FilmsController
                 #region Массив картинок по определенному названию альбома
 
                 var allItems = from m in imageContext.ImageFiles
-                                .Where(p => p.SearchFilter.Contains(filmCaption + album))
-                                .OrderBy(p => p.SortOfPicture)
-                                select m;
+                               .Where(p => p.SearchFilter != null &&
+                                           p.SearchFilter.Contains(filmCaption + album))
+                               .OrderBy(p => p.SortOfPicture)
+                               select m;
 
                 var arrayOfItems = await allItems.ToArrayAsync();
 
@@ -351,8 +375,9 @@ public class FilmsController
             #region Массив картинок по определенному названию альбома
 
             var allItems = from m in imageContext.ImageFiles
-               .Where(p => p.SearchFilter.Contains(filmCaption + album))
-               .OrderBy(p => p.SortOfPicture)
+                           .Where(p => p.SearchFilter != null &&
+                                       p.SearchFilter.Contains(filmCaption + album))
+                           .OrderBy(p => p.SortOfPicture)
                            select m;
 
             var arrayOfItems = await allItems.ToArrayAsync();
@@ -374,7 +399,7 @@ public class FilmsController
 
             if (pageNumber < 1 || pageNumber > maxPage)
             {
-                return RedirectToAction(nameof(FilmPhotoAlbum), new { filmCaption, pageNumber = 1 });
+                return RedirectToAction(nameof(FilmPhotoAlbum), new { filmCaption, pageNumber = 1, showAI });
             }
 
             #endregion
@@ -407,12 +432,6 @@ public class FilmsController
             photoAlbumView.CaptionOfAlbum = caption;
 
             photoAlbumView.NoteForCaptionOfAlbum = noteText;
-
-            #endregion
-
-            #region Устанавливаем Id для CurrentImageId
-
-            photoAlbumView.CurrentImageId = itemsOnPage[0].ImageFileModelId;
 
             #endregion
 
@@ -456,8 +475,11 @@ public class FilmsController
     #region Метод определения Заголовка и Подзаголовка альбома
 
     private static (string? Caption, string? Note) ParseAlbumFilter(
-                    string searchFilter, string album, string note)
+                    string? searchFilter, string album, string note)
     {
+        if (string.IsNullOrEmpty(searchFilter))
+            return (null, null);
+
         string[] filters = searchFilter.Split(',',
             StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 

@@ -230,7 +230,7 @@ public partial class ImageInfoController(
         ApplyIfFileMissing(image.IconFileName, fullPath, () => detailsView.Icon300ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
         ApplyIfFileMissing(image.Icon200FileName, fullPath, () => detailsView.Icon200ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
         ApplyIfFileMissing(image.Icon100FileName, fullPath, () => detailsView.Icon100ButtonInfostyle = $"{DetailsImageIconViewModel.MainInfostyle} btn-outline-danger");
-        
+
         #endregion
 
         return View(detailsView);
@@ -782,7 +782,7 @@ public partial class ImageInfoController(
     {
         EditImageViewModel editImage = new();
 
-        if (imageId.HasValue & await imageContext.ImageFiles.Where(i => i.ImageFileModelId == imageId).AnyAsync())
+        if (imageId.HasValue && await imageContext.ImageFiles.Where(i => i.ImageFileModelId == imageId).AnyAsync())
         {
             editImage.EditImage = await imageContext.ImageFiles.FirstAsync(i => i.ImageFileModelId == imageId);
 
@@ -803,19 +803,6 @@ public partial class ImageInfoController(
             return View(imageItem);
         }
 
-        #region Заголовок картинки
-
-        imageItem.EditImage.ImageCaption = imageItem.EditImage.ImageCaption?.Trim() ?? string.Empty;
-
-        if (string.IsNullOrEmpty(imageItem.EditImage.ImageCaption))
-        {
-            ModelState.AddModelError(nameof(imageItem.EditImage.ImageCaption), "Введите название картинки");
-
-            return View(imageItem);
-        }
-
-        #endregion
-
         #region Ранняя проверка расширений «.webp»
 
         if (!ValidateWebpFiles(imageItem))
@@ -832,19 +819,30 @@ public partial class ImageInfoController(
 
         #region Заголовок картинки
 
-        imageUpdate.ImageCaption = imageItem.EditImage.ImageCaption;
+        imageItem.EditImage.ImageCaption = imageItem.EditImage.ImageCaption?.Trim() ?? string.Empty;
+
+        if (string.IsNullOrEmpty(imageItem.EditImage.ImageCaption))
+        {
+            ModelState.AddModelError(nameof(imageItem.EditImage.ImageCaption), "Введите название картинки");
+
+            return View(imageItem);
+        }
 
         #endregion
 
         #region Описание картинки
 
-        imageUpdate.ImageDescription = imageItem.EditImage.ImageDescription.Trim();
+        imageUpdate.ImageDescription = string.IsNullOrWhiteSpace(imageItem.EditImage.ImageDescription)
+             ? imageItem.EditImage.ImageCaption
+             : imageItem.EditImage.ImageDescription.Trim();
 
         #endregion
 
         #region Теги alt и title
 
-        imageUpdate.ImageAltTitle = imageItem.EditImage.ImageAltTitle.Trim();
+        imageUpdate.SearchFilter = string.IsNullOrWhiteSpace(imageItem.EditImage.SearchFilter)
+                ? null
+                : imageItem.EditImage.SearchFilter.Trim();
 
         #endregion
 
@@ -881,14 +879,45 @@ public partial class ImageInfoController(
 
         if (!string.IsNullOrWhiteSpace(imageItem.NewImagePath))
         {
-            imageUpdate.ImagePath = "/images/" + imageItem.NewImagePath.Trim('/');
+            string newPath = imageItem.NewImagePath.Trim('/');
+
+            if (newPath.StartsWith("images/", StringComparison.OrdinalIgnoreCase))
+            {
+                newPath = newPath["images/".Length..];
+            }
+
+            if (!ImagePathRegex().IsMatch(newPath))
+            {
+                ModelState.AddModelError(nameof(imageItem.NewImagePath),
+                "Имя каталога может содержать только буквы, цифры, «_», «-» и «/»");
+
+                return View(imageItem);
+            }
+
+            imageUpdate.ImagePath = "/images/" + newPath;
         }
 
         #endregion
 
+        #region Проверяем, что итоговый путь начинается с корня wwwroot
+
+        string wwwRoot = Path.GetFullPath(Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot"))
+                              .Replace('\\', '/');
+
         string path = Path.GetFullPath(
-                    Path.Join(System.IO.Directory.GetCurrentDirectory(), "wwwroot", imageUpdate.ImagePath)
-                            ).Replace('\\', '/');
+                  Path.Join(wwwRoot, imageUpdate.ImagePath)
+                                       ).Replace('\\', '/');
+
+        if (!path.Equals(wwwRoot, StringComparison.OrdinalIgnoreCase) &&
+                   !path.StartsWith(wwwRoot + "/", StringComparison.OrdinalIgnoreCase))
+        {
+            ModelState.AddModelError(nameof(imageItem.EditImage.ImagePath),
+                    $"Формат каталога «{imageItem.EditImage.ImagePath}» указан не верно");
+
+            return View(imageItem);
+        }
+
+        #endregion
 
         #endregion
 
@@ -914,16 +943,24 @@ public partial class ImageInfoController(
                 }
             }
 
+            // PNG
             MoveIfExists(imageUpdate.ImageHDFileName);
             MoveIfExists(imageUpdate.ImageFileName);
             MoveIfExists(imageUpdate.IconFileName);
             MoveIfExists(imageUpdate.Icon200FileName);
             MoveIfExists(imageUpdate.Icon100FileName);
+            // WEBP
             MoveIfExists(imageUpdate.WebImageHDFileName);
             MoveIfExists(imageUpdate.WebImageFileName);
             MoveIfExists(imageUpdate.WebIconFileName);
             MoveIfExists(imageUpdate.WebIcon200FileName);
             MoveIfExists(imageUpdate.WebIcon100FileName);
+            // WEBP AI
+            MoveIfExists(imageUpdate.WebImageHDFileNameAI);
+            MoveIfExists(imageUpdate.WebImageFileNameAI);
+            MoveIfExists(imageUpdate.WebIconFileNameAI);
+            MoveIfExists(imageUpdate.WebIcon200FileNameAI);
+            MoveIfExists(imageUpdate.WebIcon100FileNameAI);
         }
 
         #endregion
@@ -1254,22 +1291,161 @@ public partial class ImageInfoController(
             if (!ok) return View(imageItem);
         }
 
+        // 11. WebImageHDFormFileAI — WebP HD (AI)
+        if (imageItem.WebImageHDFormFileAI is not null)
+        {
+            if (!CheckExtensionMatches(
+                   imageItem.WebImageHDFormFileAI,
+                   imageItem.EditImage.WebImageHDNameExtensionAI,
+                   nameof(imageItem.WebImageHDFormFileAI)))
+            {
+                return View(imageItem);
+            }
+
+            BackupOldFile(path, imageUpdate.WebImageHDFileNameAI);
+
+            bool ok = await SaveFileWithMetadata(
+            imageItem.WebImageHDFormFileAI,
+            path,
+            meta =>
+            {
+                imageUpdate.WebImageHDFileNameAI = meta.FileName;
+                imageUpdate.WebImageHDNameExtensionAI = meta.Extension;
+                imageUpdate.WebImageHDMimeTypeAI = meta.MimeType;
+                imageUpdate.WebImageHDFileSizeAI = meta.FileSize;
+                imageUpdate.WebImageHDWidthAI = meta.Width;
+                imageUpdate.WebImageHDHeightAI = meta.Height;
+            },
+            fieldName: nameof(imageItem.WebImageHDFormFileAI));
+
+            if (!ok) return View(imageItem);
+        }
+
+        // 12. WebImageFormFileAI — WebP 720px (AI)
+        if (imageItem.WebImageFormFileAI is not null)
+        {
+            if (!CheckExtensionMatches(
+                   imageItem.WebImageFormFileAI,
+                   imageItem.EditImage.WebImageFileNameExtensionAI,
+                   nameof(imageItem.WebImageFormFileAI)))
+            {
+                return View(imageItem);
+            }
+
+            BackupOldFile(path, imageUpdate.WebImageFileNameAI);
+
+            bool ok = await SaveFileWithMetadata(
+            imageItem.WebImageFormFileAI,
+            path,
+            meta =>
+            {
+                imageUpdate.WebImageFileNameAI = meta.FileName;
+                imageUpdate.WebImageFileNameExtensionAI = meta.Extension;
+                imageUpdate.WebImageMimeTypeAI = meta.MimeType;
+                imageUpdate.WebImageFileSizeAI = meta.FileSize;
+                imageUpdate.WebImageWidthAI = meta.Width;
+                imageUpdate.WebImageHeightAI = meta.Height;
+            },
+            fieldName: nameof(imageItem.WebImageFormFileAI));
+
+            if (!ok) return View(imageItem);
+        }
+
+        // 13. WebIconFormFileAI — WebP 300px (AI)
+        if (imageItem.WebIconFormFileAI is not null)
+        {
+            if (!CheckExtensionMatches(
+                   imageItem.WebIconFormFileAI,
+                   imageItem.EditImage.WebIconFileNameExtensionAI,
+                   nameof(imageItem.WebIconFormFileAI)))
+            {
+                return View(imageItem);
+            }
+
+            BackupOldFile(path, imageUpdate.WebIconFileNameAI);
+
+            bool ok = await SaveFileWithMetadata(
+            imageItem.WebIconFormFileAI,
+            path,
+            meta =>
+            {
+                imageUpdate.WebIconFileNameAI = meta.FileName;
+                imageUpdate.WebIconFileNameExtensionAI = meta.Extension;
+                imageUpdate.WebIconMimeTypeAI = meta.MimeType;
+                imageUpdate.WebIconFileSizeAI = meta.FileSize;
+                imageUpdate.WebIconWidthAI = meta.Width;
+                imageUpdate.WebIconHeightAI = meta.Height;
+            },
+            fieldName: nameof(imageItem.WebIconFormFileAI));
+
+            if (!ok) return View(imageItem);
+        }
+
+        // 14. WebIcon200FormFileAI — WebP 200px (AI)
+        if (imageItem.WebIcon200FormFileAI is not null)
+        {
+            if (!CheckExtensionMatches(
+                   imageItem.WebIcon200FormFileAI,
+                   imageItem.EditImage.WebIcon200FileNameExtensionAI,
+                   nameof(imageItem.WebIcon200FormFileAI)))
+            {
+                return View(imageItem);
+            }
+
+            BackupOldFile(path, imageUpdate.WebIcon200FileNameAI);
+
+            bool ok = await SaveFileWithMetadata(
+            imageItem.WebIcon200FormFileAI,
+            path,
+            meta =>
+            {
+                imageUpdate.WebIcon200FileNameAI = meta.FileName;
+                imageUpdate.WebIcon200FileNameExtensionAI = meta.Extension;
+                imageUpdate.WebIcon200MimeTypeAI = meta.MimeType;
+                imageUpdate.WebIcon200FileSizeAI = meta.FileSize;
+                imageUpdate.WebIcon200WidthAI = meta.Width;
+                imageUpdate.WebIcon200HeightAI = meta.Height;
+            },
+            fieldName: nameof(imageItem.WebIcon200FormFileAI));
+
+            if (!ok) return View(imageItem);
+        }
+
+        // 15. WebIcon100FormFileAI — WebP 100px (AI)
+        if (imageItem.WebIcon100FormFileAI is not null)
+        {
+            if (!CheckExtensionMatches(
+                   imageItem.WebIcon100FormFileAI,
+                   imageItem.EditImage.WebIcon100FileNameExtensionAI,
+                   nameof(imageItem.WebIcon100FormFileAI)))
+            {
+                return View(imageItem);
+            }
+
+            BackupOldFile(path, imageUpdate.WebIcon100FileNameAI);
+
+            bool ok = await SaveFileWithMetadata(
+            imageItem.WebIcon100FormFileAI,
+            path,
+            meta =>
+            {
+                imageUpdate.WebIcon100FileNameAI = meta.FileName;
+                imageUpdate.WebIcon100FileNameExtensionAI = meta.Extension;
+                imageUpdate.WebIcon100MimeTypeAI = meta.MimeType;
+                imageUpdate.WebIcon100FileSizeAI = meta.FileSize;
+                imageUpdate.WebIcon100WidthAI = meta.Width;
+                imageUpdate.WebIcon100HeightAI = meta.Height;
+            },
+            fieldName: nameof(imageItem.WebIcon100FormFileAI));
+
+            if (!ok) return View(imageItem);
+        }
+
         #endregion
 
         #region Удаление файлов (чекбоксы Delete*)
 
-        if (imageItem.DeleteImageHD)
-        {
-            DeleteFileIfExists(path, imageItem.EditImage.ImageHDFileName);
-
-            imageUpdate.ImageHDFileName = null;
-            imageUpdate.ImageHDNameExtension = null;
-            imageUpdate.ImageHDMimeType = null;
-            imageUpdate.ImageHDFileSize = 0;
-            imageUpdate.ImageHDWidth = 0;
-            imageUpdate.ImageHDHeight = 0;
-        }
-
+        // WEBP HD
         if (imageItem.DeleteWebImageHD)
         {
             DeleteFileIfExists(path, imageItem.EditImage.WebImageHDFileName);
@@ -1280,6 +1456,19 @@ public partial class ImageInfoController(
             imageUpdate.WebImageHDFileSize = 0;
             imageUpdate.WebImageHDWidth = 0;
             imageUpdate.WebImageHDHeight = 0;
+        }
+
+        // PNG
+        if (imageItem.DeleteImageHD)
+        {
+            DeleteFileIfExists(path, imageItem.EditImage.ImageHDFileName);
+
+            imageUpdate.ImageHDFileName = null;
+            imageUpdate.ImageHDNameExtension = null;
+            imageUpdate.ImageHDMimeType = null;
+            imageUpdate.ImageHDFileSize = 0;
+            imageUpdate.ImageHDWidth = 0;
+            imageUpdate.ImageHDHeight = 0;
         }
 
         if (imageItem.DeleteImage)
@@ -1328,6 +1517,67 @@ public partial class ImageInfoController(
             imageUpdate.Icon100FileSize = 0;
             imageUpdate.Icon100Width = 0;
             imageUpdate.Icon100Height = 0;
+        }
+
+        // WEBP AI
+        if (imageItem.DeleteWebImageHDAI)
+        {
+            DeleteFileIfExists(path, imageItem.EditImage.WebImageHDFileNameAI);
+
+            imageUpdate.WebImageHDFileNameAI = null;
+            imageUpdate.WebImageHDNameExtensionAI = null;
+            imageUpdate.WebImageHDMimeTypeAI = null;
+            imageUpdate.WebImageHDFileSizeAI = null;
+            imageUpdate.WebImageHDWidthAI = null;
+            imageUpdate.WebImageHDHeightAI = null;
+        }
+
+        if (imageItem.DeleteWebImageAI)
+        {
+            DeleteFileIfExists(path, imageItem.EditImage.WebImageFileNameAI);
+
+            imageUpdate.WebImageFileNameAI = null;
+            imageUpdate.WebImageFileNameExtensionAI = null;
+            imageUpdate.WebImageMimeTypeAI = null;
+            imageUpdate.WebImageFileSizeAI = null;
+            imageUpdate.WebImageWidthAI = null;
+            imageUpdate.WebImageHeightAI = null;
+        }
+
+        if (imageItem.DeleteWebIconAI)
+        {
+            DeleteFileIfExists(path, imageItem.EditImage.WebIconFileNameAI);
+
+            imageUpdate.WebIconFileNameAI = null;
+            imageUpdate.WebIconFileNameExtensionAI = null;
+            imageUpdate.WebIconMimeTypeAI = null;
+            imageUpdate.WebIconFileSizeAI = null;
+            imageUpdate.WebIconWidthAI = null;
+            imageUpdate.WebIconHeightAI = null;
+        }
+
+        if (imageItem.DeleteWebIcon200AI)
+        {
+            DeleteFileIfExists(path, imageItem.EditImage.WebIcon200FileNameAI);
+
+            imageUpdate.WebIcon200FileNameAI = null;
+            imageUpdate.WebIcon200FileNameExtensionAI = null;
+            imageUpdate.WebIcon200MimeTypeAI = null;
+            imageUpdate.WebIcon200FileSizeAI = null;
+            imageUpdate.WebIcon200WidthAI = null;
+            imageUpdate.WebIcon200HeightAI = null;
+        }
+
+        if (imageItem.DeleteWebIcon100AI)
+        {
+            DeleteFileIfExists(path, imageItem.EditImage.WebIcon100FileNameAI);
+
+            imageUpdate.WebIcon100FileNameAI = null;
+            imageUpdate.WebIcon100FileNameExtensionAI = null;
+            imageUpdate.WebIcon100MimeTypeAI = null;
+            imageUpdate.WebIcon100FileSizeAI = null;
+            imageUpdate.WebIcon100WidthAI = null;
+            imageUpdate.WebIcon100HeightAI = null;
         }
 
         #endregion

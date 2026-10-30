@@ -96,10 +96,14 @@ public class EditImageViewModel
 
     #endregion
 
-    #region Флаги удаления картинок
+    #region Флаг удаления WEBP HD
 
     [Display(Name = "Удалить картинку HD (WebP) :")]
     public bool DeleteWebImageHD { get; set; } = false;
+
+    #endregion
+
+    #region Флаги удаления PNG
 
     [Display(Name = "Удалить картинку HD (Png)")]
     public bool DeleteImageHD { get; set; } = false;
@@ -115,6 +119,25 @@ public class EditImageViewModel
 
     [Display(Name = "Удалить иконку 100 px (Png) :")]
     public bool DeleteIcon100 { get; set; } = false;
+
+    #endregion
+
+    #region Флаги удаления WEBP AI
+
+    [Display(Name = "Удалить картинку HD (WebP AI) :")]
+    public bool DeleteWebImageHDAI { get; set; } = false;
+
+    [Display(Name = "Удалить картинку 720 px (WebP AI) :")]
+    public bool DeleteWebImageAI { get; set; } = false;
+
+    [Display(Name = "Удалить иконку 300 px (WebP AI) :")]
+    public bool DeleteWebIconAI { get; set; } = false;
+
+    [Display(Name = "Удалить иконку 200 px (WebP AI) :")]
+    public bool DeleteWebIcon200AI { get; set; } = false;
+
+    [Display(Name = "Удалить иконку 100 px (WebP AI) :")]
+    public bool DeleteWebIcon100AI { get; set; } = false;
 
     #endregion
 

@@ -141,18 +141,21 @@
                     </label>
 
                     @* Текущие фильтры для картинки *@
-                    <div class="maxwidthcontent mx-auto justify-content-lg-start mb-3">
+                    @if (Model.EditImage.SearchFilter != null)
+                    {
+                        <div class="maxwidthcontent mx-auto justify-content-lg-start mb-3">
 
-                        @foreach (var tag in Model.EditImage.SearchFilter.Split(',', StringSplitOptions.RemoveEmptyEntries))
-                        {
-                            <p class="fs-5 text-start text_shadow">
+                            @foreach (var tag in Model.EditImage.SearchFilter.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                            {
+                                <p class="fs-5 text-start text_shadow">
 
-                                # @tag
+                                    # @tag
 
-                            </p>
-                        }
+                                </p>
+                            }
 
-                    </div>
+                        </div>
+                    }
 
                     <textarea asp-for="EditImage.SearchFilter"
                               class="form-control"
@@ -196,7 +199,7 @@
                     <div class="col-auto">
 
                         <input asp-for="EditImage.SortOfPicture"
-                               class="form-control text-center"
+                               class="form-control text-center maxwidth100px"
                                aria-describedby="SortOfPictureInputHelpBlock" />
 
                     </div>
@@ -260,12 +263,6 @@
                             выбрать каталог картинки
                         </span>
 
-                        <br class="d-sm-none" />
-
-                        <span>
-                            (в каталоге «images»)
-                        </span>
-
                     </div>
 
                 </div>
@@ -314,7 +311,7 @@
                 @* Выбор картинок *@
                 <div class="accordion p-3" id="accordionEditImage">
 
-                    @* Выбор картинок WEBP*@
+                    @* Выбор картинок WEBP *@
                     <div class="accordion-item mb-3 block-shadow">
 
                         <h2 id="webpHeading" class="accordion-header block-shadow">
@@ -347,8 +344,8 @@
                                     @if (string.IsNullOrEmpty(Model.EditImage.WebImageHDFileName))
                                     {
                                         <vc:view-image image-id="@DataConfig.NoImage"
-                                                       css-class=""
-                                                       icon-type="webimage" />
+                                                       css-class="maxwidth800px"
+                                                       icon-type="webhd" />
 
                                         <p class="fs-5 text-danger my-3">
 
@@ -365,7 +362,7 @@
                                         </p>
 
                                         <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
-                                                       css-class=""
+                                                       css-class="maxwidth800px"
                                                        icon-type="webhd" />
 
                                         <p class="text_shadow fs-5 my-3">
@@ -432,7 +429,7 @@
                                     @if (string.IsNullOrEmpty(Model.EditImage.WebImageFileName))
                                     {
                                         <vc:view-image image-id="@DataConfig.NoImage"
-                                                       css-class=""
+                                                       css-class="maxwidth600px"
                                                        icon-type="webimage" />
 
                                         <p class="fs-5 text-danger my-3">
@@ -502,8 +499,8 @@
                                     @if (string.IsNullOrEmpty(Model.EditImage.WebIconFileName))
                                     {
                                         <vc:view-image image-id="@DataConfig.NoImage"
-                                                       css-class=""
-                                                       icon-type="webimage" />
+                                                       css-class="maxwidth300px"
+                                                       icon-type="webicon300" />
 
                                         <p class="fs-5 text-danger my-3">
 
@@ -572,8 +569,8 @@
                                     @if (string.IsNullOrEmpty(Model.EditImage.WebIcon200FileName))
                                     {
                                         <vc:view-image image-id="@DataConfig.NoImage"
-                                                       css-class=""
-                                                       icon-type="webimage" />
+                                                       css-class="maxwidth200px"
+                                                       icon-type="webicon200" />
 
                                         <p class="fs-5 text-danger my-3">
 
@@ -642,8 +639,8 @@
                                     @if (string.IsNullOrEmpty(Model.EditImage.WebIcon100FileName))
                                     {
                                         <vc:view-image image-id="@DataConfig.NoImage"
-                                                       css-class=""
-                                                       icon-type="webimage" />
+                                                       css-class="maxwidth100px"
+                                                       icon-type="webicon100" />
 
                                         <p class="fs-5 text-danger my-3 fw-bolder">
 
@@ -712,7 +709,435 @@
 
                     </div>
 
-                    @* Выбор картинок PNG*@
+                    @* Выбор картинок WEBP AI *@
+                    <div class="accordion-item mb-3 block-shadow">
+
+                        <h2 id="aiHeading" class="accordion-header block-shadow">
+
+                            <button class="accordion-button collapsed py-0 stranicy"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#AiImage"
+                                    aria-expanded="false"
+                                    aria-controls="AiImage">
+
+                                <span class="form-label fs-5">
+                                    Формат AI (WebP) :
+                                </span>
+
+
+                            </button>
+
+                        </h2>
+
+                        <div id="AiImage"
+                             class="accordion-collapse collapse"
+                             aria-labelledby="aiHeading"
+                             data-bs-parent="#accordionEditImage">
+
+                            <div class="accordion-body text-indent-0 text-center">
+
+                                @* Картинка WebHD AI *@
+                                <div class="mb-3">
+
+                                    @if (string.IsNullOrEmpty(Model.EditImage.WebImageHDFileNameAI))
+                                    {
+                                        <vc:view-image image-id="@DataConfig.NoImage"
+                                                       css-class="maxwidth800px"
+                                                       icon-type="webhd" />
+
+                                        <p class="fs-5 text-danger my-3">
+
+                                            картинка WebHD AI отсутствует
+
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-success fs-6 mb-2 mt-3">
+
+                                            Картинка (@Model.EditImage.WebImageHDWidthAI px x @Model.EditImage.WebImageHDHeightAI px) / Размер @Model.EditImage.WebImageHDFileSizeAI bytes
+
+                                        </p>
+
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
+                                                       css-class="maxwidth800px"
+                                                       icon-type="webhdAI" />
+
+                                        <p class="text_shadow fs-5 my-3">
+
+                                            File: @Model.EditImage.ImagePath/@Model.EditImage.WebImageHDFileNameAI
+
+                                        </p>
+                                    }
+
+                                    <div class="row g-2 justify-content-center mb-3">
+
+                                        <div class="col-auto">
+
+                                            <label asp-for="WebImageHDFormFileAI"
+                                                   class="@cssForLabel">
+                                            </label>
+
+                                        </div>
+
+                                        <div class="col-auto">
+
+                                            <input asp-for="WebImageHDFormFileAI"
+                                                   class="form-control"
+                                                   aria-describedby="WebImageHDFormFileAIInputHelpBlock" />
+
+                                        </div>
+
+                                        <div id="WebImageHDFormFileAIInputHelpBlock" class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    @if (!string.IsNullOrEmpty(Model.EditImage.WebImageHDFileNameAI))
+                                    {
+                                        <label asp-for="DeleteWebImageHDAI"
+                                               class="@cssForLabel">
+                                        </label>
+
+                                        <input asp-for="DeleteWebImageHDAI"
+                                               class="form-check-input fs-5 align-text-bottom" />
+                                    }
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="WebImageHDFormFileAI" class="text-danger"></span>
+                                    }
+
+                                </div>
+
+                                @* Картинка Web AI *@
+                                <div class="mb-3">
+
+                                    @if (string.IsNullOrEmpty(Model.EditImage.WebImageFileNameAI))
+                                    {
+                                        <vc:view-image image-id="@DataConfig.NoImage"
+                                                       css-class="maxwidth600px"
+                                                       icon-type="webimage" />
+
+                                        <p class="fs-5 text-danger my-3">
+
+                                            картинка WebImage AI отсутствует
+
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-success fs-6 mb-2 mt-3">
+
+                                            Картинка (@Model.EditImage.WebImageWidthAI px x @Model.EditImage.WebImageHeightAI px) / Размер @Model.EditImage.WebImageFileSizeAI bytes
+
+                                        </p>
+
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
+                                                       css-class="maxwidth600px"
+                                                       icon-type="webimageAI" />
+
+                                        <p class="text_shadow fs-5 my-3">
+
+                                            File: @Model.EditImage.ImagePath/@Model.EditImage.WebImageFileNameAI
+
+                                        </p>
+                                    }
+
+                                    <div class="row g-2 justify-content-center">
+
+                                        <div class="col-auto">
+
+                                            <label asp-for="WebImageFormFileAI"
+                                                   class="@cssForLabel">
+                                            </label>
+
+                                        </div>
+
+                                        <div class="col-auto">
+
+                                            <input asp-for="WebImageFormFileAI"
+                                                   class="form-control"
+                                                   aria-describedby="WebImageFormFileAIInputHelpBlock" />
+
+                                        </div>
+
+                                        <div id="WebImageFormFileAIInputHelpBlock" class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    @if (!string.IsNullOrEmpty(Model.EditImage.WebImageFileNameAI))
+                                    {
+                                        <label asp-for="DeleteWebImageAI"
+                                               class="@cssForLabel">
+                                        </label>
+
+                                        <input asp-for="DeleteWebImageAI"
+                                               class="form-check-input fs-5 align-text-bottom" />
+                                    }
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="WebImageFormFileAI" class="text-danger"></span>
+                                    }
+
+                                </div>
+
+                                @* Иконка Web300 AI *@
+                                <div class="mb-3">
+
+                                    @if (string.IsNullOrEmpty(Model.EditImage.WebIconFileNameAI))
+                                    {
+                                        <vc:view-image image-id="@DataConfig.NoImage"
+                                                       css-class="maxwidth300px"
+                                                       icon-type="webicon300" />
+
+                                        <p class="fs-5 text-danger my-3">
+
+                                            иконка WebIcon300 AI отсутствует
+
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-success fs-6 mb-2 mt-3">
+
+                                            Картинка (@Model.EditImage.WebIconWidthAI px x @Model.EditImage.WebIconHeightAI px) / Размер @Model.EditImage.WebIconFileSizeAI bytes
+
+                                        </p>
+
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
+                                                       css-class="maxwidth300px"
+                                                       icon-type="webicon300AI" />
+
+                                        <p class="text_shadow fs-5 my-3">
+
+                                            File: @Model.EditImage.ImagePath/@Model.EditImage.WebIconFileNameAI
+
+                                        </p>
+                                    }
+
+                                    <div class="row g-2 justify-content-center">
+
+                                        <div class="col-auto">
+
+                                            <label asp-for="WebIconFormFileAI"
+                                                   class="@cssForLabel">
+                                            </label>
+
+                                        </div>
+
+                                        <div class="col-auto">
+
+                                            <input asp-for="WebIconFormFileAI"
+                                                   class="form-control"
+                                                   aria-describedby="WebIconFormFileAIInputHelpBlock" />
+
+                                        </div>
+
+                                        <div id="WebIconFormFileAIInputHelpBlock" class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    @if (!string.IsNullOrEmpty(Model.EditImage.WebIconFileNameAI))
+                                    {
+                                        <label asp-for="DeleteWebIconAI"
+                                               class="@cssForLabel">
+                                        </label>
+
+                                        <input asp-for="DeleteWebIconAI"
+                                               class="form-check-input fs-5 align-text-bottom" />
+                                    }
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="WebIconFormFileAI" class="text-danger"></span>
+                                    }
+
+                                </div>
+
+                                @* Иконка Web200 AI *@
+                                <div class="mb-3">
+
+                                    @if (string.IsNullOrEmpty(Model.EditImage.WebIcon200FileNameAI))
+                                    {
+                                        <vc:view-image image-id="@DataConfig.NoImage"
+                                                       css-class="maxwidth200px"
+                                                       icon-type="webicon200" />
+
+                                        <p class="fs-5 text-danger my-3">
+
+                                            иконка WebIcon200 AI отсутствует
+
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-success fs-6 mb-2 mt-3">
+
+                                            Картинка (@Model.EditImage.WebIcon200WidthAI px x @Model.EditImage.WebIcon200HeightAI px) / Размер @Model.EditImage.WebIcon200FileSizeAI bytes
+
+                                        </p>
+
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
+                                                       css-class="maxwidth200px"
+                                                       icon-type="webicon200AI" />
+
+                                        <p class="text_shadow fs-5 my-3">
+
+                                            File: @Model.EditImage.ImagePath/@Model.EditImage.WebIcon200FileNameAI
+
+                                        </p>
+                                    }
+
+                                    <div class="row g-2 justify-content-center">
+
+                                        <div class="col-auto">
+
+                                            <label asp-for="WebIcon200FormFileAI"
+                                                   class="@cssForLabel">
+                                            </label>
+
+                                        </div>
+
+                                        <div class="col-auto">
+
+                                            <input asp-for="WebIcon200FormFileAI"
+                                                   class="form-control"
+                                                   aria-describedby="WebIcon200FormFileAIInputHelpBlock" />
+
+                                        </div>
+
+                                        <div id="WebIcon200FormFileAIInputHelpBlock" class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    @if (!string.IsNullOrEmpty(Model.EditImage.WebIcon200FileNameAI))
+                                    {
+                                        <label asp-for="DeleteWebIcon200AI"
+                                               class="@cssForLabel">
+                                        </label>
+
+                                        <input asp-for="DeleteWebIcon200AI"
+                                               class="form-check-input fs-5 align-text-bottom" />
+                                    }
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="WebIcon200FormFileAI" class="text-danger"></span>
+                                    }
+
+                                </div>
+
+                                @* Иконка Web100 AI *@
+                                <div>
+
+                                    @if (string.IsNullOrEmpty(Model.EditImage.WebIcon100FileNameAI))
+                                    {
+                                        <vc:view-image image-id="@DataConfig.NoImage"
+                                                       css-class="maxwidth100px"
+                                                       icon-type="webicon100" />
+
+                                        <p class="fs-5 text-danger my-3 fw-bolder">
+
+                                            иконка WebIcon100 AI отсутствует
+
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-success fs-6 mb-2 mt-3">
+
+                                            Картинка (@Model.EditImage.WebIcon100WidthAI px x @Model.EditImage.WebIcon100HeightAI px) / Размер @Model.EditImage.WebIcon100FileSizeAI bytes
+
+                                        </p>
+
+                                        <vc:view-image image-id="@Model.EditImage.ImageFileModelId"
+                                                       css-class="maxwidth100px"
+                                                       icon-type="webicon100AI" />
+
+                                        <p class="text_shadow fs-5 my-3">
+
+                                            File: @Model.EditImage.ImagePath/@Model.EditImage.WebIcon100FileNameAI
+
+                                        </p>
+                                    }
+
+                                    <div class="row g-2 justify-content-center">
+
+                                        <div class="col-auto">
+
+                                            <label asp-for="WebIcon100FormFileAI"
+                                                   class="@cssForLabel">
+                                            </label>
+
+                                        </div>
+
+                                        <div class="col-auto">
+
+                                            <input asp-for="WebIcon100FormFileAI"
+                                                   class="form-control"
+                                                   aria-describedby="WebIcon100FormFileAIInputHelpBlock" />
+
+                                        </div>
+
+                                        <div id="WebIcon100FormFileAIInputHelpBlock" class="@cssForHelpBlock">
+
+                                            <span>
+                                                выбрать файл
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    @if (!string.IsNullOrEmpty(Model.EditImage.WebIcon100FileNameAI))
+                                    {
+                                        <label asp-for="DeleteWebIcon100AI"
+                                               class="@cssForLabel">
+                                        </label>
+                                        <input asp-for="DeleteWebIcon100AI"
+                                               class="form-check-input fs-5 align-text-bottom" />
+                                    }
+
+                                    @if (Context.Request.Method == "POST")
+                                    {
+                                        <span asp-validation-for="WebIcon100FormFileAI" class="text-danger"></span>
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    @* Выбор картинок PNG *@
                     <div class="accordion-item block-shadow">
 
                         <h2 id="pngHeading" class="accordion-header">

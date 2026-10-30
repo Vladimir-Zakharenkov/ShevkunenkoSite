@@ -34,11 +34,12 @@
                    asp-action="FilmPhotoAlbum"
                    asp-route-filmCaption="@Model.CaptionOfAlbum"
                    asp-route-imageId="@imageItem.ImageFileModelId"
+                   asp-route-showAI="@Model.ShowAI"
                    title="смотреть фото">
 
                     <vc:view-image image-id="@imageItem.ImageFileModelId"
                                    css-class=""
-                                   icon-type="webicon300" />
+                                   icon-type="webicon300AI" />
 
                 </a>
 
@@ -47,58 +48,17 @@
 
     </div>
 }
+@* Просмотр картинки *@
 else
 {
-    @* Просмотр картинки *@
-    <div class="row py-2 justify-content-center">
+    <div class="row py-3 justify-content-center block-shadow bg-info-subtle">
 
         <div class="col col-lg-11 col-xl-10 maxwidth900px">
 
-            <div id="fotoAlbumCarousel" class="carousel slide carousel-dark rounded-3 pb-0 pb-sm-1 pb-lg-2 pb-xl-3 block-shadow">
+            @* Карусель: картинка + описание + стрелки *@
+            <div id="fotoAlbumCarousel" class="carousel slide carousel-dark rounded-3 block-shadow">
 
-                <div class="carousel-indicators pb-0 pb-sm-2 pb-lg-3 pb-xl-4">
-
-                    @{
-                        var items = Model.ItemsOnPage;
-                    }
-
-                    @for (int k = 0; k < items.Length; k++)
-                    {
-                        var picture = items[k];
-
-                        if (Model.CurrentImageId == picture.ImageFileModelId)
-                        {
-                            <button type="button"
-                                    data-bs-target="#fotoAlbumCarousel"
-                                    data-bs-slide-to="@k"
-                                    class="active width9percent"
-                                    aria-current="true"
-                                    aria-label="Фото @k">
-
-                                <vc:view-image image-id="@picture.ImageFileModelId"
-                                               css-class="d-block mx-auto imageref p-0"
-                                               icon-type="" />
-
-                            </button>
-                        }
-                        else
-                        {
-                            <button type="button"
-                                    data-bs-target="#fotoAlbumCarousel"
-                                    data-bs-slide-to="@k"
-                                    class="width9percent"
-                                    aria-label="Фото @k">
-
-                                <vc:view-image image-id="@picture.ImageFileModelId"
-                                               css-class="d-block mx-auto imageref p-0"
-                                               icon-type="" />
-                            </button>
-                        }
-                    }
-
-                </div>
-
-                <div class="carousel-inner pb-5">
+                <div class="carousel-inner">
 
                     @foreach (var picture in Model.ItemsOnPage)
                     {
@@ -108,7 +68,7 @@ else
 
                                 <vc:view-image image-id=@picture.ImageFileModelId
                                                css-class="d-block mx-auto"
-                                               icon-type="" />
+                                               icon-type="@(Model.ShowAI ? "webimageAI" : "webimage")" />
 
                                 <p class="d-none d-md-block fs-4 mt-3 text_shadow maxwidth700px mx-auto">
                                     @picture.ImageDescription.TrimEnd('.')
@@ -122,7 +82,7 @@ else
 
                                 <vc:view-image image-id=@picture.ImageFileModelId
                                                css-class="d-block mx-auto"
-                                               icon-type="" />
+                                               icon-type="@(Model.ShowAI ? "webimageAI" : "webimage")" />
 
                                 <p class="d-none d-md-block fs-4 mt-3 text_shadow maxwidth700px mx-auto">
 
@@ -168,25 +128,130 @@ else
 
             </div>
 
+            @* Иконки под картинкой — ссылки на отдельные страницы картинок *@
+            @* Вынесены ВНЕ .carousel, чтобы стрелки не наезжали на иконки *@
+            <div class="d-flex flex-wrap justify-content-center gap-1 mt-2">
+
+                @{
+                    var items = Model.ItemsOnPage;
+                }
+
+                @for (int k = 0; k < items.Length; k++)
+                {
+                    var picture = items[k];
+
+                    bool isActive = Model.CurrentImageId == picture.ImageFileModelId;
+
+                    <a asp-area=""
+                       asp-controller="Films"
+                       asp-action="FilmPhotoAlbum"
+                       asp-route-filmCaption="@Model.CaptionOfAlbum"
+                       asp-route-imageId="@picture.ImageFileModelId"
+                       asp-route-pageNumber="@Model.CurrentPage"
+                       asp-route-showAI="@Model.ShowAI"
+                       class="width9percent d-inline-block p-0 @(isActive ? "border border-2 border-danger rounded" : "")"
+                       aria-current="@(isActive ? "true" : "false")"
+                       aria-label="Фото @k"
+                       title="смотреть фото">
+
+                        <vc:view-image image-id="@picture.ImageFileModelId"
+                                       css-class="d-block mx-auto imageref p-0"
+                                       icon-type="@(Model.ShowAI ? "webicon100AI" : "webicon100")" />
+
+                    </a>
+                }
+
+            </div>
+
         </div>
 
     </div>
+
+    @* Переключение режимов AI < - > Оригинал *@
+    @* Показываем только если у текущей картинки есть AI-варианты *@
+    @if (Model.CurrentImageHasAI)
+    {
+        <hr class="liniya w-25 my-3" />
+
+        <div class="d-flex justify-content-center gap-4 my-3">
+
+            <a asp-area=""
+               asp-controller="Films"
+               asp-action="FilmPhotoAlbum"
+               asp-route-filmCaption="@Model.CaptionOfAlbum"
+               asp-route-imageId="@Model.CurrentImageId"
+               asp-route-pageNumber="@Model.CurrentPage"
+               asp-route-showAI="true"
+               class="btn btn-sm fw-bold minwidth100px ten @(Model.ShowAI ? "btn-success" : "btn-outline-success")">
+
+                AI
+
+            </a>
+
+            <a asp-area=""
+               asp-controller="Films"
+               asp-action="FilmPhotoAlbum"
+               asp-route-filmCaption="@Model.CaptionOfAlbum"
+               asp-route-imageId="@Model.CurrentImageId"
+               asp-route-pageNumber="@Model.CurrentPage"
+               asp-route-showAI="false"
+               class="btn btn-sm minwidth100px ten @(!Model.ShowAI ? "btn-primary" : "btn-outline-dark")">
+
+                Оригинал
+
+            </a>
+
+        </div>
+
+        @* Подпись под кнопками — только в режиме AI *@
+        @if (Model.ShowAI)
+        {
+            <p class="text-center fs-6 text_shadow mx-auto maxwidth700px mb-3">
+
+                Картинка отредактирована AI, возможны неточности и расхождения с
+
+                <a asp-area=""
+                   asp-controller="Films"
+                   asp-action="FilmPhotoAlbum"
+                   asp-route-filmCaption="@Model.CaptionOfAlbum"
+                   asp-route-imageId="@Model.CurrentImageId"
+                   asp-route-pageNumber="@Model.CurrentPage"
+                   asp-route-showAI="false"
+                   class="text-decoration-none atext">
+
+                    оригиналом
+
+                </a>
+
+                .
+
+            </p>
+        }
+
+        <hr class="liniya w-25 my-3" />
+    }
 }
 
-@* Страницы альбома *@
-<h2 class="text_shadow fs-3 p-0 mt-2">
+@* Кнопки страниц альбома *@
+<div class="bg-dark-subtle my-4 block-shadow">
 
-    страницы альбома
+    <h2 class="text_shadow fs-3 p-0 mb-0">
 
-</h2>
+        страницы альбома
 
-<div pagination="@Model"
-     album-caption="@Model.CaptionOfAlbum"
-     data-toggle="buttons"
-     role="group"
-     aria-label="фотоальбом">
+    </h2>
+
+    <div pagination="@Model"
+         album-caption="@Model.CaptionOfAlbum"
+         show-ai="@Model.ShowAI"
+         data-toggle="buttons"
+         role="group"
+         aria-label="фотоальбом">
+    </div>
+
 </div>
 
+@* Тройная карусель из кадров *@
 <vc:film-picture-carousel caption-for-picture-carousel="@Model.CaptionOfAlbum" />
 
 <hr class="liniya" />
