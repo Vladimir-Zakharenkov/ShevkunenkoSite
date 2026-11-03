@@ -456,7 +456,7 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Property<string>("FilmYouTube")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FilmРroductionCompany")
+                    b.Property<string>("FilmProductionCompany")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

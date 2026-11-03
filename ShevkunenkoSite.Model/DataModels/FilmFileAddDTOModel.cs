@@ -129,7 +129,7 @@ public record class FilmFileAddDTOModel
     [Required(ErrorMessage = "Введите название кинокомпании")]
     [DataType(DataType.Text)]
     [Display(Name = "Кинокомпания:")]
-    public string FilmРroductionCompany { get; set; } = string.Empty;
+    public string FilmProductionCompany { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Введите режиссера фильма")]
     [DataType(DataType.Text)]

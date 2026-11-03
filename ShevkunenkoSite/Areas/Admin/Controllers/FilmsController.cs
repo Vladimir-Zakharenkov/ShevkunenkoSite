@@ -25,6 +25,45 @@ public partial class FilmsController(
 
     #endregion
 
+    #region FillAllFilmsAsync
+
+    /// <summary>
+    /// Заполняет AllFilms для FilmFileAddDTOModel (AddFilm).
+    /// Список — все фильмы.
+    /// </summary>
+    private async Task FillAllFilmsAsync(FilmFileAddDTOModel filmItem)
+    {
+        filmItem.AllFilms = await filmContext.FilmFiles
+            .AsNoTracking()
+            .OrderBy(f => f.FilmCaption)
+            .Select(f => new SelectListItem
+            {
+                Value = f.FilmFileModelId.ToString(),
+                Text = f.FilmCaption
+            })
+            .ToListAsync();
+    }
+
+    /// <summary>
+    /// Заполняет AllFilms для FilmFileModel (EditFilm).
+    /// Список — все фильмы, кроме текущего.
+    /// </summary>
+    private async Task FillAllFilmsAsync(FilmFileModel editFilm, Guid? excludeFilmId)
+    {
+        editFilm.AllFilms = await filmContext.FilmFiles
+            .AsNoTracking()
+            .Where(f => f.FilmFileModelId != excludeFilmId)
+            .OrderBy(f => f.FilmCaption)
+            .Select(f => new SelectListItem
+            {
+                Value = f.FilmFileModelId.ToString(),
+                Text = f.FilmCaption
+            })
+            .ToListAsync();
+    }
+
+    #endregion
+
     #region Список фильмов
 
     public async Task<ViewResult> Index
@@ -101,13 +140,11 @@ public partial class FilmsController(
 
         #region Кадры слева и справа от фильма
 
-        // Картинки с фильтром == название фильма + #film-album#
         var listOfPictures = from m in imageContext.ImageFiles
                              .Where(p => p.SearchFilter != null &&
                                          p.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
                              select m;
 
-        // Если задан GUID фильма для кадров
         if (filmItem.FilmForPictureId != null)
         {
             FilmFileModel? filmForPictureAround = await filmContext.FilmFiles
@@ -118,7 +155,6 @@ public partial class FilmsController(
             {
                 filmItem.FilmForPictureAround = filmForPictureAround;
 
-                // Картинки с фильтром == название фильма + #film-album#
                 if (await imageContext.ImageFiles
                     .Where(img => img.SearchFilter != null &&
                                   img.SearchFilter.Contains(filmForPictureAround.FilmCaption + "#film-album#"))
@@ -132,7 +168,6 @@ public partial class FilmsController(
             }
         }
 
-        // ✅ Материализуем один раз асинхронно (без синхронного AsEnumerable)
         List<ImageFileModel> picturesList = await listOfPictures.ToListAsync();
 
         if (picturesList.Count > 0)
@@ -171,19 +206,11 @@ public partial class FilmsController(
     #region Добавить фильм в базу данных
 
     [HttpGet]
-    public IActionResult AddFilm()
+    public async Task<IActionResult> AddFilm()
     {
-        FilmFileAddDTOModel filmItem = new()
-        {
-            AllFilms = [.. filmContext.FilmFiles
-            .AsNoTracking()
-            .OrderBy(f => f.FilmCaption)
-            .Select(f => new SelectListItem
-            {
-                Value = f.FilmFileModelId.ToString(),
-                Text = f.FilmCaption
-            })]
-        };
+        FilmFileAddDTOModel filmItem = new();
+
+        await FillAllFilmsAsync(filmItem);
 
         return View(filmItem);
     }
@@ -212,7 +239,7 @@ public partial class FilmsController(
                 "FilmInLanguage2," +
                 "FilmSubtitles1," +
                 "FilmSubtitles2," +
-                "FilmРroductionCompany," +
+                "FilmProductionCompany," +
                 "FilmDirector1," +
                 "FilmDirector2," +
                 "FilmMusicBy," +
@@ -239,7 +266,8 @@ public partial class FilmsController(
                 "FilmPart," +
                 "FilmForPictureId," +
                 "PosterForFilmFormFile," +
-                "ImageForFilmFormFile"
+                "ImageForFilmFormFile," +
+                "FilmIsFamilyFriendly"
         )]
         FilmFileAddDTOModel filmItem)
     {
@@ -261,9 +289,11 @@ public partial class FilmsController(
             {
                 #region Проверка расширения выбранного файла
 
-                if (!filmItem.FileForFilmFormFile.FileName.EndsWith(".mp4"))
+                if (!filmItem.FileForFilmFormFile.FileName.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase))
                 {
                     ModelState.AddModelError("FileForFilmFormFile", $"Вы выбрали файл {filmItem.FileForFilmFormFile.FileName}" + Environment.NewLine + "Формат фильмов на сайте должен быть «mp4»");
+
+                    await FillAllFilmsAsync(filmItem);
 
                     return View(filmItem);
                 }
@@ -275,6 +305,8 @@ public partial class FilmsController(
                 if (await filmContext.FilmFiles.Where(film => film.FilmFileName == filmItem.FileForFilmFormFile.FileName).AnyAsync())
                 {
                     ModelState.AddModelError("FileForFilmFormFile", $"Вы выбрали файл «{filmItem.FileForFilmFormFile.FileName}»" + Environment.NewLine + "Файл с таким именем уже есть в базе данных");
+
+                    await FillAllFilmsAsync(filmItem);
 
                     return View(filmItem);
                 }
@@ -307,7 +339,9 @@ public partial class FilmsController(
                         {
                             if (string.IsNullOrEmpty(tag.Description))
                             {
-                                ModelState.AddModelError("filmItem.FilmDuration", "Продолжительность фильма равна 0");
+                                ModelState.AddModelError("", "Продолжительность фильма равна 0");
+
+                                await FillAllFilmsAsync(filmItem);
 
                                 return View(filmItem);
                             }
@@ -343,7 +377,9 @@ public partial class FilmsController(
                         {
                             if (string.IsNullOrEmpty(tag.Description))
                             {
-                                ModelState.AddModelError("filmItem.FilmFileName", "Название файла не определено");
+                                ModelState.AddModelError("", "Название файла не определено");
+
+                                await FillAllFilmsAsync(filmItem);
 
                                 return View(filmItem);
                             }
@@ -361,7 +397,9 @@ public partial class FilmsController(
                         {
                             if (string.IsNullOrEmpty(tag.Description))
                             {
-                                ModelState.AddModelError("filmItem.FilmFileExtension", "Расширение файла не определено");
+                                ModelState.AddModelError("", "Расширение файла не определено");
+
+                                await FillAllFilmsAsync(filmItem);
 
                                 return View(filmItem);
                             }
@@ -379,7 +417,9 @@ public partial class FilmsController(
                         {
                             if (string.IsNullOrEmpty(tag.Description))
                             {
-                                ModelState.AddModelError("filmItem.FilmMimeType", "MIME/TYPE файла не определен");
+                                ModelState.AddModelError("", "MIME/TYPE файла не определен");
+
+                                await FillAllFilmsAsync(filmItem);
 
                                 return View(filmItem);
                             }
@@ -397,7 +437,9 @@ public partial class FilmsController(
                         {
                             if (string.IsNullOrEmpty(tag.Description))
                             {
-                                ModelState.AddModelError("filmItem.FilmFileSize", "Размер файла равен 0");
+                                ModelState.AddModelError("", "Размер файла равен 0");
+
+                                await FillAllFilmsAsync(filmItem);
 
                                 return View(filmItem);
                             }
@@ -415,14 +457,18 @@ public partial class FilmsController(
 
                 if (addFilm.FilmWidth < 1)
                 {
-                    ModelState.AddModelError("filmItem.FilmWidth", "Ширина кадра равна 0");
+                    ModelState.AddModelError("", "Ширина кадра равна 0");
+
+                    await FillAllFilmsAsync(filmItem);
 
                     return View(filmItem);
                 }
 
                 if (addFilm.FilmHeight < 1)
                 {
-                    ModelState.AddModelError("filmItem.FilmHeight", "Высота кадра равна 0");
+                    ModelState.AddModelError("", "Высота кадра равна 0");
+
+                    await FillAllFilmsAsync(filmItem);
 
                     return View(filmItem);
                 }
@@ -442,20 +488,25 @@ public partial class FilmsController(
                 {
                     if (filmItem.FileForFilmFormFile.FileName == filmItem.FullFilmFormFile.FileName)
                     {
-                        ModelState.AddModelError("FullFilmFormFile", $"Выбран файл «{filmItem.FileForFilmFormFile.FileName}» для полной и неполной версии."); ;
+                        ModelState.AddModelError("FullFilmFormFile", $"Выбран файл «{filmItem.FileForFilmFormFile.FileName}» для полной и неполной версии.");
+
+                        await FillAllFilmsAsync(filmItem);
 
                         return View(filmItem);
                     }
 
-                    if (await filmContext.FilmFiles.Where(film => film.FilmFileName == filmItem.FullFilmFormFile.FileName).AnyAsync())
-                    {
-                        var fullFilm = await filmContext.FilmFiles.FirstAsync(film => film.FilmFileName == filmItem.FullFilmFormFile.FileName);
+                    var fullFilm = await filmContext.FilmFiles
+                        .FirstOrDefaultAsync(film => film.FilmFileName == filmItem.FullFilmFormFile.FileName);
 
+                    if (fullFilm != null)
+                    {
                         addFilm.FullFilmId = fullFilm.FilmFileModelId;
                     }
                     else
                     {
-                        ModelState.AddModelError("FullFilmFormFile", $"Файл «{filmItem.FullFilmFormFile.FileName}» не найден в базе данных."); ;
+                        ModelState.AddModelError("FullFilmFormFile", $"Файл «{filmItem.FullFilmFormFile.FileName}» не найден в базе данных.");
+
+                        await FillAllFilmsAsync(filmItem);
 
                         return View(filmItem);
                     }
@@ -463,7 +514,9 @@ public partial class FilmsController(
             }
             else
             {
-                ModelState.AddModelError("FileForFilmFormFile", "Выберите файл фильма."); ;
+                ModelState.AddModelError("FileForFilmFormFile", "Выберите файл фильма.");
+
+                await FillAllFilmsAsync(filmItem);
 
                 return View(filmItem);
             }
@@ -472,14 +525,24 @@ public partial class FilmsController(
 
             #region Название фильма в базе данных
 
-            // ✅ GeneratedRegex + защита от null + Trim до замены
             filmItem.FilmCaption = WhitespaceRegex().Replace(
                 (filmItem.FilmCaption ?? string.Empty).Trim(),
                 "--");
 
+            if (string.IsNullOrEmpty(filmItem.FilmCaption))
+            {
+                ModelState.AddModelError(nameof(filmItem.FilmCaption), "Введите название фильма");
+
+                await FillAllFilmsAsync(filmItem);
+
+                return View(filmItem);
+            }
+
             if (await filmContext.FilmFiles.Where(film => film.FilmCaption == filmItem.FilmCaption).AnyAsync())
             {
-                ModelState.AddModelError("filmItem.FilmCaption", $"Фильм «{filmItem.FilmCaption}» уже существует.");
+                ModelState.AddModelError(nameof(filmItem.FilmCaption), $"Фильм «{filmItem.FilmCaption}» уже существует.");
+
+                await FillAllFilmsAsync(filmItem);
 
                 return View(filmItem);
             }
@@ -496,7 +559,9 @@ public partial class FilmsController(
             {
                 if (await filmContext.FilmFiles.Where(film => film.FilmCaptionOriginal == filmItem.FilmCaptionOriginal).AnyAsync())
                 {
-                    ModelState.AddModelError("filmItem.FilmCaptionOriginal", $"Фильм «{filmItem.FilmCaptionOriginal}» уже существует.");
+                    ModelState.AddModelError(nameof(filmItem.FilmCaptionOriginal), $"Фильм «{filmItem.FilmCaptionOriginal}» уже существует.");
+
+                    await FillAllFilmsAsync(filmItem);
 
                     return View(filmItem);
                 }
@@ -534,6 +599,8 @@ public partial class FilmsController(
 
             addFilm.FilmAdult = filmItem.FilmAdult;
 
+            addFilm.FilmIsFamilyFriendly = filmItem.FilmIsFamilyFriendly;
+
             #endregion
 
             #region Язык и субтитры
@@ -559,7 +626,7 @@ public partial class FilmsController(
 
             #region Съёмочная группа
 
-            addFilm.FilmРroductionCompany = filmItem.FilmРroductionCompany.Trim();
+            addFilm.FilmProductionCompany = filmItem.FilmProductionCompany.Trim();
 
             addFilm.FilmDirector1 = filmItem.FilmDirector1.Trim();
 
@@ -673,7 +740,7 @@ public partial class FilmsController(
 
             if (filmItem.FilmImbd != null)
             {
-                addFilm.FilmImbd = filmItem.FilmMailRuVideo;
+                addFilm.FilmImbd = filmItem.FilmImbd;
             }
 
             #endregion
@@ -694,9 +761,11 @@ public partial class FilmsController(
             #region Фильм для альбома кадров
 
             if (filmItem.FilmForPictureId != null &&
-                       !await filmContext.FilmFiles.AnyAsync(f => f.FilmFileModelId == filmItem.FilmForPictureId))
+                !await filmContext.FilmFiles.AnyAsync(f => f.FilmFileModelId == filmItem.FilmForPictureId))
             {
-                ModelState.AddModelError("FilmForPictureId", "Выбранный фильм не найден в базе данных.");
+                ModelState.AddModelError(nameof(filmItem.FilmForPictureId), "Выбранный фильм не найден в базе данных.");
+
+                await FillAllFilmsAsync(filmItem);
 
                 return View(filmItem);
             }
@@ -719,8 +788,9 @@ public partial class FilmsController(
                 {
                     ModelState.AddModelError("PosterForFilmFormFile", $"Вы выбрали файл «{filmItem.PosterForFilmFormFile.FileName}»" + Environment.NewLine + "Файла с таким именем нет в базе данных");
 
-                    return View(filmItem);
+                    await FillAllFilmsAsync(filmItem);
 
+                    return View(filmItem);
                 }
             }
             else
@@ -739,6 +809,8 @@ public partial class FilmsController(
                 else
                 {
                     ModelState.AddModelError("ImageForFilmFormFile", $"Вы выбрали файл «{filmItem.ImageForFilmFormFile.FileName}»" + Environment.NewLine + "Файла с таким именем нет в базе данных");
+
+                    await FillAllFilmsAsync(filmItem);
 
                     return View(filmItem);
                 }
@@ -762,6 +834,8 @@ public partial class FilmsController(
         }
         else
         {
+            await FillAllFilmsAsync(filmItem);
+
             return View(filmItem);
         }
     }
@@ -773,110 +847,94 @@ public partial class FilmsController(
     [HttpGet]
     public async Task<IActionResult> EditFilm(Guid? filmId)
     {
-        if (filmId.HasValue && await filmContext.FilmFiles.Where(film => film.FilmFileModelId == filmId).AnyAsync())
-        {
-            #region Инициализация editFilm
-
-            FilmFileModel editFilm = await filmContext.FilmFiles
-                .Include(film => film.FilmImage)
-                .Include(film => film.FilmPoster)
-                .Include(film => film.PageInfoModel)
-                .Include(film => film.FullFilm)
-                .AsNoTracking()
-                .FirstAsync(film => film.FilmFileModelId == filmId);
-
-            #endregion
-
-            #region Список фильмов сайта
-
-            var allFilms = await filmContext.FilmFiles
-                                .AsNoTracking()
-                                .Where(f => f.FilmFileModelId != filmId)
-                                .OrderBy(f => f.FilmCaption)
-                                .Select(f => new SelectListItem
-                                {
-                                    Value = f.FilmFileModelId.ToString(),
-                                    Text = f.FilmCaption
-                                })
-                                .ToListAsync();
-
-            editFilm.AllFilms = allFilms;
-
-            #endregion
-
-            #region Кадры слева и справа от фильма
-
-            // Картинки с фильтром == название фильма + #film-album#
-            var listOfPictures = from m in imageContext.ImageFiles
-                            .Where(p => p.SearchFilter != null &&
-                                    p.SearchFilter.Contains(editFilm.FilmCaption + "#film-album#"))
-                                 select m;
-
-            // Если задан GUID фильма для кадров
-            if (editFilm.FilmForPictureId != null
-                && await filmContext.FilmFiles
-                    .Where(film => film.FilmFileModelId == editFilm.FilmForPictureId)
-                    .AnyAsync())
-            {
-                #region Инициализация фильма для кадров
-
-                editFilm.FilmForPictureAround = await filmContext.FilmFiles
-                    .AsNoTracking()
-                    .FirstAsync(film => film.FilmFileModelId == editFilm.FilmForPictureId);
-
-                #endregion
-
-                // Картинки с фильтром == название фильма + #film-album#
-                if (await imageContext.ImageFiles
-                            .Where(img => img.SearchFilter != null &&
-                                        img.SearchFilter.Contains(editFilm.FilmForPictureAround.FilmCaption + "#film-album#"))
-                            .AnyAsync())
-                {
-                    listOfPictures = from m in imageContext.ImageFiles
-                            .Where(p => p.SearchFilter != null &&
-                                        p.SearchFilter.Contains(editFilm.FilmForPictureAround.FilmCaption + "#film-album#"))
-                                     select m;
-                }
-            }
-
-            if (listOfPictures.Any())
-            {
-                List<ImageFileModel> framesAroundFilm = [.. listOfPictures.AsEnumerable().Shuffle()];
-
-                if (framesAroundFilm.Count > 1 && framesAroundFilm.Count < DataConfig.NumberOfPicturesAround * 2)
-                {
-                    editFilm.FramesOnTheLeft = [.. framesAroundFilm.Take(framesAroundFilm.Count / 2)];
-
-                    editFilm.FramesOnTheRight = [.. framesAroundFilm.Skip(framesAroundFilm.Count / 2)];
-                }
-                else if (framesAroundFilm.Count >= DataConfig.NumberOfPicturesAround * 2)
-                {
-                    editFilm.FramesOnTheLeft = [.. framesAroundFilm.Take(DataConfig.NumberOfPicturesAround)];
-
-                    editFilm.FramesOnTheRight = [.. framesAroundFilm.Skip(DataConfig.NumberOfPicturesAround).Take(DataConfig.NumberOfPicturesAround)];
-                }
-                else
-                {
-                    editFilm.FramesOnTheLeft = framesAroundFilm;
-
-                    editFilm.FramesOnTheRight = framesAroundFilm;
-                }
-            }
-            else
-            {
-                editFilm.FramesOnTheLeft = [];
-
-                editFilm.FramesOnTheRight = [];
-            }
-
-            #endregion
-
-            return View(editFilm);
-        }
-        else
+        if (!filmId.HasValue)
         {
             return RedirectToAction(nameof(Index));
         }
+
+        #region Инициализация editFilm
+
+        FilmFileModel? editFilm = await filmContext.FilmFiles
+            .Include(film => film.FilmImage)
+            .Include(film => film.FilmPoster)
+            .Include(film => film.FullFilm)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(film => film.FilmFileModelId == filmId);
+
+        if (editFilm is null)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        #endregion
+
+        #region Список фильмов сайта
+
+        await FillAllFilmsAsync(editFilm, filmId);
+
+        #endregion
+
+        #region Кадры слева и справа от фильма
+
+        var listOfPictures = from m in imageContext.ImageFiles
+                             .Where(p => p.SearchFilter != null &&
+                                         p.SearchFilter.Contains(editFilm.FilmCaption + "#film-album#"))
+                             select m;
+
+        if (editFilm.FilmForPictureId != null)
+        {
+            FilmFileModel? filmForPictureAround = await filmContext.FilmFiles
+                .AsNoTracking()
+                .FirstOrDefaultAsync(film => film.FilmFileModelId == editFilm.FilmForPictureId);
+
+            if (filmForPictureAround is not null)
+            {
+                editFilm.FilmForPictureAround = filmForPictureAround;
+
+                if (await imageContext.ImageFiles
+                    .Where(img => img.SearchFilter != null &&
+                                  img.SearchFilter.Contains(filmForPictureAround.FilmCaption + "#film-album#"))
+                    .AnyAsync())
+                {
+                    listOfPictures = from m in imageContext.ImageFiles
+                                     .Where(p => p.SearchFilter != null &&
+                                                 p.SearchFilter.Contains(filmForPictureAround.FilmCaption + "#film-album#"))
+                                     select m;
+                }
+            }
+        }
+
+        List<ImageFileModel> picturesList = await listOfPictures.ToListAsync();
+
+        if (picturesList.Count > 0)
+        {
+            List<ImageFileModel> framesAroundFilm = [.. picturesList.Shuffle()];
+
+            if (framesAroundFilm.Count > 1 && framesAroundFilm.Count < DataConfig.NumberOfPicturesAround * 2)
+            {
+                editFilm.FramesOnTheLeft = [.. framesAroundFilm.Take(framesAroundFilm.Count / 2)];
+                editFilm.FramesOnTheRight = [.. framesAroundFilm.Skip(framesAroundFilm.Count / 2)];
+            }
+            else if (framesAroundFilm.Count >= DataConfig.NumberOfPicturesAround * 2)
+            {
+                editFilm.FramesOnTheLeft = [.. framesAroundFilm.Take(DataConfig.NumberOfPicturesAround)];
+                editFilm.FramesOnTheRight = [.. framesAroundFilm.Skip(DataConfig.NumberOfPicturesAround).Take(DataConfig.NumberOfPicturesAround)];
+            }
+            else
+            {
+                editFilm.FramesOnTheLeft = framesAroundFilm;
+                editFilm.FramesOnTheRight = framesAroundFilm;
+            }
+        }
+        else
+        {
+            editFilm.FramesOnTheLeft = [];
+            editFilm.FramesOnTheRight = [];
+        }
+
+        #endregion
+
+        return View(editFilm);
     }
 
     [HttpPost]
@@ -906,7 +964,7 @@ public partial class FilmsController(
                 "FilmInLanguage2," +
                 "FilmSubtitles1," +
                 "FilmSubtitles2," +
-                "FilmРroductionCompany," +
+                "FilmProductionCompany," +
                 "FilmDirector1," +
                 "FilmDirector2," +
                 "FilmMusicBy," +
@@ -936,7 +994,8 @@ public partial class FilmsController(
                 "FilmPoster," +
                 "FilmImageId," +
                 "FilmForPictureId," +
-                "FilmImage"
+                "FilmImage," +
+                "FilmIsFamilyFriendly"
         )]
         FilmFileModel editFilm)
     {
@@ -954,9 +1013,11 @@ public partial class FilmsController(
             {
                 #region Проверка расширения выбранного файла
 
-                if (!editFilm.FileForFilmFormFile.FileName.EndsWith(".mp4"))
+                if (!editFilm.FileForFilmFormFile.FileName.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase))
                 {
                     ModelState.AddModelError("FileForFilmFormFile", $"Вы выбрали файл «{editFilm.FileForFilmFormFile.FileName}»" + Environment.NewLine + "Формат фильмов на сайте должен быть «.mp4»");
+
+                    await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
 
                     return View(editFilm);
                 }
@@ -971,6 +1032,8 @@ public partial class FilmsController(
                     {
                         ModelState.AddModelError("FileForFilmFormFile", $"Вы выбрали файл «{editFilm.FileForFilmFormFile.FileName}»." + Environment.NewLine + "Это файл редактируемого фильма.");
 
+                        await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
+
                         return View(editFilm);
                     }
                     else
@@ -978,6 +1041,8 @@ public partial class FilmsController(
                         var filmInDB = await filmContext.FilmFiles.FirstAsync(film => film.FilmFileName == editFilm.FileForFilmFormFile.FileName);
 
                         ModelState.AddModelError("FileForFilmFormFile", $"Вы выбрали файл «{editFilm.FileForFilmFormFile.FileName}»." + Environment.NewLine + $"Это файл фильма «{filmInDB.FilmCaption}».");
+
+                        await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
 
                         return View(editFilm);
                     }
@@ -1031,7 +1096,9 @@ public partial class FilmsController(
                             {
                                 if (string.IsNullOrEmpty(tag.Description))
                                 {
-                                    ModelState.AddModelError("editFilm.FilmDuration", "Продолжительность фильма равна 0");
+                                    ModelState.AddModelError("", "Продолжительность фильма равна 0");
+
+                                    await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
 
                                     return View(editFilm);
                                 }
@@ -1067,7 +1134,9 @@ public partial class FilmsController(
                             {
                                 if (string.IsNullOrEmpty(tag.Description))
                                 {
-                                    ModelState.AddModelError("editFilm.FilmFileName", "Название файла не определено");
+                                    ModelState.AddModelError("", "Название файла не определено");
+
+                                    await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
 
                                     return View(editFilm);
                                 }
@@ -1085,7 +1154,9 @@ public partial class FilmsController(
                             {
                                 if (string.IsNullOrEmpty(tag.Description))
                                 {
-                                    ModelState.AddModelError("editFilm.FilmFileExtension", "Расширение файла не определено");
+                                    ModelState.AddModelError("", "Расширение файла не определено");
+
+                                    await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
 
                                     return View(editFilm);
                                 }
@@ -1103,13 +1174,15 @@ public partial class FilmsController(
                             {
                                 if (string.IsNullOrEmpty(tag.Description))
                                 {
-                                    ModelState.AddModelError("filmItem.FilmMimeType", "MIME/TYPE файла не определен");
+                                    ModelState.AddModelError("", "MIME/TYPE файла не определен");
+
+                                    await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
 
                                     return View(editFilm);
                                 }
                                 else
                                 {
-                                    editFilm.FilmMimeType = tag.Description;
+                                    filmUpdate.FilmMimeType = tag.Description;
                                 }
                             }
 
@@ -1121,7 +1194,9 @@ public partial class FilmsController(
                             {
                                 if (string.IsNullOrEmpty(tag.Description))
                                 {
-                                    ModelState.AddModelError("filmItem.FilmFileSize", "Размер файла равен 0");
+                                    ModelState.AddModelError("", "Размер файла равен 0");
+
+                                    await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
 
                                     return View(editFilm);
                                 }
@@ -1139,14 +1214,18 @@ public partial class FilmsController(
 
                     if (filmUpdate.FilmWidth < 1)
                     {
-                        ModelState.AddModelError("editFilm.FilmWidth", "Ширина кадра равна 0");
+                        ModelState.AddModelError("", "Ширина кадра равна 0");
+
+                        await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
 
                         return View(editFilm);
                     }
 
                     if (filmUpdate.FilmHeight < 1)
                     {
-                        ModelState.AddModelError("editFilm.FilmHeight", "Высота кадра равна 0");
+                        ModelState.AddModelError("", "Высота кадра равна 0");
+
+                        await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
 
                         return View(editFilm);
                     }
@@ -1167,20 +1246,25 @@ public partial class FilmsController(
             {
                 if (filmUpdate.FilmFileName == editFilm.FullFilmFormFile.FileName)
                 {
-                    ModelState.AddModelError("FullFilmFormFile", $"Выбран файл «{editFilm.FullFilmFormFile.FileName}» для полной и неполной версии."); ;
+                    ModelState.AddModelError("FullFilmFormFile", $"Выбран файл «{editFilm.FullFilmFormFile.FileName}» для полной и неполной версии.");
+
+                    await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
 
                     return View(editFilm);
                 }
 
-                if (await filmContext.FilmFiles.Where(film => film.FilmFileName == editFilm.FullFilmFormFile.FileName).AnyAsync())
-                {
-                    var fullFilm = await filmContext.FilmFiles.FirstAsync(film => film.FilmFileName == editFilm.FullFilmFormFile.FileName);
+                var fullFilm = await filmContext.FilmFiles
+                    .FirstOrDefaultAsync(film => film.FilmFileName == editFilm.FullFilmFormFile.FileName);
 
+                if (fullFilm != null)
+                {
                     filmUpdate.FullFilmId = fullFilm.FilmFileModelId;
                 }
                 else
                 {
-                    ModelState.AddModelError("FullFilmFormFile", $"Файл «{editFilm.FullFilmFormFile.FileName}» не найден в базе данных."); ;
+                    ModelState.AddModelError("FullFilmFormFile", $"Файл «{editFilm.FullFilmFormFile.FileName}» не найден в базе данных.");
+
+                    await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
 
                     return View(editFilm);
                 }
@@ -1190,24 +1274,43 @@ public partial class FilmsController(
 
             #region Название фильма в базе данных
 
-            if (filmUpdate.FilmCaption != editFilm.FilmCaption & await filmContext.FilmFiles.Where(film => film.FilmCaption == editFilm.FilmCaption).AnyAsync())
+            string normalizedCaption = WhitespaceRegex().Replace(
+                (editFilm.FilmCaption ?? string.Empty).Trim(),
+                "--");
+
+            if (string.IsNullOrEmpty(normalizedCaption))
             {
-                ModelState.AddModelError("editFilm.FilmCaption", $"Фильм с названием «{editFilm.FilmCaption}» уже существует.");
+                ModelState.AddModelError(nameof(editFilm.FilmCaption), "Введите название фильма");
+
+                await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
+
+                return View(editFilm);
+            }
+
+            if (filmUpdate.FilmCaption != normalizedCaption &&
+                await filmContext.FilmFiles.Where(film => film.FilmCaption == normalizedCaption).AnyAsync())
+            {
+                ModelState.AddModelError(nameof(editFilm.FilmCaption), $"Фильм с названием «{normalizedCaption}» уже существует.");
+
+                await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
 
                 return View(editFilm);
             }
             else
             {
-                filmUpdate.FilmCaption = editFilm.FilmCaption.Trim();
+                filmUpdate.FilmCaption = normalizedCaption;
             }
 
             #endregion
 
             #region Оригинальное название фильма
 
-            if (filmUpdate.FilmCaptionOriginal != editFilm.FilmCaptionOriginal & await filmContext.FilmFiles.Where(film => film.FilmCaptionOriginal == editFilm.FilmCaptionOriginal).AnyAsync())
+            if (filmUpdate.FilmCaptionOriginal != editFilm.FilmCaptionOriginal &&
+                await filmContext.FilmFiles.Where(film => film.FilmCaptionOriginal == editFilm.FilmCaptionOriginal).AnyAsync())
             {
-                ModelState.AddModelError("editFilm.FilmCaptionOriginal", $"Фильм с оригинальным названием «{editFilm.FilmCaptionOriginal}» уже существует.");
+                ModelState.AddModelError(nameof(editFilm.FilmCaptionOriginal), $"Фильм с оригинальным названием «{editFilm.FilmCaptionOriginal}» уже существует.");
+
+                await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
 
                 return View(editFilm);
             }
@@ -1244,6 +1347,8 @@ public partial class FilmsController(
 
             filmUpdate.FilmAdult = editFilm.FilmAdult;
 
+            filmUpdate.FilmIsFamilyFriendly = editFilm.FilmIsFamilyFriendly;
+
             #endregion
 
             #region Язык и субтитры
@@ -1269,7 +1374,7 @@ public partial class FilmsController(
 
             #region Съёмочная группа
 
-            filmUpdate.FilmРroductionCompany = editFilm.FilmРroductionCompany.Trim();
+            filmUpdate.FilmProductionCompany = editFilm.FilmProductionCompany.Trim();
 
             filmUpdate.FilmDirector1 = editFilm.FilmDirector1.Trim();
 
@@ -1404,17 +1509,20 @@ public partial class FilmsController(
             #region Фильм для альбома кадров
 
             if (editFilm.FilmForPictureId != null &&
-                    !await filmContext.FilmFiles.AnyAsync(f => f.FilmFileModelId == editFilm.FilmForPictureId))
+                !await filmContext.FilmFiles.AnyAsync(f => f.FilmFileModelId == editFilm.FilmForPictureId))
             {
-                ModelState.AddModelError("FilmForPictureId", "Выбранный фильм не найден в базе данных.");
+                ModelState.AddModelError(nameof(editFilm.FilmForPictureId), "Выбранный фильм не найден в базе данных.");
+
+                await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
 
                 return View(editFilm);
             }
 
-            // ✅ Нельзя выбрать сам себя
             if (editFilm.FilmForPictureId == editFilm.FilmFileModelId)
             {
-                ModelState.AddModelError("FilmForPictureId", "Нельзя выбрать текущий фильм как фильм для кадров.");
+                ModelState.AddModelError(nameof(editFilm.FilmForPictureId), "Нельзя выбрать текущий фильм как фильм для кадров.");
+
+                await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
 
                 return View(editFilm);
             }
@@ -1437,6 +1545,8 @@ public partial class FilmsController(
                 {
                     ModelState.AddModelError("PosterForFilmFormFile", $"Вы выбрали файл «{editFilm.PosterForFilmFormFile.FileName}»" + Environment.NewLine + "Файла с таким именем нет в базе данных");
 
+                    await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
+
                     return View(editFilm);
                 }
             }
@@ -1444,10 +1554,6 @@ public partial class FilmsController(
                 && await imageContext.ImageFiles.AnyAsync(i => i.ImageFileModelId == editFilm.FilmPosterId))
             {
                 filmUpdate.FilmPosterId = editFilm.FilmPosterId;
-            }
-            else
-            {
-                filmUpdate.FilmPosterId = filmUpdate.FilmPosterId;
             }
 
             if (editFilm.ImageForFilmFormFile != null)
@@ -1462,6 +1568,8 @@ public partial class FilmsController(
                 {
                     ModelState.AddModelError("ImageForFilmFormFile", $"Вы выбрали файл «{editFilm.ImageForFilmFormFile.FileName}»" + Environment.NewLine + "Файла с таким именем нет в базе данных");
 
+                    await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
+
                     return View(editFilm);
                 }
             }
@@ -1469,10 +1577,6 @@ public partial class FilmsController(
                 && await imageContext.ImageFiles.AnyAsync(i => i.ImageFileModelId == editFilm.FilmImageId))
             {
                 filmUpdate.FilmImageId = editFilm.FilmImageId;
-            }
-            else
-            {
-                filmUpdate.FilmImageId = filmUpdate.FilmImageId;
             }
 
             #endregion
@@ -1486,10 +1590,11 @@ public partial class FilmsController(
             return RedirectToAction("DetailsFilm", new { filmId = newFilm.FilmFileModelId, Area = "Admin" });
 
             #endregion
-
         }
         else
         {
+            await FillAllFilmsAsync(editFilm, editFilm.FilmFileModelId);
+
             return View(editFilm);
         }
     }
