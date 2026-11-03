@@ -7,7 +7,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize]
-public class FilmsController(
+public partial class FilmsController(
     IFilmFileRepository filmContext,
     IImageFileRepository imageContext,
     IWebHostEnvironment hostEnvironment
@@ -15,7 +15,15 @@ public class FilmsController(
 {
     private readonly string rootPath = hostEnvironment.WebRootPath;
 
-    readonly FilmFileAddDTOModel filmItem = new();
+    #region Regex
+
+    /// <summary>
+    /// Один или более пробельных символов — для нормализации FilmCaption
+    /// </summary>
+    [GeneratedRegex(@"\s+")]
+    private static partial Regex WhitespaceRegex();
+
+    #endregion
 
     #region Список фильмов
 
@@ -70,92 +78,92 @@ public class FilmsController(
 
     public async Task<IActionResult> DetailsFilm(Guid? filmId)
     {
-        if (filmId.HasValue && await filmContext.FilmFiles.Where(film => film.FilmFileModelId == filmId).AnyAsync())
-        {
-            #region Инициализация фильма
-
-            FilmFileModel filmItem = await filmContext.FilmFiles
-                .Include(img => img.FilmImage)
-                .Include(img => img.FilmPoster)
-                .Include(film => film.FullFilm)
-                .AsNoTracking()
-                .FirstAsync(film => film.FilmFileModelId == filmId);
-
-            #endregion
-
-            #region Кадры слева и справа от фильма
-
-            // Картинки с фильтром == название фильма + #film-album#
-            var listOfPictures = from m in imageContext.ImageFiles
-                                .Where(p => p.SearchFilter != null &&
-                                        p.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
-                                 select m;
-
-            // Если задан GUID фильма для кадров
-            if (filmItem.FilmForPictureId != null
-                && await filmContext.FilmFiles
-                    .Where(film => film.FilmFileModelId == filmItem.FilmForPictureId)
-                    .AnyAsync())
-            {
-                #region Инициализация фильма для кадров
-
-                filmItem.FilmForPictureAround = await filmContext.FilmFiles
-                    .AsNoTracking()
-                    .FirstAsync(film => film.FilmFileModelId == filmItem.FilmForPictureId);
-
-                #endregion
-
-                // Картинки с фильтром == название фильма + #film-album#
-                if (await imageContext.ImageFiles
-                                .Where(img => img.SearchFilter != null &&
-                                            img.SearchFilter.Contains(filmItem.FilmForPictureAround.FilmCaption + "#film-album#"))
-                                .AnyAsync())
-                {
-                    listOfPictures = from m in imageContext.ImageFiles
-                                .Where(p => p.SearchFilter != null &&
-                                            p.SearchFilter.Contains(filmItem.FilmForPictureAround.FilmCaption + "#film-album#"))
-                                     select m;
-                }
-            }
-
-            if (listOfPictures.Any())
-            {
-                List<ImageFileModel> framesAroundFilm = [.. listOfPictures.AsEnumerable().Shuffle()];
-
-                if (framesAroundFilm.Count > 1 && framesAroundFilm.Count < DataConfig.NumberOfPicturesAround * 2)
-                {
-                    filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(framesAroundFilm.Count / 2)];
-
-                    filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(framesAroundFilm.Count / 2)];
-                }
-                else if (framesAroundFilm.Count >= DataConfig.NumberOfPicturesAround * 2)
-                {
-                    filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(DataConfig.NumberOfPicturesAround)];
-
-                    filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(DataConfig.NumberOfPicturesAround).Take(DataConfig.NumberOfPicturesAround)];
-                }
-                else
-                {
-                    filmItem.FramesOnTheLeft = framesAroundFilm;
-
-                    filmItem.FramesOnTheRight = framesAroundFilm;
-                }
-            }
-            else
-            {
-                filmItem.FramesOnTheLeft = [];
-
-                filmItem.FramesOnTheRight = [];
-            }
-
-            #endregion
-
-            return View(filmItem);
-        }
-        else
+        if (!filmId.HasValue)
         {
             return RedirectToAction(nameof(Index));
         }
+
+        #region Инициализация фильма
+
+        FilmFileModel? filmItem = await filmContext.FilmFiles
+            .Include(img => img.FilmImage)
+            .Include(img => img.FilmPoster)
+            .Include(film => film.FullFilm)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(film => film.FilmFileModelId == filmId);
+
+        if (filmItem is null)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        #endregion
+
+        #region Кадры слева и справа от фильма
+
+        // Картинки с фильтром == название фильма + #film-album#
+        var listOfPictures = from m in imageContext.ImageFiles
+                             .Where(p => p.SearchFilter != null &&
+                                         p.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
+                             select m;
+
+        // Если задан GUID фильма для кадров
+        if (filmItem.FilmForPictureId != null)
+        {
+            FilmFileModel? filmForPictureAround = await filmContext.FilmFiles
+                .AsNoTracking()
+                .FirstOrDefaultAsync(film => film.FilmFileModelId == filmItem.FilmForPictureId);
+
+            if (filmForPictureAround is not null)
+            {
+                filmItem.FilmForPictureAround = filmForPictureAround;
+
+                // Картинки с фильтром == название фильма + #film-album#
+                if (await imageContext.ImageFiles
+                    .Where(img => img.SearchFilter != null &&
+                                  img.SearchFilter.Contains(filmForPictureAround.FilmCaption + "#film-album#"))
+                    .AnyAsync())
+                {
+                    listOfPictures = from m in imageContext.ImageFiles
+                                     .Where(p => p.SearchFilter != null &&
+                                                 p.SearchFilter.Contains(filmForPictureAround.FilmCaption + "#film-album#"))
+                                     select m;
+                }
+            }
+        }
+
+        // ✅ Материализуем один раз асинхронно (без синхронного AsEnumerable)
+        List<ImageFileModel> picturesList = await listOfPictures.ToListAsync();
+
+        if (picturesList.Count > 0)
+        {
+            List<ImageFileModel> framesAroundFilm = [.. picturesList.Shuffle()];
+
+            if (framesAroundFilm.Count > 1 && framesAroundFilm.Count < DataConfig.NumberOfPicturesAround * 2)
+            {
+                filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(framesAroundFilm.Count / 2)];
+                filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(framesAroundFilm.Count / 2)];
+            }
+            else if (framesAroundFilm.Count >= DataConfig.NumberOfPicturesAround * 2)
+            {
+                filmItem.FramesOnTheLeft = [.. framesAroundFilm.Take(DataConfig.NumberOfPicturesAround)];
+                filmItem.FramesOnTheRight = [.. framesAroundFilm.Skip(DataConfig.NumberOfPicturesAround).Take(DataConfig.NumberOfPicturesAround)];
+            }
+            else
+            {
+                filmItem.FramesOnTheLeft = framesAroundFilm;
+                filmItem.FramesOnTheRight = framesAroundFilm;
+            }
+        }
+        else
+        {
+            filmItem.FramesOnTheLeft = [];
+            filmItem.FramesOnTheRight = [];
+        }
+
+        #endregion
+
+        return View(filmItem);
     }
 
     #endregion
@@ -464,8 +472,10 @@ public class FilmsController(
 
             #region Название фильма в базе данных
 
-            // Меняем любое количество пробелов на "--"
-            filmItem.FilmCaption = Regex.Replace(filmItem.FilmCaption, @"\s+", "--");
+            // ✅ GeneratedRegex + защита от null + Trim до замены
+            filmItem.FilmCaption = WhitespaceRegex().Replace(
+                (filmItem.FilmCaption ?? string.Empty).Trim(),
+                "--");
 
             if (await filmContext.FilmFiles.Where(film => film.FilmCaption == filmItem.FilmCaption).AnyAsync())
             {
