@@ -2,6 +2,9 @@
 
 public class ViewImageViewModel
 {
+    /// <summary>
+    /// Объект картинки
+    /// </summary>
     public ImageFileModel ImageItem { get; set; } = default!;
 
     /// <summary>
@@ -11,6 +14,9 @@ public class ViewImageViewModel
     /// </summary>
     public string IconType { get; set; } = "webimage";
 
+    /// <summary>
+    /// CSS картинки
+    /// </summary>
     public string CssClass { get; set; } = "img-fluid w-100";
 
     /// <summary>
@@ -168,9 +174,7 @@ public class ViewImageViewModel
             : $"{ImageItem.ImagePath}/{name}";
     }
 
-    // -------------------------------------------------------------------
-    //  Приватные помощники
-    // -------------------------------------------------------------------
+    #region Приватные помощники
 
     /// <summary>
     /// Возвращает первый кортеж, в котором задан основной файл.
@@ -199,4 +203,6 @@ public class ViewImageViewModel
     /// </summary>
     private static string? Empty(string? value)
         => string.IsNullOrWhiteSpace(value) ? null : value;
+
+    #endregion
 }

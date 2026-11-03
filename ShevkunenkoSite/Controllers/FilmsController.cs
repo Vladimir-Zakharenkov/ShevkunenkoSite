@@ -277,7 +277,7 @@ public class FilmsController
 
                 #region Определение заголовка и подзаголовка альбома
 
-                var (caption, noteText) = ParseAlbumFilter(imageItem.SearchFilter, album, note);
+                var (caption, noteText) = ParseAlbumFilter(imageItem.SearchFilter, filmCaption, album, note);
 
                 if (caption is null)
                 {
@@ -422,7 +422,7 @@ public class FilmsController
                 return RedirectToAction(nameof(Film), new { filmCaption, host = "ok" });
             }
 
-            var (caption, noteText) = ParseAlbumFilter(itemsOnPage[0].SearchFilter, album, note);
+            var (caption, noteText) = ParseAlbumFilter(itemsOnPage[0].SearchFilter, filmCaption, album, note);
 
             if (caption is null)
             {
@@ -475,7 +475,10 @@ public class FilmsController
     #region Метод определения Заголовка и Подзаголовка альбома
 
     private static (string? Caption, string? Note) ParseAlbumFilter(
-                    string? searchFilter, string album, string note)
+        string? searchFilter,
+        string filmCaption,
+        string album,
+        string note)
     {
         if (string.IsNullOrEmpty(searchFilter))
             return (null, null);
@@ -483,28 +486,42 @@ public class FilmsController
         string[] filters = searchFilter.Split(',',
             StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
+        // ✅ Ищем фильтр ИМЕННО текущего фильма, а не первый попавшийся с album
         string? filterForCaption = Array.Find(filters,
-            p => p.Contains(album, StringComparison.OrdinalIgnoreCase));
+            p => p.Contains(filmCaption + album, StringComparison.OrdinalIgnoreCase));
 
         if (filterForCaption is null)
             return (null, null);
 
         filterForCaption = filterForCaption.ToLowerInvariant();
 
-        int foundForCaption = filterForCaption.IndexOf(album);
+        // caption — это часть фильтра ДО filmCaption + album (может быть пустой,
+        // если фильтр начинается с filmCaption, как обычно и бывает)
+        int foundForCaption = filterForCaption.IndexOf(
+            filmCaption.ToLowerInvariant() + album,
+            StringComparison.OrdinalIgnoreCase);
 
-        string caption = filterForCaption[..foundForCaption];
+        if (foundForCaption < 0)
+            return (null, null);
+
+        string caption = foundForCaption > 0
+            ? filterForCaption[..foundForCaption]
+            : filmCaption;
 
         string? noteText = null;
 
         if (filterForCaption.Contains(note))
         {
             int foundForNote = filterForCaption.IndexOf(note);
-            noteText = filterForCaption[(foundForCaption + album.Length)..foundForNote];
+
+            // note идёт сразу после filmCaption + album
+            int noteStart = foundForCaption + filmCaption.Length + album.Length;
+
+            if (foundForNote > noteStart)
+                noteText = filterForCaption[noteStart..foundForNote];
         }
 
         return (caption, noteText);
     }
-
     #endregion
 }

@@ -1,5 +1,7 @@
 ﻿// Ignore Spelling: Org Рroduction Imbd Poisk Online Teatr Vk Yandex
 
+using static System.Net.WebRequestMethods;
+
 namespace ShevkunenkoSite.Models.DataModels;
 
 public class FilmFileModel
@@ -318,6 +320,9 @@ public class FilmFileModel
 
     #region Фильм для альбома кадров
 
+    /// <summary>
+    /// Фильм для альбома кадров
+    /// </summary>
     [Display(Name = "Альбом картинок к фильму :")]
     public Guid? FilmForPictureId { get; set; }
 
@@ -392,6 +397,23 @@ public class FilmFileModel
 
     [NotMapped]
     public Uri? CurrentVideoHost { get; set; }
+
+    #endregion
+
+    #region Список фильмов сайта
+
+    /// <summary>
+    /// Список фильмов сайта
+    /// </summary>
+    [NotMapped]
+    public List<SelectListItem> AllFilms { get; set; } = [];
+
+    /// <summary>
+    /// Фильм выбранный из списка
+    /// </summary>
+    [NotMapped]
+    // для удобства — выбранный FilmForPictureId
+    public Guid? SelectedFilmForPictureId => FilmForPictureId;
 
     #endregion
 

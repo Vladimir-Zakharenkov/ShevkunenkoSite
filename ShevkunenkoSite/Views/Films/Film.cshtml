@@ -7,9 +7,6 @@
     string screenFormat = ((int)(((double)Model.FilmHeight / (double)Model.FilmWidth) * 100)).ToString() + "%";
 
     string posterForVideo = string.Empty;
-
-    // количество миниатюр кадров фильма
-    int n = 0;
 }
 
 @* Заголовок страницы *@
@@ -41,7 +38,7 @@
 
     </div>
 
-    @* Видео *@
+    @* Видео + списки под видео *@
     <div id="blockForAllOptions" class="col-12 col-md-8 mb-3 block-shadow no-ads-zone">
 
         <div id="videoBlockRow" class="row">
@@ -438,9 +435,10 @@
                     </div>
 
                     @* Кадры фильма *@
-                    <div id="filmStills" class="@((Model.ListOfPictures != null && Model.ListOfPictures.Count > 0) ? "accordion-item block-shadow mt-3" : "d-none")">
+                    <div id="filmStills"
+                         class="@((Model.ListOfPictures != null && Model.ListOfPictures.Count > 0) ? "accordion-item block-shadow mt-3" : "d-none")">
 
-                        @* заголовок группы «кадры фильма» *@
+                        @* Заголовок группы «кадры фильма» *@
                         <h2 id="headingfilmStills" class="accordion-header block-shadow">
 
                             <button class="accordion-button collapsed p-1 stranicy"
@@ -460,18 +458,18 @@
 
                                         @if (Model.ListOfPictures != null && Model.ListOfPictures.Count > 0)
                                         {
-                                            @do
+                                            @* ✅ Уникальные случайные индексы — без дублей *@
+                                            var randomIndices = Enumerable.Range(0, Model.ListOfPictures.Count)
+                                                                          .OrderBy(_ => Guid.NewGuid())
+                                                                          .Take(5)
+                                                                          .ToList();
+
+                                            foreach (int rndIndex in randomIndices)
                                             {
-                                                Random rnd = new();
-
-                                                int rndIndex = rnd.Next(Model.ListOfPictures.Count);
-
                                                 <vc:view-image image-id="@Model.ListOfPictures[rndIndex].ImageFileModelId"
                                                                css-class="border border-secondary rounded"
-                                                               icon-type="webicon100" />
-                                                n++;
+                                                               icon-type="webicon100AI" />
                                             }
-                                            while (n < Model.ListOfPictures.Count && n < 5);
                                         }
 
                                     </div>
@@ -505,7 +503,7 @@
 
                                                 <vc:view-image image-id="@item.ImageFileModelId.ToString()"
                                                                css-class="rounded-3 block-shadow imageref"
-                                                               icon-type="webicon100" />
+                                                               icon-type="webicon100AI" />
                                             </a>
                                         }
                                     }

@@ -1743,6 +1743,82 @@
 
                 </div>
 
+                @* Фильм для альбома кадров *@
+                <div class="accordion-item mb-3 block-shadow">
+
+                    <h2 id="headingFilmForPicture" class="accordion-header">
+
+                        <button class="accordion-button collapsed py-0 stranicy"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#FilmForPicture"
+                                aria-expanded="true"
+                                aria-controls="FilmForPicture">
+
+                            <span class="form-label fs-5">
+                                Альбом картинок к фильму :
+                            </span>
+
+                        </button>
+
+                    </h2>
+
+                    <div id="FilmForPicture"
+                         class="accordion-collapse collapse"
+                         aria-labelledby="headingFilmForPicture"
+                         data-bs-parent="#accordionAddFilm">
+
+                        <div class="accordion-body text-indent-0 text-center">
+
+                            <div class="row g-2 justify-content-center">
+
+                                <div class="col-auto">
+
+                                    <label asp-for="FilmForPictureId"
+                                           class="@cssForLabel">
+                                    </label>
+
+                                </div>
+
+                                <div class="col-12 col-md-8">
+
+                                    <select asp-for="FilmForPictureId"
+                                            asp-items="Model.AllFilms"
+                                            class="form-select">
+
+                                        <option value="">— не задан (кадры из текущего фильма) —</option>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="form-text">
+
+                                    <span class="fs-6 text-success">
+                                        фильм, из которого брать кадры для альбома
+                                    </span>
+
+                                    <br />
+
+                                    <span class="fs-6">
+                                        (если не выбран — кадры берутся из текущего фильма)
+                                    </span>
+
+                                </div>
+
+                                @if (Context.Request.Method == "POST")
+                                {
+                                    <span asp-validation-for="FilmForPictureId" class="text-danger"></span>
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
                 @* Постер и картинка фильма *@
                 <div class="accordion-item mb-3 block-shadow">
 

@@ -261,6 +261,16 @@ public record class FilmFileAddDTOModel
 
     #endregion
 
+    #region Фильм для альбома кадров
+
+    /// <summary>
+    /// Фильм для альбома кадров
+    /// </summary>
+    [Display(Name = "Альбом картинок к фильму :")]
+    public Guid? FilmForPictureId { get; set; }
+
+    #endregion
+
     #region Выбор постера и картинки фильма
 
     [Required(ErrorMessage = "Выберите постер для фильма")]
@@ -272,6 +282,21 @@ public record class FilmFileAddDTOModel
     [DataType(DataType.Upload)]
     [Display(Name = "Картинка фильма:")]
     public IFormFile? ImageForFilmFormFile { get; set; }
+
+    #endregion
+
+    #region Список фильмов сайта
+
+    /// <summary>
+    /// Список фильмов сайта
+    /// </summary>
+    public List<SelectListItem> AllFilms { get; set; } = [];
+
+    /// <summary>
+    /// Фильм выбранный из списка
+    /// </summary>
+    // для удобства — выбранный FilmForPictureId
+    public Guid? SelectedFilmForPictureId => FilmForPictureId;
 
     #endregion
 }

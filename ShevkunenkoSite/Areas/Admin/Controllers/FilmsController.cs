@@ -1,4 +1,5 @@
 ﻿//Ignore Spelling: Org
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.RegularExpressions;
 
@@ -86,7 +87,8 @@ public class FilmsController(
 
             // Картинки с фильтром == название фильма + #film-album#
             var listOfPictures = from m in imageContext.ImageFiles
-               .Where(p => p.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
+                                .Where(p => p.SearchFilter != null &&
+                                        p.SearchFilter.Contains(filmItem.FilmCaption + "#film-album#"))
                                  select m;
 
             // Если задан GUID фильма для кадров
@@ -105,11 +107,13 @@ public class FilmsController(
 
                 // Картинки с фильтром == название фильма + #film-album#
                 if (await imageContext.ImageFiles
-                    .Where(img => img.SearchFilter.Contains(filmItem.FilmForPictureAround.FilmCaption + "#film-album#"))
-                    .AnyAsync())
+                                .Where(img => img.SearchFilter != null &&
+                                            img.SearchFilter.Contains(filmItem.FilmForPictureAround.FilmCaption + "#film-album#"))
+                                .AnyAsync())
                 {
                     listOfPictures = from m in imageContext.ImageFiles
-                       .Where(p => p.SearchFilter.Contains(filmItem.FilmForPictureAround.FilmCaption + "#film-album#"))
+                                .Where(p => p.SearchFilter != null &&
+                                            p.SearchFilter.Contains(filmItem.FilmForPictureAround.FilmCaption + "#film-album#"))
                                      select m;
                 }
             }
@@ -161,6 +165,18 @@ public class FilmsController(
     [HttpGet]
     public IActionResult AddFilm()
     {
+        FilmFileAddDTOModel filmItem = new()
+        {
+            AllFilms = [.. filmContext.FilmFiles
+            .AsNoTracking()
+            .OrderBy(f => f.FilmCaption)
+            .Select(f => new SelectListItem
+            {
+                Value = f.FilmFileModelId.ToString(),
+                Text = f.FilmCaption
+            })]
+        };
+
         return View(filmItem);
     }
 
@@ -213,6 +229,7 @@ public class FilmsController(
                 "SeriesSearchFilter," +
                 "FilmTotalParts," +
                 "FilmPart," +
+                "FilmForPictureId," +
                 "PosterForFilmFormFile," +
                 "ImageForFilmFormFile"
         )]
@@ -664,6 +681,20 @@ public class FilmsController(
 
             #endregion
 
+            #region Фильм для альбома кадров
+
+            if (filmItem.FilmForPictureId != null &&
+                       !await filmContext.FilmFiles.AnyAsync(f => f.FilmFileModelId == filmItem.FilmForPictureId))
+            {
+                ModelState.AddModelError("FilmForPictureId", "Выбранный фильм не найден в базе данных.");
+
+                return View(filmItem);
+            }
+
+            addFilm.FilmForPictureId = filmItem.FilmForPictureId;
+
+            #endregion
+
             #region Постер и картинка фильма
 
             if (filmItem.PosterForFilmFormFile != null)
@@ -746,11 +777,29 @@ public class FilmsController(
 
             #endregion
 
+            #region Список фильмов сайта
+
+            var allFilms = await filmContext.FilmFiles
+                                .AsNoTracking()
+                                .Where(f => f.FilmFileModelId != filmId)
+                                .OrderBy(f => f.FilmCaption)
+                                .Select(f => new SelectListItem
+                                {
+                                    Value = f.FilmFileModelId.ToString(),
+                                    Text = f.FilmCaption
+                                })
+                                .ToListAsync();
+
+            editFilm.AllFilms = allFilms;
+
+            #endregion
+
             #region Кадры слева и справа от фильма
 
             // Картинки с фильтром == название фильма + #film-album#
             var listOfPictures = from m in imageContext.ImageFiles
-               .Where(p => p.SearchFilter.Contains(editFilm.FilmCaption + "#film-album#"))
+                            .Where(p => p.SearchFilter != null &&
+                                    p.SearchFilter.Contains(editFilm.FilmCaption + "#film-album#"))
                                  select m;
 
             // Если задан GUID фильма для кадров
@@ -769,11 +818,13 @@ public class FilmsController(
 
                 // Картинки с фильтром == название фильма + #film-album#
                 if (await imageContext.ImageFiles
-                    .Where(img => img.SearchFilter.Contains(editFilm.FilmForPictureAround.FilmCaption + "#film-album#"))
-                    .AnyAsync())
+                            .Where(img => img.SearchFilter != null &&
+                                        img.SearchFilter.Contains(editFilm.FilmForPictureAround.FilmCaption + "#film-album#"))
+                            .AnyAsync())
                 {
                     listOfPictures = from m in imageContext.ImageFiles
-                       .Where(p => p.SearchFilter.Contains(editFilm.FilmForPictureAround.FilmCaption + "#film-album#"))
+                            .Where(p => p.SearchFilter != null &&
+                                        p.SearchFilter.Contains(editFilm.FilmForPictureAround.FilmCaption + "#film-album#"))
                                      select m;
                 }
             }
@@ -874,6 +925,7 @@ public class FilmsController(
                 "FilmPosterId," +
                 "FilmPoster," +
                 "FilmImageId," +
+                "FilmForPictureId," +
                 "FilmImage"
         )]
         FilmFileModel editFilm)
@@ -1321,7 +1373,7 @@ public class FilmsController(
 
             if (editFilm.FilmImbd != null)
             {
-                filmUpdate.FilmImbd = editFilm.FilmMailRuVideo;
+                filmUpdate.FilmImbd = editFilm.FilmImbd;
             }
 
             #endregion
@@ -1336,6 +1388,28 @@ public class FilmsController(
             filmUpdate.FilmTotalParts = editFilm.SeriesSearchFilter != null && editFilm.FilmTotalParts != null ? editFilm.FilmTotalParts : null;
 
             filmUpdate.FilmPart = editFilm.SeriesSearchFilter != null && editFilm.FilmTotalParts != null && editFilm.FilmPart != null ? editFilm.FilmPart : null;
+
+            #endregion
+
+            #region Фильм для альбома кадров
+
+            if (editFilm.FilmForPictureId != null &&
+                    !await filmContext.FilmFiles.AnyAsync(f => f.FilmFileModelId == editFilm.FilmForPictureId))
+            {
+                ModelState.AddModelError("FilmForPictureId", "Выбранный фильм не найден в базе данных.");
+
+                return View(editFilm);
+            }
+
+            // ✅ Нельзя выбрать сам себя
+            if (editFilm.FilmForPictureId == editFilm.FilmFileModelId)
+            {
+                ModelState.AddModelError("FilmForPictureId", "Нельзя выбрать текущий фильм как фильм для кадров.");
+
+                return View(editFilm);
+            }
+
+            filmUpdate.FilmForPictureId = editFilm.FilmForPictureId;
 
             #endregion
 
@@ -1381,7 +1455,7 @@ public class FilmsController(
                     return View(editFilm);
                 }
             }
-            else if (editFilm.FilmImageId != Guid.Empty 
+            else if (editFilm.FilmImageId != Guid.Empty
                 && await imageContext.ImageFiles.AnyAsync(i => i.ImageFileModelId == editFilm.FilmImageId))
             {
                 filmUpdate.FilmImageId = editFilm.FilmImageId;

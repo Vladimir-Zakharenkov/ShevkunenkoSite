@@ -7,7 +7,6 @@ public class ImageFileModel
     [Key]
     [Display(Name = "Идентификатор картинки :")]
     [Column("ImageFileId")]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid ImageFileModelId { get; set; }
 
     #endregion
