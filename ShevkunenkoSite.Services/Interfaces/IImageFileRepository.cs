@@ -28,12 +28,16 @@ public interface IImageFileRepository
 
     #region Получить картинку из БД по GUID или имени файла
 
-    ImageFileModel GetImageByGuidOrFileNameAsync(string imageObject);
+    Task<ImageFileModel> GetImageByGuidOrFileNameAsync(string imageObject);
 
     #endregion
 
     #region Получить GUID картинки по имени файла
-
+    /// <summary>
+    /// Получить GUID картинки по имени файла
+    /// </summary>
+    /// <param name="imageFilename"></param>
+    /// <returns></returns>
     Task<Guid> GetImageGuidByFileNameAsync(string imageFilename);
 
     #endregion

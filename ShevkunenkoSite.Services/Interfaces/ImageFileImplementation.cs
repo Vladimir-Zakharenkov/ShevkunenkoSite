@@ -41,24 +41,210 @@ public class ImageFileImplementation(SiteDbContext siteContext) : IImageFileRepo
 
     #endregion
 
-    #region Получить картинку из БД по GUID
+    #region Получить картинку по GUID или имени файла
 
-    public ImageFileModel GetImageByGuidOrFileNameAsync(string imageObject)
+    /// <summary>
+    /// Получить картинку по GUID или имени файла
+    /// </summary>
+    /// <param name="imageObject"></param>
+    /// <returns></returns>
+    public async Task<ImageFileModel> GetImageByGuidOrFileNameAsync(string imageObject)
     {
         // Поиск картинки по GUID
-        if (Guid.TryParse(imageObject, out Guid imageIdGuid) & siteContext.ImageFile.Where(img => img.ImageFileModelId == imageIdGuid).Any())
+        if (Guid.TryParse(imageObject, out Guid imageIdGuid))
         {
-            return siteContext.ImageFile.First(img => img.ImageFileModelId == imageIdGuid);
+            var imageItem = await siteContext.ImageFile.FirstOrDefaultAsync(img => img.ImageFileModelId == imageIdGuid);
+
+            if (imageItem != null)
+            {
+                return imageItem;
+            }
+            else
+            {
+                return await siteContext.ImageFile.FirstAsync(img => img.ImageFileModelId == Guid.Parse(DataConfig.NoImage));
+            }
         }
         // Поиск картинки по названию файла
-        else if (siteContext.ImageFile.Where(img => img.WebImageFileName == imageObject || img.ImageFileName == imageObject).Any())
-        {
-            return siteContext.ImageFile.First(img => img.WebImageFileName == imageObject || img.ImageFileName == imageObject);
-        }
-        // Если ничего не найдено, выводим картинку NoImage
         else
         {
-            return siteContext.ImageFile.First(img => img.ImageFileModelId == Guid.Parse(DataConfig.NoImage));
+            #region WEB
+
+            #region WebImageHD
+
+            var webImageHD = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebImageHDFileName == imageObject);
+
+            if (webImageHD != null)
+            {
+                return webImageHD;
+            }
+
+            #endregion
+
+            #region WebImage
+
+            var webImage = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebImageFileName == imageObject);
+
+            if (webImage != null)
+            {
+                return webImage;
+            }
+
+            #endregion
+
+            #region WebIcon300
+
+            var webIcon300 = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebIconFileName == imageObject);
+
+            if (webIcon300 != null)
+            {
+                return webIcon300;
+            }
+
+            #endregion
+
+            #region WebIcon200
+
+            var webIcon200 = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebIcon200FileName == imageObject);
+
+            if (webIcon200 != null)
+            {
+                return webIcon200;
+            }
+
+            #endregion
+
+            #region WebIcon100
+
+            var webIcon100 = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebIcon100FileName == imageObject);
+
+            if (webIcon100 != null)
+            {
+                return webIcon100;
+            }
+
+            #endregion
+
+            #endregion
+
+            #region WEBAI
+
+            #region WebImageHDAI
+
+            var webImageHDAI = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebImageHDFileNameAI == imageObject);
+
+            if (webImageHDAI != null)
+            {
+                return webImageHDAI;
+            }
+
+            #endregion
+
+            #region WebImageAI
+
+            var webImageAI = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebImageFileNameAI == imageObject);
+
+            if (webImageAI != null)
+            {
+                return webImageAI;
+            }
+
+            #endregion
+
+            #region WebIcon300AI
+
+            var webIcon300AI = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebIconFileNameAI == imageObject);
+
+            if (webIcon300AI != null)
+            {
+                return webIcon300AI;
+            }
+
+            #endregion
+
+            #region WebIcon200AI
+
+            var webIcon200AI = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebIcon200FileNameAI == imageObject);
+
+            if (webIcon200AI != null)
+            {
+                return webIcon200AI;
+            }
+
+            #endregion
+
+            #region WebIcon100AI
+
+            var webIcon100AI = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebIcon100FileNameAI == imageObject);
+
+            if (webIcon100AI != null)
+            {
+                return webIcon100AI;
+            }
+
+            #endregion
+
+            #endregion
+
+            #region PNG
+
+            #region ImageHD
+
+            var imageHD = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.ImageHDFileName == imageObject);
+
+            if (imageHD != null)
+            {
+                return imageHD;
+            }
+
+            #endregion
+
+            #region Image
+
+            var imagePng = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.ImageFileName == imageObject);
+
+            if (imagePng != null)
+            {
+                return imagePng;
+            }
+
+            #endregion
+
+            #region Icon300
+
+            var icon300 = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.IconFileName == imageObject);
+
+            if (icon300 != null)
+            {
+                return icon300;
+            }
+
+            #endregion
+
+            #region Icon200
+
+            var icon200 = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.Icon200FileName == imageObject);
+
+            if (icon200 != null)
+            {
+                return icon200;
+            }
+
+            #endregion
+
+            #region Icon100
+
+            var icon100 = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.Icon100FileName == imageObject);
+
+            if (icon100 != null)
+            {
+                return icon100;
+            }
+
+            #endregion
+
+            #endregion
+
+            return await siteContext.ImageFile.FirstAsync(img => img.ImageFileModelId == Guid.Parse(DataConfig.NoImage));
         }
     }
 
@@ -66,68 +252,199 @@ public class ImageFileImplementation(SiteDbContext siteContext) : IImageFileRepo
 
     #region Получить Guid картинки по имени файла
 
+    /// <summary>
+    /// Получить Guid картинки по имени файла
+    /// </summary>
+    /// <param name="imageFilename"></param>
+    /// <returns></returns>
     public async Task<Guid> GetImageGuidByFileNameAsync(string? imageFilename)
     {
         if (imageFilename != null)
         {
-            if (await siteContext.ImageFile.Where(image => image.WebImageFileName == imageFilename).AnyAsync())
-            {
-                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.WebImageFileName == imageFilename);
+            #region WEB
 
-                return imageObject.ImageFileModelId;
-            }
-            else if (await siteContext.ImageFile.Where(image => image.WebIconFileName == imageFilename).AnyAsync())
-            {
-                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.WebIconFileName == imageFilename);
+            #region WebImageHD
 
-                return imageObject.ImageFileModelId;
-            }
-            else if (await siteContext.ImageFile.Where(image => image.WebIcon200FileName == imageFilename).AnyAsync())
-            {
-                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.WebIcon200FileName == imageFilename);
+            var webImageHD = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebImageHDFileName == imageFilename);
 
-                return imageObject.ImageFileModelId;
-            }
-            else if (await siteContext.ImageFile.Where(image => image.WebIcon100FileName == imageFilename).AnyAsync())
+            if (webImageHD != null)
             {
-                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.WebIcon100FileName == imageFilename);
+                return webImageHD.ImageFileModelId;
+            }
 
-                return imageObject.ImageFileModelId;
-            }
-            else if (await siteContext.ImageFile.Where(image => image.ImageFileName == imageFilename).AnyAsync())
-            {
-                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.ImageFileName == imageFilename);
+            #endregion
 
-                return imageObject.ImageFileModelId;
-            }
-            else if (await siteContext.ImageFile.Where(image => image.IconFileName == imageFilename).AnyAsync())
-            {
-                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.IconFileName == imageFilename);
+            #region WebImage
 
-                return imageObject.ImageFileModelId;
-            }
-            else if (await siteContext.ImageFile.Where(image => image.Icon200FileName == imageFilename).AnyAsync())
-            {
-                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.Icon200FileName == imageFilename);
+            var webImage = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebImageFileName == imageFilename);
 
-                return imageObject.ImageFileModelId;
-            }
-            else if (await siteContext.ImageFile.Where(image => image.Icon100FileName == imageFilename).AnyAsync())
+            if (webImage != null)
             {
-                var imageObject = await siteContext.ImageFile.FirstAsync(image => image.Icon100FileName == imageFilename);
+                return webImage.ImageFileModelId;
+            }
 
-                return imageObject.ImageFileModelId;
-            }
-            else
+            #endregion
+
+            #region WebIcon300
+
+            var webIcon300 = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebIconFileName == imageFilename);
+
+            if (webIcon300 != null)
             {
-                return Guid.Empty;
+                return webIcon300.ImageFileModelId;
             }
+
+            #endregion
+
+            #region WebIcon200
+
+            var webIcon200 = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebIcon200FileName == imageFilename);
+
+            if (webIcon200 != null)
+            {
+                return webIcon200.ImageFileModelId;
+            }
+
+            #endregion
+
+            #region WebIcon100
+
+            var webIcon100 = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebIcon100FileName == imageFilename);
+
+            if (webIcon100 != null)
+            {
+                return webIcon100.ImageFileModelId;
+            }
+
+            #endregion
+
+            #endregion
+
+            #region WEBAI
+
+            #region WebImageHDAI
+
+            var webImageHDAI = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebImageHDFileNameAI == imageFilename);
+
+            if (webImageHDAI != null)
+            {
+                return webImageHDAI.ImageFileModelId;
+            }
+
+            #endregion
+
+            #region WebImageAI
+
+            var webImageAI = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebImageFileNameAI == imageFilename);
+
+            if (webImageAI != null)
+            {
+                return webImageAI.ImageFileModelId;
+            }
+
+            #endregion
+
+            #region WebIcon300AI
+
+            var webIcon300AI = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebIconFileNameAI == imageFilename);
+
+            if (webIcon300AI != null)
+            {
+                return webIcon300AI.ImageFileModelId;
+            }
+
+            #endregion
+
+            #region WebIcon200AI
+
+            var webIcon200AI = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebIcon200FileNameAI == imageFilename);
+
+            if (webIcon200AI != null)
+            {
+                return webIcon200AI.ImageFileModelId;
+            }
+
+            #endregion
+
+            #region WebIcon100AI
+
+            var webIcon100AI = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.WebIcon100FileNameAI == imageFilename);
+
+            if (webIcon100AI != null)
+            {
+                return webIcon100AI.ImageFileModelId;
+            }
+
+            #endregion
+
+            #endregion
+
+            #region PNG
+
+            #region ImageHD
+
+            var imageHD = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.ImageHDFileName == imageFilename);
+
+            if (imageHD != null)
+            {
+                return imageHD.ImageFileModelId;
+            }
+
+            #endregion
+
+            #region Image
+
+            var imagePng = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.ImageFileName == imageFilename);
+
+            if (imagePng != null)
+            {
+                return imagePng.ImageFileModelId;
+            }
+
+            #endregion
+
+            #region Icon300
+
+            var icon300 = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.IconFileName == imageFilename);
+
+            if (icon300 != null)
+            {
+                return icon300.ImageFileModelId;
+            }
+
+            #endregion
+
+            #region Icon200
+
+            var icon200 = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.Icon200FileName == imageFilename);
+
+            if (icon200 != null)
+            {
+                return icon200.ImageFileModelId;
+            }
+
+            #endregion
+
+            #region Icon100
+
+            var icon100 = await siteContext.ImageFile.FirstOrDefaultAsync(image => image.Icon100FileName == imageFilename);
+
+            if (icon100 != null)
+            {
+                return icon100.ImageFileModelId;
+            }
+
+            #endregion
+
+            #endregion
+
+            return Guid.Empty;
         }
         else
         {
             return Guid.Empty;
         }
     }
-}
 
-#endregion
+    #endregion
+}

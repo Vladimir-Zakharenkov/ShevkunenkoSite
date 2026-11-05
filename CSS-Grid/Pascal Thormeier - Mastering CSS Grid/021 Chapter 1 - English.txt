@@ -1,0 +1,3 @@
+https://shevkunenko.site/admin-img/Mastering-CSS-Grid/Figure-1-6-Chrome-s-inspector-shows-us-our-adjusted-2x3-grid.webp
+
+By re-applying the colors, we can now see the default arrangement for this grid. By default, CSS Grid fills grid elements from left to right, top to bottom. This grid resembles a painting by Piet Mondrian and is not exactly what we’d like:

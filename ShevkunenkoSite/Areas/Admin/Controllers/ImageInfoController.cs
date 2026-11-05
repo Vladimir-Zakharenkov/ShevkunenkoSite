@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace ShevkunenkoSite.Areas.Admin.Controllers;
 
@@ -812,14 +811,14 @@ public partial class ImageInfoController(
 
         #endregion
 
-        #region Получаем запись и обновляем скалярные поля
+        #region Получаем запись и обновляем текстовые поля
 
         ImageFileModel imageUpdate = await imageContext.ImageFiles
             .FirstAsync(img => img.ImageFileModelId == imageItem.EditImage.ImageFileModelId);
 
         #region Заголовок картинки
 
-        imageItem.EditImage.ImageCaption = imageItem.EditImage.ImageCaption?.Trim() ?? string.Empty;
+        imageUpdate.ImageCaption = imageItem.EditImage.ImageCaption?.Trim() ?? string.Empty;
 
         if (string.IsNullOrEmpty(imageItem.EditImage.ImageCaption))
         {
@@ -840,9 +839,7 @@ public partial class ImageInfoController(
 
         #region Теги alt и title
 
-        imageUpdate.SearchFilter = string.IsNullOrWhiteSpace(imageItem.EditImage.SearchFilter)
-                ? null
-                : imageItem.EditImage.SearchFilter.Trim();
+        imageUpdate.ImageAltTitle = imageItem.EditImage.ImageAltTitle.Trim();
 
         #endregion
 

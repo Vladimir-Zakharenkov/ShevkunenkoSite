@@ -432,6 +432,10 @@ namespace ShevkunenkoSite.Services.Migrations
                     b.Property<Guid>("FilmPosterId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("FilmProductionCompany")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FilmSubtitles1")
                         .HasColumnType("nvarchar(max)");
 
@@ -454,10 +458,6 @@ namespace ShevkunenkoSite.Services.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FilmYouTube")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FilmProductionCompany")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("FullFilmId")
