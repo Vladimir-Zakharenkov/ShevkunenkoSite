@@ -61,7 +61,7 @@ public class ImageFileImplementation(SiteDbContext siteContext) : IImageFileRepo
             }
             else
             {
-                return await siteContext.ImageFile.FirstAsync(img => img.ImageFileModelId == Guid.Parse(DataConfig.NoImage));
+                return await siteContext.ImageFile.FirstAsync(img => img.ImageFileModelId == DataConfig.NoImage);
             }
         }
         // Поиск картинки по названию файла
@@ -244,7 +244,7 @@ public class ImageFileImplementation(SiteDbContext siteContext) : IImageFileRepo
 
             #endregion
 
-            return await siteContext.ImageFile.FirstAsync(img => img.ImageFileModelId == Guid.Parse(DataConfig.NoImage));
+            return await siteContext.ImageFile.FirstAsync(img => img.ImageFileModelId == DataConfig.NoImage);
         }
     }
 

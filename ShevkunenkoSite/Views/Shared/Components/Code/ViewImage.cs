@@ -29,7 +29,7 @@ public class ViewImage(
 
         image ??= await imageFileContext.ImageFiles
             .FirstOrDefaultAsync(img => img.WebImageFileName == imageId
-                                     || img.ImageFileName == imageId 
+                                     || img.ImageFileName == imageId
                                      || img.WebImageFileNameAI == imageId);
 
         #endregion
@@ -37,7 +37,7 @@ public class ViewImage(
         #region Если ничего не найдено, выводим картинку NoImage
 
         image ??= await imageFileContext.ImageFiles
-            .FirstOrDefaultAsync(img => img.ImageFileModelId == Guid.Parse(DataConfig.NoImage));
+            .FirstOrDefaultAsync(img => img.ImageFileModelId == DataConfig.NoImage);
 
         #endregion
 
@@ -45,7 +45,7 @@ public class ViewImage(
 
         if (image is null)
         {
-            var noImageGuid = Guid.Parse(DataConfig.NoImage);
+            var noImageGuid = DataConfig.NoImage;
 
             image = await imageFileContext.ImageFiles
                 .FirstOrDefaultAsync(img => img.ImageFileModelId == noImageGuid)
@@ -58,8 +58,8 @@ public class ViewImage(
         var vm = new ViewImageViewModel
         {
             ImageItem = image,
-            IconType = iconType is not null && AllowedIconTypes.Contains(iconType) 
-                        ? iconType 
+            IconType = iconType is not null && AllowedIconTypes.Contains(iconType)
+                        ? iconType
                         : "webimage",
             CssClass = string.IsNullOrEmpty(cssClass)
                         ? "img-fluid w-100"

@@ -15,5 +15,5 @@ public class Shevkunenko(
 
     public IActionResult Press() => Redirect("https://shevkunenko.ru/pressa/index.htm");
 
-    public IActionResult Error404() => View();
+    public IActionResult Error(int id) => View("Error404", id);
 }

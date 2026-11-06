@@ -1,176 +1,121 @@
-﻿// Ignore Spelling: Msapplication
+﻿// Ignore Spelling: Msapplication Asus Teatr Kinopoisk Imdb
 
 namespace ShevkunenkoSite.Models;
 
 public class DataConfig
 {
-    #region Папка временного хранения
+    #region Картинки
 
-    public static string TempPath { get; set; } = null!;
-
-    #endregion
-
-    #region Папка с иконками
-
-    public static string IconsFolder { get; set; } = null!;
-
-    #endregion
-
-    #region Папка с иконками на диске
-
-    public static string IconFoldersPath { get; set; } = null!;
-
-    #endregion
-
-    #region Картинка NoImage
-
-    public static string NoImage { get; set; } = null!;
-
-    #endregion
-
-    #region Папка для фильмов
-
-    public static string MovieFoldersPath { get; set; } = null!;
-
-    #endregion
-
-    #region Папка для аудиофайлов
-
-    public static string AudioFoldersPath { get; set; } = null!;
-
-    #endregion
-
-    #region Папка для текстов
-
-    public static string TextsFolderPath { get; set; } = null!;
-
-    #endregion
-
-    #region Папка-архив для текста
-
-    public static string ArchiveTextsFolderPath { get; set; } = null!;
-
-    #endregion
-
-    #region Папка-архив для фильмов
-
-    public static string ArchiveFilmsFolderPath { get; set; } = null!;
-
-    #endregion
-
-    #region Картинка Film
+    public static Guid NoImage { get; set; }
 
     public static Guid ImageForFilm { get; set; }
 
-    #endregion
-
-    #region Картинка YouTube
-
-    public static Guid YoutubeImage {  get; set; }
-
-    #endregion
-
-    #region Картинка VkVideo
+    public static Guid YoutubeImage { get; set; }
 
     public static Guid VkVideoImage { get; set; }
 
-    #endregion
-
-    #region Картинка MailRuVideo
-
     public static Guid MailRuVideoImage { get; set; }
-
-    #endregion
-
-    #region Картинка OkVideo
 
     public static Guid OkVideoImage { get; set; }
 
-    #endregion
-
-    #region Картинка AsusVideo
-
-#pragma warning disable VSSpell001 // Spell Check
     public static Guid AsusVideoImage { get; set; }
-
-    #endregion
-
-    #region Картинка YandexDisk
 
     public static Guid YandexDiskImage { get; set; }
 
-    #endregion
-
-    #region Картинка DownloadFilm
-
     public static Guid DownloadFilmImage { get; set; }
-
-    #endregion
-
-    #region Картинка Kino-Teatr.ru
 
     public static Guid KinoTeatrImage { get; set; }
 
-    #endregion
-
-    #region Картинка Kinopoisk.ru
-
     public static Guid KinopoiskImage { get; set; }
 
-    #endregion
-
-    #region Картинка IMDB.com
-
     public static Guid ImdbImage { get; set; }
-#pragma warning restore VSSpell001 // Spell Check
-
-    #endregion
-
-    #region Картинка Word
 
     public static Guid WordImage { get; set; }
 
-    #endregion
-
-    #region Картинка Txt
-
     public static Guid TxtImage { get; set; }
-
-    #endregion
-
-    #region Картинка MP3
 
     public static Guid Mp3Image { get; set; }
 
-    #endregion
-
-    #region Картинка Pdf
-
     public static Guid PdfImage { get; set; }
 
-    #endregion
-
-    #region Картинка Audio
-
     public static Guid AudioImage { get; set; }
-
-    #endregion
-
-    #region Картинка принтера
 
     public static Guid PrintImage { get; set; }
 
     #endregion
 
-    #region Число ссылок на странице для постраничного представления
+    #region Папки
 
-    public static int NumberOfItemsPerPage { get; set; }
+    public static string TempPath { get; set; } = null!;
+
+    public static string IconsFolder { get; set; } = null!;
+
+    public static string IconFoldersPath { get; set; } = null!;
+
+    public static string MovieFoldersPath { get; set; } = null!;
+
+    public static string AudioFoldersPath { get; set; } = null!;
+
+    public static string TextsFolderPath { get; set; } = null!;
+
+    public static string ArchiveTextsFolderPath { get; set; } = null!;
+
+    public static string ArchiveFilmsFolderPath { get; set; } = null!;
 
     #endregion
 
-    #region Число картинок  слева (справа) вокруг основного содержания
+    #region Пагинация
+
+    public static int NumberOfItemsPerPage { get; set; }
 
     public static int NumberOfPicturesAround { get; set; }
+
+    #endregion
+
+    #region Инициализация из DataConfigOptions
+
+    /// <summary>
+    /// Заполняет static-свойства DataConfig значениями из DataConfigOptions.
+    /// Вызывается однократно при старте приложения в Program.cs.
+    /// </summary>
+    public static void Init(DataConfigOptions options)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+
+        // Папки
+        TempPath = options.TempPath;
+        IconsFolder = options.IconsFolder;
+        IconFoldersPath = options.IconFoldersPath;
+        NoImage = options.NoImage;
+        MovieFoldersPath = options.MovieFoldersPath;
+        AudioFoldersPath = options.AudioFoldersPath;
+        TextsFolderPath = options.TextsFolderPath;
+        ArchiveTextsFolderPath = options.ArchiveTextsFolderPath;
+        ArchiveFilmsFolderPath = options.ArchiveFilmsFolderPath;
+
+        // Guid'ы картинок
+        ImageForFilm = options.ImageForFilm;
+        YoutubeImage = options.YoutubeImage;
+        VkVideoImage = options.VkVideoImage;
+        MailRuVideoImage = options.MailRuVideoImage;
+        OkVideoImage = options.OkVideoImage;
+        AsusVideoImage = options.AsusVideoImage;
+        YandexDiskImage = options.YandexDiskImage;
+        DownloadFilmImage = options.DownloadFilmImage;
+        KinoTeatrImage = options.KinoTeatrImage;
+        KinopoiskImage = options.KinopoiskImage;
+        ImdbImage = options.ImdbImage;
+        WordImage = options.WordImage;
+        TxtImage = options.TxtImage;
+        Mp3Image = options.Mp3Image;
+        PdfImage = options.PdfImage;
+        AudioImage = options.AudioImage;
+        PrintImage = options.PrintImage;
+
+        // Пагинация
+        NumberOfItemsPerPage = options.NumberOfItemsPerPage;
+        NumberOfPicturesAround = options.NumberOfPicturesAround;
+    }
 
     #endregion
 }

@@ -1,7 +1,5 @@
 {
   "ProjectData": {
-    "TempPath": "\\Temp\\",
-
     "NoImage": "29F51581-8F24-4EDC-1F48-08DAE2B985EA",
 
     "ImageForFilm": "b386f45b-fc84-4748-bc75-08dd67cfc8ed",
@@ -10,7 +8,7 @@
 
     "VkVideoImage": "3dc5ea15-b873-4f01-b103-08db0baedb98",
 
-    "MailruVideoImage": "1e1619fc-50a5-4afa-58ea-08db0bafe8f2",
+    "MailRuVideoImage": "1e1619fc-50a5-4afa-58ea-08db0bafe8f2",
 
     "OkVideoImage": "78ea8336-1037-470b-d6dd-08db0bb1124f",
 
@@ -37,6 +35,8 @@
     "AudioImage": "84c9851e-7b45-4bd1-1189-08dd8ec59a70",
 
     "PrintImage": "f271cf6f-a66e-4c55-9d5e-08dc1058c236",
+
+    "TempPath": "\\Temp\\",
 
     "IconsFolder": "/images/pageicons/",
 

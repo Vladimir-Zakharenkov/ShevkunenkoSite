@@ -1070,7 +1070,7 @@ public partial class FilmsController(
                     #region Перемещаем старый файл в папку DataConfig.ArchiveFilmsFolderPath
 
                     string oldFilePath = Path.Combine(DataConfig.MovieFoldersPath, filmUpdate.FilmFileName);
-                    string newFilePath = rootPath + Path.Combine(DataConfig.ArchiveFilmsFolderPath, Path.GetFileName(oldFilePath));
+                    string newFilePath = Path.Combine(DataConfig.ArchiveFilmsFolderPath, Path.GetFileName(oldFilePath));
 
                     using (FileStream sourceStream = System.IO.File.OpenRead(oldFilePath))
                     using (FileStream destStream = System.IO.File.Create(newFilePath))

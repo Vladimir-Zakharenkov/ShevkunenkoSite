@@ -1,32 +1,49 @@
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+п»їWebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 #region Configuration
 
 ConfigurationManager configuration = builder.Configuration;
 
-configuration.AddJsonFile("DataConfig.json");
-
-configuration.Bind("ProjectData", new DataConfig());
-
 IWebHostEnvironment environment = builder.Environment;
+
+configuration.AddJsonFile(
+    Path.Combine(environment.ContentRootPath, "DataConfig.json"),
+    optional: false,
+    reloadOnChange: false);
+
+// Р—Р°РїРѕР»РЅСЏРµРј instance-РІРµСЂСЃРёСЋ РёР· JSON, Р·Р°С‚РµРј РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј static DataConfig
+DataConfigOptions dataConfigOptions = new();
+configuration.GetSection("ProjectData").Bind(dataConfigOptions);
+DataConfig.Init(dataConfigOptions);
+
+// РџСЂРѕРІРµСЂРєР°, С‡С‚Рѕ РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РїСЂРѕС€Р»Р°
+if (string.IsNullOrEmpty(DataConfig.TempPath) ||
+    string.IsNullOrEmpty(DataConfig.MovieFoldersPath) ||
+    DataConfig.NumberOfItemsPerPage <= 0 ||
+    DataConfig.NoImage == Guid.Empty)
+{
+    throw new InvalidOperationException(
+        "DataConfig РЅРµ РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅ. РџСЂРѕРІРµСЂСЊС‚Рµ СЃРµРєС†РёСЋ 'ProjectData' РІ DataConfig.json " +
+        "Рё РІС‹Р·РѕРІ DataConfig.Init(dataConfigOptions) РІ Program.cs.");
+}
 
 #endregion
 
 #region Add services to the container
 
-#region Коллекция сервисов
+#region РљРѕР»Р»РµРєС†РёСЏ СЃРµСЂРІРёСЃРѕРІ
 
 IServiceCollection services = builder.Services;
 
 #endregion
 
-#region Работа с MVC
+#region Р Р°Р±РѕС‚Р° СЃ MVC
 
 services.AddControllersWithViews();
 
 #endregion
 
-#region Работа с RazorPages
+#region Р Р°Р±РѕС‚Р° СЃ RazorPages
 
 services.AddRazorPages(options =>
 {
@@ -39,7 +56,7 @@ services.AddRazorPages(options =>
 
 #endregion
 
-#region Подключить аутентификацию
+#region РџРѕРґРєР»СЋС‡РёС‚СЊ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЋ
 
 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -49,7 +66,7 @@ services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 
 #endregion
 
-#region Указать пути поиска файлов
+#region РЈРєР°Р·Р°С‚СЊ РїСѓС‚Рё РїРѕРёСЃРєР° С„Р°Р№Р»РѕРІ
 
 services.Configure<RazorViewEngineOptions>(options =>
 {
@@ -79,12 +96,6 @@ services.Configure<RazorViewEngineOptions>(options =>
 
 #endregion
 
-#region Кодирование в Unicode
-
-services.Configure<WebEncoderOptions>(options => options.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.All));
-
-#endregion
-
 #region RouteOptions
 
 services.Configure<RouteOptions>(options =>
@@ -98,13 +109,18 @@ services.Configure<RouteOptions>(options =>
 
 #region MemoryCache
 
-builder.Services.AddDistributedMemoryCache();
+services.AddDistributedMemoryCache();
 
 #endregion
 
 #region AddSession
 
-builder.Services.AddSession();
+services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 #endregion
 
@@ -128,7 +144,7 @@ services.AddWebMarkupMin(
 
 #endregion
 
-#region Работа с базой данных
+#region Р Р°Р±РѕС‚Р° СЃ Р±Р°Р·РѕР№ РґР°РЅРЅС‹С…
 
 services.AddDbContextFactory<SiteDbContext>(options =>
 {
@@ -161,15 +177,15 @@ services.AddScoped<IIconTypeRepository, IconTypeImplementation>();
 
 #endregion
 
-#region Открыть папку на компьютере
+#region РћС‚РєСЂС‹С‚СЊ РїР°РїРєСѓ РЅР° РєРѕРјРїСЊСЋС‚РµСЂРµ
 
-builder.Services.AddScoped<IFolderOpener, FolderOpener>();
-
-#endregion
+services.AddScoped<IFolderOpener, FolderOpener>();
 
 #endregion
 
-#region  Configure the HTTP request pipeline
+#endregion
+
+#region Configure the HTTP request pipeline
 
 WebApplication app = builder.Build();
 
@@ -185,31 +201,35 @@ else
 
 app.UseStatusCodePagesWithReExecute("/Shevkunenko/Error{0}");
 
-#region Принудительное перенаправление на HTTPS
+#region РџСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕРµ РїРµСЂРµРЅР°РїСЂР°РІР»РµРЅРёРµ РЅР° HTTPS
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 #endregion
 
-#region Работа со статическими файлами
+#region Р Р°Р±РѕС‚Р° СЃРѕ СЃС‚Р°С‚РёС‡РµСЃРєРёРјРё С„Р°Р№Р»Р°РјРё
 
+app.UseStaticFiles();
 app.MapStaticAssets();
 
 #endregion
 
-#region Работа с сессиями
+#region Р Р°Р±РѕС‚Р° СЃ СЃРµСЃСЃРёСЏРјРё
 
 app.UseSession();
 
 #endregion
 
-#region Минификация HTML
+#region РњРёРЅРёС„РёРєР°С†РёСЏ HTML
 
 app.UseWebMarkupMin();
 
 #endregion
 
-#region Маршруты
+#region РњР°СЂС€СЂСѓС‚С‹
 
 app.UseRouting();
 
@@ -223,88 +243,88 @@ app.MapControllerRoute(
 
 app.MapAreaControllerRoute(
         name: "videos_area",
-        areaName: "videos",
-        pattern: "videos/{controller=Номе}/{action=Index}/{id?}");
+        areaName: "Videos",
+        pattern: "videos/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute("pagination", "Video-na-saite/Stranica{pageNumber}",
     new { Controller = "AllVideo", Action = "Index" });
 
-#region Книги о Сергее Шевкуненко
+#region РљРЅРёРіРё Рѕ РЎРµСЂРіРµРµ РЁРµРІРєСѓРЅРµРЅРєРѕ
 
 app.MapControllerRoute(
     name: "books_about_shevkunenko",
-    pattern: "Книги-о-Сергее-Шевкуненко",
+    pattern: "РљРЅРёРіРё-Рѕ-РЎРµСЂРіРµРµ-РЁРµРІРєСѓРЅРµРЅРєРѕ",
     defaults: new { Controller = "Books", Action = "Index" });
 
 #endregion
 
-#region Страницы книги и аудиокниги
+#region РЎС‚СЂР°РЅРёС†С‹ РєРЅРёРіРё Рё Р°СѓРґРёРѕРєРЅРёРіРё
 
 app.MapControllerRoute(
     name: "pages_of_book",
-    pattern: "Книга/{bookCaption}/Страница-{pageNumber}",
+    pattern: "РљРЅРёРіР°/{bookCaption}/РЎС‚СЂР°РЅРёС†Р°-{pageNumber}",
     defaults: new { Controller = "Books", Action = "Book" });
 
 app.MapControllerRoute(
     name: "pages_of_audiobook",
-    pattern: "Аудиокнига/{audioBookCaption}/Часть-{audioBookPart}/Читает-{audioActor}",
+    pattern: "РђСѓРґРёРѕРєРЅРёРіР°/{audioBookCaption}/Р§Р°СЃС‚СЊ-{audioBookPart}/Р§РёС‚Р°РµС‚-{audioActor}",
     defaults: new { Controller = "Books", Action = "AudioBook" });
 
 #endregion
 
-#region Альбом фотографий из книги
+#region РђР»СЊР±РѕРј С„РѕС‚РѕРіСЂР°С„РёР№ РёР· РєРЅРёРіРё
 
 app.MapControllerRoute(
     name: "album_page_photo",
-    pattern: "{albumCaption}/Альбом/Страница-{pageNumber}/Фото-{imageId}",
+    pattern: "{albumCaption}/РђР»СЊР±РѕРј/РЎС‚СЂР°РЅРёС†Р°-{pageNumber}/Р¤РѕС‚Рѕ-{imageId}",
     new { Controller = "Books", Action = "PhotoAlbum" });
 
 app.MapControllerRoute(
     name: "album_paging",
-    pattern: "{albumCaption}/Альбом/Страница-{pageNumber}",
+    pattern: "{albumCaption}/РђР»СЊР±РѕРј/РЎС‚СЂР°РЅРёС†Р°-{pageNumber}",
     new { Controller = "Books", Action = "PhotoAlbum" });
 
 app.MapControllerRoute(
     name: "album_photo",
-    pattern: "{albumCaption}/Альбом/Фото-{imageId}",
+    pattern: "{albumCaption}/РђР»СЊР±РѕРј/Р¤РѕС‚Рѕ-{imageId}",
     new { Controller = "Books", Action = "PhotoAlbum" });
 
 #endregion
 
-#region Страница фильма
+#region РЎС‚СЂР°РЅРёС†Р° С„РёР»СЊРјР°
 
 app.MapControllerRoute(
     name: "search_of_films",
-    pattern: "Фильмы--на--сайте/Страница--{pageNumber}",
+    pattern: "Р¤РёР»СЊРјС‹--РЅР°--СЃР°Р№С‚Рµ/РЎС‚СЂР°РЅРёС†Р°--{pageNumber}",
     defaults: new { Controller = "Films", Action = "Index" });
 
 app.MapControllerRoute(
     name: "list_of_films",
-    pattern: "Фильмы--на--сайте",
+    pattern: "Р¤РёР»СЊРјС‹--РЅР°--СЃР°Р№С‚Рµ",
     defaults: new { Controller = "Films", Action = "Index" });
 
 app.MapControllerRoute(
     name: "film",
-    pattern: "Фильм--«{filmCaption}»",
+    pattern: "Р¤РёР»СЊРј--В«{filmCaption}В»",
     defaults: new { Controller = "Films", Action = "Film" });
 
 #endregion
 
-#region Альбом фотографий из фильма
+#region РђР»СЊР±РѕРј С„РѕС‚РѕРіСЂР°С„РёР№ РёР· С„РёР»СЊРјР°
 
 app.MapControllerRoute(
     name: "album_page_photo_film",
-    pattern: "Фильм--«{filmCaption}»/Кадры/Страница-{pageNumber}/Фото-{imageId}",
+    pattern: "Р¤РёР»СЊРј--В«{filmCaption}В»/РљР°РґСЂС‹/РЎС‚СЂР°РЅРёС†Р°-{pageNumber}/Р¤РѕС‚Рѕ-{imageId}",
     defaults: new { Controller = "Films", Action = "FilmPhotoAlbum" });
 
 app.MapControllerRoute(
     name: "album_paging_film",
-    pattern: "Фильм--«{filmCaption}»/Кадры/Страница-{pageNumber}",
+    pattern: "Р¤РёР»СЊРј--В«{filmCaption}В»/РљР°РґСЂС‹/РЎС‚СЂР°РЅРёС†Р°-{pageNumber}",
     defaults: new { Controller = "Films", Action = "FilmPhotoAlbum" });
 
 app.MapControllerRoute(
     name: "album_photo_film",
-    pattern: "Фильм--«{filmCaption}»/Кадры/Фото-{imageId}",
+    pattern: "Р¤РёР»СЊРј--В«{filmCaption}В»/РљР°РґСЂС‹/Р¤РѕС‚Рѕ-{imageId}",
     defaults: new { Controller = "Films", Action = "FilmPhotoAlbum" });
 
 #endregion
