@@ -7,7 +7,7 @@ ConfigurationManager configuration = builder.Configuration;
 IWebHostEnvironment environment = builder.Environment;
 
 configuration.AddJsonFile(
-    Path.Combine(environment.ContentRootPath, "DataConfig.json"),
+    "DataConfig.json",
     optional: false,
     reloadOnChange: false);
 
@@ -17,8 +17,8 @@ configuration.GetSection("ProjectData").Bind(dataConfigOptions);
 DataConfig.Init(dataConfigOptions);
 
 // Проверка, что инициализация прошла
-if (string.IsNullOrEmpty(DataConfig.TempPath) ||
-    string.IsNullOrEmpty(DataConfig.MovieFoldersPath) ||
+if (string.IsNullOrWhiteSpace(DataConfig.TempPath) ||
+    string.IsNullOrWhiteSpace(DataConfig.MovieFoldersPath) ||
     DataConfig.NumberOfItemsPerPage <= 0 ||
     DataConfig.NoImage == Guid.Empty)
 {
@@ -61,7 +61,10 @@ services.AddRazorPages(options =>
 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = new PathString("/Admin/Login");
+        options.LoginPath = "/Admin/Login";
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SameSite = SameSiteMode.Lax;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
     });
 
 #endregion
@@ -120,6 +123,7 @@ services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
+    options.Cookie.SameSite = SameSiteMode.Lax;
 });
 
 #endregion
@@ -146,9 +150,9 @@ services.AddWebMarkupMin(
 
 #region Работа с базой данных
 
-services.AddDbContextFactory<SiteDbContext>(options =>
+services.AddDbContext<SiteDbContext>(options =>
 {
-    options.UseSqlServer(configuration["ConnectionStrings:ShevkunenkoSitePAPA"] ?? throw new InvalidOperationException("Connection string 'ShevkunenkoSitePAPA' not found."));
+    options.UseSqlServer(configuration.GetConnectionString("ShevkunenkoSitePAPA") ?? throw new InvalidOperationException("Connection string 'ShevkunenkoSitePAPA' not found."));
 
     if (environment.IsDevelopment())
     {
@@ -212,34 +216,25 @@ if (!app.Environment.IsDevelopment())
 
 #region Работа со статическими файлами
 
-app.UseStaticFiles();
 app.MapStaticAssets();
 
 #endregion
 
-#region Работа с сессиями
+#region Маршрутизация и middleware
+
+app.UseRouting();
 
 app.UseSession();
 
-#endregion
+app.UseAuthentication();
 
-#region Минификация HTML
+app.UseAuthorization();
 
 app.UseWebMarkupMin();
 
 #endregion
 
 #region Маршруты
-
-app.UseRouting();
-
-app.UseAuthentication();
-
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "MyArea",
-    pattern: "{area?}/{controller=Shevkunenko}/{action=Index}/{id?}");
 
 app.MapAreaControllerRoute(
         name: "videos_area",
