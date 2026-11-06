@@ -546,7 +546,7 @@ namespace ShevkunenkoSite.Services.Migrations
                         .HasColumnName("ImageFileId");
 
                     b.Property<string>("Icon100FileName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Icon100FileNameExtension")
                         .HasColumnType("nvarchar(max)");
@@ -564,7 +564,7 @@ namespace ShevkunenkoSite.Services.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Icon200FileName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Icon200FileNameExtension")
                         .HasColumnType("nvarchar(max)");
@@ -582,7 +582,7 @@ namespace ShevkunenkoSite.Services.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("IconFileName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("IconFileNameExtension")
                         .HasColumnType("nvarchar(max)");
@@ -615,7 +615,7 @@ namespace ShevkunenkoSite.Services.Migrations
                         .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("ImageFileName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ImageFileNameExtension")
                         .HasColumnType("nvarchar(max)");
@@ -624,7 +624,7 @@ namespace ShevkunenkoSite.Services.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("ImageHDFileName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<long?>("ImageHDFileSize")
                         .HasColumnType("bigint");
@@ -662,10 +662,10 @@ namespace ShevkunenkoSite.Services.Migrations
 
                     b.Property<string>("WebIcon100FileName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("WebIcon100FileNameAI")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("WebIcon100FileNameExtension")
                         .IsRequired()
@@ -701,10 +701,10 @@ namespace ShevkunenkoSite.Services.Migrations
 
                     b.Property<string>("WebIcon200FileName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("WebIcon200FileNameAI")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("WebIcon200FileNameExtension")
                         .IsRequired()
@@ -740,10 +740,10 @@ namespace ShevkunenkoSite.Services.Migrations
 
                     b.Property<string>("WebIconFileName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("WebIconFileNameAI")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("WebIconFileNameExtension")
                         .IsRequired()
@@ -779,10 +779,10 @@ namespace ShevkunenkoSite.Services.Migrations
 
                     b.Property<string>("WebImageFileName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("WebImageFileNameAI")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("WebImageFileNameExtension")
                         .IsRequired()
@@ -798,10 +798,10 @@ namespace ShevkunenkoSite.Services.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("WebImageHDFileName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("WebImageHDFileNameAI")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<long?>("WebImageHDFileSize")
                         .HasColumnType("bigint");
@@ -853,6 +853,66 @@ namespace ShevkunenkoSite.Services.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("ImageFileModelId");
+
+                    b.HasIndex("Icon100FileName")
+                        .IsUnique()
+                        .HasFilter("[Icon100FileName] IS NOT NULL AND [Icon100FileName] <> ''");
+
+                    b.HasIndex("Icon200FileName")
+                        .IsUnique()
+                        .HasFilter("[Icon200FileName] IS NOT NULL AND [Icon200FileName] <> ''");
+
+                    b.HasIndex("IconFileName")
+                        .IsUnique()
+                        .HasFilter("[IconFileName] IS NOT NULL AND [IconFileName] <> ''");
+
+                    b.HasIndex("ImageFileName")
+                        .IsUnique()
+                        .HasFilter("[ImageFileName] IS NOT NULL AND [ImageFileName] <> ''");
+
+                    b.HasIndex("ImageHDFileName")
+                        .IsUnique()
+                        .HasFilter("[ImageHDFileName] IS NOT NULL AND [ImageHDFileName] <> ''");
+
+                    b.HasIndex("WebIcon100FileName")
+                        .IsUnique()
+                        .HasFilter("[WebIcon100FileName] IS NOT NULL AND [WebIcon100FileName] <> ''");
+
+                    b.HasIndex("WebIcon100FileNameAI")
+                        .IsUnique()
+                        .HasFilter("[WebIcon100FileNameAI] IS NOT NULL AND [WebIcon100FileNameAI] <> ''");
+
+                    b.HasIndex("WebIcon200FileName")
+                        .IsUnique()
+                        .HasFilter("[WebIcon200FileName] IS NOT NULL AND [WebIcon200FileName] <> ''");
+
+                    b.HasIndex("WebIcon200FileNameAI")
+                        .IsUnique()
+                        .HasFilter("[WebIcon200FileNameAI] IS NOT NULL AND [WebIcon200FileNameAI] <> ''");
+
+                    b.HasIndex("WebIconFileName")
+                        .IsUnique()
+                        .HasFilter("[WebIconFileName] IS NOT NULL AND [WebIconFileName] <> ''");
+
+                    b.HasIndex("WebIconFileNameAI")
+                        .IsUnique()
+                        .HasFilter("[WebIconFileNameAI] IS NOT NULL AND [WebIconFileNameAI] <> ''");
+
+                    b.HasIndex("WebImageFileName")
+                        .IsUnique()
+                        .HasFilter("[WebImageFileName] IS NOT NULL AND [WebImageFileName] <> ''");
+
+                    b.HasIndex("WebImageFileNameAI")
+                        .IsUnique()
+                        .HasFilter("[WebImageFileNameAI] IS NOT NULL AND [WebImageFileNameAI] <> ''");
+
+                    b.HasIndex("WebImageHDFileName")
+                        .IsUnique()
+                        .HasFilter("[WebImageHDFileName] IS NOT NULL AND [WebImageHDFileName] <> ''");
+
+                    b.HasIndex("WebImageHDFileNameAI")
+                        .IsUnique()
+                        .HasFilter("[WebImageHDFileNameAI] IS NOT NULL AND [WebImageHDFileNameAI] <> ''");
 
                     b.ToTable("ImageFile");
                 });
