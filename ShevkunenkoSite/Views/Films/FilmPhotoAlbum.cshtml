@@ -233,7 +233,7 @@ else
 }
 
 @* Кнопки страниц альбома *@
-<div class="bg-dark-subtle my-4 block-shadow">
+<div class="bg-dark-subtle my-4 block-shadow @(Model.AllImageFiles.Count <= DataConfig.NumberOfItemsPerPage ? "d-none" : "")">
 
     <h2 class="text_shadow fs-3 p-0 mb-0">
 

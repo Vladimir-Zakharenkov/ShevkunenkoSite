@@ -236,6 +236,10 @@ app.UseWebMarkupMin();
 
 #region Маршруты
 
+app.MapControllerRoute(
+    name: "MyArea",
+    pattern: "{area?}/{controller=Shevkunenko}/{action=Index}/{id?}");
+
 app.MapAreaControllerRoute(
         name: "videos_area",
         areaName: "Videos",
