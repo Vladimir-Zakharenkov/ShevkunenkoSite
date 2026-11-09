@@ -25,9 +25,9 @@ public class VideoCard(
         // определяем страницу серий многосерийного фильма
         if (IsPartsMoreOne == true & movieFileModel.PageForMovieSeriesId != null & linkToInfoAboutMovie !=true)
         {
-            if (await pageInfoContext.PagesInfo.Where(p => p.PageInfoModelId == movieFileModel.PageForMovieSeriesId).AnyAsync())
+            if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageInfoModelId == movieFileModel.PageForMovieSeriesId).AnyAsync())
             {
-                pageForMoreOneParts = await pageInfoContext.PagesInfo.FirstAsync(p => p.PageInfoModelId == movieFileModel.PageForMovieSeriesId);
+                pageForMoreOneParts = await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PageInfoModelId == movieFileModel.PageForMovieSeriesId);
 
                 pathForSeries = pageForMoreOneParts.PageFullPathWithData;
             }

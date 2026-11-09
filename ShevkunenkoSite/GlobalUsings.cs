@@ -13,6 +13,7 @@ global using Microsoft.Extensions.WebEncoders;
 global using System.Text.Unicode;
 global using WebMarkupMin.AspNetCoreLatest;
 global using MetadataExtractor;
+global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc;
 global using System.IO;

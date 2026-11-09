@@ -14,7 +14,7 @@ public class Kak_uhodili_kumiryModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        PageLinks =  await _pageInfoContext.PagesInfo.Where(p => p.PageFilter.Contains("Как уходили кумиры,")).ToArrayAsync();
+        PageLinks =  await _pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFilter.Contains("Как уходили кумиры,")).ToArrayAsync();
 
         return Page();
     }

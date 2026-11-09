@@ -87,10 +87,10 @@ public class AllVideoController(
 
             foreach (var p in pagesIdOfMovies)
             {
-                if (await pageContext.PagesInfo.Where(i => i.PageInfoModelId == p).AnyAsync())
-                {
-                    var pg = await pageContext.PagesInfo.FirstAsync(i => i.PageInfoModelId == p);
+                var pg = await pageContext.PagesInfoNoTracking.FirstOrDefaultAsync(i => i.PageInfoModelId == p);
 
+                if (pg != null)
+                {
                     pagesForMovies.Add(pg);
                 }
             }

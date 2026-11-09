@@ -11,9 +11,9 @@ public class ManifestController(
 
         ManifestModel manifest = new();
 
-        if (pageContext.PagesInfo.Where(page => page.PageInfoModelId == pageId).Any())
+        if (pageContext.PagesInfoNoTracking.Where(page => page.PageInfoModelId == pageId).Any())
         {
-            pageInfo = pageContext.PagesInfo.First(page => page.PageInfoModelId == pageId);
+            pageInfo = pageContext.PagesInfoNoTracking.First(page => page.PageInfoModelId == pageId);
         }
 
         manifest.Name = pageInfo.PageTitle;

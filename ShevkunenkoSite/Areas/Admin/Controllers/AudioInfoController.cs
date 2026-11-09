@@ -140,7 +140,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
                     ViewData["AudioBooks"] = new SelectList(audioBookContext.AudioBooks, "AudioBookModelId", "CaptionOfAudioBook");
 
                     // Список страниц сайта
-                    ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfo.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
+                    ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfoNoTracking.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
 
                     // Список текстовых файлов
                     ViewData["TextFIles"] = new SelectList(textsOfSiteContext.Texts, "TextInfoModelId", "TxtFileName");
@@ -248,7 +248,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
                                 ViewData["AudioBooks"] = new SelectList(audioBookContext.AudioBooks, "AudioBookModelId", "CaptionOfAudioBook");
 
                                 // Список страниц сайта
-                                ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfo.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
+                                ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfoNoTracking.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
 
                                 // Список текстовых файлов
                                 ViewData["TextFIles"] = new SelectList(textsOfSiteContext.Texts, "TextInfoModelId", "TxtFileName");
@@ -278,7 +278,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
                                 ViewData["AudioBooks"] = new SelectList(audioBookContext.AudioBooks, "AudioBookModelId", "CaptionOfAudioBook");
 
                                 // Список страниц сайта
-                                ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfo.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
+                                ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfoNoTracking.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
 
                                 // Список текстовых файлов
                                 ViewData["TextFIles"] = new SelectList(textsOfSiteContext.Texts, "TextInfoModelId", "TxtFileName");
@@ -308,7 +308,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
                                 ViewData["AudioBooks"] = new SelectList(audioBookContext.AudioBooks, "AudioBookModelId", "CaptionOfAudioBook");
 
                                 // Список страниц сайта
-                                ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfo.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
+                                ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfoNoTracking.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
 
                                 // Список текстовых файлов
                                 ViewData["TextFIles"] = new SelectList(textsOfSiteContext.Texts, "TextInfoModelId", "TxtFileName");
@@ -338,7 +338,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
                                 ViewData["AudioBooks"] = new SelectList(audioBookContext.AudioBooks, "AudioBookModelId", "CaptionOfAudioBook");
 
                                 // Список страниц сайта
-                                ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfo.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
+                                ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfoNoTracking.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
 
                                 // Список текстовых файлов
                                 ViewData["TextFIles"] = new SelectList(textsOfSiteContext.Texts, "TextInfoModelId", "TxtFileName");
@@ -368,7 +368,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
                                 ViewData["AudioBooks"] = new SelectList(audioBookContext.AudioBooks, "AudioBookModelId", "CaptionOfAudioBook");
 
                                 // Список страниц сайта
-                                ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfo.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
+                                ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfoNoTracking.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
 
                                 // Список текстовых файлов
                                 ViewData["TextFIles"] = new SelectList(textsOfSiteContext.Texts, "TextInfoModelId", "TxtFileName");
@@ -398,7 +398,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
                                 ViewData["AudioBooks"] = new SelectList(audioBookContext.AudioBooks, "AudioBookModelId", "CaptionOfAudioBook");
 
                                 // Список страниц сайта
-                                ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfo.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
+                                ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfoNoTracking.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
 
                                 // Список текстовых файлов
                                 ViewData["TextFIles"] = new SelectList(textsOfSiteContext.Texts, "TextInfoModelId", "TxtFileName");
@@ -470,7 +470,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
                 ViewData["AudioBooks"] = new SelectList(audioBookContext.AudioBooks, "AudioBookModelId", "CaptionOfAudioBook");
 
                 // Список страниц сайта
-                ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfo.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
+                ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfoNoTracking.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
 
                 // Список текстовых файлов
                 ViewData["TextFIles"] = new SelectList(textsOfSiteContext.Texts, "TextInfoModelId", "TxtFileName");
@@ -626,7 +626,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
                                     ViewData["AudioBooks"] = new SelectList(audioBookContext.AudioBooks, "AudioBookModelId", "CaptionOfAudioBook");
 
                                     // Список страниц сайта
-                                    ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfo.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
+                                    ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfoNoTracking.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
 
                                     // Список текстовых файлов
                                     ViewData["TextFIles"] = new SelectList(textsOfSiteContext.Texts, "TextInfoModelId", "TxtFileName");
@@ -656,7 +656,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
                                     ViewData["AudioBooks"] = new SelectList(audioBookContext.AudioBooks, "AudioBookModelId", "CaptionOfAudioBook");
 
                                     // Список страниц сайта
-                                    ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfo.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
+                                    ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfoNoTracking.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
 
                                     // Список текстовых файлов
                                     ViewData["TextFIles"] = new SelectList(textsOfSiteContext.Texts, "TextInfoModelId", "TxtFileName");
@@ -686,7 +686,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
                                     ViewData["AudioBooks"] = new SelectList(audioBookContext.AudioBooks, "AudioBookModelId", "CaptionOfAudioBook");
 
                                     // Список страниц сайта
-                                    ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfo.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
+                                    ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfoNoTracking.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
 
                                     // Список текстовых файлов
                                     ViewData["TextFIles"] = new SelectList(textsOfSiteContext.Texts, "TextInfoModelId", "TxtFileName");
@@ -716,7 +716,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
                                     ViewData["AudioBooks"] = new SelectList(audioBookContext.AudioBooks, "AudioBookModelId", "CaptionOfAudioBook");
 
                                     // Список страниц сайта
-                                    ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfo.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
+                                    ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfoNoTracking.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
 
                                     // Список текстовых файлов
                                     ViewData["TextFIles"] = new SelectList(textsOfSiteContext.Texts, "TextInfoModelId", "TxtFileName");
@@ -746,7 +746,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
                                     ViewData["AudioBooks"] = new SelectList(audioBookContext.AudioBooks, "AudioBookModelId", "CaptionOfAudioBook");
 
                                     // Список страниц сайта
-                                    ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfo.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
+                                    ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfoNoTracking.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
 
                                     // Список текстовых файлов
                                     ViewData["TextFIles"] = new SelectList(textsOfSiteContext.Texts, "TextInfoModelId", "TxtFileName");
@@ -776,7 +776,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
                                     ViewData["AudioBooks"] = new SelectList(audioBookContext.AudioBooks, "AudioBookModelId", "CaptionOfAudioBook");
 
                                     // Список страниц сайта
-                                    ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfo.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
+                                    ViewData["PagesOfSite"] = new SelectList(pagesOfSiteContext.PagesInfoNoTracking.OrderBy(page => page.PageTitle), "PageInfoModelId", "PageTitle");
 
                                     // Список текстовых файлов
                                     ViewData["TextFIles"] = new SelectList(textsOfSiteContext.Texts, "TextInfoModelId", "TxtFileName");

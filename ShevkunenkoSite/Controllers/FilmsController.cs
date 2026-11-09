@@ -210,36 +210,62 @@ public class FilmsController
         #region Разделители в фильтре картинки
 
         string album = "#film-album#";
-
         string note = "#film-note#";
 
         #endregion
 
-        #region Если не задан filmCaption или картинок по filmCaption нет
+        #region Если не задан filmCaption
 
         if (string.IsNullOrEmpty(filmCaption))
         {
             return RedirectToAction(nameof(Index));
         }
 
-        bool hasPictures = await imageContext.ImageFiles
-            .Where(img => img.SearchFilter != null &&
-                          img.SearchFilter.Contains(filmCaption + album))
-            .AnyAsync();
+        #endregion
 
-        if (!hasPictures)
+        #region Полный массив картинок по filmCaption из URL
+
+        var allItemsQuery = from m in imageContext.ImageFiles
+                            .Where(p => p.SearchFilter != null &&
+                                        p.SearchFilter.ToLower().Contains((filmCaption + album).ToLower()))
+                            .OrderBy(p => p.SortOfPicture)
+                            .ThenBy(p => p.ImageFileModelId)
+                            select m;
+
+        var arrayOfItems = await allItemsQuery.ToArrayAsync();
+
+        if (arrayOfItems.Length == 0)
         {
             return RedirectToAction(nameof(Film), new { filmCaption, host = "ok" });
         }
 
-        photoAlbumView.CaptionOfAlbum = filmCaption;
+        photoAlbumView.AllImageFiles = [.. arrayOfItems];
+        photoAlbumView.TotalItems = arrayOfItems.Length;
 
         #endregion
 
-        #region Если картинка не найдена
+        #region Ключ выборки = filmCaption из URL (НЕ перезаписывается)
 
-        if (imageId != null
-                    && !await imageContext.ImageFiles.AnyAsync(img => img.ImageFileModelId == imageId))
+        // ✅ Ключевое: FilmCaption всегда равен filmCaption из URL.
+        // Все ссылки (иконки, карусель, пагинация) строятся по нему.
+        // CaptionOfAlbum — только «красивый заголовок» для отображения.
+        photoAlbumView.FilmCaption = filmCaption;
+
+        #endregion
+
+        #region Красивый заголовок и подзаголовок — только для отображения
+
+        // Берём из первой картинки полного массива — консистентно для всех страниц.
+        var (displayCaption, displayNote) = ParseAlbumFilter(arrayOfItems[0].SearchFilter, filmCaption, album, note);
+
+        photoAlbumView.CaptionOfAlbum = displayCaption ?? filmCaption;
+        photoAlbumView.NoteForCaptionOfAlbum = displayNote;
+
+        #endregion
+
+        #region Если картинка не найдена в полном массиве
+
+        if (imageId != null && !arrayOfItems.Any(item => item.ImageFileModelId == imageId))
         {
             return RedirectToAction(nameof(Film), new { filmCaption });
         }
@@ -250,114 +276,35 @@ public class FilmsController
 
         if (imageId != null)
         {
-            #region Показываем страницу картинки
-
             photoAlbumView.AlbumOrPhoto = false;
 
-            #endregion
-
-            #region Экземпляр картинки
-
-            var imageItem = await imageContext.ImageFiles.FirstAsync(img => img.ImageFileModelId == imageId);
+            ImageFileModel imageItem = arrayOfItems.First(item => item.ImageFileModelId == imageId);
 
             photoAlbumView.CurrentImageId = imageId;
 
-            #endregion
+            photoAlbumView.CurrentImageHasAI =
+                !string.IsNullOrEmpty(imageItem.WebImageFileNameAI) ||
+                !string.IsNullOrEmpty(imageItem.WebImageHDFileNameAI) ||
+                !string.IsNullOrEmpty(imageItem.WebIconFileNameAI) ||
+                !string.IsNullOrEmpty(imageItem.WebIcon200FileNameAI) ||
+                !string.IsNullOrEmpty(imageItem.WebIcon100FileNameAI);
 
-            if (imageItem.SearchFilter is not null &&
-                imageItem.SearchFilter.Contains(filmCaption + album, StringComparison.OrdinalIgnoreCase))
+            int indexZeroBased = Array.FindIndex(arrayOfItems, item => item.ImageFileModelId == imageId);
+
+            if (indexZeroBased < 0)
             {
-                // ✅ Есть ли у текущей картинки AI-варианты
-                photoAlbumView.CurrentImageHasAI =
-                    !string.IsNullOrEmpty(imageItem.WebImageFileNameAI) ||
-                    !string.IsNullOrEmpty(imageItem.WebImageHDFileNameAI) ||
-                    !string.IsNullOrEmpty(imageItem.WebIconFileNameAI) ||
-                    !string.IsNullOrEmpty(imageItem.WebIcon200FileNameAI) ||
-                    !string.IsNullOrEmpty(imageItem.WebIcon100FileNameAI);
-
-                #region Определение заголовка и подзаголовка альбома
-
-                var (caption, noteText) = ParseAlbumFilter(imageItem.SearchFilter, filmCaption, album, note);
-
-                if (caption is null)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-
-                photoAlbumView.CaptionOfAlbum = caption;
-
-                photoAlbumView.NoteForCaptionOfAlbum = noteText;
-
-                #endregion
-
-                #region Массив картинок по определенному названию альбома
-
-                var allItems = from m in imageContext.ImageFiles
-                               .Where(p => p.SearchFilter != null &&
-                                           p.SearchFilter.Contains(filmCaption + album))
-                               .OrderBy(p => p.SortOfPicture)
-                               select m;
-
-                var arrayOfItems = await allItems.ToArrayAsync();
-
-                if (arrayOfItems.Length == 0)
-                {
-                    return RedirectToAction(nameof(Film), new { filmCaption, host = "ok" });
-                }
-
-                photoAlbumView.AllImageFiles = [.. arrayOfItems];
-
-                photoAlbumView.TotalItems = arrayOfItems.Length;
-
-                #endregion
-
-                #region Номер по порядку текущей картинки в массиве
-
-                int indexZeroBased = Array.FindIndex(arrayOfItems, item => item.ImageFileModelId == imageId);
-
-                if (indexZeroBased < 0)
-                {
-                    return RedirectToAction(nameof(Film), new { filmCaption, host = "ok" });
-                }
-
-                int indexOfItem = indexZeroBased + 1;
-
-                #endregion
-
-                #region Порядковый номер страницы альбома для текущей картинки
-
-                if (indexOfItem < photoAlbumView.ItemsPerPage)
-                {
-                    pageNumber = 1;
-                }
-                else if (indexOfItem % photoAlbumView.ItemsPerPage == 0)
-                {
-                    pageNumber = indexOfItem / photoAlbumView.ItemsPerPage;
-                }
-                else
-                {
-                    pageNumber = indexOfItem / photoAlbumView.ItemsPerPage + 1;
-                }
-
-                photoAlbumView.CurrentPage = pageNumber;
-
-                #endregion
-
-                #region Массив картинок для текущей страницы
-
-                var itemsOnPage = arrayOfItems
-                   .Skip((pageNumber - 1) * photoAlbumView.ItemsPerPage)
-                   .Take(photoAlbumView.ItemsPerPage)
-                   .ToArray();
-
-                photoAlbumView.ItemsOnPage = itemsOnPage;
-
-                #endregion
+                return RedirectToAction(nameof(Film), new { filmCaption, host = "ok" });
             }
-            else
-            {
-                return RedirectToAction(nameof(Index));
-            }
+
+            int indexOfItem = indexZeroBased + 1;
+
+            pageNumber = (indexOfItem - 1) / photoAlbumView.ItemsPerPage + 1;
+
+            photoAlbumView.CurrentPage = pageNumber;
+
+            photoAlbumView.ItemsOnPage = [.. arrayOfItems
+                .Skip((pageNumber - 1) * photoAlbumView.ItemsPerPage)
+                .Take(photoAlbumView.ItemsPerPage)];
         }
 
         #endregion
@@ -366,34 +313,7 @@ public class FilmsController
 
         else
         {
-            #region Показываем страницу альбома
-
             photoAlbumView.AlbumOrPhoto = true;
-
-            #endregion
-
-            #region Массив картинок по определенному названию альбома
-
-            var allItems = from m in imageContext.ImageFiles
-                           .Where(p => p.SearchFilter != null &&
-                                       p.SearchFilter.Contains(filmCaption + album))
-                           .OrderBy(p => p.SortOfPicture)
-                           select m;
-
-            var arrayOfItems = await allItems.ToArrayAsync();
-
-            if (arrayOfItems.Length == 0)
-            {
-                return RedirectToAction(nameof(Film), new { filmCaption, host = "ok" });
-            }
-
-            photoAlbumView.AllImageFiles = [.. arrayOfItems];
-
-            photoAlbumView.TotalItems = arrayOfItems.Length;
-
-            #endregion
-
-            #region Проверка параметра pageNumber
 
             int maxPage = (arrayOfItems.Length + photoAlbumView.ItemsPerPage - 1) / photoAlbumView.ItemsPerPage;
 
@@ -402,51 +322,17 @@ public class FilmsController
                 return RedirectToAction(nameof(FilmPhotoAlbum), new { filmCaption, pageNumber = 1, showAI });
             }
 
-            #endregion
-
-            #region Массив картинок для текущей страницы
-
-            var itemsOnPage = arrayOfItems
-               .Skip((pageNumber - 1) * photoAlbumView.ItemsPerPage)
-               .Take(photoAlbumView.ItemsPerPage)
-               .ToArray();
-
-            photoAlbumView.ItemsOnPage = itemsOnPage;
-
-            #endregion
-
-            #region Определение заголовка и подзаголовка альбома
-
-            if (itemsOnPage.Length == 0)
-            {
-                return RedirectToAction(nameof(Film), new { filmCaption, host = "ok" });
-            }
-
-            var (caption, noteText) = ParseAlbumFilter(itemsOnPage[0].SearchFilter, filmCaption, album, note);
-
-            if (caption is null)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-
-            photoAlbumView.CaptionOfAlbum = caption;
-
-            photoAlbumView.NoteForCaptionOfAlbum = noteText;
-
-            #endregion
-
-            #region Номер текущей страницы
+            photoAlbumView.ItemsOnPage = [.. arrayOfItems
+                .Skip((pageNumber - 1) * photoAlbumView.ItemsPerPage)
+                .Take(photoAlbumView.ItemsPerPage)];
 
             photoAlbumView.CurrentPage = pageNumber;
-
-            #endregion
         }
 
         #endregion
 
         return View(photoAlbumView);
     }
-
     #endregion
 
     #region Скачать файл

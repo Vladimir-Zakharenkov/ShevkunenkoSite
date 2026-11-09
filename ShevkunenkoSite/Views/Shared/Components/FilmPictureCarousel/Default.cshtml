@@ -3,7 +3,7 @@
 @model PictureCarouselForFilmViewModel
 
 @{
-    async Task RenderCarousel(string carouselId, int interval, IEnumerable<ImageFileModel> pictures)
+    async Task RenderCarousel(string carouselId, int interval, ImageFileModel[] pictures)
     {
         bool isFirst = true;
 
@@ -21,8 +21,10 @@
                         <a asp-area=""
                            asp-controller="Films"
                            asp-action="FilmPhotoAlbum"
-                           asp-route-imageId="@picture.ImageFileModelId"
                            asp-route-filmCaption="@Model.FilmCaption"
+                           asp-route-imageId="@picture.ImageFileModelId"
+                           asp-route-pageNumber=@null
+                           asp-route-showAI="true"
                            title="@picture.ImageAltTitle"
                            class="d-block">
 
@@ -47,19 +49,19 @@
 
     <div class="col">
         @{
-            await RenderCarousel("multipleItemCarousel1", 3000, Model.FirstCarousel ?? Enumerable.Empty<ImageFileModel>());
+            await RenderCarousel("multipleItemCarousel1", 3000, Model.FirstCarousel ?? []);
         }
     </div>
 
     <div class="col">
         @{
-            await RenderCarousel("multipleItemCarousel2", 5000, Model.SecondCarousel ?? Enumerable.Empty<ImageFileModel>());
+            await RenderCarousel("multipleItemCarousel2", 5000, Model.SecondCarousel ?? []);
         }
     </div>
 
     <div class="col">
         @{
-            await RenderCarousel("multipleItemCarousel3", 4000, Model.ThirdCarousel ?? Enumerable.Empty<ImageFileModel>());
+            await RenderCarousel("multipleItemCarousel3", 4000, Model.ThirdCarousel ?? []);
         }
     </div>
 

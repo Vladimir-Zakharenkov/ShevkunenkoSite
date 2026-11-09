@@ -584,14 +584,14 @@ public class MovieInfoController(
             {
                 movieItem.PageForSeries = "/" + movieItem.PageForSeries.Trim().Trim('/');
 
-                if (!await pageInfoContext.PagesInfo.Where(p => p.PageFullPathWithData == movieItem.PageForSeries).AnyAsync())
+                if (!await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFullPathWithData == movieItem.PageForSeries).AnyAsync())
                 {
                     ModelState.AddModelError("PageForSeries", "Указанной страницы нет в базе данных");
 
                     return View(movieItem);
                 }
 
-                var pageForSeries = await pageInfoContext.PagesInfo.FirstAsync(p => p.PageFullPathWithData == movieItem.PageForSeries);
+                var pageForSeries = await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PageFullPathWithData == movieItem.PageForSeries);
 
                 movieItem.PageForMovieSeriesId = pageForSeries.PageInfoModelId;
             }
@@ -1173,9 +1173,9 @@ public class MovieInfoController(
 
             if (editMovie.MovieItem.PageInfoModelId != null
                     && editMovie.MovieItem.PageInfoModelId != Guid.Empty
-                    && await pageInfoContext.PagesInfo.Where(i => i.PageInfoModelId == editMovie.MovieItem.PageInfoModelId).AnyAsync())
+                    && await pageInfoContext.PagesInfoNoTracking.Where(i => i.PageInfoModelId == editMovie.MovieItem.PageInfoModelId).AnyAsync())
             {
-                var pageForMovie = await pageInfoContext.PagesInfo.FirstAsync(i => i.PageInfoModelId == editMovie.MovieItem.PageInfoModelId);
+                var pageForMovie = await pageInfoContext.PagesInfoNoTracking.FirstAsync(i => i.PageInfoModelId == editMovie.MovieItem.PageInfoModelId);
 
                 editMovie.PageForMovie = pageForMovie.PageFullPathWithData;
             }
@@ -1190,7 +1190,7 @@ public class MovieInfoController(
 
             if (editMovie.MovieItem.PageForMovieSeriesId != null
                     && editMovie.MovieItem.PageForMovieSeriesId != Guid.Empty
-                    && await pageInfoContext.PagesInfo.Where(i => i.PageInfoModelId == editMovie.MovieItem.PageForMovieSeriesId).AnyAsync())
+                    && await pageInfoContext.PagesInfoNoTracking.Where(i => i.PageInfoModelId == editMovie.MovieItem.PageForMovieSeriesId).AnyAsync())
             {
                 editMovie.PageForSeries = await pageInfoContext.PagesInfo.FirstAsync(i => i.PageInfoModelId == editMovie.MovieItem.PageForMovieSeriesId);
 
@@ -1444,21 +1444,21 @@ public class MovieInfoController(
             {
                 editMovie.PageForMovie = "/" + editMovie.PageForMovie.Trim().Trim('/');
 
-                if (!await pageInfoContext.PagesInfo.Where(p => p.PageFullPathWithData == editMovie.PageForMovie.Trim()).AnyAsync()
-                        & !await pageInfoContext.PagesInfo.Where(p => p.PagePathNickNameWithData == editMovie.PageForMovie.Trim()).AnyAsync())
+                if (!await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFullPathWithData == editMovie.PageForMovie.Trim()).AnyAsync()
+                        & !await pageInfoContext.PagesInfoNoTracking.Where(p => p.PagePathNickNameWithData == editMovie.PageForMovie.Trim()).AnyAsync())
                 {
                     ModelState.AddModelError("PageForMovie", "Указанной страницы нет в базе данных");
 
                     return View(editMovie);
                 }
-                else if (await pageInfoContext.PagesInfo.Where(p => p.PageFullPathWithData == editMovie.PageForMovie.Trim()).AnyAsync())
+                else if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFullPathWithData == editMovie.PageForMovie.Trim()).AnyAsync())
                 {
-                    var pageForMovie = await pageInfoContext.PagesInfo.FirstAsync(p => p.PageFullPathWithData == editMovie.PageForMovie.Trim());
+                    var pageForMovie = await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PageFullPathWithData == editMovie.PageForMovie.Trim());
                     movieUpdate.PageInfoModelId = pageForMovie.PageInfoModelId;
                 }
-                else if (await pageInfoContext.PagesInfo.Where(p => p.PagePathNickNameWithData == editMovie.PageForMovie.Trim()).AnyAsync())
+                else if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PagePathNickNameWithData == editMovie.PageForMovie.Trim()).AnyAsync())
                 {
-                    var pageForMovie = await pageInfoContext.PagesInfo.FirstAsync(p => p.PagePathNickNameWithData == editMovie.PageForMovie.Trim());
+                    var pageForMovie = await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PagePathNickNameWithData == editMovie.PageForMovie.Trim());
                     movieUpdate.PageInfoModelId = pageForMovie.PageInfoModelId;
                 }
                 else
@@ -1655,21 +1655,21 @@ public class MovieInfoController(
             {
                 editMovie.PageForSeriesString = "/" + editMovie.PageForSeriesString.Trim().Trim('/');
 
-                if (!await pageInfoContext.PagesInfo.Where(p => p.PageFullPathWithData == editMovie.PageForSeriesString).AnyAsync()
-                        & !await pageInfoContext.PagesInfo.Where(p => p.PagePathNickNameWithData == editMovie.PageForSeriesString).AnyAsync())
+                if (!await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFullPathWithData == editMovie.PageForSeriesString).AnyAsync()
+                        & !await pageInfoContext.PagesInfoNoTracking.Where(p => p.PagePathNickNameWithData == editMovie.PageForSeriesString).AnyAsync())
                 {
                     ModelState.AddModelError("PageOfSeries", $"{editMovie.PageForSeriesString} - страницы нет в базе данных");
 
                     return View(editMovie);
                 }
-                else if (await pageInfoContext.PagesInfo.Where(p => p.PageFullPathWithData == editMovie.PageForSeriesString).AnyAsync())
+                else if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFullPathWithData == editMovie.PageForSeriesString).AnyAsync())
                 {
-                    var pageForSeries = await pageInfoContext.PagesInfo.FirstAsync(p => p.PageFullPathWithData == editMovie.PageForSeriesString);
+                    var pageForSeries = await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PageFullPathWithData == editMovie.PageForSeriesString);
                     movieUpdate.PageForMovieSeriesId = pageForSeries.PageInfoModelId;
                 }
-                else if (await pageInfoContext.PagesInfo.Where(p => p.PagePathNickNameWithData == editMovie.PageForSeriesString).AnyAsync())
+                else if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PagePathNickNameWithData == editMovie.PageForSeriesString).AnyAsync())
                 {
-                    var pageForSeries = await pageInfoContext.PagesInfo.FirstAsync(p => p.PagePathNickNameWithData == editMovie.PageForSeriesString);
+                    var pageForSeries = await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PagePathNickNameWithData == editMovie.PageForSeriesString);
                     movieUpdate.PageForMovieSeriesId = pageForSeries.PageInfoModelId;
                 }
                 else

@@ -32,7 +32,7 @@
                 <a asp-area=""
                    asp-controller="Films"
                    asp-action="FilmPhotoAlbum"
-                   asp-route-filmCaption="@Model.CaptionOfAlbum"
+                   asp-route-filmCaption="@Model.FilmCaption"
                    asp-route-imageId="@imageItem.ImageFileModelId"
                    asp-route-showAI="@Model.ShowAI"
                    title="смотреть фото">
@@ -178,7 +178,7 @@ else
             <a asp-area=""
                asp-controller="Films"
                asp-action="FilmPhotoAlbum"
-               asp-route-filmCaption="@Model.CaptionOfAlbum"
+               asp-route-filmCaption="@Model.FilmCaption"
                asp-route-imageId="@Model.CurrentImageId"
                asp-route-pageNumber="@Model.CurrentPage"
                asp-route-showAI="true"
@@ -191,7 +191,7 @@ else
             <a asp-area=""
                asp-controller="Films"
                asp-action="FilmPhotoAlbum"
-               asp-route-filmCaption="@Model.CaptionOfAlbum"
+               asp-route-filmCaption="@Model.FilmCaption"
                asp-route-imageId="@Model.CurrentImageId"
                asp-route-pageNumber="@Model.CurrentPage"
                asp-route-showAI="false"
@@ -252,6 +252,6 @@ else
 </div>
 
 @* Тройная карусель из кадров *@
-<vc:film-picture-carousel caption-for-picture-carousel="@Model.CaptionOfAlbum" />
+<vc:film-picture-carousel caption-for-picture-carousel="@Model.FilmCaption" />
 
 <hr class="liniya" />

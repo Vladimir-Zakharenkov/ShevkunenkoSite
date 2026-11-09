@@ -14,7 +14,7 @@ public class Tainy_kinoModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        PageLinks =  await _pageInfoContext.PagesInfo.Where(p => p.PageFilter.Contains("Тайны кино,")).ToArrayAsync();
+        PageLinks =  await _pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFilter.Contains("Тайны кино,")).ToArrayAsync();
 
         return Page();
     }

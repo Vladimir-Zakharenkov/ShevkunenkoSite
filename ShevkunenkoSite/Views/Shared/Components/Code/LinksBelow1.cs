@@ -65,7 +65,7 @@ public class LinksBelow1(
                     {
                         if (item.PageInfoModelId != null)
                         {
-                            var pageModel = await pageContext.PagesInfo.FirstAsync(p => p.PageInfoModelId == item.PageInfoModelId);
+                            var pageModel = await pageContext.PagesInfoNoTracking.FirstAsync(p => p.PageInfoModelId == item.PageInfoModelId);
 
                             listOfPageLinks.Add(pageModel);
                         }

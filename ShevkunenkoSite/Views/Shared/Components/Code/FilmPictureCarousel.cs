@@ -14,7 +14,10 @@ public class FilmPictureCarousel(
 
         // Массив картинок
         ImageFileModel[] pictures = await imageContext.ImageFiles
-                            .Where(pict => pict.SearchFilter.ToLower().Contains(pattern))
+                            .Where(p => p.SearchFilter != null &&
+                                        p.SearchFilter.ToLower().Contains(pattern))
+                            .OrderBy(p => p.SortOfPicture)
+                            .ThenBy(p => p.ImageFileModelId)
                             .ToArrayAsync();
 
         if (pictures.Length == 0)
@@ -22,7 +25,9 @@ public class FilmPictureCarousel(
             return View("Empty");
         }
 
-        int countPerCarousel = pictures.Length / 3;
+        // В каждой карусели не более 12 картинок
+        int countPerCarousel = pictures.Length / 3 >= 12 ? 12 : pictures.Length / 3;
+
         int remainder = pictures.Length % 3;
 
         // Если картинок меньше 9 - карусель не показываем
@@ -30,25 +35,13 @@ public class FilmPictureCarousel(
         {
             return View("Empty");
         }
-
-        // В каждой карусели не более 12 картинок
-        else if (countPerCarousel >= 12)
-        {
-            return View(new PictureCarouselForFilmViewModel
-            {
-                FirstCarousel = [.. pictures.Take(countPerCarousel).Shuffle2()],
-                SecondCarousel = [.. pictures.Skip(countPerCarousel).Take(countPerCarousel).Shuffle2()],
-                ThirdCarousel = [.. pictures.Skip(countPerCarousel * 2).Take(countPerCarousel + remainder).Shuffle2()],
-                FilmCaption = captionForPictureCarousel
-            });
-        }
         else
         {
             return View(new PictureCarouselForFilmViewModel
             {
-                FirstCarousel = [.. pictures.Take(countPerCarousel).Shuffle2()],
-                SecondCarousel = [.. pictures.Skip(countPerCarousel).Take(countPerCarousel).Shuffle2()],
-                ThirdCarousel = [.. pictures.Skip(countPerCarousel * 2).Take(countPerCarousel + remainder).Shuffle2()],
+                FirstCarousel = [.. pictures.Take(countPerCarousel)],
+                SecondCarousel = [.. pictures.Skip(countPerCarousel).Take(countPerCarousel)],
+                ThirdCarousel = [.. pictures.Skip(countPerCarousel * 2).Take(countPerCarousel + remainder)],
                 FilmCaption = captionForPictureCarousel
             });
         }

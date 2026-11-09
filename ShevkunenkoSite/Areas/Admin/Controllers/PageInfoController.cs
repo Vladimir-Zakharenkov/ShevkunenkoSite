@@ -33,7 +33,7 @@ public class PageInfoController(
         )
     {
         // Список всех страниц сайта
-        var allSitePages = await pageInfoContext.PagesInfo.ToListAsync();
+        var allSitePages = await pageInfoContext.PagesInfoNoTracking.ToListAsync();
 
         if (!searchString.IsNullOrEmpty())
         {
@@ -78,13 +78,13 @@ public class PageInfoController(
     public async Task<IActionResult> DetailsPage(Guid? pageId)
     {
         if (pageId.HasValue
-                && await pageInfoContext.PagesInfo
+                && await pageInfoContext.PagesInfoNoTracking
                     .Where(page => page.PageInfoModelId == pageId)
                     .AnyAsync())
         {
             #region Инициализация экземпляра страницы
 
-            var pageItem = await pageInfoContext.PagesInfo
+            var pageItem = await pageInfoContext.PagesInfoNoTracking
                 .Include(image => image.ImageFileModel)
                 .Include(text => text.TextInfo)
                 .Include(background => background.BackgroundFileModel)
@@ -124,7 +124,7 @@ public class PageInfoController(
 
 #pragma warning disable CA1862
             pageItem.LinksFromPagesByGuid
-                .AddRange(await pageInfoContext.PagesInfo
+                .AddRange(await pageInfoContext.PagesInfoNoTracking
                     .Where(p => p.RefPages != null && p.RefPages.ToLower()
                     .Contains(pageItem.PageInfoModelId.ToString().ToLower()))
                     .ToArrayAsync());
@@ -140,7 +140,7 @@ public class PageInfoController(
 
 #pragma warning disable CA1862
             pageItem.LinksFromPagesByGuid2
-                 .AddRange(await pageInfoContext.PagesInfo
+                 .AddRange(await pageInfoContext.PagesInfoNoTracking
                     .Where(p => p.RefPages2 != null && p.RefPages2.ToLower().Contains(pageItem.PageInfoModelId.ToString().ToLower()))
                 .ToArrayAsync());
 #pragma warning restore CA1862
@@ -161,9 +161,9 @@ public class PageInfoController(
                 {
                     for (int i = 0; i < pageFilters.Length; i++)
                     {
-                        if (await pageInfoContext.PagesInfo.Where(p => p.PageFilter.Contains(pageFilters[i].Trim() + ',')).AnyAsync())
+                        if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFilter.Contains(pageFilters[i].Trim() + ',')).AnyAsync())
                         {
-                            var listOfFilterOut = await pageInfoContext.PagesInfo
+                            var listOfFilterOut = await pageInfoContext.PagesInfoNoTracking
                                 .Where(p => p.PageFilterOut != null && p.PageFilterOut.Contains(pageFilters[i].Trim() + ','))
                                 .ToListAsync();
 
@@ -191,9 +191,9 @@ public class PageInfoController(
                     {
                         if (Guid.TryParse(refPageId, out Guid pageGuid))
                         {
-                            if (await pageInfoContext.PagesInfo.Where(p => p.PageInfoModelId == pageGuid).AnyAsync())
+                            if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageInfoModelId == pageGuid).AnyAsync())
                             {
-                                pageItem.LinksToPagesByGuid.Add(await pageInfoContext.PagesInfo.FirstAsync(p => p.PageInfoModelId == pageGuid));
+                                pageItem.LinksToPagesByGuid.Add(await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PageInfoModelId == pageGuid));
 
                                 _ = pageItem.LinksToPagesByGuid.Distinct().OrderBy(p => p.PageCardText);
                             }
@@ -218,9 +218,9 @@ public class PageInfoController(
                     {
                         if (Guid.TryParse(refPageId2, out Guid pageGuid2))
                         {
-                            if (await pageInfoContext.PagesInfo.Where(p => p.PageInfoModelId == pageGuid2).AnyAsync())
+                            if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageInfoModelId == pageGuid2).AnyAsync())
                             {
-                                pageItem.LinksToPagesByGuid2.Add(await pageInfoContext.PagesInfo.FirstAsync(p => p.PageInfoModelId == pageGuid2));
+                                pageItem.LinksToPagesByGuid2.Add(await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PageInfoModelId == pageGuid2));
 
                                 _ = pageItem.LinksToPagesByGuid2.Distinct().OrderBy(p => p.PageCardText);
                             }
@@ -243,11 +243,11 @@ public class PageInfoController(
                 {
                     for (int i = 0; i < pageFiltersOut.Length; i++)
                     {
-                        if (await pageInfoContext.PagesInfo
+                        if (await pageInfoContext.PagesInfoNoTracking
                                 .Where(p => p.PageFilter.Contains((pageFiltersOut[i] + ',').Trim()))
                                 .AnyAsync())
                         {
-                            var pages = await pageInfoContext.PagesInfo
+                            var pages = await pageInfoContext.PagesInfoNoTracking
                                 .Where(p => p.PageFilter.Contains((pageFiltersOut[i] + ',').Trim()))
                                 .ToListAsync();
 
@@ -634,7 +634,7 @@ public class PageInfoController(
             else
             {
                 // Исключаем дублирование заголовков страниц
-                if (await pageInfoContext.PagesInfo.Where(page => page.PageTitle == addPage.PageTitle.Trim()).AnyAsync())
+                if (await pageInfoContext.PagesInfoNoTracking.Where(page => page.PageTitle == addPage.PageTitle.Trim()).AnyAsync())
                 {
                     ModelState.AddModelError("PageTitle", $"Заголовок страницы «{addPage.PageTitle}» уже существует.");
 
@@ -1298,7 +1298,7 @@ public class PageInfoController(
             {
                 checkPageFullPathWithData = newPage.PageArea + newPage.PageLoc + newPage.RoutData;
 
-                if (await pageInfoContext.PagesInfo.Where(p => p.PageFullPathWithData == checkPageFullPathWithData).AnyAsync())
+                if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFullPathWithData == checkPageFullPathWithData).AnyAsync())
                 {
                     ModelState.AddModelError("pageItem.PageLoc", $"Страница «{addPage.PageArea + addPage.PageLoc + addPage.RoutData}» уже существует");
 
@@ -1331,7 +1331,7 @@ public class PageInfoController(
             {
                 checkPageFullPathWithData = addPage.PageArea + addPage.Controller + addPage.Action + addPage.RoutData;
 
-                if (await pageInfoContext.PagesInfo.Where(p => p.PageFullPathWithData == checkPageFullPathWithData).AnyAsync())
+                if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFullPathWithData == checkPageFullPathWithData).AnyAsync())
                 {
                     ModelState.AddModelError("addPage.PageLoc", $"Страница «{addPage.PageArea + addPage.Controller + addPage.Action + addPage.RoutData}» уже существует");
 
@@ -1361,7 +1361,7 @@ public class PageInfoController(
                 }
             }
 
-            if (!string.IsNullOrEmpty(addPage.PagePathNickName) && await pageInfoContext.PagesInfo.Where(p => p.PagePathNickName == addPage.PagePathNickName).AnyAsync())
+            if (!string.IsNullOrEmpty(addPage.PagePathNickName) && await pageInfoContext.PagesInfoNoTracking.Where(p => p.PagePathNickName == addPage.PagePathNickName).AnyAsync())
             {
                 ModelState.AddModelError("newPage.PagePathNickName", $"Страница с псевдонимом «{addPage.PagePathNickName}» уже существует");
 
@@ -1390,7 +1390,7 @@ public class PageInfoController(
                 return View(newPage);
             }
 
-            if (!string.IsNullOrEmpty(addPage.PagePathNickName2) && await pageInfoContext.PagesInfo.Where(p => p.PagePathNickName2 == addPage.PagePathNickName2).AnyAsync())
+            if (!string.IsNullOrEmpty(addPage.PagePathNickName2) && await pageInfoContext.PagesInfoNoTracking.Where(p => p.PagePathNickName2 == addPage.PagePathNickName2).AnyAsync())
             {
                 ModelState.AddModelError("newPage.PagePathNickName2", $"Страница с псевдонимом «{addPage.PagePathNickName2}» уже существует");
 
@@ -1419,7 +1419,7 @@ public class PageInfoController(
                 return View(newPage);
             }
 
-            if (!string.IsNullOrEmpty(addPage.PagePathNickName3) && await pageInfoContext.PagesInfo.Where(p => p.PagePathNickName3 == addPage.PagePathNickName3).AnyAsync())
+            if (!string.IsNullOrEmpty(addPage.PagePathNickName3) && await pageInfoContext.PagesInfoNoTracking.Where(p => p.PagePathNickName3 == addPage.PagePathNickName3).AnyAsync())
             {
                 ModelState.AddModelError("newPage.PagePathNickName3", $"Страница с псевдонимом «{addPage.PagePathNickName3}» уже существует");
 
@@ -1448,7 +1448,7 @@ public class PageInfoController(
                 return View(newPage);
             }
 
-            if (!string.IsNullOrEmpty(addPage.PagePathNickName4) && await pageInfoContext.PagesInfo.Where(p => p.PagePathNickName4 == addPage.PagePathNickName4).AnyAsync())
+            if (!string.IsNullOrEmpty(addPage.PagePathNickName4) && await pageInfoContext.PagesInfoNoTracking.Where(p => p.PagePathNickName4 == addPage.PagePathNickName4).AnyAsync())
             {
                 ModelState.AddModelError("newPage.PagePathNickName4", $"Страница с псевдонимом «{addPage.PagePathNickName4}» уже существует");
 
@@ -1656,7 +1656,7 @@ public class PageInfoController(
 
             #region Открытие страницы DetailsPage
 
-            PageInfoModel infoPage = await pageInfoContext.PagesInfo.FirstAsync(p => p.PageTitle == newPage.PageTitle);
+            PageInfoModel infoPage = await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PageTitle == newPage.PageTitle);
 
             return RedirectToAction("DetailsPage", new { pageId = infoPage.PageInfoModelId, Area = "Admin" });
 
@@ -1700,7 +1700,7 @@ public class PageInfoController(
         PageInfoModel editPage = new();
 
         if (pageId.HasValue
-            && await pageInfoContext.PagesInfo
+            && await pageInfoContext.PagesInfoNoTracking
                 .Where(page => page.PageInfoModelId == pageId)
                 .AnyAsync())
         {
@@ -1760,9 +1760,9 @@ public class PageInfoController(
             {
                 for (int i = 0; i < pageFilters.Length; i++)
                 {
-                    if (await pageInfoContext.PagesInfo.Where(p => p.PageFilter.Contains(pageFilters[i] + ',')).AnyAsync())
+                    if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFilter.Contains(pageFilters[i] + ',')).AnyAsync())
                     {
-                        var listOfFilterOut = await pageInfoContext.PagesInfo.Where(p => p.PageFilterOut != null && p.PageFilterOut.Contains(pageFilters[i] + ',')).ToListAsync();
+                        var listOfFilterOut = await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFilterOut != null && p.PageFilterOut.Contains(pageFilters[i] + ',')).ToListAsync();
 
                         _ = listOfFilterOut.Distinct().OrderBy(p => p.SortOfPage);
 
@@ -1787,9 +1787,9 @@ public class PageInfoController(
                 {
                     for (int i = 0; i < pageFiltersOut.Length; i++)
                     {
-                        if (await pageInfoContext.PagesInfo.Where(p => p.PageFilter.Contains(pageFiltersOut[i].Trim())).AnyAsync())
+                        if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFilter.Contains(pageFiltersOut[i].Trim())).AnyAsync())
                         {
-                            var pages = await pageInfoContext.PagesInfo.Where(p => p.PageFilter.Contains(pageFiltersOut[i].Trim())).ToListAsync();
+                            var pages = await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFilter.Contains(pageFiltersOut[i].Trim())).ToListAsync();
 
                             _ = pages.OrderBy(p => p.SortOfPage);
 
@@ -1817,9 +1817,9 @@ public class PageInfoController(
                     {
                         if (Guid.TryParse(refPageId, out Guid pageGuid))
                         {
-                            if (await pageInfoContext.PagesInfo.Where(p => p.PageInfoModelId == pageGuid).AnyAsync())
+                            if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageInfoModelId == pageGuid).AnyAsync())
                             {
-                                linksToPagesByGuid.Add(await pageInfoContext.PagesInfo.FirstAsync(p => p.PageInfoModelId == pageGuid));
+                                linksToPagesByGuid.Add(await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PageInfoModelId == pageGuid));
 
                                 _ = linksToPagesByGuid.Distinct().OrderBy(p => p.PageCardText);
 
@@ -1846,9 +1846,9 @@ public class PageInfoController(
                     {
                         if (Guid.TryParse(refPageId2, out Guid pageGuid2))
                         {
-                            if (await pageInfoContext.PagesInfo.Where(p => p.PageInfoModelId == pageGuid2).AnyAsync())
+                            if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageInfoModelId == pageGuid2).AnyAsync())
                             {
-                                linksToPagesByGuid2.Add(await pageInfoContext.PagesInfo.FirstAsync(p => p.PageInfoModelId == pageGuid2));
+                                linksToPagesByGuid2.Add(await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PageInfoModelId == pageGuid2));
 
                                 _ = linksToPagesByGuid2.Distinct().OrderBy(p => p.PageCardText);
 
@@ -2928,7 +2928,7 @@ public class PageInfoController(
     {
         if (pageId.HasValue)
         {
-            if (await pageInfoContext.PagesInfo.Where(page => page.PageInfoModelId == pageId).AnyAsync())
+            if (await pageInfoContext.PagesInfoNoTracking.Where(page => page.PageInfoModelId == pageId).AnyAsync())
             {
                 PageInfoModel deletePage = await pageInfoContext.PagesInfo
                     .Include(icon => icon.IconType)
@@ -3003,7 +3003,7 @@ public class PageInfoController(
 
             ModelState.AddModelError("PageTitle", $"На страницу ссылается фильм «{refMovie.MovieCaption}».");
 
-            return View(await pageInfoContext.PagesInfo.Include(icon => icon.IconType).FirstAsync(page => page.PageInfoModelId == deletePage.PageInfoModelId));
+            return View(await pageInfoContext.PagesInfoNoTracking.Include(icon => icon.IconType).FirstAsync(page => page.PageInfoModelId == deletePage.PageInfoModelId));
         }
 
         if (deletePage != null)

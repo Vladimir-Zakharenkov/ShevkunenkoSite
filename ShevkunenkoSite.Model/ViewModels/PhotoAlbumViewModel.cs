@@ -11,6 +11,14 @@ public class PhotoAlbumViewModel : ItemsListViewModel
 
     #endregion
 
+    #region Исходный заголовок альбома
+    /// <summary>
+    /// Исходный заголовок альбома
+    /// </summary>
+    public string FilmCaption { get; set; } = string.Empty;
+
+    #endregion
+
     #region Примечание для заголовка альбома
 
     /// <summary>

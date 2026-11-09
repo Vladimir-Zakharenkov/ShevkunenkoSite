@@ -55,9 +55,9 @@ public class RefPages(
                 {
                     for (int i = 0; i < pageFilterOut.Length; i++)
                     {
-                        if (await pageInfoContext.PagesInfo.Where(sitePage => sitePage.PageFilter.Contains((pageFilterOut[i] + ',').Trim())).AnyAsync())
+                        if (await pageInfoContext.PagesInfoNoTracking.Where(sitePage => sitePage.PageFilter.Contains((pageFilterOut[i] + ',').Trim())).AnyAsync())
                         {
-                            var listOfFilterOut = await pageInfoContext.PagesInfo.Where(p => p.PageFilter.Contains((pageFilterOut[i] + ',').Trim())).ToListAsync();
+                            var listOfFilterOut = await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFilter.Contains((pageFilterOut[i] + ',').Trim())).ToListAsync();
 
                             _ = listOfFilterOut.Distinct();
 
@@ -164,9 +164,9 @@ public class RefPages(
                     {
                         if (Guid.TryParse(pageId, out Guid pageGuid))
                         {
-                            if (await pageInfoContext.PagesInfo.Where(p => p.PageInfoModelId == pageGuid).AnyAsync())
+                            if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageInfoModelId == pageGuid).AnyAsync())
                             {
-                                refsUnderPage.LinksToPagesByGuid.Add(await pageInfoContext.PagesInfo.FirstAsync(p => p.PageInfoModelId == pageGuid));
+                                refsUnderPage.LinksToPagesByGuid.Add(await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PageInfoModelId == pageGuid));
                             }
                         }
                     }
@@ -189,9 +189,9 @@ public class RefPages(
                     {
                         if (Guid.TryParse(pageId2, out Guid pageGuid2))
                         {
-                            if (await pageInfoContext.PagesInfo.Where(p => p.PageInfoModelId == pageGuid2).AnyAsync())
+                            if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageInfoModelId == pageGuid2).AnyAsync())
                             {
-                                refsUnderPage.LinksToPagesByGuid2.Add(await pageInfoContext.PagesInfo.FirstAsync(p => p.PageInfoModelId == pageGuid2));
+                                refsUnderPage.LinksToPagesByGuid2.Add(await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PageInfoModelId == pageGuid2));
                             }
                         }
                     }

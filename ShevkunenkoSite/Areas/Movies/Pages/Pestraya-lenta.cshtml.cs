@@ -14,7 +14,7 @@ public class Pestraya_lentaModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        PageLinks =  await _pageInfoContext.PagesInfo.Where(p => p.PageFilter.Contains("Пёстрая лента,")).ToArrayAsync();
+        PageLinks =  await _pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFilter.Contains("Пёстрая лента,")).ToArrayAsync();
 
         return Page();
     }

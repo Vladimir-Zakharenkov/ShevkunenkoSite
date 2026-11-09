@@ -10,15 +10,15 @@ public class CardForPage(IPageInfoRepository pageInfoContext) : ViewComponent
     {
         PageInfoModel page;
 
-        PageInfoModel errorPage = await pageInfoContext.PagesInfo.AsNoTracking().FirstAsync(p => p.PageInfoModelId == Guid.Parse("A195DA69-34CC-4215-9DBA-38D949685EEE"));
+        PageInfoModel errorPage = await pageInfoContext.PagesInfoNoTracking.AsNoTracking().FirstAsync(p => p.PageInfoModelId == Guid.Parse("A195DA69-34CC-4215-9DBA-38D949685EEE"));
 
         if (!string.IsNullOrEmpty(pageLoc))
         {
             if (Guid.TryParse(pageLoc, out pageIdGuid))
             {
-                if (await pageInfoContext.PagesInfo.Where(g => g.PageInfoModelId == pageIdGuid).AnyAsync())
+                if (await pageInfoContext.PagesInfoNoTracking.Where(g => g.PageInfoModelId == pageIdGuid).AnyAsync())
                 {
-                    page = await pageInfoContext.PagesInfo.AsNoTracking().FirstAsync(p => p.PageInfoModelId == pageIdGuid);
+                    page = await pageInfoContext.PagesInfoNoTracking.AsNoTracking().FirstAsync(p => p.PageInfoModelId == pageIdGuid);
 
                     return View(page);
                 }
@@ -29,15 +29,15 @@ public class CardForPage(IPageInfoRepository pageInfoContext) : ViewComponent
             }
             else
             {
-                if (await pageInfoContext.PagesInfo.Where(p => p.PageFullPathWithData == pageLoc).AnyAsync())
+                if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFullPathWithData == pageLoc).AnyAsync())
                 {
-                    page = await pageInfoContext.PagesInfo.FirstAsync(p => p.PageFullPathWithData == pageLoc);
+                    page = await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PageFullPathWithData == pageLoc);
 
                     return View(page);
                 }
-                else if (await pageInfoContext.PagesInfo.Where(p => p.PagePathNickNameWithData == pageLoc).AnyAsync())
+                else if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PagePathNickNameWithData == pageLoc).AnyAsync())
                 {
-                    page = await pageInfoContext.PagesInfo.FirstAsync(p => p.PagePathNickNameWithData == pageLoc);
+                    page = await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PagePathNickNameWithData == pageLoc);
 
                     return View(page);
                 }

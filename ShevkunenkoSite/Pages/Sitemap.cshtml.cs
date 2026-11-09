@@ -8,7 +8,7 @@ public class SitemapModel(IPageInfoRepository pageinfoContext) : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var pages = await _pageinfoContext.PagesInfo.ToListAsync();
+        var pages = await _pageinfoContext.PagesInfoNoTracking.ToListAsync();
 
         StringBuilder sb = new();
 

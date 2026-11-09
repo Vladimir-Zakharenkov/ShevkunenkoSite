@@ -1,21 +1,48 @@
 ﻿namespace ShevkunenkoSite.Services.Interfaces;
 
+using Microsoft.AspNetCore.Http;
+
 public class PageInfoImplementation(SiteDbContext siteContext) : IPageInfoRepository
 {
+    #region Константы путей
+
+    // Вынесено из "магических строк". Имена публичные, чтобы при необходимости
+    // можно было использовать их в других местах без дублирования.
+    private const string DefaultPagePath = "/shevkunenko/index";
+    private const string NotFoundPagePath = "/shevkunenko/error404";
+
+    #endregion
+
     #region Инициализация PagesInfo
 
-    public IQueryable<PageInfoModel> PagesInfo => siteContext.PageInfo
-        .Include(iconType => iconType.IconType).ThenInclude(icon => icon.IconList)
-        .Include(image => image.ImageFileModel)
-        .Include(text => text.TextInfo).ThenInclude(book => book != null ? book.BooksAndArticlesModel : null).ThenInclude(articleLogo => articleLogo!.LogoOfArticle != null ? articleLogo.LogoOfArticle : null)
-        .Include(background => background.BackgroundFileModel)
-        .Include(audioFile => audioFile.AudioInfo)
-        // TODO: убрать nullable для картинки фильма
-        .Include(movie => movie.MovieFile).ThenInclude(movieImage => movieImage != null ? movieImage.ImageFileModel : null)
-        .Include(movie => movie.MovieFile).ThenInclude(moviePoster => moviePoster != null ? moviePoster.MoviePoster : null)
-        //.Include(film => film.Film).ThenInclude(filmImage => filmImage != null ? filmImage.FilmImage : null)
-        //.Include(film => film.Film).ThenInclude(filmPoster => filmPoster != null ? filmPoster.FilmPoster : null)
-        ;
+    /// <summary>
+    /// Отслеживаемый запрос — оставлен для обратной совместимости.
+    /// </summary>
+    public IQueryable<PageInfoModel> PagesInfo => BuildPageQuery(tracking: true);
+
+    /// <summary>
+    /// Запрос без tracking — рекомендуется для отображения.
+    /// </summary>
+    public IQueryable<PageInfoModel> PagesInfoNoTracking => BuildPageQuery(tracking: false);
+
+    private IQueryable<PageInfoModel> BuildPageQuery(bool tracking)
+    {
+        IQueryable<PageInfoModel> query = siteContext.PageInfo
+            .Include(iconType => iconType.IconType).ThenInclude(icon => icon.IconList)
+            .Include(image => image.ImageFileModel)
+            .Include(text => text.TextInfo)
+                .ThenInclude(book => book != null ? book.BooksAndArticlesModel : null)
+                .ThenInclude(articleLogo => articleLogo!.LogoOfArticle != null ? articleLogo.LogoOfArticle : null)
+            .Include(background => background.BackgroundFileModel)
+            .Include(audioFile => audioFile.AudioInfo)
+            // TODO: убрать nullable для картинки фильма
+            .Include(movie => movie.MovieFile)
+                .ThenInclude(movieImage => movieImage != null ? movieImage.ImageFileModel : null)
+            .Include(movie => movie.MovieFile)
+                .ThenInclude(moviePoster => moviePoster != null ? moviePoster.MoviePoster : null);
+
+        return tracking ? query : query.AsNoTracking();
+    }
 
     #endregion
 
@@ -23,224 +50,273 @@ public class PageInfoImplementation(SiteDbContext siteContext) : IPageInfoReposi
 
     public async Task<PageInfoModel> GetPageInfoByPathAsync(HttpContext httpContext)
     {
-        #region Запрос без данных
+        #region Путь и данные запроса
 
         string pagePath = httpContext.Request.Path.ToString().ToLower().TrimEnd('/');
 
-        #endregion
-
-        #region Коллекция данных запроса
-
         IQueryCollection pageQuery = httpContext.Request.Query;
 
-        string routData = string.Empty; //Данные запроса
+        string routData = BuildRouteData(pageQuery);
 
         #endregion
 
         #region Поиск совпадения пути и данных
 
-        if (pageQuery.Count > 0)
+        if (pageQuery.Count > 0 && !string.IsNullOrEmpty(routData))
         {
-            #region Определить данные запроса
+            // Перебираем постепенно усечённые варианты routData.
+            string? currentRoutData = routData;
 
-            foreach (var item in pageQuery)
+            while (!string.IsNullOrEmpty(currentRoutData))
             {
-                routData = routData == string.Empty ? $"?{item.Key}={item.Value}" : $"{routData}&{item.Key}={item.Value}";
+                PageInfoModel? page = await FindPageWithRouteDataAsync(pagePath, currentRoutData);
+                if (page != null)
+                {
+                    return page;
+                }
+
+                currentRoutData = TrimLastRouteParameter(currentRoutData);
             }
 
-            #endregion
-
-            for (int i = 0; i < pageQuery.Count; i++)
-            {
-                #region Если совпали пути и данные
-
-                if (await PagesInfo.Where(p => p.PageFullPath == pagePath & p.RoutData == routData).AnyAsync())
-                {
-                    return await PagesInfo.FirstAsync(p => p.PageFullPath == pagePath & p.RoutData == routData);
-                }
-
-                #endregion
-
-                #region Если совпал путь + /index и данные
-
-                else if (await PagesInfo.Where(p => p.PageFullPath == pagePath + "/index" & p.RoutData == routData).AnyAsync())
-                {
-                    return await PagesInfo.FirstAsync(p => p.PageFullPath == pagePath + "/index" & p.RoutData == routData);
-                }
-
-                #endregion
-
-                #region Если совпал псевдоним (1) и данные
-
-                else if (await PagesInfo.Where(p => p.PagePathNickName == pagePath & p.RoutData == routData).AnyAsync())
-                {
-                    return await PagesInfo.FirstAsync(p => p.PagePathNickName == pagePath & p.RoutData == routData);
-                }
-
-                #endregion
-
-                #region Если совпал псевдоним (2) и данные
-
-                else if (await PagesInfo.Where(p => p.PagePathNickName2 == pagePath & p.RoutData == routData).AnyAsync())
-                {
-                    return await PagesInfo.FirstAsync(p => p.PagePathNickName2 == pagePath & p.RoutData == routData);
-                }
-
-                #endregion
-
-                else
-                {
-                    if (i == httpContext.Request.Query.Count - 1)
-                    {
-                        routData = string.Empty;
-                    }
-                    else
-                    {
-                        if (routData.Contains("&videohosting=https://vk.com"))
-                        {
-                            routData = routData[..routData.LastIndexOf("&videohosting=https://vk.com")];
-                        }
-                        else if (routData.Contains("&videohosting=https://vkvideo.ru"))
-                        {
-                            routData = routData[..routData.LastIndexOf("&videohosting=https://vkvideo.ru")];
-                        }
-                        else
-                        {
-                            routData = routData[..routData.LastIndexOf('&')];
-                        }
-                    }
-                }
-            }
+            // Если с данными не нашли — пробуем без данных (routData = "").
         }
 
         #endregion
 
-        #region Если в адресе нет данных или с данными поиск не удался
+        #region Поиск без данных
 
-        if (routData == string.Empty)
+        return await FindPageWithoutRouteDataAsync(pagePath);
+
+        #endregion
+    }
+
+    public async Task<PageInfoModel?> FindPageByPathAsync(
+        string path,
+        string? routData,
+        CancellationToken cancellationToken = default)
+    {
+        string pagePath = (path ?? string.Empty).ToLower().TrimEnd('/');
+
+        if (!string.IsNullOrEmpty(routData))
         {
-            #region Если нет строки запроса
-
-            if (string.IsNullOrEmpty(pagePath))
+            PageInfoModel? page = await FindPageWithRouteDataAsync(pagePath, routData, cancellationToken);
+            if (page != null)
             {
-                return await PagesInfo.FirstAsync(page => page.PageFullPath == "/shevkunenko/index");
+                return page;
             }
 
-            #endregion
+            // Пробуем без данных
+        }
 
-            #region Совпадение пути
+        try
+        {
+            return await FindPageWithoutRouteDataAsync(pagePath, cancellationToken);
+        }
+        catch (InvalidOperationException)
+        {
+            // Страница не найдена и нет error404 — вернём null вместо исключения.
+            return null;
+        }
+    }
 
-            else if (await PagesInfo.Where(page => page.PageFullPath == pagePath).AnyAsync())
-            {
-                var pageInfo = await PagesInfo.FirstAsync(page => page.PageFullPath == pagePath);
+    #endregion
 
-                #region Если совпал путь и не совпали данные (кроме пути с index )
-                
-                if (!string.IsNullOrEmpty(pageInfo.RoutData) & !pagePath.EndsWith("index"))
-                {
-                    return await PagesInfo.FirstAsync(page => page.PageFullPath == "/shevkunenko/error404");
-                }
+    #region Вспомогательные методы поиска
 
-                #endregion
+    /// <summary>
+    /// Собирает строку вида "?key1=value1&key2=value2" из коллекции query.
+    /// </summary>
+    private static string BuildRouteData(IQueryCollection pageQuery)
+    {
+        string routData = string.Empty;
+        foreach (var item in pageQuery)
+        {
+            routData = routData.Length == 0
+                ? $"?{item.Key}={item.Value}"
+                : $"{routData}&{item.Key}={item.Value}";
+        }
 
-                return (pageInfo);
-            }
+        return routData;
+    }
 
-            #endregion
+    /// <summary>
+    /// Усекает последний параметр в строке запроса.
+    /// Специфичная логика для videohosting сохранена для совместимости.
+    /// </summary>
+    private static string TrimLastRouteParameter(string routData)
+    {
+        if (routData.Contains("&videohosting=https://vk.com"))
+        {
+            return routData[..routData.LastIndexOf("&videohosting=https://vk.com", StringComparison.Ordinal)];
+        }
 
-            #region Совпадение пути и псевдонима (1)
+        if (routData.Contains("&videohosting=https://vkvideo.ru"))
+        {
+            return routData[..routData.LastIndexOf("&videohosting=https://vkvideo.ru", StringComparison.Ordinal)];
+        }
 
-            else if (await PagesInfo.Where(p => p.PagePathNickName == pagePath).AnyAsync())
-            {
-                return await PagesInfo.FirstAsync(p => p.PagePathNickName == pagePath);
-            }
+        int lastAmp = routData.LastIndexOf('&');
+        return lastAmp >= 0 ? routData[..lastAmp] : string.Empty;
+    }
 
-            #endregion
+    /// <summary>
+    /// Поиск страницы с совпадением пути и данных.
+    /// Все варианты (FullPath, FullPath+/index, NickName1..4, NickName+/index)
+    /// проверяются одним запросом на вариант через FirstOrDefaultAsync.
+    /// </summary>
+    private async Task<PageInfoModel?> FindPageWithRouteDataAsync(
+        string pagePath,
+        string routData,
+        CancellationToken cancellationToken = default)
+    {
+        string pathWithIndex = pagePath + "/index";
 
-            #region Совпадение пути и псевдонима (2)
+        // Один LINQ-запрос с OR-условиями — вместо 10 отдельных Any/First.
+        // EF Core транслирует в один SQL-запрос.
+        PageInfoModel? page = await PagesInfo.FirstOrDefaultAsync(
+            p => (p.PageFullPath == pagePath
+                  || p.PageFullPath == pathWithIndex
+                  || p.PagePathNickName == pagePath
+                  || p.PagePathNickName2 == pagePath
+                  || p.PagePathNickName3 == pagePath
+                  || p.PagePathNickName4 == pagePath
+                  || p.PagePathNickName == pathWithIndex
+                  || p.PagePathNickName2 == pathWithIndex
+                  || p.PagePathNickName3 == pathWithIndex
+                  || p.PagePathNickName4 == pathWithIndex)
+                 && p.RoutData == routData,
+            cancellationToken);
 
-            else if (await PagesInfo.Where(p => p.PagePathNickName2 == pagePath).AnyAsync())
-            {
-                return await PagesInfo.FirstAsync(p => p.PagePathNickName2 == pagePath);
-            }
+        return page;
+    }
 
-            #endregion
+    /// <summary>
+    /// Поиск страницы без учёта данных (routData).
+    /// Сохраняет прежнее поведение: если у найденной страницы есть RoutData,
+    /// но путь не заканчивается на "index" — вернуть error404.
+    /// </summary>
+    private async Task<PageInfoModel> FindPageWithoutRouteDataAsync(
+        string pagePath,
+        CancellationToken cancellationToken = default)
+    {
+        #region Пустой путь -> главная
 
-            #region Совпадение пути и псевдонима (3)
-
-            else if (await PagesInfo.Where(p => p.PagePathNickName3 == pagePath).AnyAsync())
-            {
-                return await PagesInfo.FirstAsync(p => p.PagePathNickName3 == pagePath);
-            }
-
-            #endregion
-
-            #region Совпадение пути и псевдонима (4)
-
-            else if (await PagesInfo.Where(p => p.PagePathNickName4 == pagePath).AnyAsync())
-            {
-                return await PagesInfo.FirstAsync(p => p.PagePathNickName4 == pagePath);
-            }
-
-            #endregion
-
-            #region Совпадение пути + /index
-
-            else if (await PagesInfo.Where(p => p.PageFullPath == pagePath + "/index").AnyAsync())
-            {
-                return await PagesInfo.FirstAsync(p => p.PageFullPath == pagePath + "/index");
-            }
-
-            #endregion
-
-            #region Совпадение пути с псевдонимом (1) + /index
-
-            else if (await PagesInfo.Where(p => p.PagePathNickName == pagePath + "/index").AnyAsync())
-            {
-                return await PagesInfo.FirstAsync(p => p.PagePathNickName == pagePath + "/index");
-            }
-
-            #endregion
-
-            #region Совпадение пути с псевдонимом (2) + /index
-
-            else if (await PagesInfo.Where(p => p.PagePathNickName2 == pagePath + "/index").AnyAsync())
-            {
-                return await PagesInfo.FirstAsync(p => p.PagePathNickName2 == pagePath + "/index");
-            }
-
-            #endregion
-
-            #region Совпадение пути с псевдонимом (3) + /index
-
-            else if (await PagesInfo.Where(p => p.PagePathNickName3 == pagePath + "/index").AnyAsync())
-            {
-                return await PagesInfo.FirstAsync(p => p.PagePathNickName3 == pagePath + "/index");
-            }
-
-            #endregion
-
-            #region Совпадение пути с псевдонимом (4) + /index
-
-            else if (await PagesInfo.Where(p => p.PagePathNickName4 == pagePath + "/index").AnyAsync())
-            {
-                return await PagesInfo.FirstAsync(p => p.PagePathNickName4 == pagePath + "/index");
-            }
-
-            #endregion
-
-            else
-            {
-                return await PagesInfo.FirstAsync(p => p.PageFullPath == "/shevkunenko/error404");
-            }
+        if (string.IsNullOrEmpty(pagePath))
+        {
+            return await GetPageOrThrowAsync(DefaultPagePath, cancellationToken);
         }
 
         #endregion
 
-        else
+        #region Совпадение FullPath
+
+        PageInfoModel? byFullPath = await PagesInfo.FirstOrDefaultAsync(
+            page => page.PageFullPath == pagePath,
+            cancellationToken);
+
+        if (byFullPath != null)
         {
-            return await PagesInfo.FirstAsync(p => p.PageFullPath == "/shevkunenko/error404");
+            // Если у страницы есть RoutData, а путь без "/index" — отдаём 404 (как раньше).
+            if (!string.IsNullOrEmpty(byFullPath.RoutData) && !pagePath.EndsWith("index", StringComparison.Ordinal))
+            {
+                return await GetPageOrThrowAsync(NotFoundPagePath, cancellationToken);
+            }
+
+            return byFullPath;
         }
+
+        #endregion
+
+        #region Совпадения псевдонимов
+
+        PageInfoModel? byNickName = await PagesInfo.FirstOrDefaultAsync(
+            p => p.PagePathNickName == pagePath
+                 || p.PagePathNickName2 == pagePath
+                 || p.PagePathNickName3 == pagePath
+                 || p.PagePathNickName4 == pagePath,
+            cancellationToken);
+
+        if (byNickName != null)
+        {
+            return byNickName;
+        }
+
+        #endregion
+
+        #region Совпадение FullPath + /index
+
+        string pathWithIndex = pagePath + "/index";
+
+        PageInfoModel? byFullPathWithIndex = await PagesInfo.FirstOrDefaultAsync(
+            p => p.PageFullPath == pathWithIndex,
+            cancellationToken);
+
+        if (byFullPathWithIndex != null)
+        {
+            return byFullPathWithIndex;
+        }
+
+        #endregion
+
+        #region Совпадение псевдонимов + /index
+
+        PageInfoModel? byNickNameWithIndex = await PagesInfo.FirstOrDefaultAsync(
+            p => p.PagePathNickName == pathWithIndex
+                 || p.PagePathNickName2 == pathWithIndex
+                 || p.PagePathNickName3 == pathWithIndex
+                 || p.PagePathNickName4 == pathWithIndex,
+            cancellationToken);
+
+        if (byNickNameWithIndex != null)
+        {
+            return byNickNameWithIndex;
+        }
+
+        #endregion
+
+        #region Ничего не найдено -> error404
+
+        return await GetPageOrThrowAsync(NotFoundPagePath, cancellationToken);
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Возвращает страницу по полному пути или бросает InvalidOperationException,
+    /// если её нет (сохраняем поведение FirstAsync).
+    /// </summary>
+    private async Task<PageInfoModel> GetPageOrThrowAsync(
+        string fullPath,
+        CancellationToken cancellationToken = default)
+    {
+        PageInfoModel? page = await PagesInfo.FirstOrDefaultAsync(
+            p => p.PageFullPath == fullPath,
+            cancellationToken);
+
+        return page ?? throw new InvalidOperationException(
+            $"Страница с путём '{fullPath}' не найдена в базе данных.");
+    }
+
+    #endregion
+
+    #region Поиск по идентификатору
+
+    public async Task<PageInfoModel?> GetPageByIdAsync(
+        Guid pageId,
+        CancellationToken cancellationToken = default)
+    {
+        return await PagesInfo.FirstOrDefaultAsync(
+            p => p.PageInfoModelId == pageId,
+            cancellationToken);
+    }
+
+    public async Task<bool> PageExistsAsync(
+        Guid pageId,
+        CancellationToken cancellationToken = default)
+    {
+        return await siteContext.PageInfo.AnyAsync(
+            p => p.PageInfoModelId == pageId,
+            cancellationToken);
     }
 
     #endregion
@@ -250,6 +326,11 @@ public class PageInfoImplementation(SiteDbContext siteContext) : IPageInfoReposi
     public async Task SaveChangesInPageAsync()
     {
         _ = await siteContext.SaveChangesAsync();
+    }
+
+    public async Task SaveChangesInPageAsync(CancellationToken cancellationToken = default)
+    {
+        _ = await siteContext.SaveChangesAsync(cancellationToken);
     }
 
     #endregion
@@ -262,19 +343,43 @@ public class PageInfoImplementation(SiteDbContext siteContext) : IPageInfoReposi
         await SaveChangesInPageAsync();
     }
 
+    public async Task AddNewPageWithoutSaveAsync(
+        PageInfoModel page,
+        CancellationToken cancellationToken = default)
+    {
+        _ = await siteContext.PageInfo.AddAsync(page, cancellationToken);
+    }
+
     #endregion
 
     #region Удалить страницу
 
     public async Task DeletePageAsync(Guid pageId)
     {
-        if (await siteContext.PageInfo.Where(i => i.PageInfoModelId == pageId).AnyAsync())
-        {
-            PageInfoModel pageToDelete = await siteContext.PageInfo.FirstAsync(i => i.PageInfoModelId == pageId);
+        PageInfoModel? pageToDelete = await siteContext.PageInfo
+            .FirstOrDefaultAsync(i => i.PageInfoModelId == pageId);
 
+        if (pageToDelete != null)
+        {
             _ = siteContext.PageInfo.Remove(pageToDelete);
             _ = await siteContext.SaveChangesAsync();
         }
+    }
+
+    public async Task<bool> DeletePageWithoutSaveAsync(
+        Guid pageId,
+        CancellationToken cancellationToken = default)
+    {
+        PageInfoModel? pageToDelete = await siteContext.PageInfo
+            .FirstOrDefaultAsync(i => i.PageInfoModelId == pageId, cancellationToken);
+
+        if (pageToDelete == null)
+        {
+            return false;
+        }
+
+        _ = siteContext.PageInfo.Remove(pageToDelete);
+        return true;
     }
 
     #endregion

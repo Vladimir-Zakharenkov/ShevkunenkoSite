@@ -9,21 +9,21 @@ public class PageCard : ViewComponent
     {
         PageInfoModel page;
 
-        if (pageLoc != null & await _pageContext.PagesInfo.Where(p => p.PageFullPathWithData == pageLoc).AnyAsync())
+        if (pageLoc != null & await _pageContext.PagesInfoNoTracking.Where(p => p.PageFullPathWithData == pageLoc).AnyAsync())
         {
-            page = await _pageContext.PagesInfo.FirstAsync(p => p.PageFullPath == pageLoc);
+            page = await _pageContext.PagesInfoNoTracking.FirstAsync(p => p.PageFullPath == pageLoc);
 
             return View(page);
         }
-        else if (pageLoc != null & await _pageContext.PagesInfo.Where(p => p.PagePathNickNameWithData == pageLoc).AnyAsync())
+        else if (pageLoc != null & await _pageContext.PagesInfoNoTracking.Where(p => p.PagePathNickNameWithData == pageLoc).AnyAsync())
         {
-            page = await _pageContext.PagesInfo.FirstAsync(p => p.PagePathNickNameWithData == pageLoc);
+            page = await _pageContext.PagesInfoNoTracking.FirstAsync(p => p.PagePathNickNameWithData == pageLoc);
 
             return View(page);
         }
         else
         {
-            page = await _pageContext.PagesInfo.FirstAsync(p => p.PageLoc == "/error404");
+            page = await _pageContext.PagesInfoNoTracking.FirstAsync(p => p.PageLoc == "/error404");
 
             return View(page);
         }
