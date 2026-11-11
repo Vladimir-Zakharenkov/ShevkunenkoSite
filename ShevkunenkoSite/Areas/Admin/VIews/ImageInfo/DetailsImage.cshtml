@@ -365,28 +365,6 @@
                                 </tr>
                             }
 
-                            @if (!string.IsNullOrEmpty(Model.ImageItem.WebIcon100FileName))
-                            {
-                                <tr class="text-start @(Model.IconType == "webicon100" ? "table-primary" : "")">
-                                    <td scope="col" class="text-start text-success fw-bolder">WebIcon100</td>
-                                    <td scope="col" class="d-none d-sm-table-cell text-start text_shadow">@Model.ImageItem.WebIcon100FileName</td>
-                                    <td scope="col" class="d-none d-md-table-cell text-start text-primary">@Model.ImageItem.WebIcon100FileSize</td>
-                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebIcon100Width</td>
-                                    <td scope="col" class="d-none d-md-table-cell text-start">@Model.ImageItem.WebIcon100Height</td>
-                                    <td scope="col">
-                                        <a class="@Model.WebIcon100ButtonInfostyle"
-                                           asp-area="Admin"
-                                           asp-controller="ImageInfo"
-                                           asp-action="DetailsImage"
-                                           asp-route-imageId="@Model.ImageItem.ImageFileModelId"
-                                           asp-route-imageIcon="webicon100"
-                                           title="Информация о иконке 100 WEB">
-                                            Info
-                                        </a>
-                                    </td>
-                                </tr>
-                            }
-
                             @if (!string.IsNullOrEmpty(Model.ImageItem.WebImageHDFileNameAI))
                             {
                                 <tr class="text-start @(Model.IconType == "webhdAI" ? "table-primary" : "")">

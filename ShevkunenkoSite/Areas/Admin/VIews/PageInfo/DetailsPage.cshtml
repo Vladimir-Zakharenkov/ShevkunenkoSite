@@ -67,7 +67,7 @@
             <a asp-area="Admin"
                asp-controller="PageInfo"
                asp-action="Index"
-               asp-rout-pageCard="false"
+               asp-route-pageCard="false"
                class="@actionButton btn-outline-primary"
                title="список страниц">
 
@@ -648,7 +648,7 @@
                             else
                             {
                                 <a class="fs-5 text_shadow"
-                                   href="@Url.Content($"{Model.ImageFileModel.ImagePath}/{Model.ImageFileModel.WebImageFileName}")"
+                                   href="@Url.Content($"{Model.ImageFileModel.ImagePath}/{Model.ImageFileModel.ImageFileName}")"
                                    onclick="this.target='_blank'">
                                     @Model.ImageFileModel.ImagePath/@Model.ImageFileModel.ImageFileName
                                 </a>
@@ -1217,7 +1217,7 @@
                                             @if (Model.ImagePageHeading != null && Model.ImagePageHeading.WebImageFileName != null)
                                             {
                                                 <a class="fs-5 text_shadow d-block text-lg-center"
-                                                   href="@Url.Content($" {Model.ImagePageHeading.ImagePath}\\ /{Model.ImagePageHeading.WebImageFileName}")"
+                                                   href="@Url.Content($"{Model.ImagePageHeading.ImagePath}/{Model.ImagePageHeading.WebImageFileName}")"
                                                    onclick="this.target='_blank'">
 
                                                     @Model.ImagePageHeading.ImagePath/@Model.ImagePageHeading.WebImageFileName
@@ -1227,7 +1227,7 @@
                                             else if (Model.ImagePageHeading != null)
                                             {
                                                 <a class="fs-5 text_shadow d-block text-lg-center"
-                                                   href="@Url.Content($" {Model.ImagePageHeading.ImagePath}\\ /{Model.ImagePageHeading.ImageFileName}")"
+                                                   href="@Url.Content($"{Model.ImagePageHeading.ImagePath}/{Model.ImagePageHeading.ImageFileName}")"
                                                    onclick="this.target='_blank'">
 
                                                     @Model.ImagePageHeading.ImagePath/@Model.ImagePageHeading.ImageFileName

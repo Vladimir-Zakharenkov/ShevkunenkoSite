@@ -129,8 +129,10 @@ public class PageInfoController(
                     .Contains(pageItem.PageInfoModelId.ToString().ToLower()))
                     .ToArrayAsync());
 #pragma warning restore CA1862
-
-            _ = pageItem.LinksFromPagesByGuid.Distinct().OrderBy(p => p.SortOfPage);
+            if (pageItem.LinksFromPagesByGuid.Count > 0)
+            {
+                pageItem.LinksFromPagesByGuid = [.. pageItem.LinksFromPagesByGuid.Distinct().OrderBy(p => p.SortOfPage)];
+            }
 
             #endregion
 
@@ -145,7 +147,10 @@ public class PageInfoController(
                 .ToArrayAsync());
 #pragma warning restore CA1862
 
-            _ = pageItem.LinksFromPagesByGuid2.Distinct().OrderBy(p => p.SortOfPage);
+            if (pageItem.LinksFromPagesByGuid2.Count > 0)
+            {
+                pageItem.LinksFromPagesByGuid2 = [.. pageItem.LinksFromPagesByGuid2.Distinct().OrderBy(p => p.SortOfPage)];
+            }
 
             #endregion
 
@@ -161,13 +166,13 @@ public class PageInfoController(
                 {
                     for (int i = 0; i < pageFilters.Length; i++)
                     {
-                        if (await pageInfoContext.PagesInfoNoTracking.Where(p => p.PageFilter.Contains(pageFilters[i].Trim() + ',')).AnyAsync())
-                        {
-                            var listOfFilterOut = await pageInfoContext.PagesInfoNoTracking
-                                .Where(p => p.PageFilterOut != null && p.PageFilterOut.Contains(pageFilters[i].Trim() + ','))
-                                .ToListAsync();
+                        var listOfFilterOut = await pageInfoContext.PagesInfoNoTracking
+                            .Where(p => p.PageFilterOut != null && p.PageFilterOut.Contains(pageFilters[i].Trim() + ','))
+                            .ToListAsync();
 
-                            _ = listOfFilterOut.Distinct().OrderBy(p => p.SortOfPage);
+                        if (listOfFilterOut.Count > 0)
+                        {
+                            listOfFilterOut = [.. listOfFilterOut.Distinct().OrderBy(p => p.SortOfPage)];
 
                             pageItem.DictionaryOfOutPages[pageFilters[i].Trim()] = listOfFilterOut;
                         }
@@ -195,7 +200,7 @@ public class PageInfoController(
                             {
                                 pageItem.LinksToPagesByGuid.Add(await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PageInfoModelId == pageGuid));
 
-                                _ = pageItem.LinksToPagesByGuid.Distinct().OrderBy(p => p.PageCardText);
+                                pageItem.LinksToPagesByGuid = [.. pageItem.LinksToPagesByGuid.Distinct().OrderBy(p => p.PageCardText)];
                             }
                         }
                     }
@@ -222,7 +227,7 @@ public class PageInfoController(
                             {
                                 pageItem.LinksToPagesByGuid2.Add(await pageInfoContext.PagesInfoNoTracking.FirstAsync(p => p.PageInfoModelId == pageGuid2));
 
-                                _ = pageItem.LinksToPagesByGuid2.Distinct().OrderBy(p => p.PageCardText);
+                                pageItem.LinksToPagesByGuid2 = [.. pageItem.LinksToPagesByGuid2.Distinct().OrderBy(p => p.PageCardText)];
                             }
                         }
                     }
@@ -243,15 +248,13 @@ public class PageInfoController(
                 {
                     for (int i = 0; i < pageFiltersOut.Length; i++)
                     {
-                        if (await pageInfoContext.PagesInfoNoTracking
-                                .Where(p => p.PageFilter.Contains((pageFiltersOut[i] + ',').Trim()))
-                                .AnyAsync())
-                        {
-                            var pages = await pageInfoContext.PagesInfoNoTracking
-                                .Where(p => p.PageFilter.Contains((pageFiltersOut[i] + ',').Trim()))
+                        var pages = await pageInfoContext.PagesInfoNoTracking
+                                .Where(p => p.PageFilter != null && p.PageFilter.Contains(pageFiltersOut[i].Trim() + ','))
                                 .ToListAsync();
 
-                            _ = pages.OrderBy(p => p.SortOfPage);
+                        if (pages.Count > 0)
+                        {
+                            pages = [.. pages.Distinct().OrderBy(p => p.SortOfPage)];
 
                             pageItem.DictionaryOfLinksByPageFilterOut[pageFiltersOut[i].Trim()] = pages;
                         }
@@ -2274,7 +2277,7 @@ public class PageInfoController(
 
                     #endregion
 
-                    return View(editPage);
+                    return View(pageUpdate);
                 }
                 else if (editPage.PageLoc == "/")
                 {

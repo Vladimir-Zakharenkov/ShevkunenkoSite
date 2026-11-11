@@ -1,4 +1,5 @@
 ﻿//Ignore Spelling: Org
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.RegularExpressions;
@@ -624,6 +625,16 @@ public partial class FilmsController(
 
             #endregion
 
+            #region Даты
+
+            addFilm.FilmDateCreated = filmItem.FilmDateCreated;
+
+            addFilm.FilmDatePublished = filmItem.FilmDatePublished;
+
+            addFilm.FilmUploadDate = filmItem.FilmUploadDate;
+
+            #endregion
+
             #region Съёмочная группа
 
             addFilm.FilmProductionCompany = filmItem.FilmProductionCompany.Trim();
@@ -1003,7 +1014,8 @@ public partial class FilmsController(
         {
             #region Инициализация filmUpdate
 
-            FilmFileModel filmUpdate = await filmContext.FilmFiles.FirstAsync(film => film.FilmFileModelId == editFilm.FilmFileModelId);
+            FilmFileModel filmUpdate = await filmContext.FilmFiles
+                    .FirstAsync(film => film.FilmFileModelId == editFilm.FilmFileModelId);
 
             #endregion
 
@@ -1369,6 +1381,16 @@ public partial class FilmsController(
             {
                 filmUpdate.FilmSubtitles2 = editFilm.FilmSubtitles2.Trim();
             }
+
+            #endregion
+
+            #region Даты
+
+            filmUpdate.FilmDateCreated = editFilm.FilmDateCreated;
+
+            filmUpdate.FilmDatePublished = editFilm.FilmDatePublished;
+
+            filmUpdate.FilmUploadDate = editFilm.FilmUploadDate;
 
             #endregion
 
