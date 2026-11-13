@@ -23,52 +23,67 @@ public class PageInfoController(
 
     #region Список страниц сайта
 
-    private static readonly char[] separator = [','];
-
-    public async Task<ViewResult> Index
-        (
+    public async Task<ViewResult> Index(
         string? searchString,
         int pageNumber = 1,
-        bool pageCard = false
-        )
+        bool pageCard = false,
+        CancellationToken cancellationToken = default)
     {
-        // Список всех страниц сайта
-        var allSitePages = await pageInfoContext.PagesInfoNoTracking.ToListAsync();
+        int pageSize = Math.Max(
+            1, DataConfig.NumberOfItemsPerPage);
 
-        if (!searchString.IsNullOrEmpty())
+        string search = searchString?.Trim() ?? string.Empty;
+
+        // Запрос без отслеживания изменений
+        var query = pageInfoContext.PagesInfoNoTracking
+            .AsNoTracking()
+            .PageSearchQuery(search);
+
+        // Количество записей после фильтрации
+        int totalItems = await query.CountAsync(cancellationToken);
+
+        // Количество страниц
+        int totalPages = Math.Max(
+            1,
+            (int)Math.Ceiling((double)totalItems / pageSize));
+
+        // Корректируем номер страницы
+        pageNumber = Math.Clamp(pageNumber, 1, totalPages);
+
+        // Сортировка и постраничная выборка в SQL Server
+        var sortedQuery = query
+            .OrderBy(pageInfo => pageInfo.SortOfPage)
+            .ThenBy(pageInfo => pageInfo.PageInfoModelId)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize);
+
+        PageInfoModel[] pages;
+
+        if (pageCard)
         {
-            allSitePages = [.. allSitePages.PageSearch(searchString).OrderBy(sitePage => sitePage.SortOfPage)];
-        }
-
-        ItemsListViewModel itemList = new()
-        {
-            AllSitePages = [.. allSitePages
-                     .Skip((pageNumber - 1) * DataConfig.NumberOfItemsPerPage)
-                     .Take(DataConfig.NumberOfItemsPerPage)],
-
-            #region Свойства PagingInfoViewModel
-
-            TotalItems = allSitePages.Count,
-
-            ItemsPerPage = DataConfig.NumberOfItemsPerPage,
-
-            CurrentPage = pageNumber,
-
-            SearchString = searchString ?? string.Empty,
-
-            PageCard = pageCard
-
-            #endregion
-        };
-
-        if (pageCard == false)
-        {
-            return View(itemList);
+            pages = await sortedQuery
+                .Include(pageInfo => pageInfo.ImageFileModel)
+                .ToArrayAsync(cancellationToken);
         }
         else
         {
-            return View("PageCardList", itemList);
+            pages = await sortedQuery
+                .ToArrayAsync(cancellationToken);
         }
+
+        ItemsListViewModel model = new()
+        {
+            AllSitePages = pages,
+            TotalItems = totalItems,
+            ItemsPerPage = pageSize,
+            CurrentPage = pageNumber,
+            SearchString = search,
+            PageCard = pageCard
+        };
+
+        return View(
+            pageCard ? "PageCardList" : "Index",
+            model);
     }
 
     #endregion

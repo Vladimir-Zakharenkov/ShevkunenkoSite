@@ -1,4 +1,5 @@
-﻿namespace ShevkunenkoSite.Views.Shared.Components.Code;
+﻿
+namespace ShevkunenkoSite.Views.Shared.Components.Code;
 
 public class ViewImage(
     IImageFileRepository imageFileContext
@@ -11,59 +12,55 @@ public class ViewImage(
         "hd", "image", "icon300", "icon200", "icon100"
     ];
 
-    public async Task<IViewComponentResult> InvokeAsync(string? imageId, string? cssClass, string? iconType)
+
+    public async Task<IViewComponentResult> InvokeAsync(
+        string? imageId = null,
+        string? cssClass = null,
+        string? iconType = null,
+        ImageFileModel? imageItem = null)
     {
-        ImageFileModel? image = null;
-
-        #region Поиск картинки по GUID
-
-        if (Guid.TryParse(imageId, out var guid))
-        {
-            image = await imageFileContext.ImageFiles
-                .FirstOrDefaultAsync(img => img.ImageFileModelId == guid);
-        }
-
-        #endregion
-
-        #region Если по GUID не нашли, ищем по названию файла
-
-        image ??= await imageFileContext.ImageFiles
-            .FirstOrDefaultAsync(img => img.WebImageFileName == imageId
-                                     || img.ImageFileName == imageId
-                                     || img.WebImageFileNameAI == imageId);
-
-        #endregion
-
-        #region Если ничего не найдено, выводим картинку NoImage
-
-        image ??= await imageFileContext.ImageFiles
-            .FirstOrDefaultAsync(img => img.ImageFileModelId == DataConfig.NoImage);
-
-        #endregion
-
-        #region Если не нашли NoImage
+        ImageFileModel? image = imageItem;
 
         if (image is null)
         {
-            var noImageGuid = DataConfig.NoImage;
+            var query = imageFileContext.ImageFiles
+                .AsNoTracking();
 
-            image = await imageFileContext.ImageFiles
-                .FirstOrDefaultAsync(img => img.ImageFileModelId == noImageGuid)
-                ?? throw new InvalidOperationException(
-                    $"Не найдено изображение NoImage с Id = {DataConfig.NoImage}");
+            if (Guid.TryParse(imageId, out Guid imageGuid))
+            {
+                image = await query.FirstOrDefaultAsync(
+                    img => img.ImageFileModelId == imageGuid);
+            }
+            else if (!string.IsNullOrWhiteSpace(imageId))
+            {
+                image = await query.FirstOrDefaultAsync(img =>
+                    img.WebImageFileName == imageId
+                    || img.ImageFileName == imageId
+                    || img.WebImageFileNameAI == imageId);
+            }
+
+            image ??= await query.FirstOrDefaultAsync(
+                img => img.ImageFileModelId == DataConfig.NoImage);
         }
 
-        #endregion
+        if (image is null)
+        {
+            throw new InvalidOperationException(
+                $"Не найдено изображение NoImage с Id = {DataConfig.NoImage}");
+        }
 
-        var vm = new ViewImageViewModel
+        ViewImageViewModel vm = new()
         {
             ImageItem = image,
-            IconType = iconType is not null && AllowedIconTypes.Contains(iconType)
-                        ? iconType
-                        : "webimage",
-            CssClass = string.IsNullOrEmpty(cssClass)
-                        ? "img-fluid w-100"
-                        : $"img-fluid w-100 {cssClass}"
+
+            IconType = iconType is not null
+                && AllowedIconTypes.Contains(iconType)
+                    ? iconType
+                    : "webimage",
+
+            CssClass = string.IsNullOrWhiteSpace(cssClass)
+                ? "img-fluid w-100"
+                : $"img-fluid w-100 {cssClass}"
         };
 
         return View(vm);

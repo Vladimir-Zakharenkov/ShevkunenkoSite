@@ -4,7 +4,7 @@ public class PagingInfoViewModel
 {
     #region Полное количество объектов
 
-    public int TotalItems { get; set; } = 1;
+    public int TotalItems { get; set; } = 0;
 
     #endregion
 

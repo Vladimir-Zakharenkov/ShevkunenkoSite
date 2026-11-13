@@ -1,7 +1,9 @@
-﻿namespace ShevkunenkoSite.Services.TagHelpers;
+﻿
+namespace ShevkunenkoSite.Services.TagHelpers;
 
 [HtmlTargetElement("div", Attributes = "pagination")]
-public class PaginationOfItemsListTagHelper(IUrlHelperFactory helperFactory) : TagHelper
+public class PaginationOfItemsListTagHelper(
+    IUrlHelperFactory helperFactory) : TagHelper
 {
     [ViewContext]
     [HtmlAttributeNotBound]
@@ -16,79 +18,192 @@ public class PaginationOfItemsListTagHelper(IUrlHelperFactory helperFactory) : T
     public bool? ShowAI { get; set; }
 
     private const string PhotoAlbumAction = "PhotoAlbum";
-
     private const string FilmPhotoAlbumAction = "FilmPhotoAlbum";
 
-    public override void Process(TagHelperContext context, TagHelperOutput output)
+    private const int VisiblePagesAroundCurrent = 2;
+
+    public override void Process(
+        TagHelperContext context,
+        TagHelperOutput output)
     {
-        if (ViewContext is null || Paging is null || Paging.TotalPages <= 1)
+        if (ViewContext is null
+            || Paging is null
+            || Paging.TotalPages <= 1)
         {
             output.SuppressOutput();
             return;
         }
 
-        string actionName = ViewContext.ActionDescriptor?.RouteValues["action"]
-                    ?? ViewContext.RouteData.Values["action"]?.ToString()
-                    ?? string.Empty;
+        string actionName =
+            ViewContext.RouteData.Values["action"]?.ToString()
+            ?? ViewContext.ActionDescriptor.RouteValues["action"]
+            ?? string.Empty;
 
-        if (string.IsNullOrEmpty(actionName))
+        if (string.IsNullOrWhiteSpace(actionName))
         {
             output.SuppressOutput();
             return;
         }
 
-        IUrlHelper urlHelper = helperFactory.GetUrlHelper(ViewContext);
+        IUrlHelper urlHelper =
+            helperFactory.GetUrlHelper(ViewContext);
 
+        int totalPages = Paging.TotalPages;
+
+        int currentPage = Math.Clamp(
+            Paging.CurrentPage, 1, totalPages);
+
+        int startPage = Math.Max(
+            1, currentPage - VisiblePagesAroundCurrent);
+
+        int endPage = Math.Min(
+            totalPages,
+            currentPage + VisiblePagesAroundCurrent);
+
+        output.TagName = "nav";
         output.Attributes.Clear();
 
-        output.Attributes.SetAttribute("class",
-            "d-flex flex-wrap justify-content-center p-2 mx-auto");
+        output.Attributes.SetAttribute(
+            "class",
+            "d-flex flex-wrap justify-content-center " +
+            "align-items-center p-2 mx-auto");
 
-        for (int i = 1; i <= Paging.TotalPages; i++)
+        output.Attributes.SetAttribute(
+            "aria-label", "Навигация по страницам");
+
+        // Формирование адреса с сохранением маршрутов
+        string? GetPageUrl(int pageNumber)
         {
-            TagBuilder newRef = new("a");
-
-            if (actionName == PhotoAlbumAction)
+            if (string.Equals(
+                actionName,
+                PhotoAlbumAction,
+                StringComparison.OrdinalIgnoreCase))
             {
-                newRef.Attributes["href"] = urlHelper.Action(actionName,
-                    new
-                    {
-                        albumCaption = AlbumCaption,
-                        pageNumber = i,
-                        imageId = string.Empty
-                    });
+                return urlHelper.Action(actionName, new
+                {
+                    albumCaption = AlbumCaption,
+                    pageNumber,
+                    imageId = string.Empty
+                });
             }
-            else if (actionName == FilmPhotoAlbumAction)
+
+            if (string.Equals(
+                actionName,
+                FilmPhotoAlbumAction,
+                StringComparison.OrdinalIgnoreCase))
             {
-                // ✅ Сохраняем showAI в ссылке, чтобы режим не сбрасывался
-                newRef.Attributes["href"] = urlHelper.Action(actionName,
-                    new
-                    {
-                        filmCaption = AlbumCaption,
-                        pageNumber = i,
-                        imageId = string.Empty,
-                        showAI = ShowAI ?? true
-                    });
+                return urlHelper.Action(actionName, new
+                {
+                    filmCaption = AlbumCaption,
+                    pageNumber,
+                    imageId = string.Empty,
+                    showAI = ShowAI ?? true
+                });
+            }
+
+            return urlHelper.Action(actionName, new
+            {
+                searchString = Paging.SearchString ?? string.Empty,
+                pageNumber,
+                pageCard = Paging.PageCard
+            });
+        }
+
+        // Создание кнопки страницы
+        void AddPageLink(
+            int pageNumber,
+            string text,
+            string? title = null)
+        {
+            TagBuilder link = new("a");
+
+            link.Attributes["href"] =
+                GetPageUrl(pageNumber) ?? "#";
+
+            link.Attributes["title"] =
+                title ?? $"Страница {pageNumber}";
+
+            link.AddCssClass(
+                "btn border border-1 border-secondary " +
+                "rounded ten width60px mx-1 my-1 py-0");
+
+            if (pageNumber == currentPage)
+            {
+                link.AddCssClass("btn-danger");
+
+                link.Attributes["aria-current"] = "page";
             }
             else
             {
-                newRef.Attributes["href"] = urlHelper.Action(actionName,
-                    new
-                    {
-                        searchString = Paging.SearchString ?? string.Empty,
-                        pageNumber = i,
-                        pageCard = Paging.PageCard
-                    });
+                link.AddCssClass("btn-outline-dark");
             }
 
-            newRef.Attributes["title"] = $"страница {i}";
+            link.InnerHtml.Append(text);
 
-            newRef.AddCssClass($"btn border border-1 border-secondary rounded ten width60px mx-2 my-1 py-0 " +
-                               $"{(i == Paging.CurrentPage ? "btn-danger" : "btn-outline-dark")}");
+            output.Content.AppendHtml(link);
+        }
 
-            newRef.InnerHtml.Append(i.ToString());
+        // Многоточие между диапазонами
+        void AddEllipsis()
+        {
+            TagBuilder dots = new("span");
 
-            output.Content.AppendHtml(newRef);
+            dots.AddCssClass(
+                "mx-2 my-1 text-secondary");
+
+            dots.Attributes["aria-hidden"] = "true";
+
+            dots.InnerHtml.Append("…");
+
+            output.Content.AppendHtml(dots);
+        }
+
+        // Кнопка назад
+        if (currentPage > 1)
+        {
+            AddPageLink(
+                currentPage - 1,
+                "«",
+                "Предыдущая страница");
+        }
+
+        // Первая страница
+        if (startPage > 1)
+        {
+            AddPageLink(1, "1");
+
+            if (startPage > 2)
+            {
+                AddEllipsis();
+            }
+        }
+
+        // Страницы вокруг текущей
+        for (int i = startPage; i <= endPage; i++)
+        {
+            AddPageLink(i, i.ToString());
+        }
+
+        // Последняя страница
+        if (endPage < totalPages)
+        {
+            if (endPage < totalPages - 1)
+            {
+                AddEllipsis();
+            }
+
+            AddPageLink(
+                totalPages,
+                totalPages.ToString());
+        }
+
+        // Кнопка вперёд
+        if (currentPage < totalPages)
+        {
+            AddPageLink(
+                currentPage + 1,
+                "»",
+                "Следующая страница");
         }
     }
 }
