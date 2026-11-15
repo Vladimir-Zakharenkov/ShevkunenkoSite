@@ -72,6 +72,7 @@
            asp-action="Index"
            asp-route-searchString="@Model.SearchString"
            asp-route-pageCard="true"
+           asp-route-pageNumber="@Model.CurrentPage"
            class="btn btn-outline-primary block-shadow py-1 mt-2 minwidth100px"
            title="карточки страниц">
 
@@ -86,7 +87,6 @@
     @* Поиск страницы *@
     <div class="col-12 col-md-6 col-lg-8 mb-2">
 
-		
         <form method="get"
               asp-area="Admin"
               asp-controller="PageInfo"

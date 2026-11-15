@@ -163,7 +163,7 @@ public class PaginationOfItemsListTagHelper(
         {
             AddPageLink(
                 currentPage - 1,
-                "«",
+                "<<",
                 "Предыдущая страница");
         }
 
@@ -202,7 +202,7 @@ public class PaginationOfItemsListTagHelper(
         {
             AddPageLink(
                 currentPage + 1,
-                "»",
+                ">>",
                 "Следующая страница");
         }
     }
