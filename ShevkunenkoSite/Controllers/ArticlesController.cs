@@ -85,7 +85,9 @@ public class ArticlesController(
             FramesAroundMainContentModel framesAroundMainContent = new();
 
             var imageItems = await imageFileContext.ImageFiles
-                .Where(img => img.SearchFilter.ToLower().Contains(bookOrArticleItem.CaptionOfText.ToLower()))
+                .Where(img => img.SearchFilter != null &&
+                          img.SearchFilter.ToLower()
+                              .Contains(bookOrArticleItem.CaptionOfText.ToLower()))
                 .ToArrayAsync();
 
             imageItems = [.. imageItems.Shuffle()];

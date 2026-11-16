@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 namespace ShevkunenkoSite.Areas.Admin.Controllers;
@@ -22,7 +21,7 @@ public class TextInfoController(
     {
         var allTextFiles = await textContext.Texts.ToListAsync();
 
-        if (!searchString.IsNullOrEmpty())
+        if (!string.IsNullOrEmpty(searchString))
         {
             allTextFiles = [.. allTextFiles.TextSearch(searchString, hostEnvironment).OrderBy(text => text.TextDescription)];
         }

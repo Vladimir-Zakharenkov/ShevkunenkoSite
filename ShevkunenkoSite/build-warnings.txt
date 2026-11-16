@@ -1,0 +1,11 @@
+  ╨Ю╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╕╨╡ ╨┐╤А╨╛╨╡╨║╤В╨╛╨▓ ╨┤╨╗╤П ╨▓╨╛╤Б╤Б╤В╨░╨╜╨╛╨▓╨╗╨╡╨╜╨╕╤П...
+  ╨Т╤Б╨╡ ╨┐╤А╨╛╨╡╨║╤В╤Л ╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╤Л ╨┤╨╗╤П ╨▓╨╛╤Б╤Б╤В╨░╨╜╨╛╨▓╨╗╨╡╨╜╨╕╤П.
+  ShevkunenkoSite.Models -> C:\ShevkunenkoNET10\ShevkunenkoSite.Model\bin\Release\net11.0\ShevkunenkoSite.Models.dll
+  ShevkunenkoSite.Services -> C:\ShevkunenkoNET10\ShevkunenkoSite.Services\bin\Release\net11.0\ShevkunenkoSite.Services.dll
+  ShevkunenkoSite -> C:\ShevkunenkoNET10\ShevkunenkoSite\bin\Release\net11.0\ShevkunenkoSite.dll
+
+╨б╨▒╨╛╤А╨║╨░ ╤Г╤Б╨┐╨╡╤И╨╜╨╛ ╨╖╨░╨▓╨╡╤А╤И╨╡╨╜╨░.
+    ╨Я╤А╨╡╨┤╤Г╨┐╤А╨╡╨╢╨┤╨╡╨╜╨╕╨╣: 0
+    ╨Ю╤И╨╕╨▒╨╛╨║: 0
+
+╨Я╤А╨╛╤И╨╗╨╛ ╨▓╤А╨╡╨╝╨╡╨╜╨╕ 00:00:13.46

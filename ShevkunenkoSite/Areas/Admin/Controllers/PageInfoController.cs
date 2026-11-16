@@ -327,9 +327,9 @@ public class PageInfoController(
                 {
                     for (int i = 0; i < pictureFiltersOut.Length; i++)
                     {
-                        if (await imageContext.ImageFiles.Where(img => img.SearchFilter.Contains(pictureFiltersOut[i].Trim())).AnyAsync())
+                        if (await imageContext.ImageFiles.Where(img => img.SearchFilter != null && img.SearchFilter.Contains(pictureFiltersOut[i].Trim())).AnyAsync())
                         {
-                            var pictures = await imageContext.ImageFiles.Where(img => img.SearchFilter.Contains(pictureFiltersOut[i].Trim())).ToListAsync();
+                            var pictures = await imageContext.ImageFiles.Where(img => img.SearchFilter != null && img.SearchFilter.Contains(pictureFiltersOut[i].Trim())).ToListAsync();
 
                             _ = pictures.OrderBy(p => p.ImageCaption);
 
@@ -354,11 +354,11 @@ public class PageInfoController(
                 if (audioForPage.AudioBookModel != null
                         && audioForPage.AudioBookModel.BookForAudioBook != null
                         && await imageContext.ImageFiles
-                                       .Where(img => img.SearchFilter.Contains(audioForPage.AudioBookModel.BookForAudioBook.CaptionOfText.Replace(' ', '-') + "#album#"))
+                                       .Where(img => img.SearchFilter != null && img.SearchFilter.Contains(audioForPage.AudioBookModel.BookForAudioBook.CaptionOfText.Replace(' ', '-') + "#album#"))
                                        .AnyAsync())
                 {
                     var listOfPictures = await imageContext.ImageFiles
-                       .Where(p => p.SearchFilter.Contains(audioForPage.AudioBookModel.BookForAudioBook.CaptionOfText.Replace(' ', '-') + "#album#"))
+                       .Where(p => p.SearchFilter != null && p.SearchFilter.Contains(audioForPage.AudioBookModel.BookForAudioBook.CaptionOfText.Replace(' ', '-') + "#album#"))
                        .ToArrayAsync(); ;
 
                     listOfPictures = [.. listOfPictures.Shuffle()];
@@ -406,7 +406,7 @@ public class PageInfoController(
 
 #pragma warning disable CA1862
                             var imageItems = await imageContext.ImageFiles
-                                                            .Where(img => img.SearchFilter.ToLower().Contains(bookForPage.CaptionOfText.ToLower()))
+                                                            .Where(img => img.SearchFilter != null && img.SearchFilter.ToLower().Contains(bookForPage.CaptionOfText.ToLower()))
                                                             .ToArrayAsync();
 #pragma warning restore CA1862
 
@@ -440,10 +440,10 @@ public class PageInfoController(
 
 #pragma warning restore CA1862
                     if (await imageContext.ImageFiles
-                                .Where(img => img.SearchFilter.ToLower().Contains(dictionaryOfRoutdata["bookcaption"].ToLower())).AnyAsync())
+                                .Where(img => img.SearchFilter != null && img.SearchFilter.ToLower().Contains(dictionaryOfRoutdata["bookcaption"].ToLower())).AnyAsync())
                     {
                         var imageItems = await imageContext.ImageFiles
-                                    .Where(img => img.SearchFilter.ToLower().Contains(dictionaryOfRoutdata["bookcaption"].ToLower()))
+                                    .Where(img => img.SearchFilter != null && img.SearchFilter.ToLower().Contains(dictionaryOfRoutdata["bookcaption"].ToLower()))
                                     .ToArrayAsync();
 
                         imageItems = [.. imageItems.Shuffle()];
@@ -1929,9 +1929,9 @@ public class PageInfoController(
                 {
                     for (int i = 0; i < pictureFiltersOut.Length; i++)
                     {
-                        if (await imageContext.ImageFiles.Where(img => img.SearchFilter.Contains(pictureFiltersOut[i])).AnyAsync())
+                        if (await imageContext.ImageFiles.Where(img => img.SearchFilter != null && img.SearchFilter.Contains(pictureFiltersOut[i])).AnyAsync())
                         {
-                            var pictures = await imageContext.ImageFiles.Where(img => img.SearchFilter.Contains(pictureFiltersOut[i])).ToListAsync();
+                            var pictures = await imageContext.ImageFiles.Where(img => img.SearchFilter != null && img.SearchFilter.Contains(pictureFiltersOut[i])).ToListAsync();
 
                             _ = pictures.OrderBy(p => p.ImageCaption);
 
@@ -1956,11 +1956,11 @@ public class PageInfoController(
                 if (audioForPage.AudioBookModel != null
                         && audioForPage.AudioBookModel.BookForAudioBook != null
                         && await imageContext.ImageFiles
-                                       .Where(img => img.SearchFilter.Contains(audioForPage.AudioBookModel.BookForAudioBook.CaptionOfText.Replace(' ', '-') + "#album#"))
+                                       .Where(img => img.SearchFilter != null && img.SearchFilter.Contains(audioForPage.AudioBookModel.BookForAudioBook.CaptionOfText.Replace(' ', '-') + "#album#"))
                                        .AnyAsync())
                 {
                     var listOfPictures = await imageContext.ImageFiles
-                       .Where(p => p.SearchFilter.Contains(audioForPage.AudioBookModel.BookForAudioBook.CaptionOfText.Replace(' ', '-') + "#album#"))
+                       .Where(p => p.SearchFilter != null && p.SearchFilter.Contains(audioForPage.AudioBookModel.BookForAudioBook.CaptionOfText.Replace(' ', '-') + "#album#"))
                        .ToArrayAsync(); ;
 
                     listOfPictures = [.. listOfPictures.Shuffle()];
@@ -2008,7 +2008,7 @@ public class PageInfoController(
 
 #pragma warning disable CA1862
                             var imageItems = await imageContext.ImageFiles
-                                                            .Where(img => img.SearchFilter.ToLower().Contains(bookForPage.CaptionOfText.ToLower()))
+                                                            .Where(img => img.SearchFilter != null && img.SearchFilter.ToLower().Contains(bookForPage.CaptionOfText.ToLower()))
                                                             .ToArrayAsync();
 #pragma warning restore CA1862
 
@@ -2042,7 +2042,7 @@ public class PageInfoController(
 
 #pragma warning disable CA1862
                     var imageItems = await imageContext.ImageFiles
-                                .Where(img => img.SearchFilter.ToLower().Contains(dictionaryOfRoutdata["bookcaption"].ToLower()))
+                                .Where(img => img.SearchFilter != null && img.SearchFilter.ToLower().Contains(dictionaryOfRoutdata["bookcaption"].ToLower()))
                                 .ToArrayAsync();
 #pragma warning restore CA1862
 

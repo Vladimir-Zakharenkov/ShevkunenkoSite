@@ -1,6 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-
-namespace ShevkunenkoSite.Controllers;
+﻿namespace ShevkunenkoSite.Controllers;
 
 public class FilmsController
     (
@@ -20,7 +18,7 @@ public class FilmsController
     {
         var allFilmsSite = await filmContext.FilmFiles.Where(film => film.FilmInMainList == true).ToListAsync();
 
-        if (!searchString.IsNullOrEmpty())
+        if (!string.IsNullOrEmpty(searchString))
         {
             allFilmsSite = [.. allFilmsSite.FilmSiteSearch(searchString).OrderBy(filmSite => filmSite.FilmDatePublished)];
         }

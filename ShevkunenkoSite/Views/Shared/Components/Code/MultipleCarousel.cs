@@ -31,13 +31,15 @@ public class MultipleCarousel(
         if (movieCarousel.MovieCaption.Contains("Интервью"))
         {
             pictures = await imageContext.ImageFiles
-                .Where(p => p.SearchFilter.Contains("Криминальная звезда," ?? string.Empty))
+                .Where(p => p.SearchFilter != null &&
+                        p.SearchFilter.Contains("Криминальная звезда," ?? string.Empty))
                 .ToArrayAsync();
         }
         else
         {
             pictures = await imageContext.ImageFiles
-            .Where(p => p.SearchFilter.Contains($"{movieCarousel.MovieCaption}," ?? string.Empty))
+            .Where(p => p.SearchFilter != null &&
+                    p.SearchFilter.Contains($"{movieCarousel.MovieCaption}," ?? string.Empty))
             .ToArrayAsync();
         }
 

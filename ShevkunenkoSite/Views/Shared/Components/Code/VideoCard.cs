@@ -41,7 +41,7 @@ public class VideoCard(
         {
             imageVideo = await imageFileContext.ImageFiles.FirstAsync(i => i.ImageFileModelId == movieFileModel.ImageFileModelId);
 
-            imageForVideo = imageVideo.ImageFileName;
+            imageForVideo = imageVideo.ImageFileName ?? "no-image.webp";
 
             imageForVideoGuid = imageVideo.ImageFileModelId;
         }

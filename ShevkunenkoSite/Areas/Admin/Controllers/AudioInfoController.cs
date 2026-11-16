@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.IdentityModel.Tokens;
 using NAudio.Wave;
 
 namespace ShevkunenkoSite.Areas.Admin.Controllers
@@ -22,7 +21,7 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
         {
             var allAudioFiles = await audioFileContext.AudioFiles.ToListAsync();
 
-            if (!searchString.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(searchString))
             {
                 allAudioFiles = [.. allAudioFiles.AudioFileSearch(searchString).OrderBy(audioBook => audioBook.AudioFileName)];
             }
@@ -223,6 +222,11 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
                 //}
 
                 string audioFile = Path.Combine(audioFileForAdding.FolderForAudioFile, audioFileForAdding.ChooseAudioFile.FileName);
+
+                if (!OperatingSystem.IsWindows())
+                {
+                    throw new PlatformNotSupportedException("Mp3FileReader поддерживается только в Windows.");
+                }
 
                 Mp3FileReader mp3File = new(audioFile);
 
@@ -601,6 +605,11 @@ namespace ShevkunenkoSite.Areas.Admin.Controllers
                     //}
 
                     string audioFile = Path.Combine(audioFileForEditing.FolderForAudioFile, audioFileForEditing.ChooseAudioFile.FileName);
+
+                    if (!OperatingSystem.IsWindows())
+                    {
+                        throw new PlatformNotSupportedException("Mp3FileReader поддерживается только в Windows.");
+                    }
 
                     Mp3FileReader mp3File = new(audioFile);
 

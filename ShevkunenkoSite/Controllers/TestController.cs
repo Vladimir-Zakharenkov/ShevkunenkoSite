@@ -1,6 +1,4 @@
-﻿using Azure;
-
-namespace ShevkunenkoSite.Controllers;
+﻿namespace ShevkunenkoSite.Controllers;
 
 // Тестовый контроллер
 public class TestController(IPageInfoRepository pageContext) : Controller

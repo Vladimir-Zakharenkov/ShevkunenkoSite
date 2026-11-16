@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.IdentityModel.Tokens;
 
 namespace ShevkunenkoSite.Areas.Admin.Controllers;
 
@@ -20,7 +19,7 @@ public class BooksAndArticlesController
     {
         var allBooksAndArticles = await bookContext.BooksAndArticles.ToListAsync();
 
-        if (!searchString.IsNullOrEmpty())
+        if (!string.IsNullOrEmpty(searchString))
         {
             allBooksAndArticles = [.. allBooksAndArticles.BookSearch(searchString).OrderBy(book => book.CaptionOfText)];
         }

@@ -11,7 +11,8 @@ public class Carousel : ViewComponent
     public async Task<IViewComponentResult> InvokeAsync(string searchFilter)
     {
         var pictures = await _imageContext.ImageFiles
-            .Where(p => p.SearchFilter.Contains(searchFilter ?? string.Empty))
+            .Where(p => p.SearchFilter != null &&
+                    p.SearchFilter.Contains(searchFilter ?? string.Empty))
             .ToArrayAsync();
 
         if (pictures.Length >= 30)

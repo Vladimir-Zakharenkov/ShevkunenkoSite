@@ -1,7 +1,6 @@
 ﻿//Ignore Spelling: Org
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.IdentityModel.Tokens;
 using System.Text.RegularExpressions;
 
 namespace ShevkunenkoSite.Areas.Admin.Controllers;
@@ -76,7 +75,7 @@ public partial class FilmsController(
     {
         var allFilmsSite = await filmContext.FilmFiles.ToListAsync();
 
-        if (!searchString.IsNullOrEmpty())
+        if (!string.IsNullOrEmpty(searchString))
         {
             allFilmsSite = [.. allFilmsSite.FilmSearch(searchString).OrderBy(filmSite => filmSite.FilmDatePublished)];
         }

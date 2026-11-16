@@ -2,7 +2,7 @@
 
 [Area("Rybakov")]
 public class MoviesByBooksController(
-    IMovieFileRepository movieContext, 
+    IMovieFileRepository movieContext,
     IImageFileRepository imageContext
     ) : Controller
 {
@@ -84,15 +84,15 @@ public class MoviesByBooksController(
 
             if (movieItem.MovieCaption == "Кортик - 1" || movieItem.MovieCaption == "Кортик - 2" || movieItem.MovieCaption == "Кортик - 3")
             {
-                imageArray = await imageContext.ImageFiles.Where(p => p.SearchFilter.Contains("Кортик-альбом,")).ToArrayAsync();
+                imageArray = await imageContext.ImageFiles.Where(p => p.SearchFilter != null && p.SearchFilter.Contains("Кортик-альбом,")).ToArrayAsync();
             }
             else if (movieItem.MovieCaption == "Бронзовая птица - 1" || movieItem.MovieCaption == "Бронзовая птица - 2" || movieItem.MovieCaption == "Бронзовая птица - 3")
             {
-                imageArray = await imageContext.ImageFiles.Where(p => p.SearchFilter.Contains("Бронзовая птица - альбом,")).ToArrayAsync();
+                imageArray = await imageContext.ImageFiles.Where(p => p.SearchFilter != null && p.SearchFilter.Contains("Бронзовая птица - альбом,")).ToArrayAsync();
             }
             else
             {
-                imageArray = await imageContext.ImageFiles.Where(p => p.SearchFilter.Contains(movieItem.MovieCaption ?? string.Empty)).ToArrayAsync();
+                imageArray = await imageContext.ImageFiles.Where(p => p.SearchFilter != null && p.SearchFilter.Contains(movieItem.MovieCaption ?? string.Empty)).ToArrayAsync();
             }
 
             return View("Frames", new FramesViewModel

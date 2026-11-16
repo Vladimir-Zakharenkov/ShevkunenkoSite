@@ -9,10 +9,14 @@ public class MovieFrames(IImageFileRepository imageFileContext) : ViewComponent
     public async Task<IViewComponentResult> InvokeAsync(string? imageFilter, bool leftSide, bool oneFrame)
     {
         if (!string.IsNullOrEmpty(imageFilter)
-            && await imageFileContext.ImageFiles.Where(img => img.SearchFilter.ToLower().Contains(imageFilter.ToLower())).AnyAsync())
+            && await imageFileContext.ImageFiles
+                .Where(img => img.SearchFilter != null &&
+                      img.SearchFilter.ToLower().Contains(imageFilter.ToLower()))
+                .AnyAsync())
         {
             var imageItems = await imageFileContext.ImageFiles
-                .Where(img => img.SearchFilter.ToLower().Contains(imageFilter.ToLower()))
+                .Where(img => img.SearchFilter != null &&
+                      img.SearchFilter.ToLower().Contains(imageFilter.ToLower()))
                 .ToArrayAsync();
 
             imageItems = imageItems.Shuffle().ToArray();

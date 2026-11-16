@@ -3,13 +3,13 @@
 @{
     // Локальные функции Razor — уменьшают дублирование
     string PickPrimaryFileName(ImageFileModel img) =>
-        string.IsNullOrEmpty(img.WebImageFileName) ? img.ImageFileName : img.WebImageFileName;
+        (string.IsNullOrEmpty(img.WebImageFileName) ? img.ImageFileName : img.WebImageFileName) ?? string.Empty;
 
     string PickWidth(ImageFileModel img) =>
-        (img.WebImageWidth > 0 ? img.WebImageWidth : img.ImageWidth).ToString();
+        (img.WebImageWidth > 0 ? img.WebImageWidth : img.ImageWidth).ToString() ?? string.Empty;
 
     string PickHeight(ImageFileModel img) =>
-        (img.WebImageHeight > 0 ? img.WebImageHeight : img.ImageHeight).ToString();
+        (img.WebImageHeight > 0 ? img.WebImageHeight : img.ImageHeight).ToString() ?? string.Empty;
 }
 
 <partial name="_HeadingPartial"

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ShevkunenkoSite.Areas.Admin.Controllers;
 
@@ -17,7 +15,7 @@ public class AudioBookController(
     {
         var allAudioBooks = await audioBookContext.AudioBooks.ToListAsync();
 
-        if (!searchString.IsNullOrEmpty())
+        if (!string.IsNullOrEmpty(searchString))
         {
             allAudioBooks = [.. allAudioBooks.AudioBookSearch(searchString).OrderBy(audioBook => audioBook.CaptionOfAudioBook)];
         }

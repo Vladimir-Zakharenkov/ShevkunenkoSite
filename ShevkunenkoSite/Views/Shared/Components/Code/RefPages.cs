@@ -81,9 +81,15 @@ public class RefPages(
                 {
                     for (int i = 0; i < photoFilterOut.Length; i++)
                     {
-                        if (await imageContext.ImageFiles.Where(p => p.SearchFilter.Contains(photoFilterOut[i] + ',')).AnyAsync())
+                        if (await imageContext.ImageFiles
+                                .Where(p => p.SearchFilter != null &&
+                                        p.SearchFilter.Contains(photoFilterOut[i] + ','))
+                                .AnyAsync())
                         {
-                            var listOfFilterOut = await imageContext.ImageFiles.Where(p => p.SearchFilter.Contains(photoFilterOut[i] + ',')).ToListAsync();
+                            var listOfFilterOut = await imageContext.ImageFiles
+                                .Where(p => p.SearchFilter != null &&
+                                        p.SearchFilter.Contains(photoFilterOut[i] + ','))
+                                .ToListAsync();
 
                             _ = listOfFilterOut.Distinct().OrderBy(s => s.SortOfPicture);
 

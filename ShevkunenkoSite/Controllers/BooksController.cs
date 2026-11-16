@@ -113,7 +113,7 @@ public class BooksController(
         string albumFilter = articleViewModel.BookOrArticle.CaptionOfText.Replace(' ', '-') + "#album#";
 
         var pictures = await imageFileContext.ImageFiles
-            .Where(img => img.SearchFilter.Contains(albumFilter))
+            .Where(img => img.SearchFilter != null && img.SearchFilter.Contains(albumFilter))
             .OrderBy(img => img.SortOfPicture)
             .ToListAsync();
 
@@ -243,7 +243,7 @@ public class BooksController(
             string albumFilter = audioBookViewModel.AudioBook.BookForAudioBook.CaptionOfText.Replace(' ', '-') + "#album#";
 
             var pictures = await imageFileContext.ImageFiles
-                .Where(img => img.SearchFilter.Contains(albumFilter))
+                .Where(img => img.SearchFilter != null && img.SearchFilter.Contains(albumFilter))
                 .OrderBy(img => img.SortOfPicture)
                 .ToListAsync();
 
@@ -337,7 +337,7 @@ public class BooksController(
 
         if (albumCaption != null
                 && !await imageFileContext.ImageFiles
-                    .AnyAsync(img => img.SearchFilter.Contains(albumCaption + album)))
+                    .AnyAsync(img => img.SearchFilter != null && img.SearchFilter.Contains(albumCaption + album)))
         {
             return RedirectToAction(nameof(Index));
         }
@@ -368,7 +368,7 @@ public class BooksController(
 
             #endregion
 
-            if (imageItem.SearchFilter.Contains(album))
+            if (imageItem.SearchFilter != null && imageItem.SearchFilter.Contains(album))
             {
                 #region Определение заголовка и подзаголовка альбома
 
@@ -395,7 +395,7 @@ public class BooksController(
                 #region Массив картинок по определенному названию альбома
 
                 var allItems = from m in imageFileContext.ImageFiles
-                   .Where(p => p.SearchFilter.Contains(photoAlbumView.CaptionOfAlbum + album))
+                   .Where(p => p.SearchFilter != null && p.SearchFilter.Contains(photoAlbumView.CaptionOfAlbum + album))
                    .OrderBy(p => p.SortOfPicture)
                                select m;
 
@@ -464,7 +464,7 @@ public class BooksController(
             #region Массив картинок по определенному названию альбома
 
             var allItems = from m in imageFileContext.ImageFiles
-               .Where(p => p.SearchFilter.Contains(albumCaption + album))
+               .Where(p => p.SearchFilter != null && p.SearchFilter.Contains(albumCaption + album))
                .OrderBy(p => p.SortOfPicture)
                            select m;
 
@@ -504,7 +504,7 @@ public class BooksController(
 
             #region Определение заголовка и подзаголовка альбома
 
-            string[] filters = itemsOnPage[0].SearchFilter.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            string[] filters = (itemsOnPage[0].SearchFilter ?? string.Empty).Split(',', StringSplitOptions.RemoveEmptyEntries);
 
             string? filterForCaption = Array.Find(filters, p => p.Contains(album));
 

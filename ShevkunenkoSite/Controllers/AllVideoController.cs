@@ -1,4 +1,4 @@
-﻿// Ignore Spelling: Programmy
+﻿// Ignore Spelling: Programmy Lihie
 
 namespace ShevkunenkoSite.Controllers;
 
@@ -285,15 +285,15 @@ public class AllVideoController(
 
                 if (movieItem.MovieCaption == "Пропавшая экспедиция - 1" || movieItem.MovieCaption == "Пропавшая экспедиция - 2")
                 {
-                    imageArray = await imageContext.ImageFiles.Where(p => p.SearchFilter.Contains("Пропавшая экспедиция - альбом,")).ToArrayAsync();
+                    imageArray = await imageContext.ImageFiles.Where(p => p.SearchFilter != null && p.SearchFilter.Contains("Пропавшая экспедиция - альбом,")).ToArrayAsync();
                 }
                 else if (movieItem.MovieCaption.Contains("Интервью"))
                 {
-                    imageArray = await imageContext.ImageFiles.Where(p => p.SearchFilter.Contains("Криминальная звезда,")).ToArrayAsync();
+                    imageArray = await imageContext.ImageFiles.Where(p => p.SearchFilter != null && p.SearchFilter.Contains("Криминальная звезда,")).ToArrayAsync();
                 }
                 else
                 {
-                    imageArray = await imageContext.ImageFiles.Where(p => p.SearchFilter.Contains(movieItem.MovieCaption ?? string.Empty)).ToArrayAsync();
+                    imageArray = await imageContext.ImageFiles.Where(p => p.SearchFilter != null && p.SearchFilter.Contains(movieItem.MovieCaption ?? string.Empty)).ToArrayAsync();
                 }
 
                 return View("Frames", new FramesViewModel
