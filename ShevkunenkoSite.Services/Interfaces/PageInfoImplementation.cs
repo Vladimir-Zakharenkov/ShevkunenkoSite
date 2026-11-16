@@ -25,6 +25,12 @@ public class PageInfoImplementation(SiteDbContext siteContext) : IPageInfoReposi
     /// </summary>
     public IQueryable<PageInfoModel> PagesInfoNoTracking => BuildPageQuery(tracking: false);
 
+    /// <summary>
+    /// Базовый запрос без автоматической загрузки связанных сущностей.
+    /// Для выборочной загрузки в DetailsPage.
+    /// </summary>
+    public IQueryable<PageInfoModel> PagesInfoBaseNoTracking => siteContext.PageInfo.AsNoTracking();
+
     private IQueryable<PageInfoModel> BuildPageQuery(bool tracking)
     {
         IQueryable<PageInfoModel> query = siteContext.PageInfo
@@ -128,15 +134,19 @@ public class PageInfoImplementation(SiteDbContext siteContext) : IPageInfoReposi
     /// </summary>
     private static string BuildRouteData(IQueryCollection pageQuery)
     {
-        string routData = string.Empty;
-        foreach (var item in pageQuery)
+        if (pageQuery.Count == 0)
         {
-            routData = routData.Length == 0
-                ? $"?{item.Key}={item.Value}"
-                : $"{routData}&{item.Key}={item.Value}";
+            return string.Empty;
         }
 
-        return routData;
+        System.Text.StringBuilder routData = new();
+        foreach (var item in pageQuery)
+        {
+            routData.Append(routData.Length == 0 ? '?' : '&');
+            routData.Append(item.Key).Append('=').Append(item.Value);
+        }
+
+        return routData.ToString();
     }
 
     /// <summary>

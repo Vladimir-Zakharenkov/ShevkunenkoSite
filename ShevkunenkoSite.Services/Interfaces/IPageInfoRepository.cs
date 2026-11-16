@@ -16,6 +16,13 @@ public interface IPageInfoRepository
     IQueryable<PageInfoModel> PagesInfoNoTracking { get; }
 
     /// <summary>
+    /// Базовый запрос без отслеживания и без автоматических Include.
+    /// Позволяет выбирать необходимые навигационные свойства для DetailsPage.
+    /// </summary>
+    IQueryable<PageInfoModel> PagesInfoBaseNoTracking { get; }
+
+
+    /// <summary>
     /// Определяет страницу по HTTP-запросу (путь + query-строка).
     /// Оставлено для обратной совместимости — используется в middleware/контроллерах.
     /// </summary>

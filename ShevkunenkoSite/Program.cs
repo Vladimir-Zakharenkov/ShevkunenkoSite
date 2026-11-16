@@ -150,7 +150,7 @@ services.AddWebMarkupMin(
 
 #region Работа с базой данных
 
-services.AddDbContext<SiteDbContext>(options =>
+services.AddDbContextPool<SiteDbContext>(options =>
 {
     options.UseSqlServer(configuration.GetConnectionString("ShevkunenkoSitePAPA") ?? throw new InvalidOperationException("Connection string 'ShevkunenkoSitePAPA' not found."));
 
