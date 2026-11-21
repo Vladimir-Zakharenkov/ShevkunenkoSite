@@ -76,15 +76,15 @@
                         <script src="~/js/8-23-7-video.js"></script>
 
                         <script>
-                                                var player = videojs('playerId', {
-                                                    html5: {
-                                                        vhs: {
-                                                            overrideNative: true
-                                                        },
-                                                        nativeAudioTracks: false,
-                                                        nativeVideoTracks: false
-                                                    }
-                                                });
+                            var player = videojs('playerId', {
+                                html5: {
+                                    vhs: {
+                                        overrideNative: true
+                                    },
+                                    nativeAudioTracks: false,
+                                    nativeVideoTracks: false
+                                }
+                            });
                         </script>
                     }
                     else
@@ -340,7 +340,7 @@
 
                             <div id="accordionBodyInternerInfo" class="accordion-body text-indent-0">
 
-                                <div class="row row-cols-3 g-1 g-sm-2 justify-content-center">
+                                <div class="internet-info">
 
                                     @* Kino-Teatr.Ru *@
                                     <a onClick="this.target='_blank'" href="@Model.FilmKinoTeatrRu">

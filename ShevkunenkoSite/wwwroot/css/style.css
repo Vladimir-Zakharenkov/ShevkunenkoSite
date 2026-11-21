@@ -13710,3 +13710,8 @@ img.maxwidth80px {
   --bs-btn-padding-x: 0.5rem;
   --bs-btn-font-size: 0.9rem;
 }
+
+.internet-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
