@@ -13704,3 +13704,9 @@ img.maxwidth80px {
 .carousel-item > a {
   display: block;
 }
+
+.btn-clear-file {
+  --bs-btn-padding-y: 0.2rem;
+  --bs-btn-padding-x: 0.5rem;
+  --bs-btn-font-size: 0.9rem;
+}

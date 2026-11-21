@@ -16,6 +16,7 @@
     // строка из БД, например: "filmId=42&sort=new&page=3"
     var rawQuery = Model.RoutData ?? "";
 
+    // словарь данных запроса
     var routeData = new Dictionary<string, string>();
 
     foreach (var pair in rawQuery.TrimStart('?').Split('&', StringSplitOptions.RemoveEmptyEntries))
@@ -46,7 +47,7 @@
 
                     <vc:view-image image-id="@item.ImageFileModelId"
                                    css-class="my-2 w-100 block-shadow imageref"
-                                   icon-type="webicon200" />
+                                   icon-type="webicon200AI" />
 
                 </a>
             }
@@ -153,30 +154,74 @@
             }
             else
             {
-                @* Карточка страницы и GUID *@
-                <div id="blockForCardOfPageAndGuid" class="bg-dark bg-opacity-25 py-2">
+                @* Карточка страницы *@
+
+                <div id="blockForCardOfPageAndGuid" class="bg-dark bg-opacity-10 py-2">
 
                     <h2 class="text-center text-danger-emphasis py-2">
                         Карточка страницы
                     </h2>
 
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 mb-3 justify-content-center">
+                        <div class="col">
+                            <div class="card h-100 me-1 mb-1 p-1 block-shadow borderforitem">
+
+				
+                                <vc:view-image image-id="@Model.ImageFileModelId.ToString()"
+                                               image-item="@Model.ImageFileModel"
+                                               css-class="card-img-top block-shadow rounded-3"
+                                               icon-type="webicon300AI" />
+
+                                <div class="card-body p-0 mt-2 block-shadow cardBodyBg">
+
+                                    @if (!string.IsNullOrEmpty(Model.PageCardText))
+                                    {
+                                        <p class="card-title lh-1 fontadaptive my-1 mt-2">
+                                            
+                                            @Model.PageCardText
+
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="card-title lh-1 text-danger fontadaptive my-1 mt-2">
+                                            
+                                            текст не задан
+                                            
+                                        </p>
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
 
                         <vc:card-of-page page=Model />
 
                     </div>
 
-                    <p>
-                        <span class="d-block mb-2 text-info-emphasis fluid-font-size">
-                            @Model.PageInfoModelId
-                        </span>
-                        <span class="fs-6 fw-bolder form-text text-danger-emphasis text-bg-light p-1">
-                            GUID страницы
-                        </span>
-                    </p>
-
                 </div>
             }
+
+        </div>
+
+        @* GUID *@
+        <div id="Guid" class="bg-body-secondary bg-opacity-10 block-shadow my-3 pt-2">
+
+            <p>
+
+                <span class="fs-5 text_shadow">
+                    @Model.PageInfoModelId
+                </span>
+
+                <br />
+
+                <span class="fs-6 form-text text-success">
+                    GUID
+                </span>
+
+            </p>
 
         </div>
 
@@ -193,6 +238,25 @@
 
                 <span class="fs-6 form-text text-success">
                     тег « title »
+                </span>
+
+            </p>
+
+        </div>
+
+        @* Тег « description » *@
+        <div id="tagDescription" class="bg-body-secondary bg-opacity-10 block-shadow my-3 pt-2">
+
+            <p>
+
+                <span class="fs-5 text_shadow">
+                    @Model.PageDescription
+                </span>
+
+                <br />
+
+                <span class="fs-6 form-text text-success">
+                    тег « description »
                 </span>
 
             </p>
@@ -986,45 +1050,6 @@
 
                             </button>
 
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            @* Тег «description» *@
-            <div id="pageDescriptionAccordionItem" class="accordion-item mb-3 block-shadow">
-
-                @* Заголовок группы «описание страницы» *@
-                <h2 id="headingPageDescription" class="accordion-header block-shadow">
-
-                    <button class="accordion-button collapsed py-0 stranicy"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#PageDescription"
-                            aria-expanded="true"
-                            aria-controls="PageDescription">
-
-                        <span class="@textForAccordionBtn">
-                            Описание :
-                        </span>
-
-                    </button>
-
-                </h2>
-
-                <div id="PageDescription" class="accordion-collapse collapse" aria-labelledby="headingPageDescription" data-bs-parent="#accordionDetailsPage">
-
-                    <div class="accordion-body text-indent-0 text-center">
-
-                        <p class="text-start fluid-font-size">
-                            @Model.PageDescription
-                        </p>
-
-                        <p class="fs-6 form-text text-success">
-                            тег «description»
                         </p>
 
                     </div>
@@ -2955,7 +2980,7 @@
 
                     <vc:view-image image-id="@item.ImageFileModelId"
                                    css-class="my-2 w-100 block-shadow imageref"
-                                   icon-type="webicon200" />
+                                   icon-type="webicon200AI" />
 
                 </a>
             }

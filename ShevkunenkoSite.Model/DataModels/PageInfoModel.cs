@@ -38,6 +38,9 @@ public class PageInfoModel
     [DataType(DataType.Text)]
     public string Action { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Данные запроса, например ?imageId=2&pageSize=5
+    /// </summary>
     [Required(AllowEmptyStrings = true)]
     [DisplayFormat(ConvertEmptyStringToNull = false)]
     [Display(Name = "Данные :")]
